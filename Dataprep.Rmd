@@ -7,7 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-setwd("/Users/admin/Desktop/MPI/Share/ShareSEM")
+setwd("/Users/admin/Desktop/MPI/Share/ShareSEM/ShareSEM")
 
 library(haven)
 library(tidyverse)
@@ -19,14 +19,14 @@ cf1 <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_cf.dta")
 mh1 <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_mh.dta")
 casp1 <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_dropoff.dta")
 
-demo1items<- demo1 %>% select("mergeid", "dn003_", "dn042_") %>%  ## select items
+demo1items<- demo1 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%  ## select items
   rename_at(vars(-mergeid),function(x) paste0(x,"_1"))            ## add wave number as suffix to variable name
 
-cf1items<- cf1 %>% select(mergeid, contains ("cf0"))%>%
+cf1items<- cf1 %>% dplyr::select(mergeid, contains ("cf0"))%>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_1"))
 
-mh1items<- mh1 %>% select(mergeid, contains ("mh0")) %>%
-  select(- c( "mh018_", "mh019_", "mh020_", "mh021_")) %>%
+mh1items<- mh1 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select(- c( "mh018_", "mh019_", "mh020_", "mh021_")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_1"))
 
 casp1items <- casp1 %>% dplyr::select("mergeid", "q2_a", "q2_b", "q2_c", "q2_d","q2_e","q2_f","q2_g","q2_h","q2_i",
@@ -41,14 +41,14 @@ cf2 <- read_dta("sharew2_rel8-0-0_ALL_datasets_stata/sharew2_rel8-0-0_cf.dta")
 mh2 <- read_dta("sharew2_rel8-0-0_ALL_datasets_stata/sharew2_rel8-0-0_mh.dta")
 casp2 <- read_dta("sharew2_rel8-0-0_ALL_datasets_stata/sharew2_rel8-0-0_ac.dta")
 
-demo2items<- demo2 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo2items<- demo2 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_2"))
 
-cf2items<- cf2 %>% select(mergeid, contains ("cf0")) %>%
+cf2items<- cf2 %>% dplyr::select(mergeid, contains ("cf0")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_2"))
 
-mh2items<- mh2 %>% select(mergeid, contains ("mh0")) %>%
-  select (- c ("mh018_", "mh019_", contains ("mh02"))) %>%
+mh2items<- mh2 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select (- c ("mh018_", "mh019_", contains ("mh02"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_2"))
 
 casp2items<- casp2 %>% dplyr::select("mergeid", "ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
@@ -82,14 +82,14 @@ cf4 <- read_dta("sharew4_rel8-0-0_ALL_datasets_stata/sharew4_rel8-0-0_cf.dta")
 mh4 <- read_dta("sharew4_rel8-0-0_ALL_datasets_stata/sharew4_rel8-0-0_mh.dta")
 casp4 <- read_dta("sharew4_rel8-0-0_ALL_datasets_stata/sharew4_rel8-0-0_ac.dta")
 
-demo4items<- demo4 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo4items<- demo4 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_4"))
 
-cf4items<- cf4 %>% select(mergeid, contains ("cf0")) %>%
+cf4items<- cf4 %>% dplyr::select(mergeid, contains ("cf0")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_4"))
 
-mh4items<- mh4 %>% select(mergeid, contains ("mh0")) %>%
-  select( -c( "mh018_", "mh019_", contains ("mh02"), contains("mh03"))) %>%
+mh4items<- mh4 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select( -c( "mh018_", "mh019_", contains ("mh02"), contains("mh03"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_4"))
 
 casp4items<- casp4 %>% dplyr::select("mergeid", "ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
@@ -102,14 +102,14 @@ cf5 <- read_dta("sharew5_rel8-0-0_ALL_datasets_stata/sharew5_rel8-0-0_cf.dta")
 mh5 <- read_dta("sharew5_rel8-0-0_ALL_datasets_stata/sharew5_rel8-0-0_mh.dta")
 casp5 <- read_dta("sharew5_rel8-0-0_ALL_datasets_stata/sharew5_rel8-0-0_ac.dta")
 
-demo5items<- demo5 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo5items<- demo5 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_5"))
 
-cf5items<- cf5 %>% select(mergeid, contains ("cf0")) %>%
+cf5items<- cf5 %>% dplyr::select(mergeid, contains ("cf0")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_5"))
 
-mh5items<- mh5 %>% select(mergeid, contains ("mh0")) %>%
-  select( -c(contains ("mh02"), contains("mh03"))) %>%
+mh5items<- mh5 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select( -c(contains ("mh02"), contains("mh03"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_5"))
 
 casp5items<- casp5 %>% dplyr::select("mergeid", "ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
@@ -122,15 +122,15 @@ cf6 <- read_dta("sharew6_rel8-0-0_ALL_datasets_stata/sharew6_rel8-0-0_cf.dta")
 mh6 <- read_dta("sharew6_rel8-0-0_ALL_datasets_stata/sharew6_rel8-0-0_mh.dta")
 casp6 <- read_dta("sharew6_rel8-0-0_ALL_datasets_stata/sharew6_rel8-0-0_ac.dta")
 
-demo6items<- demo6 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo6items<- demo6 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_6"))
 
-cf6items<- cf6 %>% select(mergeid, contains ("cf0")) %>%
-  select( -"cf019_") %>%
+cf6items<- cf6 %>% dplyr::select(mergeid, contains ("cf0")) %>%
+  dplyr::select( -"cf019_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_6"))
 
-mh6items<- mh6 %>% select(mergeid, contains ("mh0")) %>%
-  select( -c(contains ("mh02"), contains("mh03"))) %>%
+mh6items<- mh6 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select( -c(contains ("mh02"), contains("mh03"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_6"))
 
 casp6items<- casp6 %>% dplyr::select("mergeid","ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_",  "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
@@ -144,17 +144,17 @@ mh7 <- read_dta("sharew7_rel8-0-0_ALL_datasets_stata/sharew7_rel8-0-0_mh.dta")
 casp7 <- read_dta("sharew7_rel8-0-0_ALL_datasets_stata/sharew7_rel8-0-0_ac.dta")
 
 
-demo7items<- demo7 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo7items<- demo7 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_7"))
 
-cf7items<- cf7 %>% select(mergeid, contains ("cf0")) %>%
+cf7items<- cf7 %>% dplyr::select(mergeid, contains ("cf0")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_7"))
 
-mh7items<- mh7 %>% select(mergeid, contains ("mh0")) %>%
-  select( -c(contains ("mh02"), contains("mh03"))) %>%
+mh7items<- mh7 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select( -c(contains ("mh02"), contains("mh03"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_7"))
 
-casp7items<- casp7 %>% select("mergeid","ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
+casp7items<- casp7 %>% dplyr::select("mergeid","ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_7"))
 
 ## Wave 8
@@ -164,17 +164,17 @@ cf8 <- read_dta("sharew8_rel8-0-0_ALL_datasets_stata/sharew8_rel8-0-0_cf.dta")
 mh8 <- read_dta("sharew8_rel8-0-0_ALL_datasets_stata/sharew8_rel8-0-0_mh.dta")
 casp8 <- read_dta("sharew8_rel8-0-0_ALL_datasets_stata/sharew8_rel8-0-0_ac.dta")
 
-demo8items<- demo8 %>% select("mergeid", "dn003_", "dn042_") %>%
+demo8items<- demo8 %>% dplyr::select("mergeid", "dn003_", "dn042_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_8"))
 
-cf8items<- cf8 %>% select(mergeid, contains ("cf0")) %>%
+cf8items<- cf8 %>% dplyr::select(mergeid, contains ("cf0")) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_8"))
 
-mh8items<- mh8 %>% select(mergeid, contains ("mh0")) %>%
-  select( -c(contains ("mh02"), contains("mh03"))) %>%
+mh8items<- mh8 %>% dplyr::select(mergeid, contains ("mh0")) %>%
+  dplyr::select( -c(contains ("mh02"), contains("mh03"))) %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_8"))
 
-casp8items<- casp8 %>% select("mergeid", "ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
+casp8items<- casp8 %>% dplyr::select("mergeid", "ac014_", "ac015_", "ac016_", "ac017_","ac018_","ac019_","ac020_", "ac021_","ac022_","ac023_","ac024_","ac025_") %>%
   rename_at(vars(-mergeid),function(x) paste0(x,"_8"))
 
 

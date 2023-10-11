@@ -1,0 +1,531 @@
+---
+title: "MNLFA"
+author: "Leonie H."
+date: "2023-08-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(haven)
+library(tidyverse)
+library(tidyr)
+library(mokken)
+library(OpenMx)
+library(ggplot2)
+library(lavaan)
+library(semTools)
+library(semPlot)
+library(psych)
+library(GPArotation)
+library(corrplot)
+library(stats)
+library(dplyr)
+library(usethis)
+library(gitcreds)
+library(gh)
+library(repro)
+```
+
+# Read and Prepare Data
+```{r}
+# read
+demo <- read_delim("cf_all.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+casp <- read_delim("casp.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+
+
+View(demo7)
+# prepare Data: 
+casp <- casp %>% 
+  rename(
+    # name CASP-12 Items as variables according to factor structure.
+    "cC1_1" = "q2_a_1",
+    "cC2_1" = "q2_b_1",
+    "cC3_1" = "q2_c_1",
+    "cA1_1" = "q2_d_1",
+    "cA2_1" = "q2_e_1",
+    "cA3_1" = "q2_f_1",
+    "cP1_1" = "q2_g_1",
+    "cP2_1" = "q2_h_1",
+    "cP3_1" = "q2_i_1",
+    "cS1_1" = "q2_j_1",
+    "cS2_1" = "q2_k_1",
+    "cS3_1" = "q2_l_1",
+    #
+    "cC1_2" = "ac014__2",
+    "cC2_2" = "ac015__2",
+    "cC3_2" = "ac016__2",
+    "cA1_2" = "ac017__2",
+    "cA2_2" = "ac018__2",
+    "cA3_2" = "ac019__2",
+    "cP1_2" = "ac020__2",
+    "cP2_2" = "ac021__2",
+    "cP3_2" = "ac022__2",
+    "cS1_2" = "ac023__2",
+    "cS2_2" = "ac024__2",
+    "cS3_2" = "ac025__2",
+    #
+    "cC1_4" = "ac014__4",
+    "cC2_4" = "ac015__4",
+    "cC3_4" = "ac016__4",
+    "cA1_4" = "ac017__4",
+    "cA2_4" = "ac018__4",
+    "cA3_4" = "ac019__4",
+    "cP1_4" = "ac020__4",
+    "cP2_4" = "ac021__4",
+    "cP3_4" = "ac022__4",
+    "cS1_4" = "ac023__4",
+    "cS2_4" = "ac024__4",
+    "cS3_4" = "ac025__4",
+    #
+    "cC1_5" = "ac014__5",
+    "cC2_5" = "ac015__5",
+    "cC3_5" = "ac016__5",
+    "cA1_5" = "ac017__5",
+    "cA2_5" = "ac018__5",
+    "cA3_5" = "ac019__5",
+    "cP1_5" = "ac020__5",
+    "cP2_5" = "ac021__5",
+    "cP3_5" = "ac022__5",
+    "cS1_5" = "ac023__5",
+    "cS2_5" = "ac024__5",
+    "cS3_5" = "ac025__5",
+    #
+    "cC1_6" = "ac014__6",
+    "cC2_6" = "ac015__6",
+    "cC3_6" = "ac016__6",
+    "cA1_6" = "ac017__6",
+    "cA2_6" = "ac018__6",
+    "cA3_6" = "ac019__6",
+    "cP1_6" = "ac020__6",
+    "cP2_6" = "ac021__6",
+    "cP3_6" = "ac022__6",
+    "cS1_6" = "ac023__6",
+    "cS2_6" = "ac024__6",
+    "cS3_6" = "ac025__6",
+    #
+    "cC1_7" = "ac014__7",
+    "cC2_7" = "ac015__7",
+    "cC3_7" = "ac016__7",
+    "cA1_7" = "ac017__7",
+    "cA2_7" = "ac018__7",
+    "cA3_7" = "ac019__7",
+    "cP1_7" = "ac020__7",
+    "cP2_7" = "ac021__7",
+    "cP3_7" = "ac022__7",
+    "cS1_7" = "ac023__7",
+    "cS2_7" = "ac024__7",
+    "cS3_7" = "ac025__7",
+    #
+    "cC1_8" = "ac014__8",
+    "cC2_8" = "ac015__8",
+    "cC3_8" = "ac016__8",
+    "cA1_8" = "ac017__8",
+    "cA2_8" = "ac018__8",
+    "cA3_8" = "ac019__8",
+    "cP1_8" = "ac020__8",
+    "cP2_8" = "ac021__8",
+    "cP3_8" = "ac022__8",
+    "cS1_8" = "ac023__8",
+    "cS2_8" = "ac024__8",
+    "cS3_8" = "ac025__8"
+  )
+
+View(casp)
+```
+
+
+## merge demographic variables to items:
+```{r}
+df1 <- casp %>% 
+  full_join(
+    demo, by="mergeid"
+  ) %>% 
+  dplyr::select(age, matches("^cC|^cA|^cP|^cS"))
+
+# Storing the names of variables (items) as `manVars`:
+manVars <- colnames(df1[,-c(1:2)])
+
+# Storing the number of variables (items) as `nv`:
+nv <- length(manVars)
+```
+
+## Missing Values
+```{r missing}
+# Define Missing Codes. Refer to the SHARE release guide for more detail:
+missing_codes <- c(-1, -2, -3, -7, -9, -10, -11, -12, -14, -15, -16)
+
+df2 <- df1 %>%
+  mutate_all(~ifelse(. %in% missing_codes, NA, .))
+
+# Check number of subjects with NAs on all CASP-12:
+n_missings <- 
+  sum(apply(df2[manVars], 1, function(row) all(is.na(row))))
+
+df3 <- df2 %>% 
+  filter(rowSums(is.na(.[manVars])) < length(manVars)) %>% 
+# Remove missings on moderators gender and `age` (year of birth) and bfi items
+  filter(complete.cases(age))
+```
+
+## Recode Items
+```{r}
+df4 <- df3 %>% 
+  # Recode negative items of the Casp-12 questionnaire:
+  mutate(
+    cA1 = 5 - cA1,
+    cP1 = 5 - cP1,
+    cP2 = 5 - cP2,
+    cP3 = 5 - cP3,
+    cS1 = 5 - cS1,
+    cS2 = 5 - cS2,
+    cS3 = 5 - cS3,
+  # Recode gender variable to `male` with 1 indicating male and 0 female:
+    age = 2017 - age
+  ) %>%  
+  # Order variables:
+  dplyr::select(age, everything())
+
+# Standardize all variables
+df_z <- df4 %>% 
+  mutate_if(names(.) != "male", scale)
+```
+
+## Descriptives
+```{r}
+hist(df4$age)
+
+cor <- cor(df4, use= "pairwise.complete.obs")
+
+corrplot(cor, method = "color")
+```
+
+```{r}
+# Saving data frame as mx object:
+mxdf1 <- mxData(observed = df_z, type = "raw")
+```
+#################################
+# With Country and Age
+```{r}
+## Specify matrices for configural model
+matT0 <- mxMatrix(type="Full", nrow=1, ncol=12,#baseline intercepts
+                  free=TRUE,
+                  values=1,
+                  name="matT0")
+
+matB1 <- mxMatrix(type = "Full", nrow = 1, ncol = nv,  # full matrix of background effects
+                  free = TRUE,
+                  values = 0,
+                  name = "matB1")
+matB2 <- mxMatrix(type = "Full", nrow = 1, ncol = nv,
+                  free = TRUE,
+                  values = 0,
+                  name = "matB2")
+
+matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
+                  free = c(rep(c(TRUE, FALSE,FALSE, FALSE), 3),
+                           rep(c(FALSE, TRUE,FALSE, FALSE), 3),
+                           rep(c(FALSE,FALSE,TRUE,FALSE), 3),
+                           rep(c(FALSE, FALSE, FALSE,TRUE), 3)
+                           ),
+                  values = c(rep(c(1, 0, 0, 0), 3),
+                             rep(c(0, 1, 0, 0), 3),
+                             rep(c(0, 0, 1, 0), 3),
+                             rep(c(0, 0, 0, 1), 3)),
+                  byrow = TRUE,
+                  name = "matL0")
+
+matC1 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # direct effects of age and country
+                  free = c(rep(c(TRUE, FALSE, FALSE, FALSE), 3),
+                           rep(c(FALSE, TRUE, FALSE, FALSE), 3),
+                           rep(c(FALSE, FALSE, TRUE, FALSE), 3),
+                           rep(c(FALSE, FALSE, FALSE, TRUE), 3)),
+                  values = 0,
+                  byrow = TRUE,
+                  name = "matC1")
+
+matC2 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,
+                  free = c(rep(c(TRUE, FALSE, FALSE, FALSE), 3),
+                           rep(c(FALSE, TRUE, FALSE, FALSE), 3),
+                           rep(c(FALSE, FALSE, TRUE, FALSE), 3),
+                           rep(c(FALSE, FALSE, FALSE, TRUE), 3)),
+                  values = 0,
+                  byrow = TRUE,
+                  name = "matC2")
+# matrix for residual covariance at baseline
+matE0 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 1,
+                  name = "matE0")
+# matrix for residual covariance of age
+matD1 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 0,
+                  name = "matD1")
+# matrix for residual covariance of country
+matD2 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 0,
+                  name = "matD2")
+
+matP0 <- mxMatrix(type = "Symm", nrow = 4, ncol = 4,#variances
+                  free = c(FALSE, TRUE, TRUE, TRUE,
+                           TRUE, FALSE, TRUE, TRUE,
+                           TRUE, TRUE, FALSE, TRUE,
+                           TRUE, TRUE, TRUE, FALSE),
+                  values = c(1, 0, 0, 0,
+                             0, 1, 0, 0,
+                             0, 0, 1, 0,
+                             0, 0, 0, 1),
+                  name = "matP0")
+matH1 <- mxMatrix(type = "Symm", nrow = 4, ncol = 4,
+                  free = c(FALSE, TRUE, TRUE, TRUE,
+                           TRUE, FALSE, TRUE, TRUE,
+                           TRUE, TRUE, FALSE, TRUE,
+                           TRUE, TRUE, TRUE, FALSE),
+                  values = 0,
+                  name = "matH1")
+matH2 <- mxMatrix(type = "Symm", nrow = 4, ncol = 4,
+                  free = c(FALSE, TRUE, TRUE, TRUE,
+                           TRUE, FALSE, TRUE, TRUE,
+                           TRUE, TRUE, FALSE, TRUE,
+                           TRUE, TRUE, TRUE, FALSE),
+                  values = 0,
+                  name = "matH2")
+
+matA0 <- mxMatrix(type="Full", nrow=4, ncol=1,#factor means not estimated
+                  free=FALSE,
+                  values= c(0, 0, 0, 0),
+                  name="matA0")
+matG1 <- mxMatrix(type="Full", nrow=4, ncol=1,
+                  free=FALSE, # to identify the model config to zero
+                  values=0,
+                  name="matG1")
+matG2 <- mxMatrix(type="Full", nrow=4, ncol=1,
+                  free=FALSE, # to identify the model config to zero
+                  values=0,
+                  name="matG2")
+
+matV1 <- mxMatrix(type="Full", nrow=1, ncol=1, 
+                  free=FALSE, 
+                  labels="data.age2004", 
+                  name = "age")
+matV2 <- mxMatrix(type="Full", nrow=1, ncol=1, 
+                  free=FALSE, 
+                  labels="data.country", 
+                  name = "country")
+
+matIa <- mxMatrix(type="Diag", nrow=4, ncol=4, 
+                  free=FALSE,
+                  values=1, 
+                  name="matIa")
+matIb <- mxMatrix(type="Full", nrow=4, ncol=4, 
+                  free=FALSE, 
+                  values=c(0,1,1,1,
+                           1,0,1,1,
+                           1,1,0,1,
+                           1,1,1,0),
+                  name="matIb")
+```
+
+## Specify algebra for the dependent parameters
+```{r}
+matT <- mxAlgebra(expression=matT0+matB1*country+matB2*age, 
+                  name="matT")
+matL <- mxAlgebra(expression=matL0+matC1*country+matC2*age, 
+                  name="matL")
+matE <- mxAlgebra(expression=matE0*exp(matD1*country+matD2*age), 
+                  name="matE")
+matA <- mxAlgebra(expression=matA0+matG1*country+matG2*age, 
+                  name="matA")
+
+## Specify algebra for covariance matrix of factors (transformed to ensure positive definite matrices)
+matVar <- mxAlgebra(expression=(matP0*exp(matH1*country+matH2*age)), 
+                    name="matVar")
+matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*country+matH2*age))-1)/
+                    (exp(2*(matP0+matH1*country+matH2*age))+1), 
+                  name="matR")
+matCov <- mxAlgebra(expression=(matIa*sqrt(matVar))%*%matR%*%(matIa*sqrt(matVar)), 
+                    name="matCov")
+matP <- mxAlgebra(expression=matIa*matVar+matIb*matCov, 
+                  name="matP")
+
+## Specify model-implied matrices
+matC <- mxAlgebra(expression=matL%*%matP%*%t(matL)+matE, 
+                  name="matC") 
+matM <- mxAlgebra(expression=matT+t(matL%*%matA), 
+                  name="matM") 
+
+## Specify expectation and fit function
+expF <- mxExpectationNormal(covariance="matC", 
+                            means="matM",
+                            dimnames=manVars)
+fitF <- mxFitFunctionML() 
+```
+
+## Make mxModel object and run the model
+```{r}
+modConfig <- mxModel(model="Configural", 
+                     matT, matT0, matB1, matB2,
+                     matL, matL0, matC1, matC2, 
+                     matE, matE0, matD1, matD2,
+                     matP, matP0, matH1, matH2,
+                     matA, matA0, matG1, matG2,  
+                     matIa, matIb, matV1, matV2, 
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdata1)
+
+
+fitConfig <- mxRun(modConfig)
+summary(fitConfig) 
+```
+
+```{r}
+#mxCheckIdentification(modConfig) #commented out for knitting
+
+```
+
+### Specify matrices scalar model
+```{r}
+matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                  free=FALSE,
+                  values=0,
+                  name="matB1")
+matB2 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                  free=FALSE,
+                  values=0,
+                  name="matB2")
+matC1 <- mxMatrix(type="Full", nrow=12, ncol=4,
+                  free=FALSE,
+                  values=0,
+                  name="matC1")
+matC2 <- mxMatrix(type="Full", nrow=12, ncol=4,
+                  free=FALSE,
+                  values=0,
+                  name="matC2")
+
+matH1 <- mxMatrix(type="Symm", nrow=4, ncol=4,
+                  free=TRUE, 
+                  values=0,
+                  name="matH1")
+matH2 <- mxMatrix(type="Symm", nrow=4, ncol=4,
+                  free=TRUE, 
+                  values=0,
+                  name="matH2")
+
+matG1 <- mxMatrix(type="Full", nrow=4, ncol=1,
+                  free=TRUE, 
+                  values=0,
+                  name="matG1")
+matG2 <- mxMatrix(type="Full", nrow=4, ncol=1,
+                  free=TRUE, 
+                  values=0,
+                  name="matG2")
+```
+
+## Make mxModel object and run the model
+```{r}
+modScalar <- mxModel(model="Scalar", 
+                     matT, matT0, matB1, matB2,
+                     matL, matL0, matC1, matC2, 
+                     matE, matE0, matD1, matD2,
+                     matP, matP0, matH1, matH2,
+                     matA, matA0, matG1, matG2,  
+                     matIa, matIb, matV1, matV2, 
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdata1)
+fitScalar <- mxRun(modScalar)
+summary(fitScalar)
+```
+
+## Compare fit of unconstrained model with constrained model
+```{r}
+miTest <- mxCompare(fitConfig, fitScalar)
+#miTest[2,c(7,8,9)] #values not adjusted yet
+#miTest$p[2] < 0.001
+```
+
+## Step 4: Select anchor indicators
+```{r}
+## Run unconstrained model for each indicator
+fitAbo <- list()
+
+for (i in 1:12) {
+  freeparT <- matrix(FALSE, nrow = 1, ncol = 12)
+  freeparT[i] <- TRUE
+  
+  freeparL <- matrix(FALSE, nrow = 12, ncol = 4)  # Adjusted for four number-spaces
+  
+  # Assign the corresponding number-space based on the row index
+  if (i %in% 1:3) {
+    freeparL[i, 1] <- TRUE  # First number-space
+  } else if (i %in% 4:6) {
+    freeparL[i, 2] <- TRUE  # Second number-space
+  } else if (i %in% 7:9) {
+    freeparL[i, 3] <- TRUE  # Third number-space
+  } else if (i %in% 10:12) {
+    freeparL[i, 4] <- TRUE  # Fourth number-space
+  }       
+  matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                    free=freeparT,
+                    values=0,
+                    name="matB1")
+  matB2 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                    free=freeparT,
+                    values=0,
+                    name="matB2")
+  matC1 <- mxMatrix(type="Full", nrow=12, ncol=4,
+                    free=freeparL,
+                    values=0,
+                    byrow=TRUE,
+                    name="matC1")
+  matC2 <- mxMatrix(type="Full", nrow=12, ncol=4,
+                    free=freeparL,
+                    values=0,
+                    byrow=TRUE,
+                    name="matC2")
+  modAbo <- mxModel(model=paste0("All_but_", i), 
+                   matT, matT0, matB1, matB2,
+                   matL, matL0, matC1, matC2, 
+                   matE, matE0, matD1, matD2,
+                   matP, matP0, matH1, matH2,
+                   matA, matA0, matG1, matG2,  
+                   matIa, matIb, matV1, matV2, 
+                   matVar, matR, matCov, matM, matC, 
+                   expF, fitF, mxdata1)
+  fitAbo[[i]] <- mxRun(modAbo)
+}
+```
+
+## Compare constrained model with all unconstrained models
+```{r}
+anchorTest <- mxCompare(fitAbo, fitScalar)
+anchorOut <- data.frame(Name=paste0("Indicator",1:12), 
+                    X2=anchorTest$diffLL[seq(2,24,2)],
+                    df=anchorTest$diffdf[seq(2,24,2)],
+                    p=anchorTest$p[seq(2,24,2)])
+anchorOut
+```
+
+## Select two indicators per factor with smallest X2 as anchor
+```{r}
+anchorOut[order(anchorOut$X2[1:3]),]
+anchorOut[3+order(anchorOut$X2[4:6]),]
+anchorOut[6+order(anchorOut$X2[7:9]),]
+anchorOut[9+order(anchorOut$X2[10:12]),]
+
+## Save anchors in object ####currently random selected
+anchors1 <- c(1,2)
+anchors2 <- c(4,5)
+anchors3 <- c(7,8)
+anchors4 <- c(10,11)
+
+```
+
+
+
