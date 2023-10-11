@@ -1,0 +1,202 @@
+---
+title: "SEM"
+author: "Leonie H."
+date: "2023-09-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(haven)
+library(tidyverse)
+library(tidyr)
+library(OpenMx)
+library(mokken)
+library(reshape2)
+library(ctsem)
+library(ctsemOMX)
+library(ggplot2)
+library(readxl)
+library(psych)
+
+```
+
+
+## Enreading Data & Descriptives
+```{r}
+library(dplyr)
+ct_data <- read_excel("ctmodel_data.xlsx")
+ct_data <- as.data.frame(ct_data)
+ct_data <- na.omit(ct_data)
+st_data <- read_excel("semtree_data.xlsx")
+st_data <- as.data.frame(st_data)
+head(ct_data)
+head(st_data)
+general_data6 <- read_excel("gen6_data.xlsx")
+general_data6 <- as.data.frame(general_data6)
+general_data7 <- read_excel("gen7_data.xlsx")
+general_data8 <- read_excel("gen8_data.xlsx")
+describe(general_data6)
+describe(general_data7)
+describe(general_data8)
+
+# Convert "single" and "gender" to factors
+general_data6$single <- factor(general_data6$single, levels = c(0, 1), labels = c("No", "Yes"))
+general_data6$gender <- factor(general_data6$gender, levels = c(1, 2), labels = c("Male", "Female"))
+
+# Perform descriptive analysis
+summary(general_data6)
+
+# Convert "single" and "gender" to factors
+general_data7$single <- factor(general_data7$single, levels = c(0, 1), labels = c("No", "Yes"))
+general_data7$gender <- factor(general_data7$gender, levels = c(1, 2), labels = c("Male", "Female"))
+
+# Perform descriptive analysis
+summary(general_data7)
+
+# Convert "single" and "gender" to factors
+general_data8$single <- factor(general_data8$single, levels = c(0, 1), labels = c("No", "Yes"))
+general_data8$gender <- factor(general_data8$gender, levels = c(1, 2), labels = c("Male", "Female"))
+
+# Perform descriptive analysis
+summary(general_data8)
+
+```
+
+## CT Model
+```{r}
+#interfacing to OpenMx (wide-data format) # neue variable
+# omx version to use sem in the end
+# mx obj and then sem 
+# Create the OpenMx model with adjusted T0MEANS
+ct_Model <- ctModel(n.latent = 2, n.manifest = 2, Tpoints = 3,
+                                      T0MEANS = "auto",  # Starting values for Latent Variables
+                                      LAMBDA = matrix(c(1,0, 
+                                                        0,1),nrow = 2, ncol = 2),
+                                      MANIFESTMEANS = "auto",#to 0
+                                      MANIFESTVAR=diag(0, 2),
+                                      T0VAR = "auto",
+                                      type = "omx",
+                                      id ="id",
+                                      time="time",
+                                      DRIFT = "auto",
+                                      DIFFUSION = "auto")
+
+# Fit the model to the data
+ct_Fit <- ctFit(ct_data, ct_Model, dataform = "wide")
+summary(ct_Fit, verbose = T)
+plot(ct_Fit)
+
+```
+
+
+## Semtree A
+```{r}
+library(readxl)
+library(ctsemOMX)
+library(semtree)
+library(dplyr)
+
+set.seed(100)
+
+semtree_data <- read_excel("C:/Users/admin/Desktop/HU Master/2.Semester/Fm9/third_project_fm9/project_c_fm9/semtree_data1.xlsx")
+semtree_data <- as.data.frame(semtree_data)
+predictors1 <- c("TI1", "TI2", "TI3")
+semtree_data <- na.omit(semtree_data)
+semtree_data$TI2 <- factor(semtree_data$TI2, ordered = TRUE)
+semtree_data$TI3 <- factor(semtree_data$TI3, ordered = TRUE)
+
+
+ct_Model <- ctModel(n.latent = 2,
+                    n.manifest = 2,
+                    Tpoints = 3,
+                    LAMBDA = matrix(c(1, 0, 
+                                      0, 1), nrow = 2, ncol = 2),
+                    MANIFESTMEANS = matrix(0, nrow = 2, ncol = 1),
+                    MANIFESTVAR = diag(0, 2),
+                    CINT = matrix(c("cint_Y1", "cint_Y2")),
+                    type = "omx",
+                    id ="id",
+                    time="time",
+                    DRIFT = "auto",
+                    DIFFUSION = "auto")
+
+# Fit the model to the data
+ct_Fit <- ctFit(subset(semtree_data, select = -c(TI1, TI2, TI3)),
+                ct_Model, dataform = "wide", retryattempts = 30)
+
+ctrl <- semtree.control(method = "score", min.bucket = 500, max.depth = 4)
+
+tree1 <- semtree::semtree(ct_Fit, semtree_data, control = ctrl,
+                         predictors = predictors1)
+
+summary(tree1)
+print(tree1)
+plot(tree1)
+
+```
+
+## Semtree B
+```{r}
+set.seed(100)
+st_data <- read_excel("semtree_data.xlsx")
+st_data <- as.data.frame(st_data)
+
+#semtree_data <- as.data.frame(semtree_data)
+predictors <- c("TI1", "TI2", "TI3","TI4","TI5")
+st_data <- na.omit(st_data)
+st_data$TI2 <- factor(st_data$TI2, ordered = TRUE)
+st_data$TI3 <- factor(st_data$TI3, ordered = TRUE)
+st_data$TI4 <- factor(st_data$TI4, ordered = TRUE)
+st_data$TI5 <- factor(st_data$TI5, ordered = TRUE)
+
+st <- na.omit(st_data)
+
+ct_Model <- ctModel(n.latent = 2,
+                    n.manifest = 2,
+                    Tpoints = 3,
+                    LAMBDA = matrix(c(1, 0, 
+                                      0, 1), nrow = 2, ncol = 2),
+                    MANIFESTMEANS = matrix(0, nrow = 2, ncol = 1),
+                    MANIFESTVAR = diag(0, 2),
+                    CINT = matrix(c("cint_Y1", "cint_Y2")),
+                    type = "omx",
+                    id ="id",
+                    time="time",
+                    DRIFT = "auto",
+                    DIFFUSION = "auto")
+
+# Fit the model to the data
+ct_Fit <- ctFit(subset(st_data, select = -c(TI1,TI2,TI3,TI4,TI5)),
+                ct_Model, dataform = "wide", retryattempts = 30)
+
+ctrl <- semtree.control(method = "score", min.bucket = 500, max.depth = 4)
+
+tree <- semtree::semtree(ct_Fit, st_data, control = ctrl,
+                         predictors = predictors)
+
+summary(tree)
+print(tree)
+plot(tree)
+```
+
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
