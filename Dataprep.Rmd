@@ -493,6 +493,12 @@ df4 <- df3 %>%
 ```
 
 ```{r}
+# Standardize all variables
+#df_z <- df4 %>% 
+# mutate_if(names(.) != "male", scale)
+```
+
+```{r}
 df4_long <- pivot_longer(df4, cols = -c(1:4), 
              names_to = c('.value', 'wave'), 
              names_pattern = '(.*)(\\d+)')
