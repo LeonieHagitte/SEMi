@@ -6,8 +6,6 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
 library(haven)
 library(tidyverse)
 library(tidyr)
@@ -26,117 +24,50 @@ library(usethis)
 library(gitcreds)
 library(gh)
 library(repro)
+
 ```
 
-# Read and Prepare Data
 ```{r}
-# read
-demo <- read_delim("cf_all.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
-    trim_ws = TRUE)
-casp <- read_delim("casp.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
-    trim_ws = TRUE)
+#measurement-models CTT
+casp_g.tau.kon.mod <- 'control  =~ q2_a + q2_b + q2_c
+                       autonomy  =~ q2_d + q2_e + q2_f
+                       pleasure  =~ q2_g + q2_h + q2_i
+                       self_real  =~ q2_j + q2_k + q2_l
+                     '
+casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, casp,
+                        meanstructure = TRUE,estimator="MLR")
+summary(casp_g.tau.kon.fit,fit.measures=TRUE,standardized=TRUE)
 
+# Loadings set to be equal
+casp_g.ess.tau.q.mod <- 'control  =~ q2_a + 1*q2_b + 1*q2_c
+                         autonomy  =~ q2_d + 1*q2_e + 1*q2_f
+                         pleasure  =~ q2_g + 1*q2_h + 1*q2_i
+                         self_real  =~ q2_j + 1*q2_k + 1*q2_l
+                        '
+casp_g.ess.tau.q.fit<- cfa(casp_g.ess.tau.q.mod, casp,
+                           meanstructure = TRUE,estimator="MLR")
+summary(casp_g.ess.tau.q.fit,fit.measures=TRUE,standardized=TRUE)
 
-View(demo7)
-# prepare Data: 
-casp <- casp %>% 
-  rename(
-    # name CASP-12 Items as variables according to factor structure.
-    "cC1_1" = "q2_a_1",
-    "cC2_1" = "q2_b_1",
-    "cC3_1" = "q2_c_1",
-    "cA1_1" = "q2_d_1",
-    "cA2_1" = "q2_e_1",
-    "cA3_1" = "q2_f_1",
-    "cP1_1" = "q2_g_1",
-    "cP2_1" = "q2_h_1",
-    "cP3_1" = "q2_i_1",
-    "cS1_1" = "q2_j_1",
-    "cS2_1" = "q2_k_1",
-    "cS3_1" = "q2_l_1",
-    #
-    "cC1_2" = "ac014__2",
-    "cC2_2" = "ac015__2",
-    "cC3_2" = "ac016__2",
-    "cA1_2" = "ac017__2",
-    "cA2_2" = "ac018__2",
-    "cA3_2" = "ac019__2",
-    "cP1_2" = "ac020__2",
-    "cP2_2" = "ac021__2",
-    "cP3_2" = "ac022__2",
-    "cS1_2" = "ac023__2",
-    "cS2_2" = "ac024__2",
-    "cS3_2" = "ac025__2",
-    #
-    "cC1_4" = "ac014__4",
-    "cC2_4" = "ac015__4",
-    "cC3_4" = "ac016__4",
-    "cA1_4" = "ac017__4",
-    "cA2_4" = "ac018__4",
-    "cA3_4" = "ac019__4",
-    "cP1_4" = "ac020__4",
-    "cP2_4" = "ac021__4",
-    "cP3_4" = "ac022__4",
-    "cS1_4" = "ac023__4",
-    "cS2_4" = "ac024__4",
-    "cS3_4" = "ac025__4",
-    #
-    "cC1_5" = "ac014__5",
-    "cC2_5" = "ac015__5",
-    "cC3_5" = "ac016__5",
-    "cA1_5" = "ac017__5",
-    "cA2_5" = "ac018__5",
-    "cA3_5" = "ac019__5",
-    "cP1_5" = "ac020__5",
-    "cP2_5" = "ac021__5",
-    "cP3_5" = "ac022__5",
-    "cS1_5" = "ac023__5",
-    "cS2_5" = "ac024__5",
-    "cS3_5" = "ac025__5",
-    #
-    "cC1_6" = "ac014__6",
-    "cC2_6" = "ac015__6",
-    "cC3_6" = "ac016__6",
-    "cA1_6" = "ac017__6",
-    "cA2_6" = "ac018__6",
-    "cA3_6" = "ac019__6",
-    "cP1_6" = "ac020__6",
-    "cP2_6" = "ac021__6",
-    "cP3_6" = "ac022__6",
-    "cS1_6" = "ac023__6",
-    "cS2_6" = "ac024__6",
-    "cS3_6" = "ac025__6",
-    #
-    "cC1_7" = "ac014__7",
-    "cC2_7" = "ac015__7",
-    "cC3_7" = "ac016__7",
-    "cA1_7" = "ac017__7",
-    "cA2_7" = "ac018__7",
-    "cA3_7" = "ac019__7",
-    "cP1_7" = "ac020__7",
-    "cP2_7" = "ac021__7",
-    "cP3_7" = "ac022__7",
-    "cS1_7" = "ac023__7",
-    "cS2_7" = "ac024__7",
-    "cS3_7" = "ac025__7",
-    #
-    "cC1_8" = "ac014__8",
-    "cC2_8" = "ac015__8",
-    "cC3_8" = "ac016__8",
-    "cA1_8" = "ac017__8",
-    "cA2_8" = "ac018__8",
-    "cA3_8" = "ac019__8",
-    "cP1_8" = "ac020__8",
-    "cP2_8" = "ac021__8",
-    "cP3_8" = "ac022__8",
-    "cS1_8" = "ac023__8",
-    "cS2_8" = "ac024__8",
-    "cS3_8" = "ac025__8"
-  )
+lavTestLRT(casp_g.tau.kon.fit, casp_g.ess.tau.q.fit)
 
-View(casp)
+```
+The respective model fits and the LRT indicate, that a tau congeneric model 
+seems to be apropriate.Therefor I continue using that respective model for the 
+following analysis.
+
+# Secondorder CFA - the model
+# latent variable definitions
+```{r}
+casp_g.tau.kon.mod <- 'control  =~ q2_a + q2_b + q2_c
+                       autonomy  =~ q2_d + q2_e + q2_f
+                       pleasure  =~ q2_g + q2_h + q2_i
+                       self_real  =~ q2_j + q2_k + q2_l
+                     '
+#CFA
+casp_cfa_mod <- cfa(casp_g.tau.kon.mod, casp, estimator="MLR") 
+summary(casp_cfa_mod,fit.measures=TRUE,standardized=TRUE)
+mod_i_m2a <- modificationIndices(casp_cfa_mod, sort=TRUE, minimum.value = 3)
+view(mod_i_m2a)
 ```
 
 

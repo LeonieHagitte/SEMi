@@ -257,18 +257,261 @@ casp_long <- pivot_longer(casp_all, cols = -c(1:3),
              names_to = c('.value', 'wave'), 
              names_pattern = '(.*)(\\d+)')
 
+#renaming variables
 
+# Read and Prepare Data
+```
 
+```{r}
+# read
+demo <- read_delim("cf_all.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+casp <- read_delim("casp.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+
+```
+
+```{r}
+casp <- casp %>% 
+  rename(
+    # name CASP-12 Items as variables according to factor structure.
+    "cC1_1" = "q2_a_1",
+    "cC2_1" = "q2_b_1",
+    "cC3_1" = "q2_c_1",
+    "cA1_1" = "q2_d_1",
+    "cA2_1" = "q2_e_1",
+    "cA3_1" = "q2_f_1",
+    "cP1_1" = "q2_g_1",
+    "cP2_1" = "q2_h_1",
+    "cP3_1" = "q2_i_1",
+    "cS1_1" = "q2_j_1",
+    "cS2_1" = "q2_k_1",
+    "cS3_1" = "q2_l_1",
+    #
+    "cC1_2" = "ac014__2",
+    "cC2_2" = "ac015__2",
+    "cC3_2" = "ac016__2",
+    "cA1_2" = "ac017__2",
+    "cA2_2" = "ac018__2",
+    "cA3_2" = "ac019__2",
+    "cP1_2" = "ac020__2",
+    "cP2_2" = "ac021__2",
+    "cP3_2" = "ac022__2",
+    "cS1_2" = "ac023__2",
+    "cS2_2" = "ac024__2",
+    "cS3_2" = "ac025__2",
+    #
+    "cC1_4" = "ac014__4",
+    "cC2_4" = "ac015__4",
+    "cC3_4" = "ac016__4",
+    "cA1_4" = "ac017__4",
+    "cA2_4" = "ac018__4",
+    "cA3_4" = "ac019__4",
+    "cP1_4" = "ac020__4",
+    "cP2_4" = "ac021__4",
+    "cP3_4" = "ac022__4",
+    "cS1_4" = "ac023__4",
+    "cS2_4" = "ac024__4",
+    "cS3_4" = "ac025__4",
+    #
+    "cC1_5" = "ac014__5",
+    "cC2_5" = "ac015__5",
+    "cC3_5" = "ac016__5",
+    "cA1_5" = "ac017__5",
+    "cA2_5" = "ac018__5",
+    "cA3_5" = "ac019__5",
+    "cP1_5" = "ac020__5",
+    "cP2_5" = "ac021__5",
+    "cP3_5" = "ac022__5",
+    "cS1_5" = "ac023__5",
+    "cS2_5" = "ac024__5",
+    "cS3_5" = "ac025__5",
+    #
+    "cC1_6" = "ac014__6",
+    "cC2_6" = "ac015__6",
+    "cC3_6" = "ac016__6",
+    "cA1_6" = "ac017__6",
+    "cA2_6" = "ac018__6",
+    "cA3_6" = "ac019__6",
+    "cP1_6" = "ac020__6",
+    "cP2_6" = "ac021__6",
+    "cP3_6" = "ac022__6",
+    "cS1_6" = "ac023__6",
+    "cS2_6" = "ac024__6",
+    "cS3_6" = "ac025__6",
+    #
+    "cC1_7" = "ac014__7",
+    "cC2_7" = "ac015__7",
+    "cC3_7" = "ac016__7",
+    "cA1_7" = "ac017__7",
+    "cA2_7" = "ac018__7",
+    "cA3_7" = "ac019__7",
+    "cP1_7" = "ac020__7",
+    "cP2_7" = "ac021__7",
+    "cP3_7" = "ac022__7",
+    "cS1_7" = "ac023__7",
+    "cS2_7" = "ac024__7",
+    "cS3_7" = "ac025__7",
+    #
+    "cC1_8" = "ac014__8",
+    "cC2_8" = "ac015__8",
+    "cC3_8" = "ac016__8",
+    "cA1_8" = "ac017__8",
+    "cA2_8" = "ac018__8",
+    "cA3_8" = "ac019__8",
+    "cP1_8" = "ac020__8",
+    "cP2_8" = "ac021__8",
+    "cP3_8" = "ac022__8",
+    "cS1_8" = "ac023__8",
+    "cS2_8" = "ac024__8",
+    "cS3_8" = "ac025__8"
+  )
+
+View(casp)
+```
+
+```{r}
+casp <- casp %>% 
+        rename(
+        "yrbirth" = "dn003__1",
+        "gender"  = "dn042__1"
+               ) 
+
+```
+
+```{r}
+demo <- demo %>% 
+        rename(
+        "yrbirth" = "dn003__1",
+        "gender"  = "dn042__1" 
+              ) 
+
+```
+
+## merge demographic variables to items:
+```{r}
+df1 <- casp %>% 
+  full_join(
+    demo, by="mergeid"
+  ) 
+  #%>% 
+  #dplyr::select(yrbirth, matches("^cC|^cA|^cP|^cS"))
+
+# Storing the names of variables (items) as `manVars`:
+manVars <- colnames(df1[,-c(1:2)])
+
+# Storing the number of variables (items) as `nv`:
+nv <- length(manVars)
+```
+
+## Missing Values
+```{r missing}
+# Define Missing Codes. Refer to the SHARE release guide for more detail:
+missing_codes <- c(-1, -2, -3, -7, -9, -10, -11, -12, -14, -15, -16)
+
+df2 <- df1 %>%
+  mutate_all(~ifelse(. %in% missing_codes, NA, .))
+
+# Check number of subjects with NAs on all CASP-12:
+n_missings <- 
+  sum(apply(df2[manVars], 1, function(row) all(is.na(row))))
+
+df3 <- df2 %>% 
+  filter(rowSums(is.na(.[manVars])) < length(manVars)) %>% 
+# Remove missings on moderators gender and `age` (year of birth) and bfi items
+  filter(complete.cases(yrbirth.x))
+```
+
+## Recode Items
+```{r}
+df4 <- df3 %>% 
+  # Recode negative items of the Casp-12 questionnaire:
+  mutate(
+    cA1_1 = 5 - cA1_1,
+    cP1_1 = 5 - cP1_1,
+    cP2_1 = 5 - cP2_1,
+    cP3_1 = 5 - cP3_1,
+    cS1_1 = 5 - cS1_1,
+    cS2_1 = 5 - cS2_1,
+    cS3_1 = 5 - cS3_1,
+    #
+    cA1_2 = 5 - cA1_2,
+    cP1_2 = 5 - cP1_2,
+    cP2_2 = 5 - cP2_2,
+    cP3_2 = 5 - cP3_2,
+    cS1_2 = 5 - cS1_2,
+    cS2_2 = 5 - cS2_2,
+    cS3_2 = 5 - cS3_2,
+    #
+    cA1_4 = 5 - cA1_4,
+    cP1_4 = 5 - cP1_4,
+    cP2_4 = 5 - cP2_4,
+    cP3_4 = 5 - cP3_4,
+    cS1_4 = 5 - cS1_4,
+    cS2_4 = 5 - cS2_4,
+    cS3_4 = 5 - cS3_4,
+    #
+    cA1_5 = 5 - cA1_5,
+    cP1_5 = 5 - cP1_5,
+    cP2_5 = 5 - cP2_5,
+    cP3_5 = 5 - cP3_5,
+    cS1_5 = 5 - cS1_5,
+    cS2_5 = 5 - cS2_5,
+    cS3_5 = 5 - cS3_5,
+    #
+    cA1_6 = 5 - cA1_6,
+    cP1_6 = 5 - cP1_6,
+    cP2_6 = 5 - cP2_6,
+    cP3_6 = 5 - cP3_6,
+    cS1_6 = 5 - cS1_6,
+    cS2_6 = 5 - cS2_6,
+    cS3_6 = 5 - cS3_6,
+    #
+    cA1_7 = 5 - cA1_7,
+    cP1_7 = 5 - cP1_7,
+    cP2_7 = 5 - cP2_7,
+    cP3_7 = 5 - cP3_7,
+    cS1_7 = 5 - cS1_7,
+    cS2_7 = 5 - cS2_7,
+    cS3_7 = 5 - cS3_7,
+    #
+    cA1_8 = 5 - cA1_8,
+    cP1_8 = 5 - cP1_8,
+    cP2_8 = 5 - cP2_8,
+    cP3_8 = 5 - cP3_8,
+    cS1_8 = 5 - cS1_8,
+    cS2_8 = 5 - cS2_8,
+    cS3_8 = 5 - cS3_8,
+  # Recode gender variable to `male` with 1 indicating male and 0 female:
+    age = 2017 - yrbirth.x
+  ) %>%  
+  # Order variables:
+  dplyr::select(age, everything())
+
+```
+
+```{r}
+df4_long <- pivot_longer(df4, cols = -c(1:4), 
+             names_to = c('.value', 'wave'), 
+             names_pattern = '(.*)(\\d+)')
+
+```
+
+```{r}
 # Sanity check
 write.csv2(cf_all, "cf_all.csv")
 write.csv2(mh_all, "mh.csv")
 write.csv2(casp_all, "casp.csv")
 write.csv2(cfmh_all, "cfmh.csv")
+write.csv2(df4, "df4.csv")
 
 write.csv2(cf_long, "cf_long.csv")
 write.csv2(mh_long, "mh_long.csv")
 write.csv2(casp_long, "casp_long.csv")
 write.csv2(cfmh_long, "cfmh_long.csv")
+write.csv2(df4_long, "df4_long.csv")
 
 
 ```
