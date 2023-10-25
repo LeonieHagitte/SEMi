@@ -65,9 +65,6 @@ summary(casp_g.ess.tau.q.fit,fit.measures=TRUE,standardized=TRUE)
 lavTestLRT(casp_g.tau.kon.fit, casp_g.ess.tau.q.fit)
 
 ```
-The respective model fits and the LRT indicate, that a tau congeneric model 
-seems to be apropriate.Therefor I continue using that respective model for the 
-following analysis.
 
 # Secondorder CFA - the model
 # latent variable definitions
@@ -129,7 +126,7 @@ matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
                   byrow = TRUE,
                   name = "matL0")
 
-matC1 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # direct effects of age and country
+matC1 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # direct effects of age and gender
                   free = c(rep(c(TRUE, FALSE, FALSE, FALSE), 3),
                            rep(c(FALSE, TRUE, FALSE, FALSE), 3),
                            rep(c(FALSE, FALSE, TRUE, FALSE), 3),
@@ -156,7 +153,7 @@ matD1 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,
                   free = TRUE,
                   values = 0,
                   name = "matD1")
-# matrix for residual covariance of country
+# matrix for residual covariance of gender
 matD2 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
                   free = TRUE,
                   values = 0,
@@ -202,12 +199,12 @@ matG2 <- mxMatrix(type="Full", nrow=4, ncol=1,
 
 matV1 <- mxMatrix(type="Full", nrow=1, ncol=1, 
                   free=FALSE, 
-                  labels="data.age2004", 
+                  labels="data.age", 
                   name = "age")
 matV2 <- mxMatrix(type="Full", nrow=1, ncol=1, 
                   free=FALSE, 
-                  labels="data.country", 
-                  name = "country")
+                  labels="data.gender", 
+                  name = "gender")
 
 matIa <- mxMatrix(type="Diag", nrow=4, ncol=4, 
                   free=FALSE,
@@ -224,20 +221,20 @@ matIb <- mxMatrix(type="Full", nrow=4, ncol=4,
 
 ## Specify algebra for the dependent parameters
 ```{r}
-matT <- mxAlgebra(expression=matT0+matB1*country+matB2*age, 
+matT <- mxAlgebra(expression=matT0+matB1*gender+matB2*age, 
                   name="matT")
-matL <- mxAlgebra(expression=matL0+matC1*country+matC2*age, 
+matL <- mxAlgebra(expression=matL0+matC1*gender+matC2*age, 
                   name="matL")
-matE <- mxAlgebra(expression=matE0*exp(matD1*country+matD2*age), 
+matE <- mxAlgebra(expression=matE0*exp(matD1*gender+matD2*age), 
                   name="matE")
-matA <- mxAlgebra(expression=matA0+matG1*country+matG2*age, 
+matA <- mxAlgebra(expression=matA0+matG1*gender+matG2*age, 
                   name="matA")
 
 ## Specify algebra for covariance matrix of factors (transformed to ensure positive definite matrices)
-matVar <- mxAlgebra(expression=(matP0*exp(matH1*country+matH2*age)), 
+matVar <- mxAlgebra(expression=(matP0*exp(matH1*gender+matH2*age)), 
                     name="matVar")
-matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*country+matH2*age))-1)/
-                    (exp(2*(matP0+matH1*country+matH2*age))+1), 
+matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*gender+matH2*age))-1)/
+                    (exp(2*(matP0+matH1*gender+matH2*age))+1), 
                   name="matR")
 matCov <- mxAlgebra(expression=(matIa*sqrt(matVar))%*%matR%*%(matIa*sqrt(matVar)), 
                     name="matCov")
@@ -335,8 +332,6 @@ summary(fitScalar)
 ## Compare fit of unconstrained model with constrained model
 ```{r}
 miTest <- mxCompare(fitConfig, fitScalar)
-#miTest[2,c(7,8,9)] #values not adjusted yet
-#miTest$p[2] < 0.001
 ```
 
 ## Step 4: Select anchor indicators

@@ -497,7 +497,12 @@ df4 <- df4 %>%
         rename(
         "yrbirth" = "yrbirth.x",
         "gender"  = "gender.x" 
-              ) 
+              )
+
+df4 <- df4 %>% dplyr::select(-yrbirth.y, -gender.y)
+
+
+
 ```
 
 
