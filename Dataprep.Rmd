@@ -493,6 +493,15 @@ df4 <- df3 %>%
 ```
 
 ```{r}
+df4 <- df4 %>% 
+        rename(
+        "yrbirth" = "yrbirth.x",
+        "gender"  = "gender.x" 
+              ) 
+```
+
+
+```{r}
 # Standardize all variables
 #df_z <- df4 %>% 
 # mutate_if(names(.) != "male", scale)
