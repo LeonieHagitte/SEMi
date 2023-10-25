@@ -24,42 +24,22 @@ library(psych)
 
 ## Enreading Data & Descriptives
 ```{r}
-library(dplyr)
-ct_data <- read_excel("ctmodel_data.xlsx")
-ct_data <- as.data.frame(ct_data)
-ct_data <- na.omit(ct_data)
-st_data <- read_excel("semtree_data.xlsx")
-st_data <- as.data.frame(st_data)
-head(ct_data)
-head(st_data)
-general_data6 <- read_excel("gen6_data.xlsx")
-general_data6 <- as.data.frame(general_data6)
-general_data7 <- read_excel("gen7_data.xlsx")
-general_data8 <- read_excel("gen8_data.xlsx")
-describe(general_data6)
-describe(general_data7)
-describe(general_data8)
+library(readr)
+df4 <- read_delim("df4.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
+df4 <- as.data.frame(df4)
+# <- na.omit(df4)
+
+describe(df4)
 
 # Convert "single" and "gender" to factors
-general_data6$single <- factor(general_data6$single, levels = c(0, 1), labels = c("No", "Yes"))
-general_data6$gender <- factor(general_data6$gender, levels = c(1, 2), labels = c("Male", "Female"))
+#general_data6$single <- factor(general_data6$single, levels = c(0, 1), labels = c("No", "Yes"))
+#general_data6$gender <- factor(general_data6$gender, levels = c(1, 2), labels = c("Male", "Female"))
 
 # Perform descriptive analysis
-summary(general_data6)
+summary(df4)
 
-# Convert "single" and "gender" to factors
-general_data7$single <- factor(general_data7$single, levels = c(0, 1), labels = c("No", "Yes"))
-general_data7$gender <- factor(general_data7$gender, levels = c(1, 2), labels = c("Male", "Female"))
-
-# Perform descriptive analysis
-summary(general_data7)
-
-# Convert "single" and "gender" to factors
-general_data8$single <- factor(general_data8$single, levels = c(0, 1), labels = c("No", "Yes"))
-general_data8$gender <- factor(general_data8$gender, levels = c(1, 2), labels = c("Male", "Female"))
-
-# Perform descriptive analysis
-summary(general_data8)
 
 ```
 
