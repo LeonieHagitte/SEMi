@@ -94,9 +94,11 @@ corrplot(cor, method = "color")
 ```{r}
 # Saving data frame as mx object:
 mxdf1 <- mxData(observed = df4, type = "raw")
+manVars <- colnames(df4[,-c(2)])
+nv <- length(manVars)
 ```
 #################################
-# With Country and Age
+# With Gender and Age
 ```{r}
 ## Specify matrices for configural model
 matT0 <- mxMatrix(type="Full", nrow=1, ncol=12,#baseline intercepts
@@ -264,7 +266,7 @@ modConfig <- mxModel(model="Configural",
                      matA, matA0, matG1, matG2,  
                      matIa, matIb, matV1, matV2, 
                      matVar, matR, matCov, matM, matC, 
-                     expF, fitF, mxdata1)
+                     expF, fitF, mxdf1)
 
 
 fitConfig <- mxRun(modConfig)
@@ -324,7 +326,7 @@ modScalar <- mxModel(model="Scalar",
                      matA, matA0, matG1, matG2,  
                      matIa, matIb, matV1, matV2, 
                      matVar, matR, matCov, matM, matC, 
-                     expF, fitF, mxdata1)
+                     expF, fitF, mxdf1)
 fitScalar <- mxRun(modScalar)
 summary(fitScalar)
 ```
@@ -381,7 +383,7 @@ for (i in 1:12) {
                    matA, matA0, matG1, matG2,  
                    matIa, matIb, matV1, matV2, 
                    matVar, matR, matCov, matM, matC, 
-                   expF, fitF, mxdata1)
+                   expF, fitF, mxdf1)
   fitAbo[[i]] <- mxRun(modAbo)
 }
 ```
