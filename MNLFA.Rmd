@@ -31,7 +31,8 @@ library(readr)
 ## Enreading Data & Descriptives
 ```{r}
 df4 <- read_delim("df4.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+        mergeid = col_skip(), yrbirth = col_skip()), 
     trim_ws = TRUE)
 View(df4)
 
@@ -94,7 +95,7 @@ corrplot(cor, method = "color")
 ```{r}
 # Saving data frame as mx object:
 mxdf1 <- mxData(observed = df4, type = "raw")
-manVars <- colnames(df4[,-c(2)])
+manVars <- colnames(df4)
 nv <- length(manVars)
 ```
 #################################
@@ -267,8 +268,9 @@ modConfig <- mxModel(model="Configural",
                      matIa, matIb, matV1, matV2, 
                      matVar, matR, matCov, matM, matC, 
                      expF, fitF, mxdf1)
+```
 
-
+```{r}
 fitConfig <- mxRun(modConfig)
 summary(fitConfig) 
 ```
