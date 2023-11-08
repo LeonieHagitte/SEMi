@@ -31,7 +31,7 @@ loading_matrix <- matrix(
 
 df4 <- c()
 
-for (i in 1:1000) {
+for (i in 1:10000) {
   age <- sample(18:100, 1,replace=TRUE)
   age_std <- (age-18)/(100-18)
   gender <- sample(c(0,1), 1, replace=TRUE)
@@ -50,3 +50,25 @@ for (i in 1:1000) {
     df4 <- rbind(df4, new_row)
   }
 }
+
+df4$gender <- factor(df4$gender)
+
+#
+# run a score-based SEM tree
+#
+
+casp_g <- 'control  =~ cC1 + cC2 + cC3 
+                       autonomy  =~ cA1 + cA2 + cA3
+                       pleasure  =~ cP1 + cP2 + cP3
+                       self_real  =~ cS1 + cS2 + cS3
+                     '
+
+library(semtree)
+
+fit <- lavaan::cfa(casp_g, df4)
+tree <- semtree(model = fit, data=df4,
+                # we need OpenMx for focus parameters!
+                #constraints = semtree.constraints(focus.parameters=fp),
+                control = semtree.control(method="score"))
+
+plot(tree)
