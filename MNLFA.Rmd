@@ -31,7 +31,8 @@ library(readr)
 ## Enreading Data & Descriptives
 ```{r}
 df4 <- read_delim("df4.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip()), 
+    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+        mergeid = col_skip(), yrbirth = col_skip()), 
     trim_ws = TRUE)
 View(df4)
 
@@ -116,10 +117,10 @@ matB2 <- mxMatrix(type = "Full", nrow = 1, ncol = nv,
                   name = "matB2")
 
 matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
-                  free = c(rep(c(TRUE, FALSE,FALSE, FALSE), 3),
-                           rep(c(FALSE, TRUE,FALSE, FALSE), 3),
-                           rep(c(FALSE,FALSE,TRUE,FALSE), 3),
-                           rep(c(FALSE, FALSE, FALSE,TRUE), 3)
+                  free = c(rep(c(TRUE, FALSE, FALSE, FALSE), 3),
+                           rep(c(FALSE, TRUE, FALSE, FALSE), 3),
+                           rep(c(FALSE, FALSE, TRUE, FALSE), 3),
+                           rep(c(FALSE, FALSE, FALSE, TRUE), 3)
                            ),
                   values = c(rep(c(1, 0, 0, 0), 3),
                              rep(c(0, 1, 0, 0), 3),
@@ -267,8 +268,9 @@ modConfig <- mxModel(model="Configural",
                      matIa, matIb, matV1, matV2, 
                      matVar, matR, matCov, matM, matC, 
                      expF, fitF, mxdf1)
+```
 
-
+```{r}
 fitConfig <- mxRun(modConfig)
 summary(fitConfig) 
 ```
