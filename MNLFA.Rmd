@@ -95,7 +95,7 @@ corrplot(cor, method = "color")
 ```{r}
 # Saving data frame as mx object:
 mxdf1 <- mxData(observed = df4, type = "raw")
-manVars <- colnames(df4)
+manVars <- colnames(df4[,-c(1,2)])
 nv <- length(manVars)
 ```
 #################################
