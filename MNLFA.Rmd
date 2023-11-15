@@ -1,11 +1,11 @@
 ---
-title: "MNLFA"
+  title: "MNLFA"
 author: "Leonie H."
 date: "2023-08-30"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
+  
+  ```{r setup, include=FALSE}
 library(haven)
 library(tidyverse)
 library(tidyr)
@@ -31,15 +31,15 @@ library(readr)
 ## Enreading Data & Descriptives
 ```{r}
 df4 <- read_delim("df4.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
-        mergeid = col_skip(), yrbirth = col_skip()), 
-    trim_ws = TRUE)
+                  escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+                                                          mergeid = col_skip(), yrbirth = col_skip()), 
+                  trim_ws = TRUE)
 View(df4)
 
 df5 <- read_delim("df5.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
-        mergeid = col_skip(), yrbirth = col_skip()), 
-    trim_ws = TRUE)
+                  escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+                                                          mergeid = col_skip(), yrbirth = col_skip()), 
+                  trim_ws = TRUE)
 View(df5)
 
 # Convert "single" and "gender" to factors
@@ -57,7 +57,7 @@ casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3
                        self_real  =~ cS1 + cS2 + cS3
                      '
 casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, df5,
-                        meanstructure = TRUE,estimator="MLR")
+                         meanstructure = TRUE,estimator="MLR")
 summary(casp_g.tau.kon.fit,fit.measures=TRUE,standardized=TRUE)
 
 # Loadings set to be equal
@@ -129,7 +129,7 @@ matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
                            rep(c(FALSE, TRUE, FALSE, FALSE), 3),
                            rep(c(FALSE, FALSE, TRUE, FALSE), 3),
                            rep(c(FALSE, FALSE, FALSE, TRUE), 3)
-                           ),
+                  ),
                   values = c(rep(c(1, 0, 0, 0), 3),
                              rep(c(0, 1, 0, 0), 3),
                              rep(c(0, 0, 1, 0), 3),
@@ -399,14 +399,14 @@ for (i in 1:12) {
                     byrow=TRUE,
                     name="matC2")
   modAbo <- mxModel(model=paste0("All_but_", i), 
-                   matT, matT0, matB1, matB2,
-                   matL, matL0, matC1, matC2, 
-                   matE, matE0, matD1, matD2,
-                   matP, matP0, matH1, matH2,
-                   matA, matA0, matG1, matG2,  
-                   matIa, matIb, matV1, matV2, 
-                   matVar, matR, matCov, matM, matC, 
-                   expF, fitF, mxdf1)
+                    matT, matT0, matB1, matB2,
+                    matL, matL0, matC1, matC2, 
+                    matE, matE0, matD1, matD2,
+                    matP, matP0, matH1, matH2,
+                    matA, matA0, matG1, matG2,  
+                    matIa, matIb, matV1, matV2, 
+                    matVar, matR, matCov, matM, matC, 
+                    expF, fitF, mxdf1)
   fitAbo[[i]] <- mxRun(modAbo)
 }
 ```
@@ -415,9 +415,9 @@ for (i in 1:12) {
 ```{r}
 anchorTest <- mxCompare(fitAbo, fitScalar)
 anchorOut <- data.frame(Name=paste0("Indicator",1:12), 
-                    X2=anchorTest$diffLL[seq(2,24,2)],
-                    df=anchorTest$diffdf[seq(2,24,2)],
-                    p=anchorTest$p[seq(2,24,2)])
+                        X2=anchorTest$diffLL[seq(2,24,2)],
+                        df=anchorTest$diffdf[seq(2,24,2)],
+                        p=anchorTest$p[seq(2,24,2)])
 anchorOut
 ```
 
