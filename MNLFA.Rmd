@@ -36,12 +36,19 @@ df4 <- read_delim("df4.csv", delim = ";",
     trim_ws = TRUE)
 View(df4)
 
+df5 <- read_delim("df5.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+        mergeid = col_skip(), yrbirth = col_skip()), 
+    trim_ws = TRUE)
+View(df5)
+
 # Convert "single" and "gender" to factors
 #general_data6$single <- factor(general_data6$single, levels = c(0, 1), labels = c("No", "Yes"))
 #general_data6$gender <- factor(general_data6$gender, levels = c(1, 2), labels = c("Male", "Female"))
 
 ```
-################ variables not yet working ################
+
+
 ```{r}
 #measurement-models CTT
 casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3 
@@ -49,7 +56,7 @@ casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3
                        pleasure  =~ cP1 + cP2 + cP3
                        self_real  =~ cS1 + cS2 + cS3
                      '
-casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, df4,
+casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, df5,
                         meanstructure = TRUE,estimator="MLR")
 summary(casp_g.tau.kon.fit,fit.measures=TRUE,standardized=TRUE)
 
@@ -59,7 +66,7 @@ casp_g.ess.tau.q.mod <- 'control  =~ cC1 + 1*cC2 + 1*cC3
                        pleasure  =~ cP1 + 1*cP2 + 1*cP3
                        self_real  =~ cS1 + 1*cS2 + 1*cS3
                      '
-casp_g.ess.tau.q.fit<- cfa(casp_g.ess.tau.q.mod, df4,
+casp_g.ess.tau.q.fit<- cfa(casp_g.ess.tau.q.mod, df5,
                            meanstructure = TRUE,estimator="MLR")
 summary(casp_g.ess.tau.q.fit,fit.measures=TRUE,standardized=TRUE)
 
@@ -76,7 +83,7 @@ casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3
                        self_real  =~ cS1 + cS2 + cS3
                      '
 #CFA
-casp_cfa_mod <- cfa(casp_g.tau.kon.mod, df4, estimator="MLR") 
+casp_cfa_mod <- cfa(casp_g.tau.kon.mod, df5, estimator="MLR") 
 summary(casp_cfa_mod,fit.measures=TRUE,standardized=TRUE)
 mod_i_m2a <- modificationIndices(casp_cfa_mod, sort=TRUE, minimum.value = 3)
 view(mod_i_m2a)
@@ -85,18 +92,19 @@ view(mod_i_m2a)
 
 ## Descriptives
 ```{r}
-hist(df4$age)
+hist(df5$age)
 
-cor <- cor(df4, use= "pairwise.complete.obs")
+cor <- cor(df5, use= "pairwise.complete.obs")
 
 corrplot(cor, method = "color")
 ```
 
 ```{r}
 # Saving data frame as mx object:
-mxdf1 <- mxData(observed = df4, type = "raw")
+mxdf1 <- mxData(observed = df5, type = "raw")
 manVars <- colnames(df4[,-c(1,2)])
 nv <- length(manVars)
+
 ```
 #################################
 # With Gender and Age
@@ -272,6 +280,19 @@ modConfig <- mxModel(model="Configural",
 
 ```{r}
 fitConfig <- mxRun(modConfig)
+```
+
+
+```{r}
+print(dim(matL))
+print(dim(matP))
+print(dim(matE))
+# Add similar print statements for other matrices involved
+
+# Now check the dimensions in your problematic expression
+print(dim(matL %*% matP %*% t(matL) + matE))
+
+
 summary(fitConfig) 
 ```
 
