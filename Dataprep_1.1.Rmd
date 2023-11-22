@@ -1,0 +1,210 @@
+---
+title: "Dataprep_1.1"
+output: html_document
+date: "2023-11-22"
+---
+```{r setup}
+
+library(haven)
+library(tidyverse)
+library(tidyr)
+library(mokken)
+library(OpenMx)
+library(ggplot2)
+library(lavaan)
+library(semTools)
+library(semPlot)
+library(psych)
+library(GPArotation)
+library(corrplot)
+library(stats)
+library(dplyr)
+library(usethis)
+library(gitcreds)
+library(gh)
+library(repro)
+
+```
+
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+## Wave 1: enread data 
+sharew1_rel8_0_0_cv_r <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_cv_r.dta")
+sharew1_rel8_0_0_gv_health <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_gv_health.dta")
+sharew1_rel8_0_0_dropoff <- read_dta("sharew1_rel8-0-0_ALL_datasets_stata/sharew1_rel8-0-0_dropoff.dta")
+
+
+#####
+attach(sharew1_rel8_0_0_cv_r)
+cvr1_items <-data.frame(mergeid,country,age2004)
+
+attach(sharew1_rel8_0_0_dropoff)
+dr_casp_items<- data.frame(mergeid,q2_a,q2_b,q2_c,q2_d,q2_e,q2_f,q2_g,q2_h,
+q2_i,q2_j,q2_k,q2_l) ## select items
+
+
+cvr_all <- full_join(cvr1_items, dr_casp_items,by = "mergeid")
+ 
+#show(cvr_all) #commented out for knitting 
+dim(cvr_all)  
+names(cvr_all)
+detach()
+```
+In the following chunk of code I selected the respective countries of the data.
+I then also got rid of the NAs in the data. And I made sure, that the variables 
+are numerics in the data frame.
+# country als dichotom
+```{r}
+cvr_notall <- subset(cvr_all, country %in% c(12, 13), 
+                     select = c(country,age2004, q2_a, q2_b, q2_c, q2_d, q2_e, 
+                                q2_f, q2_g, q2_h, q2_i, q2_j, q2_k, q2_l))
+cvr_notall$country <- as.numeric(cvr_notall$country)
+
+cvr_notall$country[cvr_notall$country == 12] <- 1
+cvr_notall$country[cvr_notall$country == 13] <- 2
+
+cvr_notall[cvr_notall %in% c(-1, -2, -3, -4, -5, -7, -9, -10, -11, -12, -13, -14, -15, -16)] <- NA
+cvr_notall <- na.omit(cvr_notall)
+
+```
+
+# Descriptives of the data used
+```{r}
+describe(cvr_notall)
+
+cor_matrix <- cor(cvr_notall)
+# Display the correlation matrix
+print(cor_matrix)
+
+# Calculate item variances
+item_variances <- apply(cvr_notall[, c("q2_a", "q2_b", "q2_c", "q2_d", "q2_e", "q2_f", "q2_g", "q2_h", "q2_i", "q2_j", "q2_k", "q2_l")], 2, var)
+
+# Print the item variances
+print(item_variances)
+```
+
+# Z-scale the variables in the dataframe
+## Troubleshoot attempt
+```{r}
+cvr_notall_scaled <- as.data.frame(scale(cvr_notall))
+
+```
+
+```{r}
+cvr_long <- pivot_longer(cvr_notall, cols = -c(1:3), 
+                        names_to = c('.value', 'wave'), 
+                        names_pattern = '(.*)(\\d+)')
+
+```
+
+
+```{r}
+## Recode negatively worded items
+names(cvr_notall)
+
+cvr_notall$q2_d <- 5 - cvr_notall$q2_d
+cvr_notall$q2_g <- 5 - cvr_notall$q2_g
+cvr_notall$q2_h <- 5 - cvr_notall$q2_h
+cvr_notall$q2_i <- 5 - cvr_notall$q2_i
+cvr_notall$q2_j <- 5 - cvr_notall$q2_j
+cvr_notall$q2_k <- 5 - cvr_notall$q2_k
+cvr_notall$q2_l <- 5 - cvr_notall$q2_l
+
+## Standardize age
+cvr_notall$age2004 <- (cvr_notall$age2004 - mean(cvr_notall$age2004))/sd(cvr_notall$age2004)
+
+```
+
+```{r}
+mxdata1 <- mxData(observed=cvr_notall,type="raw")
+manVars <- colnames(cvr_notall[,-c(1,2)])
+nv <- length(manVars)
+
+```
+
+# CFA
+```{r}
+#measurement-models CTT
+casp_g.tau.kon.mod <- 'control  =~ q2_a + q2_b + q2_c
+                       autonomy  =~ q2_d + q2_e + q2_f
+                       pleasure  =~ q2_g + q2_h + q2_i
+                       self_real  =~ q2_j + q2_k + q2_l
+                     '
+casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, dr_casp_items,
+                        meanstructure = TRUE,estimator="MLR")
+summary(casp_g.tau.kon.fit,fit.measures=TRUE,standardized=TRUE)
+
+# Loadings set to be equal
+casp_g.ess.tau.q.mod <- 'control  =~ q2_a + 1*q2_b + 1*q2_c
+                         autonomy  =~ q2_d + 1*q2_e + 1*q2_f
+                         pleasure  =~ q2_g + 1*q2_h + 1*q2_i
+                         self_real  =~ q2_j + 1*q2_k + 1*q2_l
+                        '
+casp_g.ess.tau.q.fit<- cfa(casp_g.ess.tau.q.mod, dr_casp_items,
+                           meanstructure = TRUE,estimator="MLR")
+summary(casp_g.ess.tau.q.fit,fit.measures=TRUE,standardized=TRUE)
+
+lavTestLRT(casp_g.tau.kon.fit, casp_g.ess.tau.q.fit)
+
+```
+
+# Secondorder CFA - the model
+# latent variable definitions
+```{r}
+casp_g.tau.kon.mod <- 'control  =~ q2_a + q2_b + q2_c
+                       autonomy  =~ q2_d + q2_e + q2_f
+                       pleasure  =~ q2_g + q2_h + q2_i
+                       self_real  =~ q2_j + q2_k + q2_l
+                     '
+#CFA
+casp_cfa_mod <- cfa(casp_g.tau.kon.mod, dr_casp_items, estimator="MLR") 
+summary(casp_cfa_mod,fit.measures=TRUE,standardized=TRUE)
+mod_i_m2a <- modificationIndices(casp_cfa_mod, sort=TRUE, minimum.value = 3)
+view(mod_i_m2a)
+```
+
+# residualcovariancematrix
+```{r}
+resid(casp_cfa_mod)
+```
+
+The SemPaths I just did for cosmetic reasons. I always like to be able to view 
+the model. And that way I could take a look at it, consisely, without any 
+tables.
+
+# SEM model
+```{r}
+sem_casp_cfa_mod <- sem(casp_g.tau.kon.mod, data = dr_casp_items, estimator= "mlr")
+summary(sem_casp_cfa_mod, standardized=TRUE)
+fitmeasures(sem_casp_cfa_mod, c("cfi","rmsea","tli","srmr"))
+semPaths(sem_casp_cfa_mod, what="paths",whatLabels= "stand", rotation=1)
+
+```
+
+### MI
+# configural invariance
+```{r}
+fit1_config <- cfa(casp_g.tau.kon.mod, data = cvr_notall, estimator= "MLR",
+                       group = "country")
+summary(fit1_config, fit.measures = TRUE, standardized = TRUE)
+```
+
+# Metric model
+```{r}
+fit2_metric <- cfa(casp_g.tau.kon.mod, data = cvr_notall, estimator = "MLR",
+                       group = "country", group.equal = "loadings")
+summary(fit2_metric, fit.measures = TRUE, standardized = TRUE)
+
+summary(compareFit(fit1_config, fit2_metric))
+```
+
+# Scalar model
+```{r}
+fit3_scalar <- cfa(casp_g.tau.kon.mod, data = cvr_notall, estimator = "MLR",
+                       group = "country", group.equal = c("loadings", "intercepts"))
+summary(fit3_scalar, fit.measures = TRUE, standardized = TRUE)
+
+summary(compareFit(fit2_metric, fit3_scalar))
+```
