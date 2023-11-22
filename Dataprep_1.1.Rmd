@@ -121,14 +121,9 @@ df4_1 <- cvr_notall %>%
         rename(
         "age" = "age2004"
                ) 
+write.csv2(df4, "df4_1.csv")
 ```
 
-```{r}
-mxdata1 <- mxData(observed=df4_1,type="raw")
-manVars <- colnames(df4_1[,-c(1,2)])
-nv <- length(manVars)
-
-```
 
 # CFA
 ```{r}

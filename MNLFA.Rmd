@@ -30,26 +30,41 @@ library(readr)
 
 ## Enreading Data & Descriptives
 ```{r}
-df4 <- read_delim("df4.csv", delim = ";", 
+df5 <- read_delim("df5.csv", delim = ";", 
     escape_double = FALSE, col_types = cols(...1 = col_skip(), 
         mergeid = col_skip(), yrbirth = col_skip()), 
     trim_ws = TRUE)
+
+df5$age <- as.numeric(df5$age)
+df5$gender <- as.numeric(df5$gender)
+df5$cC1 <- as.numeric(df5$cC1)
+df5$cC2 <- as.numeric(df5$cC2)
+df5$cC3 <- as.numeric(df5$cC3)
+df5$cA1 <- as.numeric(df5$cA1)
+df5$cA2 <- as.numeric(df5$cA2)
+df5$cA3 <- as.numeric(df5$cA3)
+df5$cP1 <- as.numeric(df5$cP1)
+df5$cP2 <- as.numeric(df5$cP2)
+df5$cP3 <- as.numeric(df5$cP3)
+df5$cS1 <- as.numeric(df5$cS1)
+df5$cS2 <- as.numeric(df5$cS2)
+df5$cS3 <- as.numeric(df5$cS3)
 
 ```
 
 ## Descriptives
 ```{r}
-hist(df4$age)
+hist(df5$age)
 
-cor <- cor(df4, use= "pairwise.complete.obs")
+cor <- cor(df5, use= "pairwise.complete.obs")
 
 corrplot(cor, method = "color")
 ```
 
 ```{r}
 # Saving data frame as mx object:
-mxdf1 <- mxData(observed = df4, type = "raw")
-manVars <- colnames(df4[,-c(1,2)])
+mxdf1 <- mxData(observed = df5, type = "raw")
+manVars <- colnames(df5[,-c(1,2)])
 nv <- length(manVars)
 
 ```
