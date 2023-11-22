@@ -501,10 +501,83 @@ df4 <- df4 %>%
 
 df4 <- df4 %>% dplyr::select(-yrbirth.y, -gender.y)
 
+```
+##condensing the variables over the time points
+```{r}
+#names(df4)
+
+df4_all <- df4
+df5 <- df4[, 1:88]
+
+#cC1 <- rowMeans("cC1_1","cC1_2","cC1_3","cC1_4","cC1_5","cC1_6","cC1_7","cC1_8")
+#cC2 <- rowMeans("cC2_1","cC2_2","cC2_3","cC2_4","cC2_5","cC2_6","cC2_7","cC2_8")
+#cC3 <- rowMeans("cC3_1","cC3_2","cC3_3","cC3_4","cC3_5","cC3_6","cC3_7","cC3_8")
+#cA1 <- rowMeans("cA1_1","cA1_2","cA1_3","cA1_4","cA1_5","cA1_6","cA1_7","cA1_8")
+#cA2 <- rowMeans("cA2_1","cA2_2","cA2_3","cA2_4","cA2_5","cA2_6","cA2_7","cA2_8")
+#cA3 <- rowMeans("cA3_1","cA3_2","cA3_3","cA3_4","cA3_5","cA3_6","cA3_7","cA3_8")
+#cP1 <- rowMeans("cP1_1","cP1_2","cP1_3","cP1_4","cP1_5","cP1_6","cP1_7","cP1_8")
+#cP2 <- rowMeans("cP2_1","cP2_2","cP2_3","cP2_4","cP2_5","cP2_6","cP2_7","cP2_8")
+#cP3 <- rowMeans("cP3_1","cP3_2","cP3_3","cP3_4","cP3_5","cP3_6","cP3_7","cP3_8")
+#cS1 <- rowMeans("cS1_1","cS1_2","cS1_3","cS1_4","cS1_5","cS1_6","cS1_7","cS1_8")
+#cS2 <- rowMeans("cS2_1","cS2_2","cS2_3","cS2_4","cS2_5","cS2_6","cS2_7","cS2_8")
+#cS3 <- rowMeans("cS3_1","cS3_2","cS3_3","cS3_4","cS3_5","cS3_6","cS3_7","cS3_8")
+
+
+# Create dataframes for each set of variables
+cC1 = data.frame(df4[,"cC1_1"], df4[,"cC1_2"], df4[,"cC1_4"], df4[,"cC1_5"], df4[,"cC1_6"], df4[,"cC1_7"], df4[,"cC1_8"])
+cC2 = data.frame(df4[,"cC2_1"], df4[,"cC2_2"], df4[,"cC2_4"], df4[,"cC2_5"], df4[,"cC2_6"], df4[,"cC2_7"], df4[,"cC2_8"])
+cC3 = data.frame(df4[,"cC3_1"], df4[,"cC3_2"], df4[,"cC3_4"], df4[,"cC3_5"], df4[,"cC3_6"], df4[,"cC3_7"], df4[,"cC3_8"])
+cA1 = data.frame(df4[,"cA1_1"], df4[,"cA1_2"], df4[,"cA1_4"], df4[,"cA1_5"], df4[,"cA1_6"], df4[,"cA1_7"], df4[,"cA1_8"])
+cA2 = data.frame(df4[,"cA2_1"], df4[,"cA2_2"], df4[,"cA2_4"], df4[,"cA2_5"], df4[,"cA2_6"], df4[,"cA2_7"], df4[,"cA2_8"])
+cA3 = data.frame(df4[,"cA3_1"], df4[,"cA3_2"], df4[,"cA3_4"], df4[,"cA3_5"], df4[,"cA3_6"], df4[,"cA3_7"], df4[,"cA3_8"])
+cP1 = data.frame(df4[,"cP1_1"], df4[,"cP1_2"], df4[,"cP1_4"], df4[,"cP1_5"], df4[,"cP1_6"], df4[,"cP1_7"], df4[,"cP1_8"])
+cP2 = data.frame(df4[,"cP2_1"], df4[,"cP2_2"], df4[,"cP2_4"], df4[,"cP2_5"], df4[,"cP2_6"], df4[,"cP2_7"], df4[,"cP2_8"])
+cP3 = data.frame(df4[,"cP3_1"], df4[,"cP3_2"], df4[,"cP3_4"], df4[,"cP3_5"], df4[,"cP3_6"], df4[,"cP3_7"], df4[,"cP3_8"])
+cS1 = data.frame(df4[,"cS1_1"], df4[,"cS1_2"], df4[,"cS1_4"], df4[,"cS1_5"], df4[,"cS1_6"], df4[,"cS1_7"], df4[,"cS1_8"])
+cS2 = data.frame(df4[,"cS2_1"], df4[,"cS2_2"], df4[,"cS2_4"], df4[,"cS2_5"], df4[,"cS2_6"], df4[,"cS2_7"], df4[,"cS2_8"])
+cS3 = data.frame(df4[,"cS3_1"], df4[,"cS3_2"], df4[,"cS3_4"], df4[,"cS3_5"], df4[,"cS3_6"], df4[,"cS3_7"], df4[,"cS3_8"])
+
+# Calculate row means and add them to df5
+df5$cC1 <- rowMeans(cC1, na.rm = TRUE)
+df5$cC2 <- rowMeans(cC2, na.rm = TRUE)
+df5$cC3 <- rowMeans(cC3, na.rm = TRUE)
+df5$cA1 <- rowMeans(cA1, na.rm = TRUE)
+df5$cA2 <- rowMeans(cA2, na.rm = TRUE)
+df5$cA3 <- rowMeans(cA3, na.rm = TRUE)
+df5$cP1 <- rowMeans(cP1, na.rm = TRUE)
+df5$cP2 <- rowMeans(cP2, na.rm = TRUE)
+df5$cP3 <- rowMeans(cP3, na.rm = TRUE)
+df5$cS1 <- rowMeans(cS1, na.rm = TRUE)
+df5$cS2 <- rowMeans(cS2, na.rm = TRUE)
+df5$cS3 <- rowMeans(cS3, na.rm = TRUE)
+
+#
+# Assuming df5 is your dataframe
+columns_to_exclude <- c(
+  "cC1_1", "cC2_1", "cC3_1", "cA1_1", "cA2_1", "cA3_1",
+  "cP1_1", "cP2_1", "cP3_1", "cS1_1", "cS2_1", "cS3_1",
+  "cC1_2", "cC2_2", "cC3_2", "cA1_2", "cA2_2", "cA3_2",
+  "cP1_2", "cP2_2", "cP3_2", "cS1_2", "cS2_2", "cS3_2",
+  "cC1_4", "cC2_4", "cC3_4", "cA1_4", "cA2_4", "cA3_4",
+  "cP1_4", "cP2_4", "cP3_4", "cS1_4", "cS2_4", "cS3_4",
+  "cC1_5", "cC2_5", "cC3_5", "cA1_5", "cA2_5", "cA3_5",
+  "cP1_5", "cP2_5", "cP3_5", "cS1_5", "cS2_5", "cS3_5",
+  "cC1_6", "cC2_6", "cC3_6", "cA1_6", "cA2_6", "cA3_6",
+  "cP1_6", "cP2_6", "cP3_6", "cS1_6", "cS2_6", "cS3_6",
+  "cC1_7", "cC2_7", "cC3_7", "cA1_7", "cA2_7", "cA3_7",
+  "cP1_7", "cP2_7", "cP3_7", "cS1_7", "cS2_7", "cS3_7",
+  "cC1_8", "cC2_8", "cC3_8", "cA1_8", "cA2_8", "cA3_8",
+  "cP1_8", "cP2_8", "cP3_8", "cS1_8", "cS2_8", "cS3_8"
+)
+
+# Exclude columns
+df5 <- df5[, -which(names(df5) %in% columns_to_exclude)]
+
+# Print or use df5 as needed
+print(df5)
 
 
 ```
-
 
 ```{r}
 # Standardize all variables
@@ -517,6 +590,10 @@ df4_long <- pivot_longer(df4, cols = -c(1:4),
              names_to = c('.value', 'wave'), 
              names_pattern = '(.*)(\\d+)')
 
+df5_long <- pivot_longer(df5, cols = -c(1:4), 
+             names_to = c('.value', 'wave'), 
+             names_pattern = '(.*)(\\d+)')
+
 ```
 
 ```{r}
@@ -526,12 +603,13 @@ write.csv2(mh_all, "mh.csv")
 write.csv2(casp_all, "casp.csv")
 write.csv2(cfmh_all, "cfmh.csv")
 write.csv2(df4, "df4.csv")
+write.csv2(df5, "df5.csv")
 
 write.csv2(cf_long, "cf_long.csv")
 write.csv2(mh_long, "mh_long.csv")
 write.csv2(casp_long, "casp_long.csv")
 write.csv2(cfmh_long, "cfmh_long.csv")
 write.csv2(df4_long, "df4_long.csv")
-
+write.csv2(df5_long, "df5_long.csv")
 
 ```

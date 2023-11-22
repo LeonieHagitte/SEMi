@@ -1,5 +1,5 @@
 ---
-title: "MNLFA"
+  title: "MNLFA"
 author: "Leonie H."
 date: "2023-08-30"
 output: html_document
@@ -30,76 +30,27 @@ library(readr)
 
 ## Enreading Data & Descriptives
 ```{r}
-df4 <- read_delim("df4.csv", delim = ";", 
-    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
-        mergeid = col_skip(), yrbirth = col_skip()), 
-    trim_ws = TRUE)
-View(df4)
-
-# Convert "single" and "gender" to factors
-#general_data6$single <- factor(general_data6$single, levels = c(0, 1), labels = c("No", "Yes"))
-#general_data6$gender <- factor(general_data6$gender, levels = c(1, 2), labels = c("Male", "Female"))
 
 ```
-################ variables not yet working ################
-```{r}
-#measurement-models CTT
-casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3 
-                       autonomy  =~ cA1 + cA2 + cA3
-                       pleasure  =~ cP1 + cP2 + cP3
-                       self_real  =~ cS1 + cS2 + cS3
-                     '
-casp_g.tau.kon.fit<- cfa(casp_g.tau.kon.mod, df4,
-                        meanstructure = TRUE,estimator="MLR")
-summary(casp_g.tau.kon.fit,fit.measures=TRUE,standardized=TRUE)
-
-# Loadings set to be equal
-casp_g.ess.tau.q.mod <- 'control  =~ cC1 + 1*cC2 + 1*cC3
-                       autonomy  =~ cA1 + 1*cA2 + 1*cA3
-                       pleasure  =~ cP1 + 1*cP2 + 1*cP3
-                       self_real  =~ cS1 + 1*cS2 + 1*cS3
-                     '
-casp_g.ess.tau.q.fit<- cfa(casp_g.ess.tau.q.mod, df4,
-                           meanstructure = TRUE,estimator="MLR")
-summary(casp_g.ess.tau.q.fit,fit.measures=TRUE,standardized=TRUE)
-
-lavTestLRT(casp_g.tau.kon.fit, casp_g.ess.tau.q.fit)
-
-```
-
-# Secondorder CFA - the model
-# latent variable definitions
-```{r}
-casp_g.tau.kon.mod <- 'control  =~ cC1 + cC2 + cC3 
-                       autonomy  =~ cA1 + cA2 + cA3
-                       pleasure  =~ cP1 + cP2 + cP3
-                       self_real  =~ cS1 + cS2 + cS3
-                     '
-#CFA
-casp_cfa_mod <- cfa(casp_g.tau.kon.mod, df4, estimator="MLR") 
-summary(casp_cfa_mod,fit.measures=TRUE,standardized=TRUE)
-mod_i_m2a <- modificationIndices(casp_cfa_mod, sort=TRUE, minimum.value = 3)
-view(mod_i_m2a)
-```
-
 
 ## Descriptives
 ```{r}
-hist(df4$age)
+hist(cvr_notall$age)
 
-cor <- cor(df4, use= "pairwise.complete.obs")
+cor <- cor(cvr_notall, use= "pairwise.complete.obs")
 
 corrplot(cor, method = "color")
 ```
 
 ```{r}
 # Saving data frame as mx object:
-mxdf1 <- mxData(observed = df4, type = "raw")
-manVars <- paste("c",paste(rep(c("C","P","S","A"),each=3),1:3,sep=""),sep="")
+mxdf1 <- mxData(observed = cvr_notall, type = "raw")
+manVars <- colnames(cvr_notall[,-c(1,2)])
 nv <- length(manVars)
+
 ```
 #################################
-# With Gender and Age
+# With Country and Age
 ```{r}
 ## Specify matrices for configural model
 matT0 <- mxMatrix(type="Full", nrow=1, ncol=12,#baseline intercepts
@@ -121,7 +72,7 @@ matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
                            rep(c(FALSE, TRUE, FALSE, FALSE), 3),
                            rep(c(FALSE, FALSE, TRUE, FALSE), 3),
                            rep(c(FALSE, FALSE, FALSE, TRUE), 3)
-                           ),
+                  ),
                   values = c(rep(c(1, 0, 0, 0), 3),
                              rep(c(0, 1, 0, 0), 3),
                              rep(c(0, 0, 1, 0), 3),
@@ -156,7 +107,7 @@ matD1 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,
                   free = TRUE,
                   values = 0,
                   name = "matD1")
-# matrix for residual covariance of gender
+# matrix for residual covariance of country
 matD2 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
                   free = TRUE,
                   values = 0,
@@ -202,11 +153,11 @@ matG2 <- mxMatrix(type="Full", nrow=4, ncol=1,
 
 matV1 <- mxMatrix(type="Full", nrow=1, ncol=1, 
                   free=FALSE, 
-                  labels="data.age", 
+                  labels="data.age2004", 
                   name = "age")
 matV2 <- mxMatrix(type="Full", nrow=1, ncol=1, 
                   free=FALSE, 
-                  labels="data.gender", 
+                  labels="data.country", 
                   name = "gender")
 
 matIa <- mxMatrix(type="Diag", nrow=4, ncol=4, 
@@ -378,14 +329,14 @@ for (i in 1:12) {
                     byrow=TRUE,
                     name="matC2")
   modAbo <- mxModel(model=paste0("All_but_", i), 
-                   matT, matT0, matB1, matB2,
-                   matL, matL0, matC1, matC2, 
-                   matE, matE0, matD1, matD2,
-                   matP, matP0, matH1, matH2,
-                   matA, matA0, matG1, matG2,  
-                   matIa, matIb, matV1, matV2, 
-                   matVar, matR, matCov, matM, matC, 
-                   expF, fitF, mxdf1)
+                    matT, matT0, matB1, matB2,
+                    matL, matL0, matC1, matC2, 
+                    matE, matE0, matD1, matD2,
+                    matP, matP0, matH1, matH2,
+                    matA, matA0, matG1, matG2,  
+                    matIa, matIb, matV1, matV2, 
+                    matVar, matR, matCov, matM, matC, 
+                    expF, fitF, mxdf1)
   fitAbo[[i]] <- mxRun(modAbo)
 }
 ```
@@ -394,9 +345,9 @@ for (i in 1:12) {
 ```{r}
 anchorTest <- mxCompare(fitAbo, fitScalar)
 anchorOut <- data.frame(Name=paste0("Indicator",1:12), 
-                    X2=anchorTest$diffLL[seq(2,24,2)],
-                    df=anchorTest$diffdf[seq(2,24,2)],
-                    p=anchorTest$p[seq(2,24,2)])
+                        X2=anchorTest$diffLL[seq(2,24,2)],
+                        df=anchorTest$diffdf[seq(2,24,2)],
+                        p=anchorTest$p[seq(2,24,2)])
 anchorOut
 ```
 
