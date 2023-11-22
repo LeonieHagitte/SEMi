@@ -116,10 +116,16 @@ cvr_notall$q2_l <- 5 - cvr_notall$q2_l
 cvr_notall$age2004 <- (cvr_notall$age2004 - mean(cvr_notall$age2004))/sd(cvr_notall$age2004)
 
 ```
+```{r}
+df4_1 <- cvr_notall %>% 
+        rename(
+        "age" = "age2004"
+               ) 
+```
 
 ```{r}
-mxdata1 <- mxData(observed=cvr_notall,type="raw")
-manVars <- colnames(cvr_notall[,-c(1,2)])
+mxdata1 <- mxData(observed=df4_1,type="raw")
+manVars <- colnames(df4_1[,-c(1,2)])
 nv <- length(manVars)
 
 ```
