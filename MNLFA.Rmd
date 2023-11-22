@@ -30,22 +30,26 @@ library(readr)
 
 ## Enreading Data & Descriptives
 ```{r}
+df4 <- read_delim("df4.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+        mergeid = col_skip(), yrbirth = col_skip()), 
+    trim_ws = TRUE)
 
 ```
 
 ## Descriptives
 ```{r}
-hist(df4_1$age)
+hist(df4$age)
 
-cor <- cor(df4_1, use= "pairwise.complete.obs")
+cor <- cor(df4, use= "pairwise.complete.obs")
 
 corrplot(cor, method = "color")
 ```
 
 ```{r}
 # Saving data frame as mx object:
-mxdf1 <- mxData(observed = df4_1, type = "raw")
-manVars <- colnames(df4_1[,-c(1,2)])
+mxdf1 <- mxData(observed = df4, type = "raw")
+manVars <- colnames(df4[,-c(1,2)])
 nv <- length(manVars)
 
 ```
@@ -107,7 +111,7 @@ matD1 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,
                   free = TRUE,
                   values = 0,
                   name = "matD1")
-# matrix for residual covariance of country
+# matrix for residual covariance of gender
 matD2 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
                   free = TRUE,
                   values = 0,
@@ -157,7 +161,7 @@ matV1 <- mxMatrix(type="Full", nrow=1, ncol=1,
                   name = "age")
 matV2 <- mxMatrix(type="Full", nrow=1, ncol=1, 
                   free=FALSE, 
-                  labels="data.country", 
+                  labels="data.gender", 
                   name = "gender")
 
 matIa <- mxMatrix(type="Diag", nrow=4, ncol=4, 
@@ -175,20 +179,20 @@ matIb <- mxMatrix(type="Full", nrow=4, ncol=4,
 
 ## Specify algebra for the dependent parameters
 ```{r}
-matT <- mxAlgebra(expression=matT0+matB1*country+matB2*age, 
+matT <- mxAlgebra(expression=matT0+matB1*gender+matB2*age, 
                   name="matT")
-matL <- mxAlgebra(expression=matL0+matC1*country+matC2*age, 
+matL <- mxAlgebra(expression=matL0+matC1*gender+matC2*age, 
                   name="matL")
-matE <- mxAlgebra(expression=matE0*exp(matD1*country+matD2*age), 
+matE <- mxAlgebra(expression=matE0*exp(matD1*gender+matD2*age), 
                   name="matE")
-matA <- mxAlgebra(expression=matA0+matG1*country+matG2*age, 
+matA <- mxAlgebra(expression=matA0+matG1*gender+matG2*age, 
                   name="matA")
 
 ## Specify algebra for covariance matrix of factors (transformed to ensure positive definite matrices)
-matVar <- mxAlgebra(expression=(matP0*exp(matH1*country+matH2*age)), 
+matVar <- mxAlgebra(expression=(matP0*exp(matH1*gender+matH2*age)), 
                     name="matVar")
-matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*country+matH2*age))-1)/
-                    (exp(2*(matP0+matH1*country+matH2*age))+1), 
+matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*gender+matH2*age))-1)/
+                    (exp(2*(matP0+matH1*gender+matH2*age))+1), 
                   name="matR")
 matCov <- mxAlgebra(expression=(matIa*sqrt(matVar))%*%matR%*%(matIa*sqrt(matVar)), 
                     name="matCov")
