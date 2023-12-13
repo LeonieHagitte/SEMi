@@ -55,7 +55,7 @@ detach()
 In the following chunk of code I selected the respective countries of the data.
 I then also got rid of the NAs in the data. And I made sure, that the variables 
 are numerics in the data frame.
-# country als dichotom
+# country als dichotom#################################################
 ```{r}
 cvr_notall <- subset(cvr_all, country %in% c(12, 13), 
                      select = c(country,age2004, q2_a, q2_b, q2_c, q2_d, q2_e, 
@@ -121,7 +121,7 @@ df4_1 <- cvr_notall %>%
         rename(
         "age" = "age2004"
                ) 
-write.csv2(df4, "df4_1.csv")
+write.csv2(df4_1, "df4_1.csv")
 ```
 
 

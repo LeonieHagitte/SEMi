@@ -1,0 +1,743 @@
+---
+title: "MNLFA_age_VK"
+author: "Valentin Kriegmair"
+date: "2023-06-25"
+output:
+  html_document:
+    number_sections: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Primary Libraries
+```{r}
+library(haven)
+library(OpenMx)
+library(tidyverse)
+library(psych)
+library(semPlot)
+library(lavaan)
+library(corrplot)
+```
+
+# Read and Prepare Data
+```{r}
+# read
+setwd("C:/Users/admin/Desktop/MPI/Share/ShareSEM/ShareSEM")
+df_ac7 <- read_dta("sharew7_rel8-0-0_ALL_datasets_stata/sharew7_rel8-0-0_ac.dta")
+demo7 <- read_dta("sharew7_rel8-0-0_ALL_datasets_stata/sharew7_rel8-0-0_dn.dta")
+demo7items <- demo7 %>% dplyr::select("mergeid", "dn003_", "dn042_") 
+View(demo7)
+# prepare Data: 
+df0 <- df_ac7 %>% 
+  mutate(
+    # name CASP-12 Items as variables according to factor structure.
+    cC1 = ac014_,
+    cC2 = ac015_,
+    cC3 = ac016_,
+    cA1 = ac017_,
+    cA2 = ac018_,
+    cA3 = ac019_,
+    cP1 = ac020_,
+    cP2 = ac021_,
+    cP3 = ac022_,
+    cS1 = ac023_,
+    cS2 = ac024_,
+    cS3 = ac025_
+  )
+
+# merge demographic variables to items:
+df1 <- df0 %>% 
+  full_join(
+    demo7items, by="mergeid"
+  ) %>% 
+  rename(
+    age = dn003_,
+    gender = dn042_
+  ) %>% 
+  dplyr::select(gender, age, matches("^cC|^cA|^cP|^cS"))
+
+# Storing the names of variables (items) as `manVars`:
+manVars <- colnames(df1[,-c(1:2)])
+
+# Storing the number of variables (items) as `nv`:
+nv <- length(manVars)
+```
+
+## Missing Values
+
+```{r missing}
+# Define Missing Codes. Refer to the SHARE release guide for more detail:
+missing_codes <- c(-1, -2, -3, -7, -9, -10, -11, -12, -14, -15, -16)
+
+df2 <- df1 %>%
+  mutate_all(~ifelse(. %in% missing_codes, NA, .))
+
+# Check number of subjects with NAs on all CASP-12:
+n_missings <- 
+  sum(apply(df2[manVars], 1, function(row) all(is.na(row))))
+
+# Remove 7623 rows with missing values on all CASP-12 variables:
+df3 <- df2 %>% 
+  filter(rowSums(is.na(.[manVars])) < length(manVars)) %>% 
+# Remove missings on moderators gender and `age` (year of birth) and bfi items
+  filter(complete.cases(gender, age))
+```
+
+
+## Recode Items
+```{r}
+df4 <- df3 %>% 
+  # Recode negative items of the Casp-12 questionnaire:
+  mutate(
+    cA1 = 5 - cA1,
+    cP1 = 5 - cP1,
+    cP2 = 5 - cP2,
+    cP3 = 5 - cP3,
+    cS1 = 5 - cS1,
+    cS2 = 5 - cS2,
+    cS3 = 5 - cS3,
+  # Recode gender variable to `male` with 1 indicating male and 0 female:
+    male = 2 - gender,
+    age = 2017 - age
+  ) %>% 
+  # Exclude constructor variables:
+  dplyr::select(-gender) %>% 
+  # Order variables:
+  dplyr::select(male, age, everything())
+
+# Standardize all variables
+df_z <- df4 %>% 
+  mutate_if(names(.) != "male", scale)
+```
+
+## Descriptives
+```{r}
+hist(df4$age)
+#hist(df4$bfO)
+
+df_long <- df4 %>% 
+  dplyr::select(starts_with("c"))
+  pivot_longer(cols = everything(),
+    names_to = "casp_12",
+    values_to = "value")
+
+  
+  # Create the plot
+ggplot(df_long, aes(x = value)) +
+  geom_bar() +
+  facet_wrap(~ casp_12, scales = "free_y") 
+```
+
+```{r}
+cor <- cor(df4, use= "pairwise.complete.obs")
+
+corrplot(cor, method = "color")
+```
+
+## Fit configural model
+```{r}
+model <- "
+  cntrl =~ NA*cC1 + cC2 + cC3
+  aut =~ NA*cA1 + cA2 + cA3
+  pleas =~ NA*cP1 + cP2 + cP3
+  selfre =~ NA*cS1 + cS2 + cS3
+
+  cntrl ~~ 1 * cntrl
+  aut ~~ 1 * aut
+  pleas ~~ 1 * pleas
+  selfre ~~ 1 * selfre
+"
+
+fit <- cfa(model, data = df_z, estimator = "MLR", group = "male")
+
+summary(fit, fit.measures = TRUE)
+
+# semPaths(fit, "est", curveAdjacent = TRUE)
+
+# modindices(fit, sort = TRUE, maximum.number = 20)
+
+
+fit1 <- cfa(model, data = df_z, estimator = "MLR")
+
+summary(fit1, fit.measures = TRUE)
+
+semPaths(fit1, "est", curveAdjacent = TRUE)
+
+fit_indices <- fitMeasures(fit1)
+
+fit_table <- tibble(FitIndex = names(fit_indices), Value = fit_indices)
+desired_indices <- c("rmsea", "rmr", "srmr", 
+                     "nfi", "nnfi", "cfi",
+                     "pnfi")
+fit_table_subset <- fit_table[fit_table$FitIndex %in% desired_indices, ]
+fit_table_subset$Value <- round(as.numeric(fit_table_subset$Value), 3)
+
+# Print the table
+# fit_table_subset %>%
+  #  kable("html", caption = "Fit Indices")
+
+# modindices(fit, sort = TRUE, maximum.number = 20)
+```
+
+```{r}
+# Saving data frame as mx object:
+mxdf1 <- mxData(observed = df_z, type = "raw")
+```
+
+## Assessing Measurement Invariance
+- 1. comparing fit of unconstrained configural model with the fit of metric model
+- 2. comparing fit of metric model with the fit of scalar model
+## Configural Model:
+### Base Matrices
+```{r}
+# Item Intercepts
+# Baseline intercepts:
+matT0 <- mxMatrix(type="Full", nrow = 1, ncol=nv,
+                  free=TRUE, values = 1, name="matT0")
+
+# Effect of the background variable `age` on the intercepts (freely estimated):
+matB1 <-  mxMatrix(type="Full", nrow = 1, ncol=nv,
+                   free=TRUE, values = 0, name="matB1")
+
+# Item Loadings on respective Factors
+# Baseline factor loadings:
+matL0 <- mxMatrix(type="Full", nrow=nv, ncol = 4,
+                   free=c(rep(c(T, F, F, F),3), 
+                          rep(c(F, T, F, F),3),
+                          rep(c(F, F, T, F),3),
+                          rep(c(F, F, F, T),3)),
+                   values=c(rep(c(1, 0, 0, 0),3), 
+                            rep(c(0, 1, 0, 0),3),
+                            rep(c(0, 0, 1, 0),3),
+                            rep(c(0, 0, 0, 1),3)),
+                   byrow = T,
+                   name="matL0")
+
+# Effect of `age` on the factor loadings (freely estimated):
+matC1 <- mxMatrix(type = "Full",
+                  nrow = nv,
+                  ncol = 4,
+                  free= c(rep(c(T, F, F, F),3), 
+                          rep(c(F, T, F, F),3),
+                          rep(c(F, F, T, F),3),
+                          rep(c(F, F, F, T),3)),
+                  values = 0,
+                  byrow = T,
+                  name = "matC1"
+                  )
+
+# Residual Variances:
+# baseline residual variances
+matE0 <- mxMatrix( type = "Diag", nrow = nv,
+                   ncol = nv,
+                   free = T ,
+                   values = 1,
+                   name = "matE0")
+
+# Effect of `age` on residual variances
+matD1 <- mxMatrix( type = "Diag", nrow = nv,
+                   ncol = nv,
+                   free = T ,
+                   values = 0,
+                   name = "matD1")
+
+# Baseline common-factor variances and the baseline correlation:
+matP0 <- mxMatrix(type = "Symm", nrow = 4,
+                  ncol = 4,
+                  free = c(F, T, T, T,
+                           T, F, T, T,
+                           T, T, F, T,
+                           T, T, T, F),
+                  values = 1,
+                  name = "matP0"
+                  )
+
+# Effect of `age` on factor (variances and) correlations:
+matH1 <- mxMatrix(type = "Symm", nrow = 4,
+                  ncol = 4,
+                  free = c(F, T, T, T,
+                           T, F, T, T,
+                           T, T, F, T,
+                           T, T, T, F),
+                  values = 0,
+                  name = "matH1")
+# note. Only effects on correlations are estimated,
+# effects on variances are set to 0 
+
+# Baseline factor means (fixed to 0):
+matA0 <- mxMatrix(type = "Full", nrow = 4, ncol = 1, 
+                  free = F, values = 0, name = "matA0")
+
+# Effect of `age` on factor means (fixed to 0):
+matG1 <- mxMatrix(type = "Full", nrow = 4, ncol = 1, 
+                  free = F, values = 0, name = "matG1")
+
+### Background Variables
+# observed scores of `age`:
+matV1 <- mxMatrix(type = "Full", nrow = 1,
+                  ncol = 1,
+                  free = F,
+                  labels = "data.age",
+                  name = "age")
+```
+
+### Algebraic Matrices
+```{r}
+### Parameters predicted by Background Variables
+# Identity Matrices for conversion:
+matIa <- mxMatrix(type="Diag", nrow=4, ncol=4, 
+                  free=FALSE,
+                  values=1, 
+                  name="matIa")
+
+matIb <- mxMatrix(type="Full", nrow=4, ncol=4, 
+                  free=FALSE, 
+                  values=c(0,1,1,1,
+                           1,0,1,1,
+                           1,1,0,1,
+                           1,1,1,0),
+                  name="matIb")
+
+# Intercepts:
+matT <- mxAlgebra(expression=matT0+matB1*age, 
+                  name="matT")
+# general intercept, male variable, age variable, named matT
+
+# Loadings:
+matL <- mxAlgebra(expression=matL0+matC1*age, 
+                  name="matL")
+
+
+# Latent Variance:
+matE <- mxAlgebra(expression=matE0*exp(matD1*age), 
+                  name="matE")
+
+# Latent Intercept:
+matA <- mxAlgebra(expression=matA0+matG1*age, 
+                  name="matA")
+
+## Specify algebra for covariance matrix of factors (transformed to ensure positive definite matrices)
+
+# Factor var-cov matrix predicted by age
+matVar <- mxAlgebra(expression=(matP0*exp(matH1*age)), 
+                    name="matVar")
+
+# Factor corr predicted by age
+matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*age))-1)/
+                    (exp(2*(matP0+matH1*age))+1), 
+                  name="matR")
+
+matCov <- mxAlgebra(expression=(matIa*sqrt(matVar))%*%matR%*%(matIa*sqrt(matVar)), 
+                    name="matCov")
+matP <- mxAlgebra(expression=matIa*matVar+matIb*matCov, 
+                  name="matP")
+
+## Specify model-implied matrices
+matC <- mxAlgebra(expression=matL%*%matP%*%t(matL)+matE, 
+                  name="matC") 
+matM <- mxAlgebra(expression=matT+t(matL%*%matA), 
+                  name="matM") 
+```
+
+### Configural Model Fit
+```{r}
+expF <- mxExpectationNormal(covariance="matC", 
+                            means="matM",
+                            dimnames=manVars)
+fitF <- mxFitFunctionML() 
+
+modConfig <- mxModel(model="Configural", 
+                     matT, matT0, matB1, 
+                     matL, matL0, matC1, 
+                     matE, matE0, matD1, 
+                     matP, matP0, matH1, 
+                     matA, matA0, matG1, 
+                     matIa, matIb, matV1,
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdf1)
+
+fitConfig <- mxRun(modConfig)
+
+summary(fitConfig)
+```
+
+### Metric Model
+fix the effect of age on the item loadings to 0.
+```{r}
+# respecify only matrix with item loadings (fixed to 0)
+matC1 <- mxMatrix(type="Full", nrow=nv, ncol=4,
+                  free=FALSE,
+                  values=0,
+                  name="matC1")
+
+## Make mxModel object and run the model
+modMetric <- mxModel(model="Metric", 
+                     matT, matT0, matB1,
+                     matL, matL0, matC1,  
+                     matE, matE0, matD1, 
+                     matP, matP0, matH1, 
+                     matA, matA0, matG1, 
+                     matIa, matIb, matV1,
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdf1)
+fitMetric <- mxRun(modMetric)
+summary(fitMetric)
+
+miTest <- mxCompare(fitConfig, fitMetric)
+miTest
+fitConfig$matC1
+fitMetric$matH1
+```
+
+### Scalar Model
+```{r}
+## Specify matrices scalar model
+# here all fixed to 0, as there is no moderator here.
+
+# Fix effects of age on item intercepts to 0
+matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                  free=FALSE,
+                  values=0,
+                  name="matB1")
+
+# Freely estimate effect of age on factor variances
+matH1 <- mxMatrix(type="Symm", nrow=4, ncol=4,
+                  free=TRUE, 
+                  values=0,
+                  name="matH1")
+
+# Freely estimate effect of age on factor means
+matG1 <- mxMatrix(type="Full", nrow=4, ncol=1,
+                  free=TRUE, 
+                  values=0,
+                  name="matG1")
+
+
+## Make mxModel object and run the model
+modScalar <- mxModel(model="Scalar", 
+                     matT, matT0, matB1,
+                     matL, matL0, matC1,  
+                     matE, matE0, matD1, 
+                     matP, matP0, matH1, 
+                     matA, matA0, matG1, 
+                     matIa, matIb, matV1,
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdf1)
+fitScalar <- mxRun(modScalar)
+summary(fitScalar)
+
+miTest <- mxCompare(fitMetric, fitScalar)
+miTest
+
+fitScalar$matG1
+```
+the scalar model fits the data (significantly) worse than the and configural (and metric) model, suggesting that full scalar invariance does not hold.
+
+# Test for Partial Invariance
+## Unconstrained Model for each Item
+```{r}
+## Run unconstrained model for each indicator
+fitAbo <- list()
+# all but one: assume all items to be invariant except one, then next and so on
+# …
+
+for (i in 1:12){
+  freeparT <- matrix(FALSE, nrow=1, ncol=12)
+  freeparT[i] <- TRUE
+  freeparL <- matrix(FALSE, nrow=12, ncol=4)
+  freeparL[i,ifelse(i<4,1,ifelse(i<7,2,ifelse(i<10,3,4)))] <- TRUE
+  matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                    free=freeparT,
+                    values=0,
+                    name="matB1")
+  matC1 <- mxMatrix(type="Full", nrow=nv, ncol=4,
+                    free=freeparL,
+                    values=0,
+                    byrow=TRUE,
+                    name="matC1")
+  modAbo <- mxModel(model=paste0("All_but_", i), 
+                   matT, matT0, matB1,
+                   matL, matL0, matC1,
+                   matE, matE0, matD1,
+                   matP, matP0, matH1,
+                   matA, matA0, matG1,
+                   matIa, matIb, matV1,
+                   matVar, matR, matCov, matM, matC, 
+                   expF, fitF, mxdf1)
+  fitAbo[[i]] <- mxRun(modAbo)
+}
+
+## Compare constrained model with all unconstrained models
+anchorTest <- mxCompare(fitAbo, fitScalar)
+anchorOut <- data.frame(Name=manVars, 
+                    X2=anchorTest$diffLL[seq(2,24,2)],
+                    df=anchorTest$diffdf[seq(2,24,2)],
+                    p=anchorTest$p[seq(2,24,2)])
+# anchorOut
+# this puts out
+```
+
+## Select Anchor Items
+```{r}
+## Select two indicators per factor with smallest X2 as anchor
+## number of manifest items. rule of thumb: 20% per indicator but at least 2.
+# Look at the all but one models for each factor ordered by X2 value:
+# For Control:
+anchorOut[order(anchorOut$X2[1:3]),]
+# For Autonomy:
+anchorOut[3 + order(anchorOut$X2[4:6]),]
+# For Pleasure:
+anchorOut[6 + order(anchorOut$X2[7:9]),]
+# For Selfrealization:
+anchorOut[9 + order(anchorOut$X2[10:12]),]
+anchorOut
+# Get the two items with the smallest X2 for each factor.
+anchors1 <- as.numeric(rownames(head(anchorOut[order(anchorOut$X2[1:3]), ], 2)))
+anchors2 <- as.numeric(rownames(head(anchorOut[3 + order(anchorOut$X2[4:6]),], 2)))
+anchors3 <-  as.numeric(rownames(head(anchorOut[6 + order(anchorOut$X2[7:9]),], 2)))
+anchors4 <- as.numeric(rownames(head(anchorOut[9 + order(anchorOut$X2[10:12]),], 2)))
+```
+
+## Anchors-Plus-One Models
+Sanity check free and fixed values.
+```{r}
+# vector that indicates free values for item intercepts:
+freeparT <- matrix(data=TRUE, nrow=1, ncol=12)
+freeparT[1,c(anchors1,anchors2, anchors3, anchors3)] <- FALSE
+
+# vector that indicates free values for item loadings: 
+freeparL <- matrix(rep(as.logical(diag(4)), each = 3), nrow = nv)
+freeparL[anchors1,1] <- F
+freeparL[anchors2,2] <- F
+freeparL[anchors3,3] <- F
+freeparL[anchors4,4] <- F
+
+freeparT
+freeparL
+```
+
+```{r}
+## Specify matrices for unconstrained model
+# get estimates for 
+# - `bf0` effects on factor correlations (variances fixed) (H1)
+# -  base / intercepts of factor correlations (variances fixed) (P0)
+# from the scalar model as starting values.
+scalarH1 <- fitScalar$matH1$values
+scalarP0 <- fitScalar$matP0$values
+scalarP0
+# get estimates for 
+# - `bfO` effects on indicator loadings (C1) only for free parameters 
+# (others set to 0)
+# from the configural models as starting values
+configC1 <- fitConfig$matC1$values
+startingC1 <- matrix(0, nrow = 12, ncol = 4)
+startingC1[freeparL] <- configC1[freeparL]
+
+# configL0 <- fitConfig$matL0$values
+# scalarT0 <- fitScalar$matT0$values
+matT0 <- mxMatrix(type="Full", nrow = 1, ncol=nv,
+                  free=TRUE, values = 0, name="matT0")
+matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                  free=freeparT,
+                  values=0,
+                  name="matB1")
+matL0 <- mxMatrix(type="Full", nrow=nv, ncol = 4,
+                   free=c(rep(c(T, F, F, F),3), 
+                          rep(c(F, T, F, F),3),
+                          rep(c(F, F, T, F),3),
+                          rep(c(F, F, F, T),3)),
+                   values=0,
+                   byrow = T,
+                   name="matL0")
+matC1 <- mxMatrix(type="Full", nrow=nv, ncol=4,
+                  free=freeparL,
+                  values=startingC1,
+                  name="matC1")
+matP0 <- mxMatrix(type = "Symm", nrow = 4,
+                  ncol = 4,
+                  free = c(F, T, T, T,
+                           T, F, T, T,
+                           T, T, F, T,
+                           T, T, T, F),
+                  values = scalarP0,
+                  name = "matP0"
+                  )
+matH1 <- mxMatrix(type="Symm", nrow=4, ncol=4,
+                  free=TRUE, 
+                  values=scalarH1,
+                  name="matH1")
+startingC1
+```
+
+```{r}
+# Unconstrained model with only "anchor items" allowed to vary as function of
+# `age`
+modAnchors <- mxModel(model="AnchorsOnly", 
+                      matT, matT0, matB1,
+                      matL, matL0, matC1,
+                      matE, matE0, matD1,
+                      matP, matP0, matH1,
+                      matA, matA0, matG1,
+                      matIa, matIb, matV1,
+                      matVar, matR, matCov, matM, matC, 
+                      expF, fitF, mxdf1)
+fitAnchors <- mxRun(modAnchors)
+summary(fitAnchors)
+
+mxCompare(fitConfig, fitAnchors)
+```
+
+```{r}
+## Run constrained model for each indicator (except the anchors)
+testIn <- c(1:12)[-c(anchors1, anchors2, anchors3, anchors4)]
+
+# Initialising a list to store the results of model runs.
+fitApo <- list()
+
+anchorsC1 <- fitAnchors$matC1$values
+anchorsB1 <- fitAnchors$matB1$values
+
+anchorsH1 <- fitAnchors$matH1$values
+anchorsP0 <- fitAnchors$matP0$values
+
+matP0 <- mxMatrix(type = "Symm", nrow = 4,
+                  ncol = 4,
+                  free = c(F, T, T, T,
+                           T, F, T, T,
+                           T, T, F, T,
+                           T, T, T, F),
+                  values = anchorsP0,
+                  name = "matP0"
+                  )
+
+matH1 <- mxMatrix(type="Symm", nrow=4, ncol=4,
+                  free=TRUE, 
+                  values=anchorsH1,
+                  name="matH1")
+```
+
+```{r}
+for (i in testIn){
+  freeparTa <- freeparT # Copying the original `freeparT` matrix
+  freeparLa <- freeparL # Copying the original `freeparL` matrix
+  freeparTa[1,i] <- F # Setting the 'i'th column of the first row in 'freeparTa' to FALSE
+  # if (freeparTa[1,i] == F){ anchorsB1[1,i] <- 0
+  # }
+  # Defining the column index based on the value of 'i':
+  indexLa <- ifelse(i<4,1,ifelse(i<7,2,ifelse(i<10,3,4)))
+  # fixing parameter depending on index:
+  freeparLa[i,indexLa] <- F
+  # Checking if the corresponding element in 'freeparLa' is FALSE:
+  # if(freeparLa[i, indexLa] == F){
+    # If TRUE, setting the corresponding starting value of matC1 to 0.
+    # startingC1[i, indexLa] <- 0
+  # }
+  matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                    free=freeparTa,
+                    values=0,
+                    name="matB1")
+  matC1 <- mxMatrix(type="Full", nrow=nv, ncol=4,
+                    free=freeparLa,
+                    values=0, #starting values from 
+                    name="matC1")
+  modApo <- mxModel(model=paste0("Anchors_plus_", i), 
+                    matT, matT0, matB1,
+                    matL, matL0, matC1,
+                    matE, matE0, matD1,
+                    matP, matP0, matH1,
+                    matA, matA0, matG1,
+                    matIa, matIb, matV1, 
+                    matVar, matR, matCov, matM, matC, 
+                    expF, fitF, mxdf1)
+  fitApo[[i]] <- mxRun(modApo)
+}
+
+
+# retrieve the BIC of the configural model
+config_bic <- summary(fitConfig)$BIC
+apo_bics <- sapply(fitApo[c(1, 4, 9, 10)], function(x) summary(x)$BIC)
+
+config_bic - apo_bics
+
+result <- sapply(apo_bics, function(x) config_bic - x)
+result
+
+summary(fitConfig)$BIC - summary(fitApo[[1]])$BIC
+fitConfig$matB1
+
+```
+
+```{r}
+# Specify only model with index 4 with different starting values:
+freeparTa <- freeparT 
+freeparLa <- freeparL 
+
+
+# Set wanted index to 4:
+i <- 1
+# Set the i-th column of the first row in 'freeparTa' to FALSE
+freeparTa[1, i] <- F 
+
+# Define the column index based on the value of 'i':
+indexLa <- ifelse(i<4, 1, ifelse(i<7, 2, ifelse(i<10, 3, 4)))
+
+freeparLa[i, indexLa] <- F
+
+#Starting values:
+anchorsB1 <- fitApo[[1]]$matB1$values
+anchorsT0 <- fitApo[[1]]$matT0$values
+
+# Adjust starting values matrix to have 0 on respective fixed elements:
+if (freeparTa[1,i] == F){
+      anchorsB1[1,i] <- 0
+}
+
+matT0 <- mxMatrix(type="Full", nrow = 1, ncol=nv,
+                  free=TRUE, values = anchorsT0, name="matT0")
+
+matB1 <- mxMatrix(type="Full", nrow=1, ncol=nv,
+                  free=freeparTa,
+                  values=anchorsB1,
+                  name="matB1")
+
+matC1 <- mxMatrix(type="Full", nrow=nv, ncol=4,
+                  free=freeparLa,
+                  values=0,
+                  name="matC1")
+
+modApo <- mxModel(model=paste0("Anchors_plus_", i), 
+                  matT, matT0, matB1,
+                  matL, matL0, matC1,
+                  matE, matE0, matD1,
+                  matP, matP0, matH1,
+                  matA, matA0, matG1,
+                  matIa, matIb, matV1, 
+                  matVar, matR, matCov, matM, matC, 
+                  expF, fitF, mxdf1)
+
+fitApo1 <- mxRun(modApo)
+# fitApo1 <- mxTryHard(fitApo4)
+# add the model to the preexisting list:
+fitApo[[1]] <- fitApo1
+```
+
+
+## Likelihood-Ratio Tests
+```{r}
+piTest <- mxCompare(fitAnchors, fitApo)
+piTest
+piOut <- data.frame(Name=paste0("Indicator",testIn),
+                    X2=piTest$diffLL[2:5],
+                    df=piTest$diffdf[2:5],
+                    p=piTest$p[2:5],
+                    p.bonferroni=p.adjust(p=piTest$p[2:5], method="bonferroni"),
+                    p.BH=p.adjust(p=piTest$p[2:5], method="BH"))
+piOut
+```
+
+
