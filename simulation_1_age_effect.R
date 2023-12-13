@@ -104,19 +104,22 @@ matL0 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # loadings ############
                            rep(c(FALSE, FALSE, TRUE, FALSE), 3),
                            rep(c(FALSE, FALSE, FALSE, TRUE), 3)
                   ),
-                  values = c(rep(c(1, 0, 0, 0), 3),
-                             rep(c(0, 1, 0, 0), 3),
-                             rep(c(0, 0, 1, 0), 3),
-                             rep(c(0, 0, 0, 1), 3)),
+                  values = c(rep(c(1, 0.7, 0.7, 0.7), 3),
+                             rep(c(0.7, 1, 0.7, 0.7), 3),
+                             rep(c(0.7, 0.7, 1, 0.7), 3),
+                             rep(c(0.7, 0.7, 0.7, 1), 3)),
                   byrow = TRUE,
                   name = "matL0")
-
-matC1 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  # direct effects of age and gender
+# direct effects of age and gender
+matC1 <- mxMatrix(type = "Full", nrow = 12, ncol = 4,  
                   free = c(rep(c(TRUE, FALSE, FALSE, FALSE), 3),
                            rep(c(FALSE, TRUE, FALSE, FALSE), 3),
                            rep(c(FALSE, FALSE, TRUE, FALSE), 3),
                            rep(c(FALSE, FALSE, FALSE, TRUE), 3)),
-                  values = 0,
+                  values = c(rep(c(-0.35, 0, 0, 0), 3),
+                             rep(c(0, 0, 0, 0), 3),
+                             rep(c(0, 0, 0, 0), 3),
+                             rep(c(0, 0, 0, 0), 3)),
                   byrow = TRUE,
                   name = "matC1")
 
