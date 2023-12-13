@@ -260,10 +260,12 @@ summary(fitConfig)
 mxCheckIdentification(fitConfig)
 
 #Gradient Check
-
 mxOption(model= NULL, key= NULL,value= NULL,reset= TRUE)
+#mxOption(NULL, "Gradient algorithm", "debug")
 
 #Optimization Algorithm
 #Common optimizers "NPSOL," "SLSQP," and "CSOLNP."
+
+# Set optimizer to SLSQP and so on
 mxOption(NULL, "Optimizer", "SLSQP")
 
