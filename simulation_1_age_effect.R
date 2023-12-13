@@ -255,3 +255,15 @@ modConfig <- mxModel(model="Configural",
 
 fitConfig <- mxRun(modConfig)
 summary(fitConfig) 
+
+#Check Identification Issues
+mxCheckIdentification(fitConfig)
+
+#Gradient Check
+
+mxOption(model= NULL, key= NULL,value= NULL,reset= TRUE)
+
+#Optimization Algorithm
+#Common optimizers "NPSOL," "SLSQP," and "CSOLNP."
+mxOption(NULL, "Optimizer", "SLSQP")
+
