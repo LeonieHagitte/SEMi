@@ -1,0 +1,227 @@
+---
+  title: "MNLFA_1"
+author: "Leonie H."
+date: "2024-01-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(haven)
+library(tidyverse)
+library(tidyr)
+library(mokken)
+library(OpenMx)
+library(ggplot2)
+library(lavaan)
+library(semTools)
+library(semPlot)
+library(psych)
+library(GPArotation)
+library(corrplot)
+library(stats)
+library(dplyr)
+library(usethis)
+library(gitcreds)
+library(gh)
+library(repro)
+library(readr)
+
+```
+
+## Enreading Data & Descriptives
+```{r}
+df5 <- read_delim("df5.csv", delim = ";", 
+    escape_double = FALSE, col_types = cols(...1 = col_skip(), 
+        mergeid = col_skip(), yrbirth = col_skip()), 
+    trim_ws = TRUE)
+
+df5$age <- as.numeric(df5$age)
+df5$gender <- as.numeric(df5$gender)
+df5$cC1 <- as.numeric(df5$cC1)
+df5$cC2 <- as.numeric(df5$cC2)
+df5$cC3 <- as.numeric(df5$cC3)
+df5$cA1 <- as.numeric(df5$cA1)
+df5$cA2 <- as.numeric(df5$cA2)
+df5$cA3 <- as.numeric(df5$cA3)
+df5$cP1 <- as.numeric(df5$cP1)
+df5$cP2 <- as.numeric(df5$cP2)
+df5$cP3 <- as.numeric(df5$cP3)
+df5$cS1 <- as.numeric(df5$cS1)
+df5$cS2 <- as.numeric(df5$cS2)
+df5$cS3 <- as.numeric(df5$cS3)
+
+df5 <- na.omit(df5)
+
+```
+
+## Descriptives
+```{r}
+hist(df5$age)
+
+cor <- cor(df5, use= "pairwise.complete.obs")
+corrplot(cor, method = "color")
+```
+
+```{r}
+# Saving data frame as mx object:
+mxdf1 <- mxData(observed = df5, type = "raw")
+manVars <- colnames(df5[,-c(1,2)])#################################
+nv <- length(manVars)
+
+```
+#################################
+# With Country and Age
+```{r}
+## Specify matrices for configural model
+matT0 <- mxMatrix(type="Full", nrow=1, ncol=6,#baseline intercepts
+                  free=TRUE,
+                  values=1,
+                  name="matT0")
+
+matB1 <- mxMatrix(type = "Full", nrow = 1, ncol = nv,  # full matrix of background effects
+                  free = TRUE,
+                  values = 0,
+                  name = "matB1")
+matB2 <- mxMatrix(type = "Full", nrow = 1, ncol = nv,
+                  free = TRUE,
+                  values = 0,
+                  name = "matB2")
+
+matL0 <- mxMatrix(type = "Full", nrow = 6, ncol = 2,  # loadings ############
+                  free = c(rep(c(TRUE, FALSE), 3),
+                           rep(c(FALSE, TRUE), 3),
+                  ),
+                  values = c(rep(c(1, 0), 3),
+                             rep(c(0, 1), 3)),
+                  byrow = TRUE,
+                  name = "matL0")
+
+matC1 <- mxMatrix(type = "Full", nrow = 6, ncol = 2,  # direct effects of age and gender
+                  free = c(rep(c(TRUE, FALSE), 3),
+                           rep(c(FALSE, TRUE), 3)),
+                  values = 0,
+                  byrow = TRUE,
+                  name = "matC1")
+
+matC2 <- mxMatrix(type = "Full", nrow = 16, ncol = 2,
+                  free = c(rep(c(TRUE, FALSE), 3),
+                           rep(c(FALSE, TRUE), 3)),
+                  values = 0,
+                  byrow = TRUE,
+                  name = "matC2")
+# matrix for residual covariance at baseline
+matE0 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 1,
+                  name = "matE0")
+# matrix for residual covariance of age
+matD1 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 0,
+                  name = "matD1")
+# matrix for residual covariance of gender
+matD2 <- mxMatrix(type = "Diag", nrow = nv, ncol = nv,  
+                  free = TRUE,
+                  values = 0,
+                  name = "matD2")
+
+matP0 <- mxMatrix(type = "Symm", nrow = 2, ncol = 2,#variances
+                  free = c(FALSE, TRUE, 
+                           TRUE, FALSE),
+                  values = c(1, 0, 0, 1),
+                  name = "matP0")
+matH1 <- mxMatrix(type = "Symm", nrow = 2, ncol = 2,
+                  free = c(FALSE, TRUE, 
+                           TRUE, FALSE),
+                  values = 0,
+                  name = "matH1")
+matH2 <- mxMatrix(type = "Symm", nrow = 2, ncol = 2,
+                  free = c(FALSE, TRUE,
+                           TRUE, FALSE),
+                  values = 0,
+                  name = "matH2")
+
+matA0 <- mxMatrix(type="Full", nrow=2, ncol=1,#factor means not estimated
+                  free=FALSE,
+                  values= 0,
+                  name="matA0")
+matG1 <- mxMatrix(type="Full", nrow=2, ncol=1,
+                  free=FALSE, # to identify the model config to zero
+                  values=0,
+                  name="matG1")
+matG2 <- mxMatrix(type="Full", nrow=2, ncol=1,
+                  free=FALSE, # to identify the model config to zero
+                  values=0,
+                  name="matG2")
+
+matV1 <- mxMatrix(type="Full", nrow=1, ncol=1, 
+                  free=FALSE, 
+                  labels="data.age", 
+                  name = "age")
+matV2 <- mxMatrix(type="Full", nrow=1, ncol=1, 
+                  free=FALSE, 
+                  labels="data.gender", 
+                  name = "gender")
+
+matIa <- mxMatrix(type="Diag", nrow=2, ncol=2, 
+                  free=FALSE,
+                  values=1, 
+                  name="matIa")
+matIb <- mxMatrix(type="Full", nrow=2, ncol=2, 
+                  free=FALSE, 
+                  values=c(0,1,1,0),
+                  name="matIb")
+```
+
+## Specify algebra for the dependent parameters
+```{r}
+matT <- mxAlgebra(expression=matT0+matB1*gender+matB2*age, 
+                  name="matT")
+matL <- mxAlgebra(expression=matL0+matC1*gender+matC2*age, 
+                  name="matL")
+matE <- mxAlgebra(expression=matE0*exp(matD1*gender+matD2*age), 
+                  name="matE")
+matA <- mxAlgebra(expression=matA0+matG1*gender+matG2*age, 
+                  name="matA")
+
+## Specify algebra for covariance matrix of factors (transformed to ensure positive definite matrices)
+matVar <- mxAlgebra(expression=(matP0*exp(matH1*gender+matH2*age)), 
+                    name="matVar")
+matR <- mxAlgebra(expression=(exp(2*(matP0+matH1*gender+matH2*age))-1)/
+                    (exp(2*(matP0+matH1*gender+matH2*age))+1), 
+                  name="matR")
+matCov <- mxAlgebra(expression=(matIa*sqrt(matVar))%*%matR%*%(matIa*sqrt(matVar)), 
+                    name="matCov")
+matP <- mxAlgebra(expression=matIa*matVar+matIb*matCov, 
+                  name="matP")
+
+## Specify model-implied matrices
+matC <- mxAlgebra(expression=matL%*%matP%*%t(matL)+matE, 
+                  name="matC") 
+matM <- mxAlgebra(expression=matT+t(matL%*%matA), 
+                  name="matM") 
+
+## Specify expectation and fit function
+expF <- mxExpectationNormal(covariance="matC", 
+                            means="matM",
+                            dimnames=manVars)
+fitF <- mxFitFunctionML() 
+```
+
+## Make mxModel object and run the model
+```{r}
+modConfig <- mxModel(model="Configural", 
+                     matT, matT0, matB1, matB2,
+                     matL, matL0, matC1, matC2, 
+                     matE, matE0, matD1, matD2,
+                     matP, matP0, matH1, matH2,
+                     matA, matA0, matG1, matG2,  
+                     matIa, matIb, matV1, matV2, 
+                     matVar, matR, matCov, matM, matC, 
+                     expF, fitF, mxdf1)
+```
+
+```{r}
+fitConfig <- mxRun(modConfig)
+summary(fitConfig) 
+```
