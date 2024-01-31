@@ -14,10 +14,10 @@ casp_modmxsem <- '
   self_real =~ cS1 + cS2 + cS3
 
   # Regression paths from predictors to latent variables
-  control ~ b1*gender + b2*age
-  autonomy ~ b3*gender + b4*age
-  pleasure ~ b5*gender + b6*age
-  self_real ~ b7*gender + b8*age
+  # control ~ b1*gender + b2*age
+  # autonomy ~ b3*gender + b4*age
+  # pleasure ~ b5*gender + b6*age
+  # self_real ~ b7*gender + b8*age
 '
 
 fit <- lavaan::cfa(casp_modmxsem, data = df5)
