@@ -34,7 +34,9 @@ df5 <- read_delim("df5.csv", delim = ";",
     escape_double = FALSE, col_types = cols(...1 = col_skip(), 
         mergeid = col_skip(), yrbirth = col_skip()), 
     trim_ws = TRUE)
+```
 
+```{r}
 df5$age <- as.numeric(df5$age)
 df5$gender <- as.numeric(df5$gender)
 df5$cC1 <- as.numeric(df5$cC1)
