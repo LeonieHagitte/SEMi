@@ -92,7 +92,7 @@ self_real =~ {lS1 := lS0_1 + lS1_1*data.age + lS2_1*data.gender}*cS1 +
 control ~~ 1*control
 autonomy ~~ 1*autonomy
 pleasure ~~ 1*pleasure
-self_real ~~ 1*self_real + {cov := cov0 + cov1*data.age + cov2*data.gender}*control + {cov := cov01 + cov01*data.age + cov02*data.gender}*autonomy + {cov := cov001 + cov001*data.age + cov002*data.gender}*pleasure
+self_real ~~ 1*self_real 
 
 # Explanation: Latent variances are set to 1 for scaling purposes.
 # Covariances between latent variables (control, autonomy, pleasure, self_real) are specified.
