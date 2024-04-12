@@ -42,6 +42,14 @@ cat("Removing ",  sum(apply(df5, 1, function(x){any(is.na(x))})), "rows becaus o
 
 df5 <- na.omit(df5)
 
+# scale all variables
+#df5 %>%
+#    mutate(across(where(is.numeric), scale))
+
+# scale only age
+#df5 %>%
+#  mutate( age = scale(age)  )
+
 ```
 
 ## Descriptives
