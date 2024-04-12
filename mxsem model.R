@@ -163,51 +163,51 @@ summary(casp_mnlfamxsem_result)
 ## Plotting individual parameters
 # Get individual parameters for manifest variables (cC1, cC2, ..., cS3)
 cC1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cC1",
+                                                 algebra_names = "lC1",
                                                  progress_bar = FALSE)
 
 cC2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cC2",
+                                                 algebra_names = "lC2",
                                                  progress_bar = FALSE)
 
 cC3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cC3",
+                                                 algebra_names = "lC3",
                                                  progress_bar = FALSE)
 
 cA1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cA1",
+                                                 algebra_names = "lA1",
                                                  progress_bar = FALSE)
 
 cA2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cA2",
+                                                 algebra_names = "lA2",
                                                  progress_bar = FALSE)
 
 cA3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cA3",
+                                                 algebra_names = "lA3",
                                                  progress_bar = FALSE)
 
 cP1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cP1",
+                                                 algebra_names = "lP1",
                                                  progress_bar = FALSE)
 
 cP2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cP2",
+                                                 algebra_names = "lP2",
                                                  progress_bar = FALSE)
 
 cP3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cP3",
+                                                 algebra_names = "lP3",
                                                  progress_bar = FALSE)
 
 cS1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cS1",
+                                                 algebra_names = "lS1",
                                                  progress_bar = FALSE)
 
 cS2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cS2",
+                                                 algebra_names = "lS2",
                                                  progress_bar = FALSE)
 
 cS3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "cS3",
+                                                 algebra_names = "lS3",
                                                  progress_bar = FALSE)
 
 # Display the first few rows of individual parameters for manifest variables
