@@ -340,9 +340,18 @@ ggplot(data = cS3_individual$lS3,
   ylab("Individual Parameter Value for lS3") +
   geom_point()
 
+#
+# AB->LH here is a proposal how we can derive the
+# model predictions much faster than going through
+# the algebra computation
+#
+
 # for {lC1 := lC0_1 + lC1_1*data.age + lC2_1*data.gender}*cC1
 params <- omxGetParameters(casp_mnlfamxsem_result)
 grid <- expand.grid(seq(min(df5$age),max(df5$age),1), df5$gender)
-prediction <- sapply(grid, 1, function(x) {
-  params["lC0_1"]+x[1]*params["lC1_1"]+x[2]*params["lC2_1"]
+names(grid) <- c("age","gender")
+prediction <- apply(grid, 1, function(x) {
+  params["lS0_1"]+x[1]*params["lS1_1"]+x[2]*params["lS2_1"]
 })
+grid <- cbind(grid, prediction)
+grid %>% ggplot(aes(x=age,y=prediction, group=gender,color=gender))+geom_line()
