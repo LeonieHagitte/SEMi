@@ -233,18 +233,18 @@ library(ggplot2)
 # Plot individual parameters for lC1
 
 ggplot(data = lC1_individual$lC1,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lC1") +
   geom_point()
 
 # Plot individual parameters for lC2
 
 ggplot(data = lC2_individual$lC2,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lC2") +
   geom_point()
 
@@ -252,63 +252,63 @@ ggplot(data = lC2_individual$lC2,
 # Plot individual parameters for lC3
 
 ggplot(data = lC3_individual$lC3,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lC3") +
   geom_point()
 
 # Plot individual parameters for lA1
 
 ggplot(data = lA1_individual$lA1,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lA1") +
   geom_point()
 
 # Plot individual parameters for lA2
 
 ggplot(data = lA2_individual$lA2,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lA2") +
   geom_point()
 
 # Plot individual parameters for lA3
 
 ggplot(data = lA3_individual$lA3,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lA3") +
   geom_point()
 
 # Plot individual parameters for lP1
 
 ggplot(data = lP1_individual$lP1,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lP1") +
   geom_point()
 
 # Plot individual parameters for lP2
 
 ggplot(data = lP2_individual$lP2,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lP2") +
   geom_point()
 
 # Plot individual parameters for lP3
 
 ggplot(data = lP3_individual$lP3,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lP3") +
   geom_point()
 
@@ -317,27 +317,27 @@ ggplot(data = lP3_individual$lP3,
 # Example for lS1
 
 ggplot(data = lS1_individual$lS1,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lS1") +
   geom_point()
 
 # Example for lS2
 
 ggplot(data = cS2_individual$lS2,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lS2") +
   geom_point()
 
 # Example for lS3
 
 ggplot(data = cS3_individual$lS3,
-       aes(x = Age,
+       aes(x = age,
            y = algebra_result,
-           color = factor(Male))) +
+           color = factor(gender))) +
   ylab("Individual Parameter Value for lS3") +
   geom_point()
 
