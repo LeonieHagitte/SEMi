@@ -93,7 +93,6 @@ control ~~ 1*control
 autonomy ~~ 1*autonomy
 pleasure ~~ 1*pleasure
 self_real ~~ 1*self_real 
-
 # Explanation: Latent variances are set to 1 for scaling purposes.
 # Covariances between latent variables (control, autonomy, pleasure, self_real) are specified.
 
@@ -136,7 +135,7 @@ cS3  ~ {iS3 := iS0_3 + iS1_3*data.age + iS2_3*data.gender}*1
 # Explanation: Intercepts are functions of intercepts, slopes, and covariates, multiplied by 1 (constant term).
 "
 
-#+ {cov := cov0 + cov1*data.age + cov2*data.gender}*control + {cov := cov01 + cov01*data.age + cov02*data.gender}*autonomy + {cov := cov001 + cov001*data.age + cov002*data.gender}*pleasure
+# + {covRA := cov00 + cov01*data.age + cov02*data.gender}*autonomy + {covRP := cov000 + cov001*data.age + cov002*data.gender}*pleasure
 
 
 # Define your dataset 
@@ -341,3 +340,9 @@ ggplot(data = cS3_individual$lS3,
   ylab("Individual Parameter Value for lS3") +
   geom_point()
 
+# for {lC1 := lC0_1 + lC1_1*data.age + lC2_1*data.gender}*cC1
+params <- omxGetParameters(casp_mnlfamxsem_result)
+grid <- expand.grid(seq(min(df5$age),max(df5$age),1), df5$gender)
+prediction <- sapply(grid, 1, function(x) {
+  params["lC0_1"]+x[1]*params["lC1_1"]+x[2]*params["lC2_1"]
+})
