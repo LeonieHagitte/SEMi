@@ -37,20 +37,8 @@ df5 <- read_delim("df5.csv", delim = ";",
         mergeid = col_skip(), yrbirth = col_skip()), 
     trim_ws = TRUE, locale = my_locale)
 
-df5$age <- as.numeric(df5$age)
-df5$gender <- as.numeric(df5$gender)
-df5$cC1 <- as.numeric(df5$cC1)
-df5$cC2 <- as.numeric(df5$cC2)
-df5$cC3 <- as.numeric(df5$cC3)
-df5$cA1 <- as.numeric(df5$cA1)
-df5$cA2 <- as.numeric(df5$cA2)
-df5$cA3 <- as.numeric(df5$cA3)
-df5$cP1 <- as.numeric(df5$cP1)
-df5$cP2 <- as.numeric(df5$cP2)
-df5$cP3 <- as.numeric(df5$cP3)
-df5$cS1 <- as.numeric(df5$cS1)
-df5$cS2 <- as.numeric(df5$cS2)
-df5$cS3 <- as.numeric(df5$cS3)
+
+cat("Removing ",  sum(apply(df5, 1, function(x){any(is.na(x))})), "rows becaus of missing data\n")
 
 df5 <- na.omit(df5)
 
