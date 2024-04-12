@@ -92,7 +92,7 @@ self_real =~ {lS1 := lS0_1 + lS1_1*data.age + lS2_1*data.gender}*cS1 +
 control ~~ 1*control
 autonomy ~~ 1*autonomy
 pleasure ~~ 1*pleasure
-self_real ~~ 1*self_real + {cov := cov0 + cov1*data.age + cov2*data.gender}*control + {cov := cov01 + cov01*data.age + cov02*data.gender}*autonomy + {cov := cov001 + cov001*data.age + cov002*data.gender}*pleasure
+self_real ~~ 1*self_real 
 
 # Explanation: Latent variances are set to 1 for scaling purposes.
 # Covariances between latent variables (control, autonomy, pleasure, self_real) are specified.
@@ -136,6 +136,9 @@ cS3  ~ {iS3 := iS0_3 + iS1_3*data.age + iS2_3*data.gender}*1
 # Explanation: Intercepts are functions of intercepts, slopes, and covariates, multiplied by 1 (constant term).
 "
 
+#+ {cov := cov0 + cov1*data.age + cov2*data.gender}*control + {cov := cov01 + cov01*data.age + cov02*data.gender}*autonomy + {cov := cov001 + cov001*data.age + cov002*data.gender}*pleasure
+
+
 # Define your dataset 
 # Make sure your dataset includes columns for all the variables used in the model.
 
@@ -159,51 +162,51 @@ summary(casp_mnlfamxsem_result)
 
 ## Plotting individual parameters
 # Get individual parameters for manifest variables (cC1, cC2, ..., cS3)
-cC1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cC1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cC1",
                                                  progress_bar = FALSE)
 
-cC2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cC2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cC2",
                                                  progress_bar = FALSE)
 
-cC3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cC3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cC3",
                                                  progress_bar = FALSE)
 
-cA1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cA1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cA1",
                                                  progress_bar = FALSE)
 
-cA2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cA2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cA2",
                                                  progress_bar = FALSE)
 
-cA3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cA3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cA3",
                                                  progress_bar = FALSE)
 
-cP1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cP1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cP1",
                                                  progress_bar = FALSE)
 
-cP2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cP2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cP2",
                                                  progress_bar = FALSE)
 
-cP3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cP3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cP3",
                                                  progress_bar = FALSE)
 
-cS1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cS1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cS1",
                                                  progress_bar = FALSE)
 
-cS2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cS2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cS2",
                                                  progress_bar = FALSE)
 
-cS3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem,
+cS3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
                                                  algebra_names = "cS3",
                                                  progress_bar = FALSE)
 
