@@ -168,85 +168,93 @@ summary(casp_mnlfamxsem_result)
 ## Plotting individual parameters
 # Get individual parameters for manifest variables (cC1, cC2, ..., cS3)
 lC1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lC1",
+                                                 algebra_names = "lC1_",
                                                  progress_bar = FALSE)
 
 lC2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lC2",
+                                                 algebra_names = "lC2_",
                                                  progress_bar = FALSE)
 
 lC3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lC3",
+                                                 algebra_names = "lC3_",
                                                  progress_bar = FALSE)
 
 lA1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lA1",
+                                                 algebra_names = "lA1_",
                                                  progress_bar = FALSE)
 
 lA2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lA2",
+                                                 algebra_names = "lA2_",
                                                  progress_bar = FALSE)
 
 lA3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lA3",
+                                                 algebra_names = "lA3_",
                                                  progress_bar = FALSE)
 
 lP1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lP1",
+                                                 algebra_names = "lP1_",
                                                  progress_bar = FALSE)
 
 lP2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lP2",
+                                                 algebra_names = "lP2_",
                                                  progress_bar = FALSE)
 
 lP3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lP3",
+                                                 algebra_names = "lP3_",
                                                  progress_bar = FALSE)
 
 lS1_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lS1",
+                                                 algebra_names = "lS1_",
                                                  progress_bar = FALSE)
 
 lS2_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lS2",
+                                                 algebra_names = "lS2_",
                                                  progress_bar = FALSE)
 
 lS3_individual <- get_individual_algebra_results(mxModel = casp_mnlfamxsem_result,
-                                                 algebra_names = "lS3",
+                                                 algebra_names = "lS3_",
                                                  progress_bar = FALSE)
 
 # Display the first few rows of individual parameters for manifest variables
-head(lC1_individual$lC1)
-head(lC2_individual$lC2)
-head(lC3_individual$lC3)
+head(lC1_individual$lC1_)
+head(lC2_individual$lC2_)
+head(lC3_individual$lC3_)
 
-head(lA1_individual$lA1)
-head(lA2_individual$lA2)
-head(lA3_individual$lA3)
+head(lA1_individual$lA1_)
+head(lA2_individual$lA2_)
+head(lA3_individual$lA3_)
 
-head(lP1_individual$lP1)
-head(lP2_individual$lP2)
-head(lP3_individual$lP3)
+head(lP1_individual$lP1_)
+head(lP2_individual$lP2_)
+head(lP3_individual$lP3_)
 
-head(lS1_individual$lS1)
-head(lS2_individual$lS2)
-head(lS3_individual$lS3)
+head(lS1_individual$lS1_)
+head(lS2_individual$lS2_)
+head(lS3_individual$lS3_)
 
 ## Plotting the Individual parameters
 library(ggplot2)
 
 # Plot individual parameters for lC1
 
-ggplot(data = lC1_individual$lC1,
+ggplot(data = lC1_individual$lC1_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
   ylab("Individual Parameter Value for lC1") +
   geom_point()
 
+
+ggplot(data = lC1_individual$lC1_,
+       aes(x = age,
+           y = algebra_result,
+           color = factor(wave))) +
+  ylab("Individual Parameter Value for lC1") +
+  geom_point()
+
 # Plot individual parameters for lC2
 
-ggplot(data = lC2_individual$lC2,
+ggplot(data = lC2_individual$lC2_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -254,9 +262,16 @@ ggplot(data = lC2_individual$lC2,
   geom_point()
 
 
+ggplot(data = lC2_individual$lC2_,
+       aes(x = age,
+           y = algebra_result,
+           color = factor(wave))) +
+  ylab("Individual Parameter Value for lC2") +
+  geom_point()
+
 # Plot individual parameters for lC3
 
-ggplot(data = lC3_individual$lC3,
+ggplot(data = lC3_individual$lC3_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -265,7 +280,7 @@ ggplot(data = lC3_individual$lC3,
 
 # Plot individual parameters for lA1
 
-ggplot(data = lA1_individual$lA1,
+ggplot(data = lA1_individual$lA1_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -274,7 +289,7 @@ ggplot(data = lA1_individual$lA1,
 
 # Plot individual parameters for lA2
 
-ggplot(data = lA2_individual$lA2,
+ggplot(data = lA2_individual$lA2_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -283,7 +298,7 @@ ggplot(data = lA2_individual$lA2,
 
 # Plot individual parameters for lA3
 
-ggplot(data = lA3_individual$lA3,
+ggplot(data = lA3_individual$lA3_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -292,7 +307,7 @@ ggplot(data = lA3_individual$lA3,
 
 # Plot individual parameters for lP1
 
-ggplot(data = lP1_individual$lP1,
+ggplot(data = lP1_individual$lP1_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -301,7 +316,7 @@ ggplot(data = lP1_individual$lP1,
 
 # Plot individual parameters for lP2
 
-ggplot(data = lP2_individual$lP2,
+ggplot(data = lP2_individual$lP2_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -310,18 +325,16 @@ ggplot(data = lP2_individual$lP2,
 
 # Plot individual parameters for lP3
 
-ggplot(data = lP3_individual$lP3,
+ggplot(data = lP3_individual$lP3_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
   ylab("Individual Parameter Value for lP3") +
   geom_point()
 
-# Repeat the above code for other manifest variables (lS1, lS2, lS3)
-
 # Example for lS1
 
-ggplot(data = lS1_individual$lS1,
+ggplot(data = lS1_individual$lS1_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -330,7 +343,7 @@ ggplot(data = lS1_individual$lS1,
 
 # Example for lS2
 
-ggplot(data = cS2_individual$lS2,
+ggplot(data = cS2_individual$lS2_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -339,7 +352,7 @@ ggplot(data = cS2_individual$lS2,
 
 # Example for lS3
 
-ggplot(data = cS3_individual$lS3,
+ggplot(data = cS3_individual$lS3_,
        aes(x = age,
            y = algebra_result,
            color = factor(gender))) +
@@ -354,10 +367,12 @@ ggplot(data = cS3_individual$lS3,
 
 # for {lC1 := lC0_1 + lC1_1*data.age + lC2_1*data.gender}*cC1
 params <- omxGetParameters(casp_mnlfamxsem_result)
-grid <- expand.grid(seq(min(df5$age),max(df5$age),1), df5$gender)
+grid <- expand.grid(seq(min(df4$age),max(df4$age),1), df4$gender)
 names(grid) <- c("age","gender")
 prediction <- apply(grid, 1, function(x) {
-  params["lS0_1"]+x[1]*params["lS1_1"]+x[2]*params["lS2_1"]
+  params["lS0_"]+x[1]*params["lS1_"]+x[2]*params["lS2_"]
 })
 grid <- cbind(grid, prediction)
 grid %>% ggplot(aes(x=age,y=prediction, group=gender,color=gender))+geom_line()
+
+#####################
