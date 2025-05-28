@@ -1,0 +1,15 @@
+## Decision-Log
+DL-Description:The decision-log is meant to be a documentation of the decisions that have been made along the way of this respective project. 
+The list is aimed to be as extensive as possible, but makes no claim to be absolutely complete.
+Several "types" of decisions are being distinguished: Theoretically driven ones, empirically driven ones, practicality driven ones as well as those that are arbitrary.
+The idea behind that is not only to foster general transparency and documentation, but also to explicitly enable a better grasp of the researchers degrees of freedom
+in simulation studies.
+Note, that the decisions in the DL are numbered, not to depict the chronology of the decisions in the progress of this study, but to make explicit referral easier.
+
+#No.1
+Decison: 
+Type:
+Reasoning:
+Implications:
+
+#No.2
