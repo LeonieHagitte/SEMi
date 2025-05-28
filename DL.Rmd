@@ -6,10 +6,10 @@ The idea behind that is not only to foster general transparency and documentatio
 in simulation studies.
 Note, that the decisions in the DL are numbered, not to depict the chronology of the decisions in the progress of this study, but to make explicit referral easier.
 
-#No.1
+## No.1
 Decison: 
 Type:
 Reasoning:
 Implications:
 
-#No.2
+## No.2
