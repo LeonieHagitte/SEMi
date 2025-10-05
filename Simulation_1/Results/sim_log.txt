@@ -1,0 +1,4 @@
+n_conditions: 3
+n_reps: 200
+n_rep_rows: 1800
+simtime_total_seconds: 536

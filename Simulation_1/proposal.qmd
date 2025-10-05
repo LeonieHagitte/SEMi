@@ -1,0 +1,25 @@
+## Assessing Measurement Invariance: A Comparison of MNLFA and SEM Trees {#sec-DIFDetection}
+
+-   proposal: draft
+-   status: ongoing
+-   people:
+    -   [Leonie Hagitte -@sec-Leonie Hagitte]
+    -   [Andreas Brandmaier -@sec-Andreas Brandmaier]
+
+#### What? {.unnumbered .unlisted}
+
+Ensuring the validity of psychological assessments is crucial, yet differential item functioning (DIF) threatens measurement invariance (MI) when test items function differently across groups [@Bauer2020]. Recent calls for improved DIF detection methods highlight the need for more advanced statistical approaches [@Lee2024].
+
+Moderated nonlinear factor analysis (MNLFA) is a widely used technique for assessing DIF across multiple covariates. It integrates nonlinear methodologies into factor analysis, allowing researchers to detect meaningful differences in measurement across diverse groups [@Enders2024]. Furthermore, MNLFA allows for the continuous moderation of the measurement process, which expands beyond traditional models that typically assume constant relationships across groups [@Oeltjen2023]. However, it requires a priori specification of relevant covariates.
+
+In contrast, structural equation modeling (SEM) trees and forests provide a data-driven alternative that allows for nonlinear effects and systematically identifies influential covariates and their interactions [@Brandmaier2013; @Brandmaier2016]. SEM trees facilitate the identification of heterogeneous groups within datasets by showing how covariates impact measurement model parameters across diverse subgroups. This tree-based approach simplifies the modeling of complex interactions and also offers a methodology to assess MI [@Brandmaier2013].
+
+#### So what? {.unnumbered .unlisted}
+
+This project will conduct a Monte Carlo simulation to compare the performance of MNLFA and SEM trees/forests in detecting DIF and assessing MI under varying conditions. Specifically, we evaluate their relative effectiveness in identifying MI and adjusting for DIF across different groups [@DeJoseph2022; @Kolbe2020].
+
+By systematically contrasting these methods, the study aims to clarify under which conditions each method is preferable, providing practical guidance for researchers in selecting appropriate statistical techniques to improve the validity of psychological measurement.
+
+#### What’s next? {.unnumbered .unlisted}
+
+The simulation study is in preparation. Next steps include conducting the Monte Carlo simulations, and evaluating comparative performance of the methods in terms of DIF detection, MI assessment, and accuracy.

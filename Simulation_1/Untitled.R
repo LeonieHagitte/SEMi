@@ -1,0 +1,494 @@
+
+model1_nonmod <- '
+  # first item fixed to 1
+  latent1 =~ 1*item1 + 0.7*item2 + 0.7*item3 + 0.7*item4
+
+  # variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+
+  # intercepts
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  
+  # latent means
+  latent1 ~ 0*1
+  '
+
+
+model1_metric <- '
+  # one item fixed to 1, one moderated
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator}*item1 + {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator}*item2 + {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator}*item3 + 1*item4
+
+  # variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+  # intercepts
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  
+  # latent means
+  latent1 ~ 0*1
+  '
+
+model1_scalar <- '
+  # one item fixed to 1, one moderated
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator}*item1 + {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator}*item2 + {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator}*item3 + 1*item4
+
+  # variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+  # intercepts
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator}*1
+  
+  # latent means
+  latent1 ~ 0*1
+  '
+
+model1_strict <- '
+  # one item fixed to 1, one moderated
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator}*item1 + {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator}*item2 + {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator}*item3 + 1*item4
+
+  # variances
+  item1 ~~ {theta_item1 := exp(theta_item1_0 + theta_item1_1*data.moderator)}*item1
+  item2 ~~ {theta_item2 := exp(theta_item2_0 + theta_item2_1*data.moderator)}*item2
+  item3 ~~ {theta_item3 := exp(theta_item3_0 + theta_item3_1*data.moderator)}*item3
+  item4 ~~ {theta_item4 := exp(theta_item4_0 + theta_item4_1*data.moderator)}*item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+  # intercepts
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator}*1
+  
+  # latent means
+  latent1 ~ 0*1
+  '
+
+# Quadratic moderator
+
+data$moderator_sq <- data$moderator_c^2
+
+model1_metric_quad <- '
+  # one item fixed to 1, one moderated
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator + lambda_item1_2*data.moderator_sq}*item1 + {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator + lambda_item2_2*data.moderator_sq}*item2 + {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator + lambda_item3_2*data.moderator_sq}*item3 + 1*item4
+
+  # variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+  # intercepts
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  
+  # latent means
+  latent1 ~ 0*1
+  '
+
+model1_scalar_quad <- '
+  # one item fixed to 1, one moderated
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator + lambda_item1_2*data.moderator_sq}*item1 + {lambda_item2 :=    lambda_item2_0 + lambda_item2_1*data.moderator + lambda_item2_2*data.moderator_sq}*item2 + {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator + lambda_item3_2*data.moderator_sq}*item3 + 1*item4
+
+  # variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  
+  # latent variances 
+  latent1 ~~ latent1
+
+  # intercepts
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator + nu_item1_2*data.moderator_sq}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator + nu_item2_2*data.moderator_sq}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator + nu_item3_2*data.moderator_sq}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator + nu_item4_2*data.moderator_sq}*1
+
+  # Latent mean fixed for identification
+  latent1 ~ 0*1
+'
+
+model1_strict_quad <- '
+  # Loadings with quadratic moderation (metric non-invariance)
+  latent1 =~ {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator + lambda_item1_2*data.moderator_sq}*item1 + 
+             {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator + lambda_item2_2*data.moderator_sq}*item2 + 
+             {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator + lambda_item3_2*data.moderator_sq}*item3 + 
+             1*item4
+
+  # Residual variances with quadratic moderation (strict non-invariance)
+  item1 ~~ {theta_item1 := exp(theta_item1_0 + theta_item1_1*data.moderator + theta_item1_2*data.moderator_sq)}*item1
+  item2 ~~ {theta_item2 := exp(theta_item2_0 + theta_item2_1*data.moderator + theta_item2_2*data.moderator_sq)}*item2
+  item3 ~~ {theta_item3 := exp(theta_item3_0 + theta_item3_1*data.moderator + theta_item3_2*data.moderator_sq)}*item3
+  item4 ~~ {theta_item4 := exp(theta_item4_0 + theta_item4_1*data.moderator + theta_item4_2*data.moderator_sq)}*item4
+  
+  # Latent variance
+  latent1 ~~ latent1
+
+  # Intercepts with quadratic moderation (scalar non-invariance)
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator + nu_item1_2*data.moderator_sq}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator + nu_item2_2*data.moderator_sq}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator + nu_item3_2*data.moderator_sq}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator + nu_item4_2*data.moderator_sq}*1
+
+  # Latent mean fixed for identification
+  latent1 ~ 0*1
+'
+
+
+## mnlfa 2F model-----
+
+model2_nonmod <- '
+  # Factor loadings: first item per factor fixed to 1 for identification
+  latent1 =~ 0.7*item1 + 0.7*item2 + 0.7*item3 + 1*item4
+  latent2 =~ 0.7*item5 + 0.7*item6 + 1*item7
+
+  # Residual variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  item5 ~~ item5
+  item6 ~~ item6
+  item7 ~~ item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts fixed to zero
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  item5 ~ 0*1
+  item6 ~ 0*1
+  item7 ~ 0*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+model2_metric <- '
+  # Factor loadings with linear moderation by data.moderator_con
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_con}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_con}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_con}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_con}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_con}*item6 +
+    1*item7
+
+  # Residual variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  item5 ~~ item5
+  item6 ~~ item6
+  item7 ~~ item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed to 0.5 for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts fixed to zero
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  item5 ~ 0*1
+  item6 ~ 0*1
+  item7 ~ 0*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+model2_scalar <- '
+  # Factor loadings with linear moderation by data.moderator_con
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_con}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_con}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_con}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_con}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_con}*item6 +
+    1*item7
+
+  # Residual variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  item5 ~~ item5
+  item6 ~~ item6
+  item7 ~~ item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed to 0.5 for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts with linear moderation by data.moderator_con
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator_con}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator_con}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator_con}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator_con}*1
+  item5 ~ {nu_item5 := nu_item5_0 + nu_item5_1*data.moderator_con}*1
+  item6 ~ {nu_item6 := nu_item6_0 + nu_item6_1*data.moderator_con}*1
+  item7 ~ {nu_item7 := nu_item7_0 + nu_item7_1*data.moderator_con}*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+model2_strict <- '
+  # Factor loadings with linear moderation by data.moderator_con
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_con}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_con}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_con}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_con}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_con}*item6 +
+    1*item7
+
+  # Residual variances with linear moderation
+  item1 ~~ {theta_item1 := exp(theta_item1_0 + theta_item1_1*data.moderator_con)}*item1
+  item2 ~~ {theta_item2 := exp(theta_item2_0 + theta_item2_1*data.moderator_con)}*item2
+  item3 ~~ {theta_item3 := exp(theta_item3_0 + theta_item3_1*data.moderator_con)}*item3
+  item4 ~~ {theta_item4 := exp(theta_item4_0 + theta_item4_1*data.moderator_con)}*item4
+  item5 ~~ {theta_item5 := exp(theta_item5_0 + theta_item5_1*data.moderator_con)}*item5
+  item6 ~~ {theta_item6 := exp(theta_item6_0 + theta_item6_1*data.moderator_con)}*item6
+  item7 ~~ {theta_item7 := exp(theta_item7_0 + theta_item7_1*data.moderator_con)}*item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed to 0.5 for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts with linear moderation
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator_con}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator_con}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator_con}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator_con}*1
+  item5 ~ {nu_item5 := nu_item5_0 + nu_item5_1*data.moderator_con}*1
+  item6 ~ {nu_item6 := nu_item6_0 + nu_item6_1*data.moderator_con}*1
+  item7 ~ {nu_item7 := nu_item7_0 + nu_item7_1*data.moderator_con}*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+# Center the moderator
+data$moderator_c <- scale(data$moderator, scale = FALSE)
+
+# Compute the quadratic term
+data$moderator_sq <- data$moderator_c^2
+
+model2_metric_quad <- '
+  # Factor loadings with quadratic moderation
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_c + lambda_item1_2*data.moderator_sq}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_c + lambda_item2_2*data.moderator_sq}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_c + lambda_item3_2*data.moderator_sq}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_c + lambda_item5_2*data.moderator_sq}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_c + lambda_item6_2*data.moderator_sq}*item6 +
+    1*item7
+
+  # Residual variances (can later be moderated similarly if needed)
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  item5 ~~ item5
+  item6 ~~ item6
+  item7 ~~ item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts (currently fixed to zero; can be moderated analogously)
+  item1 ~ 0*1
+  item2 ~ 0*1
+  item3 ~ 0*1
+  item4 ~ 0*1
+  item5 ~ 0*1
+  item6 ~ 0*1
+  item7 ~ 0*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+model2_scalar_quad <- '
+  # Factor loadings with quadratic moderation
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_c + lambda_item1_2*data.moderator_sq}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_c + lambda_item2_2*data.moderator_sq}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_c + lambda_item3_2*data.moderator_sq}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_c + lambda_item5_2*data.moderator_sq}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_c + lambda_item6_2*data.moderator_sq}*item6 +
+    1*item7
+
+  # Residual variances
+  item1 ~~ item1
+  item2 ~~ item2
+  item3 ~~ item3
+  item4 ~~ item4
+  item5 ~~ item5
+  item6 ~~ item6
+  item7 ~~ item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts with quadratic moderation
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator_c + nu_item1_2*data.moderator_sq}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator_c + nu_item2_2*data.moderator_sq}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator_c + nu_item3_2*data.moderator_sq}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator_c + nu_item4_2*data.moderator_sq}*1
+  item5 ~ {nu_item5 := nu_item5_0 + nu_item5_1*data.moderator_c + nu_item5_2*data.moderator_sq}*1
+  item6 ~ {nu_item6 := nu_item6_0 + nu_item6_1*data.moderator_c + nu_item6_2*data.moderator_sq}*1
+  item7 ~ {nu_item7 := nu_item7_0 + nu_item7_1*data.moderator_c + nu_item7_2*data.moderator_sq}*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+model2_strict_quad <- '
+  # Factor loadings with quadratic moderation
+  latent1 =~ 
+    {lambda_item1 := lambda_item1_0 + lambda_item1_1*data.moderator_c + lambda_item1_2*data.moderator_sq}*item1 +
+    {lambda_item2 := lambda_item2_0 + lambda_item2_1*data.moderator_c + lambda_item2_2*data.moderator_sq}*item2 +
+    {lambda_item3 := lambda_item3_0 + lambda_item3_1*data.moderator_c + lambda_item3_2*data.moderator_sq}*item3 +
+    1*item4
+
+  latent2 =~ 
+    {lambda_item5 := lambda_item5_0 + lambda_item5_1*data.moderator_c + lambda_item5_2*data.moderator_sq}*item5 +
+    {lambda_item6 := lambda_item6_0 + lambda_item6_1*data.moderator_c + lambda_item6_2*data.moderator_sq}*item6 +
+    1*item7
+
+  # Residual variances with quadratic moderation on log scale
+  item1 ~~ {theta_item1 := exp(theta_item1_0 + theta_item1_1*data.moderator_c + theta_item1_2*data.moderator_sq)}*item1
+  item2 ~~ {theta_item2 := exp(theta_item2_0 + theta_item2_1*data.moderator_c + theta_item2_2*data.moderator_sq)}*item2
+  item3 ~~ {theta_item3 := exp(theta_item3_0 + theta_item3_1*data.moderator_c + theta_item3_2*data.moderator_sq)}*item3
+  item4 ~~ {theta_item4 := exp(theta_item4_0 + theta_item4_1*data.moderator_c + theta_item4_2*data.moderator_sq)}*item4
+  item5 ~~ {theta_item5 := exp(theta_item5_0 + theta_item5_1*data.moderator_c + theta_item5_2*data.moderator_sq)}*item5
+  item6 ~~ {theta_item6 := exp(theta_item6_0 + theta_item6_1*data.moderator_c + theta_item6_2*data.moderator_sq)}*item6
+  item7 ~~ {theta_item7 := exp(theta_item7_0 + theta_item7_1*data.moderator_c + theta_item7_2*data.moderator_sq)}*item7
+
+  # Latent variances
+  latent1 ~~ latent1
+  latent2 ~~ latent2
+
+  # Latent covariance fixed for identification
+  latent1 ~~ 0.5*latent2
+
+  # Intercepts with quadratic moderation
+  item1 ~ {nu_item1 := nu_item1_0 + nu_item1_1*data.moderator_c + nu_item1_2*data.moderator_sq}*1
+  item2 ~ {nu_item2 := nu_item2_0 + nu_item2_1*data.moderator_c + nu_item2_2*data.moderator_sq}*1
+  item3 ~ {nu_item3 := nu_item3_0 + nu_item3_1*data.moderator_c + nu_item3_2*data.moderator_sq}*1
+  item4 ~ {nu_item4 := nu_item4_0 + nu_item4_1*data.moderator_c + nu_item4_2*data.moderator_sq}*1
+  item5 ~ {nu_item5 := nu_item5_0 + nu_item5_1*data.moderator_c + nu_item5_2*data.moderator_sq}*1
+  item6 ~ {nu_item6 := nu_item6_0 + nu_item6_1*data.moderator_c + nu_item6_2*data.moderator_sq}*1
+  item7 ~ {nu_item7 := nu_item7_0 + nu_item7_1*data.moderator_c + nu_item7_2*data.moderator_sq}*1
+
+  # Latent means fixed to zero for identification
+  latent1 ~ 0*1
+  latent2 ~ 0*1
+'
+
+analytical_models <- list(
+  models1 = list(
+    model1_nonmod = model1_nonmod,
+    model1_metric = model1_metric,
+    model1_scalar = model1_scalar,
+    model1_strict = model1_strict,
+    model1_metric_quad = model1_metric_quad,
+    model1_scalar_quad = model1_scalar_quad,
+    model1_strict_quad = model1_strict_quad
+  ),
+  models2 = list(
+    model2_nonmod = model2_nonmod,
+    model2_metric = model2_metric,
+    model2_scalar = model2_scalar,
+    model2_strict = model2_strict,
+    model2_metric_quad = model2_metric_quad,
+    model2_scalar_quad = model2_scalar_quad,
+    model2_strict_quad = model2_strict_quad
+  )
+)
+
