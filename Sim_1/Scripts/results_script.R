@@ -66,7 +66,6 @@ summarise_tree <- function(results) {
     ) %>%
     arrange(model_type, N, moderator_1_type)
 }
-# -----------------------------------------------------------------------------
 
 # --------------------------- saving utility ----------------------------------
 .ensure_dir <- function(path) {

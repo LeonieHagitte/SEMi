@@ -198,12 +198,31 @@ semtree_detects_moderation <- function(st, moderator = c("M","M2")) {
 }
 
 
-getPredictorsFromTree <- function(tree) {
-  if (tree$caption == "TERMINAL") {
-    return()
-  } else {
-    l <- getPredictorsFromTree(tree$left_child)
-    r <- getPredictorsFromTree(tree$right_child)
-    return(c(l, r, tree$rule$name))
-  }
+#getPredictorsFromTree <- function(tree) {
+#  if (tree$caption == "TERMINAL") {
+#    return()
+#  } else {
+#    l <- getPredictorsFromTree(tree$left_child)
+#    r <- getPredictorsFromTree(tree$right_child)
+#    return(c(l, r, tree$rule$name))
+#  }
+#}
+
+getPredictorsFromTree <- function(st) {
+  if (inherits(st, "error") || is.null(st)) return(NULL)
+  if (!methods::is(st, "semtree")) return(NULL)
+  
+  pt <- tryCatch(methods::slot(st, "tree"), error = function(e) NULL)
+  if (!inherits(pt, "party")) return(NULL)
+  
+  ids <- partykit::nodeids(pt, terminal = FALSE)
+  if (length(ids) == 0L) return(NULL)
+  
+  split_vars <- unlist(partykit::nodeapply(pt, ids, FUN = function(nd) {
+    sp <- partykit::split_node(nd)
+    if (is.null(sp)) return(NULL)
+    names(partykit::data_party(pt))[partykit::varid_split(sp)]
+  }))
+  
+  split_vars
 }

@@ -1,0 +1,113 @@
+\usepackage[english]{babel}
+
+\title{\textbf{\textsf{Preregistration: SEMi-Complete by Design: \\ A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees}}}
+\date{\today}
+\author{Leonie Hagitte\textsuperscript{1,2}, Andreas M. Brandmaier\textsuperscript{2}}
+
+% math
+\usepackage{amsmath, amssymb}
+
+% references
+\usepackage[style=apa, backend=biber]{biblatex}
+\addbibresource{bibliography.bib}
+
+% fonts
+\usepackage{helvet}
+\usepackage{sectsty}
+\allsectionsfont{\sffamily} % for section titltes use sans-serif
+% \renewcommand{\familydefault}{\sfdefault} % comment out for sans-serif font
+% \usepackage{sansmath} % comment out for sans-serif math font
+% \sansmath % comment out for sans-serif math font
+
+% margins
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  total={170mm,257mm},
+  left=25mm,
+  right=25mm,
+  top=30mm,
+  bottom=30mm,
+}
+
+% no indentation when a new paragraph starts
+\setlength{\parindent}{0cm}
+
+% links
+\usepackage{hyperref} % better links
+\usepackage{color}    % nicer link colors
+\definecolor{pigment}{rgb}{0.2, 0.2, 0.6}
+\hypersetup{
+  colorlinks = true, % Color links instead of ugly boxes
+  urlcolor   = pigment, % Color for external hyperlinks
+  linkcolor  = black, % Color for internal links
+  citecolor  = pigment % Color for citations
+}
+
+% headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{ADEMP-PreReg MNLFA vs. SEM-Trees}
+\chead{}
+\rhead{}
+
+% example boxes
+\usepackage{tcolorbox}
+\newtcolorbox{examplebox}{
+  colback=white,
+  colframe=gray!30,
+  title=Example,
+  sharp corners,
+  boxrule=0.5pt,
+  coltitle=black
+}
+
+% conditionals
+\usepackage{ifthen}
+\newboolean{showinstructions}
+\newboolean{showexamples}
+\newboolean{showexplanations}
+\renewenvironment{examplebox}{%
+  \ifthenelse{\boolean{showexamples}}%
+    {\begin{tcolorbox}[colback=white, colframe=gray!30, title=Example, sharp corners, boxrule=0.5pt, coltitle=black]}%
+    {\expandafter\comment}%
+}{%
+  \ifthenelse{\boolean{showexamples}}%
+    {\end{tcolorbox}}%
+    {\expandafter\endcomment}%
+}
+
+% Define a new environment for explanations
+\newcommand{\explanation}[1]{%
+  \ifthenelse{\boolean{showexplanations}}%
+    {\textit{Explanation:} #1}%
+    {\ignorespaces}%
+}
+
+% Define a new environment for instructions
+\newcommand{\instructions}[1]{%
+  \ifthenelse{\boolean{showinstructions}}%
+    {#1}%
+    {\ignorespaces}%
+}
+
+\makeatletter
+\newcommand{\maketitlepage}{%
+    \begin{titlepage}
+        \maketitle
+        \thispagestyle{empty}
+        \vfill 
+        \centering
+        Version: 1.1 \\
+        Last updated: 2024-11-18 \\
+        Template based on: \\
+        Siepe, B. S., Bartoš, F., Morris, T. P., Boulesteix, A.-L., Heck, D. W., \& Pawel, S. (2024). Simulation Studies for Methodological Research in Psychology: A Standardized Template for Planning, Preregistration, and Reporting. \textit{Psychological Methods}. \url{https://doi.org/10.1037/met0000695}, \url{https://doi.org/10.31234/osf.io/ufgy6}\\
+        \vspace{\baselineskip}
+        \textsuperscript{1}Center for Lifespan Psychology, Max Planck Institute for Human Development, Berlin, Germany; The International Max Planck Research School on the Life Course, Berlin, Germany\\
+        \vspace{\baselineskip}
+        \textsuperscript{2}Department of Psychology, MSB Medical School Berlin, Berlin, Germany
+        \vfill 
+    \end{titlepage}
+    \newpage
+}
+\makeatother
