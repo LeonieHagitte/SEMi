@@ -9,16 +9,10 @@
 # =============================================================================
 
 # ---- dependencies ------------------------------------------------------------
-# Only attach what we use extensively; call others with explicit namespaces.
 library(dplyr)
 library(purrr)
-library(lavaan)     # for parameterEstimates(), lavInspect()
+library(lavaan)   
 library(OpenMx)
-
-
-# =============================================================================
-# 0) Generic kernels (backend-agnostic)
-# =============================================================================
 
 # Align two named numeric vectors on common names
 .align_by_name <- function(est, tru) {
@@ -60,8 +54,6 @@ rmse_absolute <- function(est_vec, true_vec) {
   ind <- map_lgl(names(true_vec), function(nm) {
     row <- tab %>% filter(namekey == nm)
     if (nrow(row) == 0) return(NA)
-    # A parameter might appear in multiple rows (e.g., equality constraints);
-    # consider it covered if ANY matching row covers the truth.
     any((row$ci.lower <= true_vec[[nm]]) & (true_vec[[nm]] <= row$ci.upper))
   })
   mean(ind, na.rm = TRUE)
@@ -80,7 +72,6 @@ calculate_mcse_rmse <- function(rmse_list) {
 
 # =============================================================================
 # 1) lavaan extractors and wrappers
-#    (used if you also fit lavaan models; not needed for mxsem fits)
 # =============================================================================
 
 # Extract loadings as a named vector "f1=~y1", ...
@@ -99,7 +90,7 @@ get_estimated_theta_diag <- function(fit, ov_prefix = "y") {
 }
 
 # Extract moderation deltas by label prefix (e.g., "delta_")
-# Requires that you LABEL the relevant parameters in your lavaan syntax.
+# Requires LABELing the relevant parameters in lavaan syntax.
 get_estimated_deltas_by_label <- function(fit, label_prefix = "delta_") {
   if (is.null(fit) || !lavInspect(fit, "converged")) return(setNames(numeric(0), character(0)))
   pe <- parameterEstimates(fit, ci = TRUE) %>%
@@ -150,7 +141,6 @@ calculate_relative_bias_deltas <- function(fit, true_deltas, label_prefix = "del
   mean_relative_bias(get_estimated_deltas_by_label(fit, label_prefix), true_deltas)
 }
 calculate_relative_rmse_deltas <- function(fit, true_deltas, label_prefix = "delta_") {
-  # For deltas, you may prefer absolute RMSE; this keeps a "relative" version for symmetry.
   relative_rmse(get_estimated_deltas_by_label(fit, label_prefix), true_deltas)
 }
 
@@ -158,7 +148,6 @@ calculate_relative_rmse_deltas <- function(fit, true_deltas, label_prefix = "del
 
 # -------------------------------------------------------------------
 # Robust extractor for mxsem/OpenMx: estimates, SEs, and CI bounds
-# Handles column name differences across OpenMx versions.
 # Returns tibble with columns: name, estimate, se, ci.lower, ci.upper
 # -------------------------------------------------------------------
 mxsem_param_table <- function(fit) {
@@ -243,7 +232,7 @@ extract_deltas_mxsem <- function(fit, delta_names) {
 }
 
 # =============================================================================
-# 3) Backend-agnostic dispatchers for δ (use these in the driver)
+# 3) Backend-agnostic dispatchers for δ (use in the driver)
 # =============================================================================
 
 # Backend tests
@@ -267,7 +256,7 @@ get_delta_estimates_any <- function(fit, delta_names, label_prefix = "delta_") {
 }
 
 # δ coverage from either backend (returns mean coverage; NA if CIs absent).
-# For OpenMx, you must run with intervals=TRUE to populate CI bounds.
+# For OpenMx, must run with intervals=TRUE to populate CI bounds.
 coverage_deltas_any <- function(fit, true_delta, label_prefix = "delta_") {
   if (.is_mxsem(fit)) {
     tab <- mxsem_param_table(fit)

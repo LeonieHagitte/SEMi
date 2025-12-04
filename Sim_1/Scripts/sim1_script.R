@@ -118,7 +118,7 @@ run_one <- function(row) {
     tree_split_on_M  <- (k_M  > 0)
     tree_split_on_M2 <- (k_M2 > 0)
     
-    # --- truth & assumptions (now inside loop so it matches variant) ---
+    # --- truth & assumptions ---
     truth     <- truth_from_sim(sim, link_label = row$moderator_1_type)
     assumed_M <- assumptions_from_syntax(mnlfa_model, method = "MNLFA")
     assumed_T <- assumptions_from_syntax(cfa_base,    method = "SEMTREE")

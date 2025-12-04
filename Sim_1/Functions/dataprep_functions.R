@@ -1,23 +1,5 @@
 # dataprep_functions.R
 # -----------------------------------------------------------------------------
-# Purpose
-#   Generate SEM population matrices for a single latent factor with four
-#   indicators and explicit moderator handling, in the coding style of gen_mat.R.
-#   Supported model_type:
-#     - "NULL" : null model (no moderation), both moderators present and non-informative
-#     - "1.1"  : full moderation of ALL loadings and ALL residual variances (THETA)
-#     - "1.2"  : partial moderation of loadings for items 1 and 2 only (THETA fixed)
-#
-#   Always returns two moderators in the result:
-#     - moderator_1: can be linear / sigmoid / quadratic / noise
-#     - moderator_2: always non-informative (noise; has no effect on parameters)
-#
-# Matrices returned:
-#   - lambda (LAMBDA) : 4 x 1 loadings; reference loading is item4 = 1
-#   - theta  (THETA)  : 4 x 4 diagonal of residual variances
-#   - psi    (PSI)    : 1 x 1 latent variance (Var(latent1))
-#   - beta   (BETA)   : 1 x 1 structural matrix (always 0 for single factor)
-# -----------------------------------------------------------------------------
 
 # Load necessary libraries
 library(lavaan)
@@ -57,9 +39,7 @@ gen_mat <- function(model_type,
   moderator_1_type <- match.arg(moderator_1_type)
   
   # ---------------- Base (unmoderated) model ----------------
-  # Order matches your lavaan syntax: latent1 =~ item4 + item1 + item2 + item3
-  # We keep matrix rows in item order (item1..item4), but set the reference on item4.
-  # LAMBDA_base: [item1,item2,item3,item4]^T
+  
   LAMBDA_base <- matrix(c(lambda, lambda, lambda, 1.0), nrow = 4, ncol = 1)
   
   # Latent variance
@@ -134,10 +114,6 @@ lav_matrix_diag_idx <- function(n) {
 
 # =============================================================================
 # Case-wise simulator 
-# Purpose:
-#   Generate N observations for the single-factor model with per-case moderation.
-#   Uses the same population equations as gen_mat(), but varies M per subject,
-#   so methods like MNLFA and SEM Tree have a real moderation signal to detect.
 # =============================================================================
 
 # Build a named vector of true δ's for reporting/evaluation
@@ -175,7 +151,7 @@ simulate_moderated_onefactor <- function(
     delta_theta_full  = 0.20,      # used in 1.1 for ALL residual variances
     delta_lambda_12   = 0.20,      # used in 1.2 for y1 & y2 only
     moderate_reference_loading = TRUE,  # if FALSE: do not moderate y4’s loading
-    # --- optional: provide your own moderators (else drawn as N(0,1)) ----------
+    # --- optional: provide own moderators  ----------
     M  = NULL,   # informative moderator; if NULL, rnorm(N)
     M2 = NULL,   # noise moderator; always non-informative; if NULL, rnorm(N)
     # --- numerical guard --------------------------------------------------------
