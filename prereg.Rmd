@@ -1,0 +1,24 @@
+---
+title: "prereg"
+author: "Leonie"
+date: "2025-12-10"
+
+output:
+  pdf_document:
+    latex_engine: pdflatex
+    citation_package: biblatex
+    includes:
+      in_header: preamble.tex
+
+documentclass: apa7
+classoption: [man]
+
+bibliography: bibliography.bib
+biblio-style: apa
+lang: american
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
