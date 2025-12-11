@@ -7,7 +7,7 @@ library(purrr)
 library(OpenMx)
 
 # dependencies
-source(here("Sim_1", "Functions", "dataprep_functions.R"))
+source(here("Sim_1", "Functions", "dataprep_functions2.R"))
 source(here("Sim_1", "Functions", "analysis.R"))
 source(here("Sim_1", "Functions", "dataprep_wrapper.R"))
 source(here("Sim_1", "Functions", "eval_functions.R"))
