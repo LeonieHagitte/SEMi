@@ -81,9 +81,9 @@ where:
 \begin{itemize}
   \item $\boldsymbol{\nu}(Z)$ is the vector of intercepts,
   \item $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ factor loading matrix,
-  \item $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon(Z))$ is the residual vector,
-  \item $\eta \sim \mathcal{N}(\mu_\eta(Z), \sigma^2_\eta(Z))$ is the latent factor,
-  \item \( Z = h(M) \) is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate \( M \).
+  \item $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}\left(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon(Z)\right)$ is the residual vector,
+  \item $\eta \sim \mathcal{N}\left(\mu_\eta(Z), \sigma^2_\eta(Z)\right)$ is the latent factor,
+  \item $ Z = h(M) $ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate \( M \).
 \end{itemize}
 
 \vspace{\baselineskip}
@@ -98,7 +98,7 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 \begin{enumerate}
     \item \textbf{Linear:} 
     \[
-    h(M) = M.
+    h(M) = M
     \]
     In this case, the effective moderator is unbounded and symmetric around zero.
 
@@ -110,13 +110,13 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 
     \item \textbf{Quadratic:}
     \[
-    h(M) = M^2.
+    h(M) = M^2
     \]
     Here, the effective moderator takes values on \([0, \infty)\) and is therefore non-negative and right-skewed, capturing nonlinear but strictly non-negative moderation patterns.
 
     \item \textbf{Noise (non-informative):}
     \[
-    h(M) = 0.
+    h(M) = 0
     \]
     In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator.
 \end{enumerate}
@@ -124,13 +124,13 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 
 \subsubsubsection{\textbf{Factor Loadings}}
 
-The baseline factor loadings were fixed to a discrete value of $\lambda_{xi} = 0.7$ for all items exept item 4, which was used for scaling.  
+The baseline factor loadings were fixed to a discrete value of $\lambda_{xi} = 0.7$.  
 Variation in loadings across simulation conditions arises exclusively through the presence or absence of moderation, which is treated as a fully crossed factor in the grid design.
 
 \vspace{\baselineskip}
 \textbf{Moderated items:}
 
-At the population level, the baseline (unmoderated) measurement model is specified with a single latent factor and four indicators. The factor loading matrix is constructed such that the first three indicators share a common loading value $\lambda$, whereas the fourth indicator is fixed to 1.0 to set the scale of the latent factor:
+At the population level, the baseline (unmoderated) measurement model is specified with a single latent factor and four indicators. The factor loading matrix is constructed such that all fourindicators share a common loading value $\lambda$:
 
 \[
 \boldsymbol{\Lambda}_x =
@@ -138,7 +138,7 @@ At the population level, the baseline (unmoderated) measurement model is specifi
 \lambda \\
 \lambda \\
 \lambda \\
-1.0
+\lambda
 \end{bmatrix}.
 \]
 
@@ -155,7 +155,7 @@ yielding a diagonal residual covariance matrix
 \operatorname{diag}(\theta_1,\theta_2,\theta_3,\theta_4).
 \]
 
-This baseline specification sets the measurement scale (via the reference loading), ensures positive residual variances for all indicators, and serves as the starting point upon which moderation effects are introduced in subsequent conditions.
+This baseline specification ensures positive residual variances for all indicators reflecting a chosen degree of reliability, and serves as the starting point upon which moderation effects are introduced in subsequent conditions.
 
 
 For each condition involving moderation, the loading of item $i$ is defined as a deterministic function of the moderator $Z$:
@@ -179,7 +179,7 @@ Given the fixed baseline loading $\lambda_{xi}=0.7$, this constraint yields an a
 To comply with the grid-search framework, $\delta_{\lambda_i}$ is evaluated at the following discrete levels:
 
 \[
-\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0,\,0.2,\,0.3\}.
+\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
 \]
 
 These values span the full admissible range while maintaining deterministic, reproducible simulation conditions.
@@ -414,8 +414,7 @@ The following moderator transformations are implemented:
 
 \textbf{Factor Loadings}
 
-For each latent factor, a single reference indicator loading is fixed to 1.0 to set
-the measurement scale, and all remaining baseline loadings for that factor are
+For each latent factor, all baseline loadings for that factor are
 fixed at 0.7. For the two-factor model in Study~2, this yields
 
 \[
@@ -424,14 +423,14 @@ fixed at 0.7. For the two-factor model in Study~2, this yields
 0.7\\
 0.7\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \qquad
 \boldsymbol{\Lambda}_y =
 \begin{bmatrix}
 0.7\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \]
 with $x_4$ and $y_3$ serving as reference indicators.
@@ -450,17 +449,17 @@ the moderation coefficients are restricted to
 \[
 \delta_{\lambda_i} \in [-0.4,\,0.3],
 \]
-and evaluated on the discrete grid
+and evaluated on the discrete grid (leaving out the zero effect)
 \[
-\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0,\,0.2,\,0.3\}.
+\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
 \]
 
 All remaining loadings remain fixed across conditions:
 \[
 \lambda_{x3}(Z)=0.7,\quad
-\lambda_{x4}(Z)=1.0,\quad
+\lambda_{x4}(Z)=0.7,\quad
 \lambda_{yj}(Z)=0.7 \quad (j=1,2),\qquad
-\lambda_{y3}(Z)=1.0.
+\lambda_{y3}(Z)=0.7.
 \]
 
 Thus, the loading matrices take the form
@@ -470,14 +469,14 @@ Thus, the loading matrices take the form
 \lambda_{x1}(Z)\\
 \lambda_{x2}(Z)\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \qquad
 \boldsymbol{\Lambda}_y(Z)=
 \begin{bmatrix}
 0.7\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \]
 yielding fully crossed combinations of (i) moderator transformation type
@@ -509,11 +508,11 @@ identity
 Baseline factor loadings in Study~2 follow the fixed measurement structure:
 \[
 \lambda_{x1}=\lambda_{x2}=\lambda_{x3}=0.7,\qquad
-\lambda_{x4}=1.0,
+\lambda_{x4}=0.7,
 \]
 \[
 \lambda_{y1}=\lambda_{y2}=0.7,\qquad
-\lambda_{y3}=1.0.
+\lambda_{y3}=0.7.
 \]
 These values are used to compute the corresponding baseline residual variances
 $\theta_{10},\dots,\theta_{70}$.
