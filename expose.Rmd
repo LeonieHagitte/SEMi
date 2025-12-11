@@ -1,0 +1,100 @@
+---
+title: "expose"
+author: "Leonie"
+date: "2025-12-10"
+
+output:
+  pdf_document:
+    latex_engine: lualatex
+documentclass: apa7
+classoption: man
+bibliography: bibliography.bib
+header-includes:
+  - |
+    \usepackage[american]{babel}
+    \usepackage{csquotes}
+    \usepackage{amsmath}
+    \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
+    \DeclareLanguageMapping{american}{american-apa}
+    \addbibresource{bibliography.bib}
+
+    \shorttitle{Evaluation of Measurement}
+
+    \affiliation{Max Planck Institute for Human Development, MSB Medical School Berlin\\[1em]
+    \vspace{1.5em}
+    \textit{Supervisors:}\\[0.5em]
+    \textit{Prof. Dr. Andreas M. Brandmaier}\\
+    \textit{Prof. Dr. Martin Schultze}}
+
+    \leftheader{Hagitte}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Science fundamentally depends on the clear delineation and accurate measurement of the object of inquiry. If measurement does not correspond to the phenomena of interest, no level of methodological rigor, statistical sophistication will avert misleading conclusions [@Flake2020; @Flake2017]. Recent research prompted an emphasis on strengthening statistical methods [@Flake2017; @Haig2020; @Altoe2020] as well as theoretical frameworks in psychology [@Eronen2021], hence it becomes apparent that this development by extent hinges on the evaluation of measurement quality.
+
+Thus, my research will focus on two directions and will be structured into two major projects. The first project will focus on facilitating valid psychometric assessments, whereas the second project will aim at improving the evaluation of reliability of measurement scales. Together, these projects will contribute to advance the evaluation of measurement quality.
+
+## Project 1
+Ensuring the validity of psychological assessments is crucial, yet differential item functioning (DIF) can threaten measurement invariance (MI) [@Bauer2020]. Recent calls for improved DIF detection methods emphasize the need for more advanced statistical approaches [@Lee2024]. 
+Moderated nonlinear factor analysis (MNLFA) is a recent approach for assessing MI via parameter moderation within a single-group confirmatory factor analysis framework. MLNFA evaluates MI across multiple continuous and categorical covariates, and accounts for heteroskedasticity by modeling factor and residual variances as functions of these covariates. While MNLFA offers continuous moderation of several parameters of Structural Equation Models (SEMs) (e.g.: factor loadings, covariances etc.), it requires a priori specification of covariates and their functional relationships [@Bauer2017; @Kolbe2024].
+In contrast, Structural Equation Model (SEM) trees and forests are data-driven, non-parametric methods that use recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF [@Brandmaier2016; @Brandmaier2013].
+In this study, we conduct a Monte Carlo simulation to compare the performance of MNLFA and SEM trees as well as forests in detecting DIF and assessing MI under varying conditions. Specifically, we evaluate their effectiveness in identifying non-invariance and detecting relevant covariates. 
+
+### Methods
+We will preregister the simulation study according to the approach by @Siepe2024. Currently we finished a trial run with 100 replications and a minimal set-up of the simulation, for approximating the needed runtime and computational capacities, as well as the maximum number of conditions that can be included in the main simulation. 
+
+## Project 1.2
+Historically, regularization in SEM was used mainly indirectly for parsimony and robustness, but more recent work applies it directly to the detection of measurement bias and measurement non-invariance. 
+Most existing regularized SEM applications still focus on model parsimony or robust estimation, although several newer approaches explicitly target the identification of non-invariant or biased parameters. 
+Confirmatory MI workflows typically require manual specification of equality constraints, whereas exploratory methods such as SEM trees search for subgroups characterized by different parameter values. 
+Regularization has recently been used to detect measurement bias, but fully standardized and widely adopted workflows that systematically bridge confirmatory MI procedures with exploratory subgroup discovery remain rare. 
+We suggest to use ℓ₀ regularization not only for general sparsity but specifically to select a limited subset of parameters that are permitted to be non-invariant. 
+In multi-group SEM, non-invariance can be expressed as violations of cross-group equality constraints, often parameterized as deviations of group-specific parameters from those of a designated reference group. 
+In MNLFA, non-invariance appears as moderation effects on intercepts, loadings, or residual variances. 
+ℓ₀ penalization applied to MI assessment would directly limit the number of parameters allowed to differ across groups or time. 
+This aligns with the modeling goal of treating non-invariance as sparse, even though empirical research frequently documents more extensive violations. 
+Together, these considerations provide a conceptual foundation for applying ℓ₀-based methods to MI detection, at a time when practical implementations within SEM remain limited and require further methodological development.
+
+## Project 2
+Furthermore, the reliability of psychological measurement instruments is commonly estimated using coefficients such as Cronbach’s Alpha and McDonald’s Omega. 
+However, both coefficients share one limitation: they rely on the assumption of uncorrelated measurement errors.
+
+This assumption of uncorrelated measurement errors is frequently
+violated in psychological research. Correlated errors may arise in a range of scenarios, for example: Multi-method assessments, item redundancy, or context-dependent instruments.
+When correlated measurement errors are present, both Alpha and Omega tend to underestimate the true reliability of the instrument, as the unique contributions of error variance are overestimated. 
+To address this issue, we propose an extension of current reliability modeling that explicitly accounts for correlated measurement errors within a SEM framework. 
+By allowing for correlated residuals, our approach should yield more accurate
+reliability estimates, particularly for instruments used in multidimensional, mixed-method, or ecologically valid settings.
+
+The reliability coefficient will be based on previous work on
+the effective error of a latent variable [@Brandmaier2015; @Brandmaier2018; @Brandmaier2018b; @Brandmaier2025].
+Using this approach, we introduce a generalized reliability estimator that generalizes coefficients $\alpha$ and $\omega$ to factor models with correlated errors. Based on Classical Test Theory, we define coefficient $\xi$ as:
+
+\[
+\xi = \frac{1}{1 + \sigma_{\text{eff}}^{2}}
+\]
+
+with $\sigma_{\text{eff}}^{2}$ being the effective error of a pre-specified measurement model, which may or may not contain correlated measurement errors.
+For tau-equivalent models, $\xi$ is identical to Cronbach’s Alpha,
+for congeneric models, $\xi$ is identical to McDonald’s Omega.
+Using prior work \parencite{Brandmaier2018}, we can compute the effective error using an approximation via the non-centrality parameter of a chi-square
+distribution, which in turn can be computed from the loglikelihood
+ratio of a given model and the same model with the true-score variance set to zero. 
+
+### Application
+We will demonstrate the applicability of this SEM based approach using simulated data and empirical examples (e.g., using two-method measurement (2MM) and 3MM design models by @Lawes2020), highlighting the potential of this extended reliability coefficient to improve psychometric evaluation and instrument validation in psychological research.
+Afterwards there will also be need to derive a Eigenwert-based solution of $\sigma_{\text{eff}}^{2}$.
+
+\section{Timeline and Feasibility}
+\begin{itemize}
+    \item \textbf{Year 1}: completion of Project 1 (preregistration \& submission of first manuscript).
+    \item \textbf{Year 2}: Project 2 (literature review, Simulation \& empirical demonstration \& submission of second manuscript).
+    \item \textbf{Year 3}: Buffer for Project completion 1 or 2 (possibly Project 3) \& consolidation, defense. (Derive an exact solution of $\xi$ as suggested by Project 2)
+\end{itemize}
+
+\printbibliography
+
+

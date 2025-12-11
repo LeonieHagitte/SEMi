@@ -1,0 +1,1977 @@
+This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.11.28)  10 DEC 2025 13:24
+ restricted system commands enabled.
+**expose.tex
+(./expose.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+Lua module: luaotfload 2023-08-31 3.26 Lua based OpenType font support
+Lua module: lualibs 2023-07-13 2.76 ConTeXt Lua standard libraries.
+Lua module: lualibs-extended 2023-07-13 2.76 ConTeXt Lua libraries -- extended c
+ollection.
+luaotfload | conf : Root cache directory is "C:/Users/Leonie.Hagitte/AppData/Loc
+al/MiKTeX/luatex-cache/generic/names".
+luaotfload | init : Loading fontloader "fontloader-2023-08-19.lua" from kpse-res
+olved path "C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/luatex/lua
+otfload/fontloader-2023-08-19.lua".
+Lua-only attribute luaotfload@noligature = 1
+luaotfload | init : Context OpenType loader version 3.133
+Inserting `luaotfload.node_processor' in `pre_linebreak_filter'.
+Inserting `luaotfload.node_processor' in `hpack_filter'.
+Inserting `luaotfload.glyph_stream' in `glyph_stream_provider'.
+Inserting `luaotfload.define_font' in `define_font'.
+Lua-only attribute luaotfload_color_attribute = 2
+luaotfload | conf : Root cache directory is "C:/Users/Leonie.Hagitte/AppData/Loc
+al/MiKTeX/luatex-cache/generic/names".
+Inserting `luaotfload.harf.strip_prefix' in `find_opentype_file'.
+Inserting `luaotfload.harf.strip_prefix' in `find_truetype_file'.
+Removing  `luaotfload.glyph_stream' from `glyph_stream_provider'.
+Inserting `luaotfload.harf.glyphstream' in `glyph_stream_provider'.
+Inserting `luaotfload.harf.finalize_vlist' in `post_linebreak_filter'.
+Inserting `luaotfload.harf.finalize_hlist' in `hpack_filter'.
+Inserting `luaotfload.cleanup_files' in `wrapup_run'.
+Inserting `luaotfload.harf.finalize_unicode' in `finish_pdffile'.
+Inserting `luaotfload.glyphinfo' in `glyph_info'.
+Lua-only attribute luaotfload.letterspace_done = 3
+Inserting `luaotfload.aux.set_sscale_dimens' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.set_font_index' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.patch_cambria_domh' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.fixup_fontdata' in `luaotfload.patch_font_unsafe'.
+Inserting `luaotfload.aux.set_capheight' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.set_xheight' in `luaotfload.patch_font'.
+Inserting `luaotfload.rewrite_fontname' in `luaotfload.patch_font'.
+Inserting `tracingstacklevels' in `input_level_string'. (C:/Users/Leonie.Hagitt
+e/AppData/Local/Programs/MiKTeX/tex/latex/apa7/apa7.cls
+Document Class: apa7 2022/07/25 v2.16 APA formatting (7th edition)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/article.c
+ls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/size12.cl
+o
+File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+luaotfload | db : Font names database loaded from C:/Users/Leonie.Hagitte/AppDat
+a/Local/MiKTeX/luatex-cache/generic/names/luaotfload-names.luc.gz)
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen139
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/etoolbox/etool
+box.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count193
+)
+Class apa7 Info: No bibliography package was specified; defaulting to (but not 
+loading) Biblatex on input line 218.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/fontenc.s
+ty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geome
+try.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics/keyva
+l.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/iftex/ifvtex
+.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/iftex/iftex.
+sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count194
+\Gm@cntv=\count195
+\c@Gm@tempcnt=\count196
+\Gm@bindingoffset=\dimen140
+\Gm@wd@mp=\dimen141
+\Gm@odd@mp=\dimen142
+\Gm@even@mp=\dimen143
+\Gm@layoutwidth=\dimen144
+\Gm@layoutheight=\dimen145
+\Gm@layouthoffset=\dimen146
+\Gm@layoutvoffset=\dimen147
+\Gm@dimlist=\toks18
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geome
+try.cfg))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics/graph
+icx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics/graph
+ics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics/trig.
+sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics-cfg/g
+raphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: luatex.def on input line 107.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics-def/l
+uatex.def
+File: luatex.def 2022/09/22 v1.2d Graphics/color driver for luatex
+))
+\Gin@req@height=\dimen148
+\Gin@req@width=\dimen149
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/scalerel/scale
+rel.sty
+Package: scalerel 2016/12/29 v1.8 Routines for constrained scaling and stretchi
+ng of objects, relative to a reference object or in absolute terms
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/tools/calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count197
+\calc@Bcount=\count198
+\calc@Adimen=\dimen150
+\calc@Bdimen=\dimen151
+\calc@Askip=\skip50
+\calc@Bskip=\skip51
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count199
+\calc@Cskip=\skip52
+)
+\thesrwidth=\skip53
+\thesrheight=\skip54
+\srblobheight=\skip55
+\srblobdepth=\skip56
+\mnxsrwidth=\skip57
+\LMex=\skip58
+\LMpt=\skip59
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/frontendla
+yer/tikz.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/basiclayer
+/pgf.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/utilities/
+pgfrcs.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfutil-common.tex
+\pgfutil@everybye=\toks19
+\pgfutil@tempdima=\dimen152
+\pgfutil@tempdimb=\dimen153
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfutil-latex.def
+\pgfutil@abb=\box51
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfrcs.code.tex
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/pgf.revi
+sion.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/basiclayer
+/pgfcore.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/systemlaye
+r/pgfsys.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks20
+\pgfkeys@temptoks=\toks21
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks22
+))
+\pgf@x=\dimen154
+\pgf@y=\dimen155
+\pgf@xa=\dimen156
+\pgf@ya=\dimen157
+\pgf@xb=\dimen158
+\pgf@yb=\dimen159
+\pgf@xc=\dimen160
+\pgf@yc=\dimen161
+\pgf@xd=\dimen162
+\pgf@yd=\dimen163
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count266
+\c@pgf@countb=\count267
+\c@pgf@countc=\count268
+\c@pgf@countd=\count269
+\t@pgf@toka=\toks23
+\t@pgf@tokb=\toks24
+\t@pgf@tokc=\toks25
+\pgf@sys@id@count=\count270
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-luatex.def
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgfsys-luatex.def
+File: pgfsys-luatex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count271
+\pgfsyssoftpath@bigbuffer@items=\count272
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/systemla
+yer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.
+sty
+Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics-cfg/c
+olor.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: luatex.def on input line 274.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/graphics/mathc
+olor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
+Package xcolor Info: Model `RGB' extended on input line 1366.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+math.code.tex
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathutil.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathparser.code.tex
+\pgfmath@dimen=\dimen164
+\pgfmath@count=\count273
+\pgfmath@box=\box52
+\pgfmath@toks=\toks26
+\pgfmath@stack@operand=\toks27
+\pgfmath@stack@operation=\toks28
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.basic.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.trigonometric.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.random.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.comparison.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.base.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.round.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.misc.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfunctions.integerarithmetics.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathcalc.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+mathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count274
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+int.code.tex)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen165
+\pgf@picmaxx=\dimen166
+\pgf@picminy=\dimen167
+\pgf@picmaxy=\dimen168
+\pgf@pathminx=\dimen169
+\pgf@pathmaxx=\dimen170
+\pgf@pathminy=\dimen171
+\pgf@pathmaxy=\dimen172
+\pgf@xx=\dimen173
+\pgf@xy=\dimen174
+\pgf@yx=\dimen175
+\pgf@yy=\dimen176
+\pgf@zx=\dimen177
+\pgf@zy=\dimen178
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen179
+\pgf@path@lasty=\dimen180
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen181
+\pgf@shorten@start@additional=\dimen182
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box53
+\pgf@hbox=\box54
+\pgf@layerbox@main=\box55
+\pgf@picture@serial@count=\count275
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen183
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen184
+\pgf@pt@y=\dimen185
+\pgf@pt@temp=\dimen186
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen187
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen188
+\pgf@sys@shading@range@num=\count276
+\pgf@shadingcount=\count277
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box56
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/basiclay
+er/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/modules/
+pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box57
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/modules/
+pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/compatibil
+ity/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen189
+\pgf@nodesepend=\dimen190
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/compatibil
+ity/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/utilities/
+pgffor.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/utilities/
+pgfkeys.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgfkeys.code.tex))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/pgf/math/pgfma
+th.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/math/pgf
+math.code.tex))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/utilitie
+s/pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen191
+\pgffor@skip=\dimen192
+\pgffor@stack=\toks29
+\pgffor@toks=\toks30
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontend
+layer/tikz/tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/librarie
+s/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count278
+\pgfplotmarksize=\dimen193
+)
+\tikz@lastx=\dimen194
+\tikz@lasty=\dimen195
+\tikz@lastxsaved=\dimen196
+\tikz@lastysaved=\dimen197
+\tikz@lastmovetox=\dimen198
+\tikz@lastmovetoy=\dimen199
+\tikzleveldistance=\dimen256
+\tikzsiblingdistance=\dimen257
+\tikz@figbox=\box58
+\tikz@figbox@bg=\box59
+\tikz@tempbox=\box60
+\tikz@tempbox@bg=\box61
+\tikztreelevel=\count279
+\tikznumberofchildren=\count280
+\tikznumberofcurrentchild=\count281
+\tikz@fig@count=\count282
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/modules/
+pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count283
+\pgfmatrixcurrentcolumn=\count284
+\pgf@matrix@numberofcolumns=\count285
+)
+\tikz@expandcount=\count286
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontend
+layer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/hyper
+ref.sty
+Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/infwarerr/in
+fwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/kvsetkeys/kvse
+tkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/kvdefinekeys
+/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pdfescape/pd
+fescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/ltxcmds/ltxc
+mds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pdftexcmds/p
+dftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+\pdftexcmds@toks=\toks31
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hycolor/hycolo
+r.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/letltxmacro/le
+tltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/auxhook/auxhoo
+k.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/namer
+ef.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/refcount/refco
+unt.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/gettitlestri
+ng/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/kvoptions/kvop
+tions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count287
+)
+\@linkdim=\dimen258
+\Hy@linkcounter=\count288
+\Hy@pagecounter=\count289
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/pd1en
+c.def
+File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/intcalc/intc
+alc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count290
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/puenc
+.def
+File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4064.
+Package hyperref Info: Hyper figures OFF on input line 4181.
+Package hyperref Info: Link nesting OFF on input line 4186.
+Package hyperref Info: Hyper index ON on input line 4189.
+Package hyperref Info: Plain pages OFF on input line 4196.
+Package hyperref Info: Backreferencing OFF on input line 4201.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4448.
+\c@Hy@tempcnt=\count291
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4786.
+\XeTeXLinkMargin=\dimen259
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/bitset/bitse
+t.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/bigintcalc/b
+igintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count292
+\Field@Width=\dimen260
+\Fld@charsize=\dimen261
+Package hyperref Info: Hyper figures OFF on input line 6065.
+Package hyperref Info: Link nesting OFF on input line 6070.
+Package hyperref Info: Hyper index ON on input line 6073.
+Package hyperref Info: backreferencing OFF on input line 6080.
+Package hyperref Info: Link coloring OFF on input line 6085.
+Package hyperref Info: Link coloring with OCG OFF on input line 6090.
+Package hyperref Info: PDF/A mode OFF on input line 6095.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/atbegshi-
+ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count293
+\c@Item=\count294
+\c@Hfootnote=\count295
+)
+Package hyperref Info: Driver (autodetected): hluatex.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/hyperref/hluat
+ex.def
+File: hluatex.def 2023-11-26 v7.01g Hyperref driver for luaTeX
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/stringenc/st
+ringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/atveryend
+-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count296
+\c@bookmark@seq@number=\count297
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck
+/rerunfilecheck.sty
+Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/uniquecounte
+r/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
+)
+\Hy@SectionHShift=\skip60
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/frontend
+layer/tikz/libraries/tikzlibrarysvg.path.code.tex
+File: tikzlibrarysvg.path.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/librarie
+s/pgflibrarysvg.path.code.tex
+File: pgflibrarysvg.path.code.tex 2023-01-15 v3.1.10 (3.1.10)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/pgf/modules/
+pgfmoduleparser.code.tex
+File: pgfmoduleparser.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfparserdef@arg@count=\count298
+)
+\pgf@lib@svg@last@x=\dimen262
+\pgf@lib@svg@last@y=\dimen263
+\pgf@lib@svg@last@c@x=\dimen264
+\pgf@lib@svg@last@c@y=\dimen265
+\pgf@lib@svg@count=\count299
+\pgf@lib@svg@max@num=\count300
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/booktabs/bookt
+abs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen266
+\lightrulewidth=\dimen267
+\cmidrulewidth=\dimen268
+\belowrulesep=\dimen269
+\belowbottomsep=\dimen270
+\aboverulesep=\dimen271
+\abovetopsep=\dimen272
+\cmidrulesep=\dimen273
+\cmidrulekern=\dimen274
+\defaultaddspace=\dimen275
+\@cmidla=\count301
+\@cmidlb=\count302
+\@aboverulesep=\dimen276
+\@belowrulesep=\dimen277
+\@thisruleclass=\count303
+\@lastruleclass=\count304
+\@thisrulewidth=\dimen278
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/threeparttable
+/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box62
+)
+\b@level@one@skip=\skip61
+\e@level@one@skip=\skip62
+\b@level@two@skip=\skip63
+\e@level@two@skip=\skip64
+\b@level@three@skip=\skip65
+\e@level@three@skip=\skip66
+\b@level@four@skip=\skip67
+\e@level@four@skip=\skip68
+\b@level@five@skip=\skip69
+\e@level@five@skip=\skip70
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/caption/captio
+n.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/caption/captio
+n3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen279
+\captionmargin=\dimen280
+\caption@leftmargin=\dimen281
+\caption@rightmargin=\dimen282
+\caption@width=\dimen283
+\caption@indent=\dimen284
+\caption@parindent=\dimen285
+\caption@hangindent=\dimen286
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count305
+\c@continuedfloat=\count306
+Package caption Info: hyperref package is loaded.
+Package caption Info: threeparttable package is loaded.
+)
+\c@APAenum=\count307
+\@text@par@indent=\skip71
+\gr@box=\box63
+\gr@boxwidth=\skip72
+\gr@boxheight=\skip73
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/tools/bm.sty
+Package: bm 2023/07/08 v1.2f Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+Package bm Info: No bold for \OMX/lmex/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
+)
+\c@appendix=\count308
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/fancyhdr/fancy
+hdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
+\f@nch@headwidth=\skip74
+\f@nch@offset@elh=\skip75
+\f@nch@offset@erh=\skip76
+\f@nch@offset@olh=\skip77
+\f@nch@offset@orh=\skip78
+\f@nch@offset@elf=\skip79
+\f@nch@offset@erf=\skip80
+\f@nch@offset@olf=\skip81
+\f@nch@offset@orf=\skip82
+\f@nch@height=\skip83
+\f@nch@footalignment=\skip84
+\f@nch@widthL=\skip85
+\f@nch@widthC=\skip86
+\f@nch@widthR=\skip87
+\@temptokenb=\toks32
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/endfloat/endfl
+oat.sty
+Package: endfloat 2019/04/15 v2.7 LaTeX2e package puts figures and tables at en
+d (jdm)
+\c@posttable=\count309
+\efloat@postttt=\write4
+\@ef@tttopen=\count310
+\c@postfigure=\count311
+\efloat@postfff=\write5
+\@ef@fffopen=\count312
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amsmat
+h.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip88
+For additional information on amsmath, use the `?' option.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amstex
+t.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amsgen
+.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks33
+\ex@=\dimen287
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amsbsy
+.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+LaTeX Info: Redefining \boldsymbol on input line 28.
+\pmbraise@=\dimen288
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsmath/amsopn
+.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count313
+LaTeX Info: Redefining \frac on input line 236.
+\uproot@=\count314
+\leftroot@=\count315
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count316
+\DOTSCASE@=\count317
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box64
+\strutbox@=\box65
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen289
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count318
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count319
+\dotsspace@=\muskip17
+\c@parentequation=\count320
+\dspbrk@lvl=\count321
+\tag@help=\toks34
+\row@=\count322
+\column@=\count323
+\maxfields@=\count324
+\andhelp@=\toks35
+\eqnshift@=\dimen290
+\alignsep@=\dimen291
+\tagshift@=\dimen292
+\tagwidth@=\dimen293
+\totwidth@=\dimen294
+\lineht@=\dimen295
+\@envbody=\toks36
+\multlinegap=\skip89
+\multlinetaggap=\skip90
+\mathdisplay@stack=\toks37
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/amssy
+mb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/amsfo
+nts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup7
+\symAMSb=\mathgroup8
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/unicode-math/u
+nicode-math.sty
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/l3kernel/expl3
+.sty
+Package: expl3 2024-01-04 L3 programming layer (loader) 
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3ba
+ckend-luatex.def
+File: l3backend-luatex.def 2024-01-04 L3 backend support: PDF output (LuaTeX)
+\l__color_backend_stack_int=\count325
+Inserting `l3color' in `luaotfload.parse_color'.
+\l__pdf_internal_box=\box66
+))
+Package: unicode-math 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/unicode-math/u
+nicode-math-luatex.sty
+Package: unicode-math-luatex 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaL
+aTeX
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/l3packages/xpa
+rse/xparse.sty
+Package: xparse 2023-10-10 L3 Experimental document command parser
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/l3packages/l3k
+eys2e/l3keys2e.sty
+Package: l3keys2e 2023-10-10 LaTeX2e option processing using LaTeX3 keys
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/fontspec/fonts
+pec.sty
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+Lua module: fontspec 2022/01/15 2.8a Font selection for XeLaTeX and LuaLaTeX
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/fontspec/fonts
+pec-luatex.sty
+Package: fontspec-luatex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaT
+eX
+\l__fontspec_script_int=\count326
+\l__fontspec_language_int=\count327
+\l__fontspec_strnum_int=\count328
+\l__fontspec_tmp_int=\count329
+\l__fontspec_tmpa_int=\count330
+\l__fontspec_tmpb_int=\count331
+\l__fontspec_tmpc_int=\count332
+\l__fontspec_em_int=\count333
+\l__fontspec_emdef_int=\count334
+\l__fontspec_strong_int=\count335
+\l__fontspec_strongdef_int=\count336
+\l__fontspec_tmpa_dim=\dimen296
+\l__fontspec_tmpb_dim=\dimen297
+\l__fontspec_tmpc_dim=\dimen298
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/fontenc.s
+ty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/fontspec/fonts
+pec.cfg)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/fix-cm.st
+y
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/ts1enc.de
+f
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/lualatex/lualatex-ma
+th/lualatex-math.sty
+Package: lualatex-math 2022/01/01 v1.12 Patches for mathematics typesetting wit
+h LuaLaTeX
+Lua module: lualatex-math 2013/08/03 1.3 Patches for mathematics typesetting wit
+h LuaLaTeX)
+\g__um_fam_int=\count337
+\g__um_fonts_used_int=\count338
+\l__um_primecount_int=\count339
+\g__um_primekern_muskip=\muskip18
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/unicode-math/u
+nicode-math-table.tex)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/upquote/upquot
+e.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/textcomp.
+sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/microtype/micr
+otype.sty
+Package: microtype 2025/07/09 v3.2b Micro-typographical refinements (RS)
+\MT@toks=\toks38
+\MT@tempbox=\box67
+\MT@count=\count340
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
+LaTeX Info: Redefining \leftprotrusion on input line 1088.
+\MT@prot@toks=\toks39
+LaTeX Info: Redefining \rightprotrusion on input line 1107.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen299
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count341
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/microtype/micr
+otype-luatex.def
+File: microtype-luatex.def 2025/07/09 v3.2b Definitions specific to luatex (RS)
+
+Lua module: microtype 2025/07/09 3.2b microtype module.
+Module microtype Info: overwriting function `keepligature' on input line 63
+LaTeX Info: Redefining \lsstyle on input line 779.
+LaTeX Info: Redefining \lslig on input line 779.
+\MT@outer@space=\skip91
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/microtype/micr
+otype.cfg
+File: microtype.cfg 2025/07/09 v3.2b microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/parskip/parski
+p.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+)
+\pandoc@box=\box68
+\cslhangindent=\skip92
+\csllabelwidth=\skip93
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.
+sty
+Package: babel 2024/01/07 v24.1 The Babel package
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/babel/luabab
+el.def
+\bbl@readstream=\read3
+\l@afrikaans=\language2
+Package babel Info: Non-standard hyphenation setup on input line 118.
+\l@ancientgreek=\language3
+\l@armenian=\language4
+\l@assamese=\language5
+\l@basque=\language6
+\l@belarusian=\language7
+\l@bengali=\language8
+\l@bokmal=\language9
+\l@bulgarian=\language10
+\l@catalan=\language11
+\l@churchslavonic=\language12
+\l@classiclatin=\language13
+\l@coptic=\language14
+\l@croatian=\language15
+\l@czech=\language16
+\l@danish=\language17
+\l@dutch=\language18
+\l@esperanto=\language19
+\l@estonian=\language20
+\l@ethiopic=\language21
+\l@finnish=\language22
+\l@french=\language23
+\l@friulan=\language24
+\l@galician=\language25
+\l@georgian=\language26
+\l@german=\language27
+\l@greek=\language28
+\l@gujarati=\language29
+\l@hindi=\language30
+\l@hungarian=\language31
+\l@icelandic=\language32
+\l@indonesian=\language33
+\l@interlingua=\language34
+\l@irish=\language35
+\l@italian=\language36
+\l@kannada=\language37
+\l@kurmanji=\language38
+\l@latin=\language39
+\l@latvian=\language40
+\l@lithuanian=\language41
+\l@liturgicallatin=\language42
+\l@macedonian=\language43
+\l@malayalam=\language44
+\l@marathi=\language45
+\l@mongolian=\language46
+\l@mongolianlmc=\language47
+\l@monogreek=\language48
+\l@ngerman=\language49
+\l@nynorsk=\language50
+\l@occitan=\language51
+\l@oriya=\language52
+\l@pali=\language53
+\l@panjabi=\language54
+\l@piedmontese=\language55
+\l@polish=\language56
+\l@portuguese=\language57
+\l@romanian=\language58
+\l@romansh=\language59
+\l@russian=\language60
+\l@sanskrit=\language61
+\l@serbian=\language62
+\l@serbianc=\language63
+\l@slovak=\language64
+\l@slovenian=\language65
+\l@spanish=\language66
+\l@swedish=\language67
+\l@swissgerman=\language68
+\l@tamil=\language69
+\l@telugu=\language70
+\l@thai=\language71
+\l@turkish=\language72
+\l@turkmen=\language73
+\l@ukenglish=\language74
+\l@ukrainian=\language75
+\l@uppersorbian=\language76
+\l@usenglishmax=\language77
+\l@welsh=\language78
+\babelcatcodetablenum=\catcodetable14
+\bbl@pattcodes=\catcodetable15
+)
+\babel@savecnt=\count342
+\U@D=\dimen300
+\l@unhyphenated=\language79
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/babel/luabab
+el.def
+\bbl@attr@locale=\attribute4
+)
+*************************************
+* Local config file bblopts.cfg used
+*
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/arabi/bblopts.
+cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/babel-english/
+american.ldf
+Language: american 2017/06/06 v3.3r English support from the babel system
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/babel-english/
+english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+Package babel Info: Hyphen rules for 'canadian' set to \l@english
+(babel)             (\language0). Reported on input line 102.
+Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
+(babel)             (\language74). Reported on input line 105.
+Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
+(babel)             (\language74). Reported on input line 108.
+)))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/generic/babel/locale
+/en/babel-american.tex
+Package babel Info: Importing font and identification data for american
+(babel)             from babel-en-US.ini. Reported on input line 11.
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/csquotes/csquo
+tes.sty
+Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
+\csq@reset=\count343
+\csq@gtype=\count344
+\csq@glevel=\count345
+\csq@qlevel=\count346
+\csq@maxlvl=\count347
+\csq@tshold=\count348
+\csq@ltx@everypar=\toks40
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/csquotes/csquo
+tes.def
+File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/csquotes/csquo
+tes.cfg
+File: csquotes.cfg 
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/bibla
+tex.sty
+Package: biblatex 2023/03/05 v3.19 programmable bibliographies (PK/MW)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.
+sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count349
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/logreq/logreq.
+def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+))
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/base/ifthen.st
+y
+Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+)
+\c@tabx@nest=\count350
+\c@listtotal=\count351
+\c@listcount=\count352
+\c@liststart=\count353
+\c@liststop=\count354
+\c@citecount=\count355
+\c@citetotal=\count356
+\c@multicitecount=\count357
+\c@multicitetotal=\count358
+\c@instcount=\count359
+\c@maxnames=\count360
+\c@minnames=\count361
+\c@maxitems=\count362
+\c@minitems=\count363
+\c@citecounter=\count364
+\c@maxcitecounter=\count365
+\c@savedcitecounter=\count366
+\c@uniquelist=\count367
+\c@uniquename=\count368
+\c@refsection=\count369
+\c@refsegment=\count370
+\c@maxextratitle=\count371
+\c@maxextratitleyear=\count372
+\c@maxextraname=\count373
+\c@maxextradate=\count374
+\c@maxextraalpha=\count375
+\c@abbrvpenalty=\count376
+\c@highnamepenalty=\count377
+\c@lownamepenalty=\count378
+\c@maxparens=\count379
+\c@parenlevel=\count380
+\blx@tempcnta=\count381
+\blx@tempcntb=\count382
+\blx@tempcntc=\count383
+\c@blx@maxsection=\count384
+\blx@maxsegment@0=\count385
+\blx@notetype=\count386
+\blx@parenlevel@text=\count387
+\blx@parenlevel@foot=\count388
+\blx@sectionciteorder@0=\count389
+\blx@sectionciteorderinternal@0=\count390
+\blx@entrysetcounter=\count391
+\blx@biblioinstance=\count392
+\labelnumberwidth=\skip94
+\labelalphawidth=\skip95
+\biblabelsep=\skip96
+\bibitemsep=\skip97
+\bibnamesep=\skip98
+\bibinitsep=\skip99
+\bibparsep=\skip100
+\bibhang=\skip101
+\blx@bcfin=\read4
+\blx@bcfout=\write6
+\blx@langwohyphens=\language80
+\c@mincomprange=\count393
+\c@maxcomprange=\count394
+\c@mincompwidth=\count395
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/blx-d
+m.def
+File: blx-dm.def 2023/03/05 v3.19 biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex style data model...
+Package biblatex Info: ... file 'apa.dbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/a
+pa.dbx
+File: apa.dbx 2025/08/27 v9.20 APA biblatex style data model
+)
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count396
+\c@savedafterword=\count397
+\c@annotator=\count398
+\c@savedannotator=\count399
+\c@author=\count400
+\c@savedauthor=\count401
+\c@bookauthor=\count402
+\c@savedbookauthor=\count403
+\c@commentator=\count404
+\c@savedcommentator=\count405
+\c@editor=\count406
+\c@savededitor=\count407
+\c@editora=\count408
+\c@savededitora=\count409
+\c@editorb=\count410
+\c@savededitorb=\count411
+\c@editorc=\count412
+\c@savededitorc=\count413
+\c@foreword=\count414
+\c@savedforeword=\count415
+\c@holder=\count416
+\c@savedholder=\count417
+\c@introduction=\count418
+\c@savedintroduction=\count419
+\c@namea=\count420
+\c@savednamea=\count421
+\c@nameb=\count422
+\c@savednameb=\count423
+\c@namec=\count424
+\c@savednamec=\count425
+\c@translator=\count426
+\c@savedtranslator=\count427
+\c@shortauthor=\count428
+\c@savedshortauthor=\count429
+\c@shorteditor=\count430
+\c@savedshorteditor=\count431
+\c@narrator=\count432
+\c@savednarrator=\count433
+\c@execproducer=\count434
+\c@savedexecproducer=\count435
+\c@execdirector=\count436
+\c@savedexecdirector=\count437
+\c@with=\count438
+\c@savedwith=\count439
+\c@labelname=\count440
+\c@savedlabelname=\count441
+\c@institution=\count442
+\c@savedinstitution=\count443
+\c@lista=\count444
+\c@savedlista=\count445
+\c@listb=\count446
+\c@savedlistb=\count447
+\c@listc=\count448
+\c@savedlistc=\count449
+\c@listd=\count450
+\c@savedlistd=\count451
+\c@liste=\count452
+\c@savedliste=\count453
+\c@listf=\count454
+\c@savedlistf=\count455
+\c@location=\count456
+\c@savedlocation=\count457
+\c@organization=\count458
+\c@savedorganization=\count459
+\c@origlocation=\count460
+\c@savedoriglocation=\count461
+\c@origpublisher=\count462
+\c@savedorigpublisher=\count463
+\c@publisher=\count464
+\c@savedpublisher=\count465
+\c@language=\count466
+\c@savedlanguage=\count467
+\c@origlanguage=\count468
+\c@savedoriglanguage=\count469
+\c@citation=\count470
+\c@savedcitation=\count471
+\c@pageref=\count472
+\c@savedpageref=\count473
+\shorthandwidth=\skip102
+\shortjournalwidth=\skip103
+\shortserieswidth=\skip104
+\shorttitlewidth=\skip105
+\shortauthorwidth=\skip106
+\shorteditorwidth=\skip107
+\locallabelnumberwidth=\skip108
+\locallabelalphawidth=\skip109
+\localshorthandwidth=\skip110
+\localshortjournalwidth=\skip111
+\localshortserieswidth=\skip112
+\localshorttitlewidth=\skip113
+\localshortauthorwidth=\skip114
+\localshorteditorwidth=\skip115
+Package biblatex Info: Trying to load enhanced support for Unicode engines...
+Package biblatex Info: ... file 'blx-unicode.def' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/blx-u
+nicode.def)
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/blx-c
+ompat.def
+File: blx-compat.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/bibla
+tex.def
+File: biblatex.def 2023/03/05 v3.19 biblatex compatibility (PK/MW)
+\c@textcitecount=\count474
+\c@textcitetotal=\count475
+\c@textcitemaxnames=\count476
+\c@biburlbigbreakpenalty=\count477
+\c@biburlbreakpenalty=\count478
+\c@biburlnumpenalty=\count479
+\c@biburlucpenalty=\count480
+\c@biburllcpenalty=\count481
+\biburlbigskip=\muskip19
+\biburlnumskip=\muskip20
+\biburlucskip=\muskip21
+\biburllcskip=\muskip22
+\c@smartand=\count482
+)
+Package biblatex Info: Trying to load bibliography style 'apa'...
+Package biblatex Info: ... file 'apa.bbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/a
+pa.bbx
+File: apa.bbx 2025/08/27 v9.20 APA biblatex references style
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/bbx/s
+tandard.bbx
+File: standard.bbx 2023/03/05 v3.19 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count483
+\c@bbx:relatedtotal=\count484
+)
+Package biblatex Info: Delimiter 'nameyeardelim' in context 'bib' already defin
+ed, overwriting.
+Package biblatex Info: Delimiter 'nameyeardelim' in context 'biblist' already d
+efined, overwriting.
+Package biblatex Info: Delimiter 'nonameyeardelim' in context 'bib' already def
+ined, overwriting.
+Package biblatex Info: Delimiter 'nonameyeardelim' in context 'biblist' already
+ defined, overwriting.
+)
+Package biblatex Info: Trying to load citation style 'apa'...
+Package biblatex Info: ... file 'apa.cbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/a
+pa.cbx
+File: apa.cbx 2025/08/27 v9.20 APA biblatex citation style
+Package biblatex Info: Delimiter 'nameyeardelim' in context '' already defined,
+ overwriting.
+Package biblatex Info: Delimiter 'andothersdelim' in context '' already defined
+, overwriting.
+Package biblatex Info: Redefining '\fullcite'.
+Package biblatex Info: Redefining '\citeauthor'.
+Package biblatex Info: Redefining '\citeyear'.
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcites'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\footcitetexts'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\smartcites'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Lua function BLTXAPAifInParensTF = 26)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/bibla
+tex.cfg
+File: biblatex.cfg 
+)
+Package biblatex Info: LuaTeX detected.
+(biblatex)             Assuming input encoding 'utf8'.
+Package biblatex Info: Document encoding is UTF8 ....
+Package biblatex Info: ... and expl3
+(biblatex)             2024-01-04 L3 programming layer (loader) 
+(biblatex)             is new enough (at least 2020/04/06),
+(biblatex)             setting 'casechanger=expl3'.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/blx-c
+ase-expl3.sty
+Package: blx-case-expl3 2023/03/05 v3.19 expl3 case changing code for biblatex
+))
+
+Class apa7 Warning: Deprecated: see documentation for \authorsaffiliations on i
+nput line 103.
+
+\c@NumberOfAffiliations=\count485
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/bookmark/bookm
+ark.sty
+Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/bookmark/bkm-p
+dftex.def
+File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO
+)
+\BKM@id=\count486
+)) (C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/xurl/xurl.s
+ty
+Package: xurl 2022/01/09 v 0.10 modify URL breaks
+xurl: Set penalties for biblatex
+)
+\c@NumberOfAuthors=\count487
+\c@NumberOfSuperscripts=\count488
+Package csquotes Info: Checking for multilingual support...
+Package csquotes Info: ... found 'babel' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'american'.
+(./expose.aux)
+\openout1 = expose.aux
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 119.
+LaTeX Font Info:    ... okay on input line 119.
+*geometry* driver: auto-detecting
+*geometry* detected driver: luatex
+*geometry* verbose mode - [ preamble ] result:
+* driver: luatex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.0pt
+* \headheight=15.2pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=95.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/su
+pp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count489
+\scratchdimen=\dimen301
+\scratchbox=\box69
+\nofMPsegments=\count490
+\nofMParguments=\count491
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count492
+\MPscratchDim=\dimen302
+\MPnumerator=\count493
+\makeMPintoPDFobject=\count494
+\everyMPtoPDFconversion=\toks42
+)
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/epstopdf-pkg/e
+pstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/00miktex/epsto
+pdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring OFF on input line 119.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/apa7/config/AP
+A7american.txt
+File: APA7american.txt 2020/12/02 v1.02 apa7 configuration for American English
+
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 119.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 119.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},I
+talicFont={},SmallCapsFont={},Script=Math,RawFeature={mathfontdimen=xetex},Bold
+Font={latinmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=ba
+se;script=math;language=dflt;mathfontdimen=xetex;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=ba
+se;script=math;language=dflt;mathfontdimen=xetex;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 119.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},I
+talicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-
+10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-ma
+th.otf,Style=MathScriptScript}},RawFeature={mathfontdimen=xetex},BoldFont={lati
+nmodern-math.otf}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[0.9999970497384594]"[latinmodern-math.otf]:mod
+e=base;script=math;language=dflt;mathfontdimen=xetex;"<7.2-10.2>s*[0.9999970497
+384594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;mathfontdime
+n=xetex;+ssty=0;"<-7.2>s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;
+script=math;language=dflt;mathfontdimen=xetex;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=ba
+se;script=math;language=dflt;mathfontdimen=xetex;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 119.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 119.
+
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
+ line 119.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 119.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
+t line 119.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},I
+talicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-
+10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-ma
+th.otf,Style=MathScriptScript}},RawFeature={mathfontdimen=xetex},BoldFont={lati
+nmodern-math.otf},RawFeature={mathfontdimen=tex2}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[0.9999970497384594]"[latinmodern-math.otf]:mod
+e=base;script=math;language=dflt;mathfontdimen=xetex;mathfontdimen=tex2;"<7.2-1
+0.2>s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;languag
+e=dflt;mathfontdimen=xetex;mathfontdimen=tex2;+ssty=0;"<-7.2>s*[0.9999970497384
+594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;mathfontdimen=x
+etex;mathfontdimen=tex2;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=ba
+se;script=math;language=dflt;mathfontdimen=xetex;mathfontdimen=tex2;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 119.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
+t line 119.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 119.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
+t line 119.
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
+
+
+Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
+(fontspec)             'latinmodern-math.otf' with options
+(fontspec)             [Scale=MatchLowercase,Renderer=Basic,BoldItalicFont={},I
+talicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.2-},{Size=7.2-
+10.2,Font=latinmodern-math.otf,Style=MathScript},{Size=-7.2,Font=latinmodern-ma
+th.otf,Style=MathScriptScript}},RawFeature={mathfontdimen=xetex},BoldFont={lati
+nmodern-math.otf},RawFeature={mathfontdimen=tex3}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.2->s*[0.9999970497384594]"[latinmodern-math.otf]:mod
+e=base;script=math;language=dflt;mathfontdimen=xetex;mathfontdimen=tex3;"<7.2-1
+0.2>s*[0.9999970497384594]"[latinmodern-math.otf]:mode=base;script=math;languag
+e=dflt;mathfontdimen=xetex;mathfontdimen=tex3;+ssty=0;"<-7.2>s*[0.9999970497384
+594]"[latinmodern-math.otf]:mode=base;script=math;language=dflt;mathfontdimen=x
+etex;mathfontdimen=tex3;+ssty=1;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[0.9999970497384594]"[latinmodern-math.otf]:mode=ba
+se;script=math;language=dflt;mathfontdimen=xetex;mathfontdimen=tex3;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 1
+19.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
+t line 119.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 119
+.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
+t line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 119.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+19.
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 12.0pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 8.4pt on input line 119.
+LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
+(Font)              scaled to size 6.0pt on input line 119.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+19.
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+119.
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 119
+.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsa.
+fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 119
+.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsb.
+fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Info: Redefining \microtypecontext on input line 119.
+Package microtype Info: Applying patch `item' on input line 119.
+Package microtype Info: Applying patch `toc' on input line 119.
+Package microtype Info: Applying patch `eqnum' on input line 119.
+Package microtype Info: Applying patch `footnote' on input line 119.
+Package microtype Info: Applying patch `verbatim' on input line 119.
+LaTeX Info: Redefining \microtypesetup on input line 119.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of spacing.
+Package microtype Info: No adjustment of kerning.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/microtype/mt-L
+atinModernRoman.cfg
+File: mt-LatinModernRoman.cfg 2021/02/21 v1.1 microtype config. file: Latin Mod
+ern Roman (RS)
+)
+Package biblatex Info: Trying to load language 'american' -> 'american-apa'...
+Package biblatex Info: ... file 'american-apa.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/a
+merican-apa.lbx
+File: american-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/lbx/a
+merican.lbx
+File: american.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english' -> 'english-apa'...
+Package biblatex Info: ... file 'english-apa.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/e
+nglish-apa.lbx
+File: english-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/lbx/e
+nglish.lbx
+File: english.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+)))
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/lbx/a
+merican.lbx
+File: american.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english' -> 'english-apa'...
+Package biblatex Info: ... file 'english-apa.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex-apa/e
+nglish-apa.lbx
+File: english-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
+Package biblatex Info: Trying to load language 'american'...
+Package biblatex Info: ... file 'american.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/lbx/a
+merican.lbx
+File: american.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+
+(C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/tex/latex/biblatex/lbx/e
+nglish.lbx
+File: english.lbx 2023/03/05 v3.19 biblatex localization (PK/MW)
+)))))
+Package biblatex Info: LuaTeX detected.
+(biblatex)             Assuming input encoding 'utf8'.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+
+\openout6 = expose.bcf
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'expose.bbl' not found.
+No file expose.bbl.
+Package biblatex Info: Reference section=0 on input line 119.
+Package biblatex Info: Reference segment=0 on input line 119.
+
+Class apa7 Warning: Abstract not defined.
+
+Class apa7 Info: Keywords not defined on input line 120.
+[1{C:/Users/Leonie.Hagitte/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
+
+]
+Underfull \vbox (badness 4242) has occurred while \output is active []
+
+[2] [3
+Missing character: There is no ℓ (U+2113) in font [lmroman12-regular]:+tlig;!
+Missing character: There is no ₀ (U+2080) in font [lmroman12-regular]:+tlig;!
+] [4
+Missing character: There is no ℓ (U+2113) in font [lmroman12-regular]:+tlig;!
+Missing character: There is no ₀ (U+2080) in font [lmroman12-regular]:+tlig;!
+Missing character: There is no ℓ (U+2113) in font [lmroman12-regular]:+tlig;!
+Missing character: There is no ₀ (U+2080) in font [lmroman12-regular]:+tlig;!
+]
+
+LaTeX Warning: Citation 'Brandmaier2018' on page 5 undefined on input line 243.
+
+
+
+LaTeX Warning: Empty bibliography on input line 266.
+
+[5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[6]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[7] AED endfloat: Processing end Figures and Tables [8] (./expose.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+LaTeX Warning: There were undefined references.
+
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                expose
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'expose.run.xml'.
+
+\openout1 = expose.run.xml
+)
+
+Here is how much of LuaTeX's memory you used:
+ 42353 strings out of 476497
+ 125086,2373549 words of node,token memory allocated
+ 747 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 1 local_par, 4 glue, 6 kern, 1 penalty, 3 glyph, 22
+ attribute, 83 glue_spec, 13 attribute_list, 3 write nodes
+   avail lists: 1:3,2:674,3:524,4:108,5:319,6:40,7:6013,8:45,9:261,10:28,11:596
+ 63468 multiletter control sequences out of 65536+600000
+ 51 fonts using 11880087 bytes
+ 99i,11n,120p,1002b,5235s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<//?/c:/users/leonie.hagitte/appdata/local/programs/miktex/fonts/opentype/public
+/lm/lmroman8-regular.otf><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/
+fonts/opentype/public/lm-math/latinmodern-math.otf><C:/Users/Leonie.Hagitte/AppD
+ata/Local/Programs/MiKTeX/fonts/opentype/public/lm-math/latinmodern-math.otf><//
+?/c:/users/leonie.hagitte/appdata/local/programs/miktex/fonts/opentype/public/lm
+/lmroman10-bolditalic.otf><//?/c:/users/leonie.hagitte/appdata/local/programs/mi
+ktex/fonts/opentype/public/lm/lmroman12-italic.otf><//?/c:/users/leonie.hagitte/
+appdata/local/programs/miktex/fonts/opentype/public/lm/lmroman12-bold.otf><//?/c
+:/users/leonie.hagitte/appdata/local/programs/miktex/fonts/opentype/public/lm/lm
+roman12-regular.otf>
+Output written on expose.pdf (8 pages, 60479 bytes).
+
+PDF statistics: 157 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 131072)
+ 64 words of extra memory for PDF output out of 10000 (max. 100000000)
+
