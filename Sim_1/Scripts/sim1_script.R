@@ -28,7 +28,7 @@ DESIGN <- tidyr::expand_grid(
   delta_theta_full  = 0.20,
   delta_lambda_12   = 0.20,
   moderator_1_type  = MOD_TYPES,               
-  rep               = 1:10
+  rep               = 1#:10
 )
 
 set.seed(42)
