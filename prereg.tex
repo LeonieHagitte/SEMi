@@ -449,17 +449,17 @@ the moderation coefficients are restricted to
 \[
 \delta_{\lambda_i} \in [-0.4,\,0.3],
 \]
-and evaluated on the discrete grid
+and evaluated on the discrete grid (leaving out the zero effect)
 \[
-\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0,\,0.2,\,0.3\}.
+\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
 \]
 
 All remaining loadings remain fixed across conditions:
 \[
 \lambda_{x3}(Z)=0.7,\quad
-\lambda_{x4}(Z)=1.0,\quad
+\lambda_{x4}(Z)=0.7,\quad
 \lambda_{yj}(Z)=0.7 \quad (j=1,2),\qquad
-\lambda_{y3}(Z)=1.0.
+\lambda_{y3}(Z)=0.7.
 \]
 
 Thus, the loading matrices take the form
@@ -469,14 +469,14 @@ Thus, the loading matrices take the form
 \lambda_{x1}(Z)\\
 \lambda_{x2}(Z)\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \qquad
 \boldsymbol{\Lambda}_y(Z)=
 \begin{bmatrix}
 0.7\\
 0.7\\
-1.0
+0.7
 \end{bmatrix},
 \]
 yielding fully crossed combinations of (i) moderator transformation type
@@ -508,11 +508,11 @@ identity
 Baseline factor loadings in Study~2 follow the fixed measurement structure:
 \[
 \lambda_{x1}=\lambda_{x2}=\lambda_{x3}=0.7,\qquad
-\lambda_{x4}=1.0,
+\lambda_{x4}=0.7,
 \]
 \[
 \lambda_{y1}=\lambda_{y2}=0.7,\qquad
-\lambda_{y3}=1.0.
+\lambda_{y3}=0.7.
 \]
 These values are used to compute the corresponding baseline residual variances
 $\theta_{10},\dots,\theta_{70}$.
