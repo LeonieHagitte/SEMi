@@ -81,9 +81,9 @@ where:
 \begin{itemize}
   \item $\boldsymbol{\nu}(Z)$ is the vector of intercepts,
   \item $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ factor loading matrix,
-  \item $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon(Z))$ is the residual vector,
-  \item $\eta \sim \mathcal{N}(\mu_\eta(Z), \sigma^2_\eta(Z))$ is the latent factor,
-  \item \( Z = h(M) \) is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate \( M \).
+  \item $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}\left(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon(Z)\right)$ is the residual vector,
+  \item $\eta \sim \mathcal{N}\left(\mu_\eta(Z), \sigma^2_\eta(Z)\right)$ is the latent factor,
+  \item $ Z = h(M) $ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate \( M \).
 \end{itemize}
 
 \vspace{\baselineskip}
@@ -98,7 +98,7 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 \begin{enumerate}
     \item \textbf{Linear:} 
     \[
-    h(M) = M.
+    h(M) = M
     \]
     In this case, the effective moderator is unbounded and symmetric around zero.
 
@@ -110,13 +110,13 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 
     \item \textbf{Quadratic:}
     \[
-    h(M) = M^2.
+    h(M) = M^2
     \]
     Here, the effective moderator takes values on \([0, \infty)\) and is therefore non-negative and right-skewed, capturing nonlinear but strictly non-negative moderation patterns.
 
     \item \textbf{Noise (non-informative):}
     \[
-    h(M) = 0.
+    h(M) = 0
     \]
     In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator.
 \end{enumerate}
@@ -124,13 +124,13 @@ where \( h(\cdot) \) is chosen from the following deterministic transformation f
 
 \subsubsubsection{\textbf{Factor Loadings}}
 
-The baseline factor loadings were fixed to a discrete value of $\lambda_{xi} = 0.7$ for all items exept item 4, which was used for scaling.  
+The baseline factor loadings were fixed to a discrete value of $\lambda_{xi} = 0.7$.  
 Variation in loadings across simulation conditions arises exclusively through the presence or absence of moderation, which is treated as a fully crossed factor in the grid design.
 
 \vspace{\baselineskip}
 \textbf{Moderated items:}
 
-At the population level, the baseline (unmoderated) measurement model is specified with a single latent factor and four indicators. The factor loading matrix is constructed such that the first three indicators share a common loading value $\lambda$, whereas the fourth indicator is fixed to 1.0 to set the scale of the latent factor:
+At the population level, the baseline (unmoderated) measurement model is specified with a single latent factor and four indicators. The factor loading matrix is constructed such that all fourindicators share a common loading value $\lambda$:
 
 \[
 \boldsymbol{\Lambda}_x =
@@ -138,7 +138,7 @@ At the population level, the baseline (unmoderated) measurement model is specifi
 \lambda \\
 \lambda \\
 \lambda \\
-1.0
+\lambda
 \end{bmatrix}.
 \]
 
@@ -155,7 +155,7 @@ yielding a diagonal residual covariance matrix
 \operatorname{diag}(\theta_1,\theta_2,\theta_3,\theta_4).
 \]
 
-This baseline specification sets the measurement scale (via the reference loading), ensures positive residual variances for all indicators, and serves as the starting point upon which moderation effects are introduced in subsequent conditions.
+This baseline specification ensures positive residual variances for all indicators reflecting a chosen degree of reliability, and serves as the starting point upon which moderation effects are introduced in subsequent conditions.
 
 
 For each condition involving moderation, the loading of item $i$ is defined as a deterministic function of the moderator $Z$:
@@ -176,10 +176,10 @@ Given the fixed baseline loading $\lambda_{xi}=0.7$, this constraint yields an a
 \delta_{\lambda_i} \in [-0.4,\, 0.3].
 \]
 
-To comply with the grid-search framework, $\delta_{\lambda_i}$ is not sampled but instead evaluated at the following discrete levels:
+To comply with the grid-search framework, $\delta_{\lambda_i}$ is not sampled but instead evaluated at the following discrete levels (without the "zero" as this would represent no effect):
 
 \[
-\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0,\,0.2,\,0.3\}.
+\delta_{\lambda_i} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
 \]
 
 These values span the full admissible range while maintaining deterministic, reproducible simulation conditions.
