@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.11.12)  4 DEC 2025 15:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.11.12)  7 JAN 2026 15:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1087,7 +1087,7 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 
 \@quotelevel=\count448
 \@quotereset=\count449
-(prereg.aux)
+No file prereg.aux.
 \openout1 = `prereg.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
@@ -1217,28 +1217,505 @@ Package biblatex Info: ... file 'prereg.bbl' found.
 Package biblatex Info: Reference section=0 on input line 29.
 Package biblatex Info: Reference segment=0 on input line 29.
 Package hyperref Info: Link coloring ON on input line 29.
- (prereg.out) (prereg.out)
 \@outlinefile=\write5
 \openout5 = `prereg.out'.
 
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 3
+0.
 
-! I can't write on file `prereg.pdf'.
-(Press Enter to retry, or Control-C to exit; default file extension is `.pdf')
-Please type another file name for output
-! Emergency stop.
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.
+fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
+
+
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.
+fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
+
+
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.
+fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+Package xcolor Warning: Incompatible color definition on input line 30.
+
+
+Package xcolor Warning: Incompatible color definition on input line 30.
+
+[1
+
+{C:/Users/Leonie.Hagitte/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/U
+sers/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
+
+
+LaTeX Warning: Citation 'Bauer2020' on page 1 undefined on input line 43.
+
+
+LaTeX Warning: Citation 'Lee2024' on page 1 undefined on input line 43.
+
+
+LaTeX Warning: Citation 'Bauer2017' on page 1 undefined on input line 44.
+
+
+LaTeX Warning: Citation 'Kolbe2024' on page 1 undefined on input line 44.
+
+
+LaTeX Warning: Citation 'Brandmaier2016' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation 'Brandmaier2013' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation 'Buchberger2024' on page 1 undefined on input line 52.
+
+
+LaTeX Warning: Citation 'SilvaDÃ­az2025' on page 1 undefined on input line 52.
+
+Missing character: There is no Ã in font cmbx12!
+Missing character: There is no ­ in font cmbx12!
+
+LaTeX Warning: Citation 'Arnold2021' on page 1 undefined on input line 52.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
 <to be read again> 
-                   \edef 
-l.29 \begin{document}
-                     
-*** (job aborted, file error in nonstop mode)
+                   \relax 
+l.60 
+      [1]
 
- 
+! LaTeX Error: \mathbf allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 \mathbf
+            {x} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \b...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.75 \mathbf{x} = \boldsymbol{\nu}
+                                  (Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \b...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.78 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Undefined control sequence.
+l.91 \subsubsubsection
+                      {\textbf{Moderator Transformation}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[2]
+! Undefined control sequence.
+l.147 \subsubsubsection
+                       {\textbf{Factor Loadings}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `macro parameter character #' in math mode.
+l.168 $\psi_{\eta}= #
+                     #$ and is held constant across all simulation condition...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+! You can't use `macro parameter character #' in math mode.
+l.168 $\psi_{\eta}= ##
+                      $ and is held constant across all simulation condition...
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[3]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[4]
+! Undefined control sequence.
+l.310 \subsubsubsection
+                       {\textbf{Latent Distribution}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5]
+<tikz_model1.png, id=65, 563.10374pt x 297.11pt>
+File: tikz_model1.png Graphic file (type png)
+<use tikz_model1.png>
+Package pdftex.def Info: tikz_model1.png  used on input line 328.
+(pdftex.def)             Requested size: 318.66948pt x 168.13947pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6 <./tikz_model1.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[7]
+Overfull \hbox (0.95847pt too wide) in paragraph at lines 495--498
+\OT1/cmr/m/n/12 These val-ues are used to com-pute the cor-re-spond-ing base-li
+ne resid-ual vari-ances $\OML/cmm/m/it/12 ^^R[]; [] ; ^^R[]$\OT1/cmr/m/n/12 . 
+ []
+
+! Undefined control sequence.
+l.514 \subsubsubsection
+                       {\textbf{Latent Variable Distribution}}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[8]
+<tikz_model2.0.png, id=86, 615.29875pt x 303.1325pt>
+File: tikz_model2.0.png Graphic file (type png)
+<use tikz_model2.0.png>
+Package pdftex.def Info: tikz_model2.0.png  used on input line 565.
+(pdftex.def)             Requested size: 316.93607pt x 156.14503pt.
+<tikz_model2.1.png, id=87, 612.2875pt x 300.12125pt>
+File: tikz_model2.1.png Graphic file (type png)
+<use tikz_model2.1.png>
+Package pdftex.def Info: tikz_model2.1.png  used on input line 571.
+(pdftex.def)             Requested size: 316.93607pt x 155.34955pt.
+<tikz_model2.2.png, id=88, 608.2725pt x 353.32pt>
+File: tikz_model2.2.png Graphic file (type png)
+<use tikz_model2.2.png>
+Package pdftex.def Info: tikz_model2.2.png  used on input line 579.
+(pdftex.def)             Requested size: 316.93607pt x 184.09944pt.
+<tikz_model2.3.png, id=89, 604.2575pt x 353.32pt>
+File: tikz_model2.3.png Graphic file (type png)
+<use tikz_model2.3.png>
+Package pdftex.def Info: tikz_model2.3.png  used on input line 585.
+(pdftex.def)             Requested size: 316.93607pt x 185.31787pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[9]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[10 <./tikz_model2.0.png> <./tikz_model2.1.png> <./tikz_model2.2.png> <./tikz_m
+odel2.3.png>]
+Overfull \hbox (2.34836pt too wide) in paragraph at lines 599--600
+\OT1/cmr/m/n/12 The sim-u-la-tion de-sign in-cludes sev-eral ma-nip-u-lated fac
+-tors that gov-ern the data-generating
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[11]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[12]
+
+LaTeX Warning: Citation 'Bauer2009' on page 13 undefined on input line 711.
+
+LaTeX Font Info:    Trying to load font information for OML+cmr on input line 7
+11.
+
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/base\omlcmr.fd
+File: omlcmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/bx/n' in size <12> not available
+(Font)              Font shape `OML/cmm/b/it' tried instead on input line 711.
+
+
+LaTeX Warning: Citation '' on page 13 undefined on input line 711.
+
+
+LaTeX Warning: Citation 'Bauer2017' on page 13 undefined on input line 711.
+
+
+LaTeX Warning: Citation 'Muench2024' on page 13 undefined on input line 711.
+
+
+Overfull \hbox (19.45174pt too wide) in paragraph at lines 711--712
+\OT1/cmr/m/n/12 ing method-olog-i-cal flex-i-bil-ity aligned with spe-cific an-
+a-lyt-i-cal ob-jec-tives ([]). 
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[13]
+
+LaTeX Warning: Citation 'Brandmaier2013' on page 14 undefined on input line 717
+.
+
+
+LaTeX Warning: Citation '' on page 14 undefined on input line 717.
+
+
+LaTeX Warning: Citation 'Brandmaier2016' on page 14 undefined on input line 717
+.
+
+
+LaTeX Warning: Citation 'Arnold2021' on page 14 undefined on input line 717.
+
+
+LaTeX Warning: Citation '' on page 14 undefined on input line 717.
+
+
+Overfull \hbox (35.43594pt too wide) in paragraph at lines 717--718
+\OT1/cmr/m/n/12 The method was re-fined later on by []; [][].
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[14]
+Overfull \hbox (3.43408pt too wide) in paragraph at lines 783--783
+[]\OT1/phv/b/n/14.4 How will Monte Carlo un-cer-tainty of the es-ti-mated per-f
+or-mance
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[15]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[16]
+
+LaTeX Warning: Citation 'Skrondal2000' on page 17 undefined on input line 839.
+
+
+LaTeX Warning: Citation 'Chipman2022' on page 17 undefined on input line 839.
+
+
+LaTeX Warning: Citation 'R2020' on page 17 undefined on input line 853.
+
+
+LaTeX Warning: Citation 'Genz2009' on page 17 undefined on input line 853.
+
+
+LaTeX Warning: Citation 'R2020' on page 17 undefined on input line 853.
+
+
+LaTeX Warning: Citation 'Chalmers2020' on page 17 undefined on input line 853.
+
+
+LaTeX Warning: Citation 'Wickham2016' on page 17 undefined on input line 853.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[17]
+
+Package xcolor Warning: Incompatible color definition on input line 873.
+
+
+Package xcolor Warning: Incompatible color definition on input line 873.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[18]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[19]
+
+LaTeX Warning: Citation 'Siepe2024' undefined on input line 890.
+
+
+LaTeX Warning: Empty bibliography on input line 891.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[20] (prereg.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `prereg.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `prereg.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  77714E6A27B3104E1F5B7FB3AE0B16B8;9493.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                prereg
+(biblatex)                and rerun LaTeX afterwards.
+
+Package logreq Info: Writing requests to 'prereg.run.xml'.
+\openout1 = `prereg.run.xml'.
+
+ ) 
 Here is how much of TeX's memory you used:
- 30718 strings out of 474486
- 591955 string characters out of 5739506
- 1925542 words of memory out of 5000000
- 52599 multiletter control sequences out of 15000+600000
- 558367 words of font info for 37 fonts, out of 8000000 for 9000
+ 31337 strings out of 474486
+ 603354 string characters out of 5739506
+ 1937542 words of memory out of 5000000
+ 53095 multiletter control sequences out of 15000+600000
+ 581500 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 88i,1n,96p,681b,5050s stack positions out of 10000i,1000n,20000p,200000b,200000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 88i,12n,96p,980b,5050s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\Leonie.Hagitte\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dp
+i600\tcrm1200.pk><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Leonie.Hagitte/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><C:/
+Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/
+cm/cmmi12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Leonie.Hagitte/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/Le
+onie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10
+.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmr12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Leonie.Hagitte/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Use
+rs/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
+cmsy8.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmti12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb><C:/Users/Leonie.Hagitte/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/
+Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pf
+b><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvet
+ic/uhvr8a.pfb>
+Output written on prereg.pdf (21 pages, 597608 bytes).
+PDF statistics:
+ 277 PDF objects out of 1000 (max. 8388607)
+ 73 named destinations out of 1000 (max. 500000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+

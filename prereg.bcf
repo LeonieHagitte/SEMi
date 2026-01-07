@@ -3059,3 +3059,90 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1" intorder="1">Bauer2020</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">Lee2024</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">Bauer2017</bcf:citekey>
+    <bcf:citekey order="3" intorder="2">Kolbe2024</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">Brandmaier2016</bcf:citekey>
+    <bcf:citekey order="4" intorder="2">Brandmaier2013</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">Buchberger2024</bcf:citekey>
+    <bcf:citekey order="5" intorder="2">SilvaDíaz2025</bcf:citekey>
+    <bcf:citekey order="5" intorder="3">Arnold2021</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">Bauer2009</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">Bauer2017</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">Muench2024</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">Brandmaier2013</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">Brandmaier2016</bcf:citekey>
+    <bcf:citekey order="10" intorder="2">Arnold2021</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">Skrondal2000</bcf:citekey>
+    <bcf:citekey order="11" intorder="2">Chipman2022</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">R2020</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">Genz2009</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">R2020</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">Chalmers2020</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">Wickham2016</bcf:citekey>
+    <bcf:citekey order="17" intorder="1" nocite="1">Siepe2024</bcf:citekey>
+  </bcf:section>
+  <!-- SORTING TEMPLATES -->
+  <bcf:sortingtemplate name="apa">
+    <bcf:sort order="1">
+      <bcf:sortitem order="1">presort</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="2" final="1">
+      <bcf:sortitem order="1">sortkey</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="3">
+      <bcf:sortitem order="1">sortname</bcf:sortitem>
+      <bcf:sortitem order="2">author</bcf:sortitem>
+      <bcf:sortitem order="3">editor</bcf:sortitem>
+      <bcf:sortitem order="4">sorttitle</bcf:sortitem>
+      <bcf:sortitem order="5">title</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="4">
+      <bcf:sortitem order="1">pubstate</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="5">
+      <bcf:sortitem order="1">sortyear</bcf:sortitem>
+      <bcf:sortitem order="2">year</bcf:sortitem>
+      <bcf:sortitem order="3">eventyear</bcf:sortitem>
+      <bcf:sortitem literal="1" order="4">-2000000000</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="6">
+      <bcf:sortitem order="1">month</bcf:sortitem>
+      <bcf:sortitem order="2">eventmonth</bcf:sortitem>
+      <bcf:sortitem literal="1" order="3">-2000000000</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="7">
+      <bcf:sortitem order="1">day</bcf:sortitem>
+      <bcf:sortitem order="2">eventday</bcf:sortitem>
+      <bcf:sortitem literal="1" order="3">-2000000000</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="8">
+      <bcf:sortitem order="1">sorttitle</bcf:sortitem>
+      <bcf:sortitem order="2">title</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="9">
+      <bcf:sortitem order="1">volume</bcf:sortitem>
+      <bcf:sortitem literal="1" order="2">0</bcf:sortitem>
+    </bcf:sort>
+  </bcf:sortingtemplate>
+  <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="apa/apasortcite//global/global"
+                type="entry"
+                sortingtemplatename="apa"
+                sortingnamekeytemplatename="apasortcite"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global">
+  </bcf:datalist>
+  <bcf:datalist section="0"
+                name="apa/global//global/global"
+                type="entry"
+                sortingtemplatename="apa"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global">
+  </bcf:datalist>
+</bcf:controlfile>
