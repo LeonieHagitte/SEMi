@@ -9,7 +9,7 @@
 <link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.32">
 
-  <meta name="author" content="Leonie">
+  <meta name="author" content="Leonie Hagitte">
   <title>SEMi-Complete by Design</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -153,7 +153,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Leonie 
+Leonie Hagitte 
 </div>
 </div>
 </div>
@@ -187,14 +187,38 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 <section id="sem-trees" class="slide level2">
 <h2>SEM Trees</h2>
 <p>Structural Equation Model (SEM) Trees integrate <strong>confirmatory SEM</strong> with <strong>recursive partitioning</strong><span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/questions-concerns" role="doc-biblioref" onclick="">2016</a>; <a href="#/questions-concerns" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
-<p>Key characteristics: - Automatically detect <strong>heterogeneity in model parameters</strong> - Identify <strong>subgroups</strong> in which measurement or structural parameters differ - Allow data-driven detection of <strong>non-invariance</strong></p>
-<p>SEM Trees are particularly useful when grouping variables are unknown or continuous.</p>
+<p>Key characteristics:</p>
+<ul>
+<li class="fragment">Automatically detect <strong>heterogeneity in model parameters</strong><br>
+</li>
+<li class="fragment">Identify <strong>subgroups</strong> in which measurement or structural parameters differ<br>
+</li>
+<li class="fragment">Allow data-driven detection of <strong>non-invariance</strong></li>
+</ul>
+<p>SEM Trees are particularly useful when grouping variables are unknown or continuous and if you have plenty.</p>
 </section>
 <section id="advantages-and-limitations-of-sem-trees" class="slide level2">
 <h2>Advantages and Limitations of SEM Trees</h2>
-<p><strong>Advantages</strong> - Flexible, exploratory identification of non-invariance - Can handle complex interaction structures - Transparent subgroup definitions</p>
-<p><strong>Limitations</strong> - Risk of overfitting without cross-validation - Results depend on splitting criteria - Less suitable for strict confirmatory hypothesis testing</p>
-<p>SEM Trees should therefore be interpreted as <strong>exploratory diagnostic tools</strong>.</p>
+<p><strong>Strengths</strong></p>
+<ul>
+<li class="fragment">Flexible, exploratory identification of non-invariance<br>
+</li>
+<li class="fragment">Can handle complex interaction structures<br>
+</li>
+<li class="fragment">Transparent subgroup definitions<br>
+</li>
+<li class="fragment">Should perform well with sigmoid effects</li>
+</ul>
+<p><strong>Limitations</strong></p>
+<ul>
+<li class="fragment">Risk of overfitting without cross-validation<br>
+</li>
+<li class="fragment">Results depend on splitting criteria<br>
+</li>
+<li class="fragment">Less suitable for strict confirmatory hypothesis testing<br>
+</li>
+<li class="fragment">The functional form could be harder to retrieve</li>
+</ul>
 </section>
 <section id="mnlfa-moderated-nonlinear-factor-analysis" class="slide level2">
 <h2>MNLFA (Moderated Nonlinear Factor Analysis)</h2>
@@ -204,23 +228,51 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 </li>
 <li class="fragment">Factor means and variances</li>
 </ul>
-<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES).</p>
-<p>This framework directly models measurement non-invariance instead of testing it sequentially.</p>
+<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES). This means MI is conceptualized as the moderation of certain parameters/ the whole model by a external variable.</p>
+<p>This therefore directly models measurement non-invariance instead of testing it sequentially.</p>
 </section>
 <section id="strengths-and-challenges-of-mnlfa" class="slide level2">
 <h2>Strengths and Challenges of MNLFA</h2>
-<p><strong>Strengths</strong> - Handles both categorical and continuous moderators - Avoids arbitrary group discretization - Provides fine-grained modeling of parameter variation</p>
-<p><strong>Challenges</strong> - High model complexity - Strong distributional and functional form assumptions - Requires large sample sizes and careful model specification</p>
-<p>MNLFA is most appropriate when theory suggests <strong>systematic moderation</strong> of measurement parameters.</p>
+<p><strong>Strengths</strong></p>
+<ul>
+<li class="fragment">Handles both categorical and continuous moderators<br>
+</li>
+<li class="fragment">Avoids arbitrary group discretization<br>
+</li>
+<li class="fragment">Provides fine-grained modeling of parameter variation<br>
+</li>
+<li class="fragment">Is suited for nonlinear relationships</li>
+</ul>
+<p><strong>Limitations</strong></p>
+<ul>
+<li class="fragment">High model complexity<br>
+</li>
+<li class="fragment">Strong distributional and functional form assumptions<br>
+</li>
+<li class="fragment">Requires large sample sizes and careful model specification<br>
+</li>
+</ul>
+<p>MNLFA is most appropriate when <strong>theory</strong> suggests <strong>systematic moderation</strong> of measurement parameters.</p>
 </section>
 <section id="exploratory-vs.-confirmatory-approaches" class="slide level2">
 <h2>Exploratory vs.&nbsp;Confirmatory Approaches</h2>
-</section>
-<section id="exploratory-vs.-confirmatory-methods" class="slide level2">
-<h2>Exploratory Vs. Confirmatory Methods</h2>
+<p>So the question arises when to use which method for MI testing?</p>
+<ul>
+<li class="fragment">I would argue that this is a question of the substantive nature of your research question<br>
+</li>
+<li class="fragment">MI testing should be pursued with rigor and diligent documentation<br>
+</li>
+<li class="fragment">However it is not necessarily always a prerequisite to have <em>Residual Invariance</em> established<br>
+</li>
+<li class="fragment">So how far you are progessed in a theoretical foundation is key<br>
+</li>
+<li class="fragment">And what question you want to answer also determines the required invariance level<br>
+</li>
+</ul>
 </section>
 <section id="simulation" class="slide level2">
 <h2>Simulation</h2>
+<p>Monte Carlo simulation to compare SEM trees and MNLFA</p>
 </section>
 <section id="trial-run" class="slide level2">
 <h2>Trial Run</h2>
@@ -476,80 +528,42 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

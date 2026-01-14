@@ -70,71 +70,53 @@ $$
 \boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon).
 $$
 
-where:
-$$
-\begin{itemize}
-  \item $\boldsymbol{\nu}(Z)$ is the vector of intercepts,
-  \item $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ factor loading matrix,
-  \item $\boldsymbol{\varepsilon} \sim \mathcal{N}\left(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon \right)$ is the residual vector,
-  \item $\eta \sim \mathcal{N}\left(\mu_\eta(Z), \sigma^2_\eta(Z)\right)$ is the latent factor,
-  \item $ Z = h(M) $ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate \( M \).
-\end{itemize}
-$$
+where
 
-\vspace{\baselineskip}
+- $\boldsymbol{\nu}(Z)$ is the vector of intercepts,
+- $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ factor loading matrix,
+- $\boldsymbol{\varepsilon} \sim \mathcal{N}\!\left(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon\right)$ is the residual vector,
+- $\eta \sim \mathcal{N}\!\left(\mu_\eta(Z), \sigma^2_\eta(Z)\right)$ is the latent factor,
+- $Z = h(M)$ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate $M$.
+
 #### Moderator Transformation
 
-Let \( M \sim \mathcal{N}(0,1) \) denote a raw continuous covariate.
-
-We define a bounded version of the covariate by clipping
-\[
-M^\star = \mathrm{clip}(M,-c,c)
-=
-\begin{cases}
--c, & \text{if } M < -c,\\
-M,  & \text{if } -c \le M \le c,\\
-c,  & \text{if } M > c,
-\end{cases}
-\]
-with a fixed clipping threshold \(c>0\).
+Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
 
 The effective moderator is defined as
-\[
-Z = h(M^\star),
-\]
-where \( h(\cdot) \) is chosen from the following deterministic transformation functions.
+$$
+Z = h(M),
+$$
+
+where $$h(\cdot)$$ is chosen from the following deterministic transformation functions.
 Each transformation type is treated as a distinct condition in the simulation design:
 
-\begin{enumerate}
-    \item \textbf{Linear:} 
-    \[
-    h(M^\star) = M^\star
-    \]
-    In this case, the effective moderator is bounded to the interval \([-c,c]\) and symmetric around zero.
+1. **Linear:**
+   $$
+   h(M) = M
+   $$
+In this case, the effective moderator is bounded to the interval $(-1,1)$ and symmetric around zero.
 
-    \item \textbf{Sigmoid:}
-    \[
-    h(M^\star) = 2 \cdot \mathrm{logit}^{-1}(kM^\star) - 1,
-    \]
-    with a fixed steepness parameter \(k > 0\).
-    This transformation maps the input to the open interval \( (-1, 1) \) and yields a bounded moderator symmetric around zero, exhibiting diminishing sensitivity at extreme values.
+2. **Sigmoid:**
+   $$
+   h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
+   \qquad a=-1,\; b=1,\; c=0,\; k>0.
+   $$
+This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator symmetric around zero, exhibiting diminishing sensitivity at extreme values.
 
-    \item \textbf{Quadratic:}
-    \[
-    h(M^\star) = 2 \cdot \mathrm{logit}^{-1}\!\bigl(\lambda \bigl((M^\star)^2 - 1\bigr)\bigr) - 1,
-    \]
-    with \(\lambda > 0\).
-    This transformation captures symmetric nonlinear moderation as a function of distance from the center while preventing unbounded growth of the moderator.
+3. **Quadratic:**
+   $$
+   h(M) = 2M^2 - 1
+   $$
+This transformation captures symmetric nonlinear moderation as a function of distance from the center while remaining bounded in $(-1,1)$.
 
-    \item \textbf{Noise (non-informative):}
-    \[
-    h(M^\star) = 0
-    \]
-    In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator.
-\end{enumerate}
+4. **Noise:**
+   $$
+   h(M) = 0
+   $$
+In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator.
 
-Null moderation is represented by the noise-moderator condition (\(Z=0\)), not by \(\delta=0\); moderation coefficients are held fixed across conditions.
-All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. Nonlinearity in moderation arises exclusively through the transformation $Z = h(M^\star)$ of the raw covariate $M$, not through nonlinear parameter functions.
+Null moderation is represented by the noise-moderator condition $(Z=0)$, not by $\delta=0$; moderation coefficients are held fixed across conditions.
+All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. Nonlinearity in moderation arises exclusively through the transformation $Z = h(M)$, not through nonlinear parameter functions.
 
 %%%% Figure %%%%%%%
 
@@ -146,58 +128,54 @@ All parameter-level moderation effects are specified as linear functions of the 
 
 The baseline factor loadings were fixed to a discrete value of $\lambda_{xi} = 0.7$.  
 Variation in loadings across simulation conditions arises exclusively through the presence or absence of moderation, which is treated as a fully crossed factor in the grid design.
-
-\vspace{\baselineskip}
-**Moderated items:**
-
+  
+**Moderated items:**  
+  
 At the population level, the baseline (unmoderated) measurement model is specified with a single latent factor and four indicators. 
 The factor loading matrix is constructed such that all four indicators share a common loading value $\lambda$:
 
-\[
+$$
 \boldsymbol{\Lambda}_x =
 \begin{bmatrix}
-\lambda \\
-\lambda \\
-\lambda \\
-\lambda
-\end{bmatrix}.
-\]
+\lambda_1 \\
+\lambda_2 \\
+\lambda_3 \\
+\lambda_4
+\end{bmatrix}
+$$
 The latent factor variance is fixed at a prespecified constant value
 $\psi_{\eta}= 1$ and is held constant across all simulation conditions.
 
 For each condition involving moderation, the loading of item $i$ is defined as a deterministic function of the moderator $Z$:
 
-\[
+$$
 \lambda_{xi}(Z) = \lambda_{xi} + \delta_{\lambda} Z,
 \quad Z \in [-1, 1].
-\]
+$$
 
 The parameter $\delta_{\lambda}$ represents the strength of the moderation effect and is specified using a discrete set of admissible values chosen to ensure that the moderated loading remains within a psychometrically plausible interval:
 
-\[
+$$
 \lambda_{xi}(Z) \in [0.3,\, 1.0].
-\]
+$$
 
 Given the fixed baseline loading $\lambda_{xi}=0.7$, this constraint yields an admissible range
-\[
+$$
 \delta_{\lambda} \in [-0.4,\, 0.3].
-\]
+$$
 
 $\delta_{\lambda}$ is evaluated at the following discrete levels:
 
-\[
+$$
 \delta_{\lambda} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
-\]
+$$
 
-\vspace{\baselineskip}
 For moderator transformations beyond the linear case (quadratic or sigmoid), the functional form of $\lambda_{xi}(Z)$ is adapted accordingly, and the same discrete set of admissible moderation strengths is applied. 
 This yields fully crossed combinations of (i) type of moderator transformation, (ii) number of moderated items, and (iii) moderation strength.
 
-\vspace{\baselineskip}
-
 **Factor loading matrix:**
 
-\[
+$$
 \boldsymbol{\Lambda}_x(Z) =
 \begin{bmatrix}
 \lambda_1(Z) \\
@@ -205,196 +183,186 @@ This yields fully crossed combinations of (i) type of moderator transformation, 
 \lambda_3(Z)\\
 \lambda_4(Z)
 \end{bmatrix}
-\]
+$$
 
 Under partial moderation, only $\lambda_1(Z)$ and $\lambda_2(Z)$ depend on $Z$, while $\lambda_3(Z)=\lambda_3$ and $\lambda_4(Z)=\lambda_4$.
 Under full moderation, all four loadings vary with $Z$.
 
-\vspace{\baselineskip}
+- **Null Model:**
+  Neither factor loadings, nor intercepts are moderated via Z. 
+  There is no moderation present in this DGP.
 
-\begin{enumerate}
-
-    \item \textbf{Null Model}
-    Neither factor loadings, nor intercepts are moderated via Z. 
-    There is no moderation present in this DGP.
-    
-    \item \textbf{Full moderation (Model 1.1):}  
-    All factor loadings and all intercepts vary with $Z$:
-    \[
+- **Full moderation (Model 1.1):**
+  All factor loadings and all intercepts vary with $Z$:
+  $$
     \lambda_{xi}(Z) = \lambda_{xi} + \delta_{\lambda} Z, 
     \qquad
     \nu_{i}(Z) = \nu_{i} + \delta_{\nu} Z,
-    \]
-    
-
-    \item \textbf{Partial moderation (Model 1.2):}  
-    Only the loadings of items $1$ and $2$ and their intercepts can be moderated by Z:
-    \[
+  $$
+- **Partial moderation (Model 1.2):** 
+- Only the loadings of items $1$ and $2$ and their intercepts can be moderated by Z:
+  $$
     \lambda_{x1}(Z) = \lambda_{x1} + \delta_{\lambda} Z,
     \qquad
     \lambda_{x2}(Z) = \lambda_{x2} + \delta_{\lambda} Z,
-    \]
-    \[
+  $$
+  $$
     \nu_{x1}(Z) = \nu_{x1} + \delta_{\nu} Z,
     \nu_{x2}(Z) = \nu_{x2} + \delta_{\nu} Z,
-    \]
-    whereas all remaining loadings and intercepts as well as residual variances ($\theta_{i0}$) remain fixed at their baseline values.
-\end{enumerate}
+  $$
+whereas all remaining loadings and intercepts as well as residual variances $(\theta_{i0})$ remain fixed at their baseline values.
 
-\vspace{\baselineskip}
-
-**Residual Variances**
+#### Residual Variances
 
 Item reliabilities are varied deterministically across simulation conditions
-using the fixed grid
-\[
-\text{Reliability}_i \in \{0.60,\,0.70,\,0.80,\,0.95\}.
-\]
+using the fixed grid.
+$$
+Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}
+$$
 
 Baseline residual variances are derived analytically from a fixed latent variance
 $\psi_\eta=\psi_0>0$ and indicator-specific reliability values:
-\[
-\text{Reliability}_i
-=
-\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}
-\quad \Rightarrow \quad
-\theta_{i0}
-=
-\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
+$$
+Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
      {\text{Reliability}_i}.
-\]
-
-**Intercepts**
+$$
+#### Intercepts
 
 Intercept moderation is manipulated via two fully crossed factors:  
 (i) the pattern of moderated items and  
 (ii) the magnitude of the moderation effect. For each indicator $i$, the intercept is modeled as
-\[
+$$
 \nu_i(Z) = \nu_i + \delta_{\nu} Z,
-\]
+$$
 where $\nu_i$ denotes the baseline intercept and $\delta_{\nu}$ controls the strength and direction of intercept moderation. The pattern of moderated items is varied across three levels:
 
-\begin{enumerate}
-    \item \textbf{No intercept moderation:}  
-    $\delta_{\nu} = 0$ for all $i = 1,\dots,4$, such that
-    \[
-    \nu_i(Z) = \nu_i \quad \text{for all } i.
-    \]
+- **No intercept moderation:** 
+  $\delta_{\nu} = 0$ for all $i = 1,\dots,4$, such that
+  $$
+  \nu_i(Z) = \nu_i \quad \text{for all } i.
+  $$
 
-    \item \textbf{Partial intercept moderation (items 1 and 2):}  
-    \[
+- **Partial intercept moderation (items 1 and 2):**  
+    $$
     \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i \in \{1,2\},
     \qquad
     \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
-    \]
-    such that only $\nu_1(Z)$ and $\nu_2(Z)$ vary with $Z$.
+    $$
+such that only $\nu_1(Z)$ and $\nu_2(Z)$ vary with $Z$.
 
-    \item \textbf{Full intercept moderation (all items):}  
-    \[
+- **Full intercept moderation (all items):**  
+  $$
     \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i = 1,\dots,4,
-    \]
-    such that the intercepts of all four indicators vary with $Z$.
-\end{enumerate}
+  $$
+such that the intercepts of all four indicators vary with $Z$.
 
 Baseline intercepts are varied deterministically across simulation conditions using the fixed grid
-\[
+  $$
 \nu_i \in \mathcal{G}_\nu = \{-1,\, 0,\, 1\},
-\]
+  $$
 providing low, medium, and high intercept levels centered around zero. 
 The simulation design thus yields fully crossed combinations of (a) intercept moderation pattern (none, partial, full), (b) moderation strength levels $\delta_{\nu}$, and (c) baseline intercept levels $\nu$.
-
-\vspace{\baselineskip}
 
 #### Latent Distribution
 
 Latent mean moderation was specified deterministically as:
-\[
+$$
 \mu_\eta(Z) = \alpha + \delta_\eta Z,
-\]
-with both parameters selected from discrete sets:
-\[
+$$
+
+with both parameters selected from discrete sets:  
+
+$$
 \alpha \in \{0\}, \qquad
 \delta_\eta \in \{-1.0,\,-0.5,\,0.5,\,1.0\}.
-\]
+$$
 
 The latent variance was modeled to be fixed at 1.
 
-\newpage
+\pagebreak
 
-**Analytical Model Study 1**
-\begin{center}
-    \includegraphics[width=0.7\textwidth]{tikz_model1.png}
-\end{center}
-\vspace{\baselineskip}
+#### Analytical Model Study 1
+
+```{r, echo=FALSE, fig.align="center", out.width="70%"}
+knitr::include_graphics("tikz_model1.png")
+
+```
+  
 The analytical model will also have one latent factor $\eta_1$. With four manifest indicators ${x_1,..., x_4}$, their factor loadings ${\lambda_1,..., \lambda_4}$ and their respective residuals ${\epsilon_1,..., \epsilon_4}$. In the analytical model the residuals will be assumed and modeled to be uncorrelated. Furthermore, the model includes a moderator variable $Z$, which can moderate the intercepts and factor loadings from none, one or two of the manifest variables. The moderator variable $Z$ will be modeled as linear or quadratic.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ### Study 2
-\textbf{Two Factors with Moderator Effects}
+
+**Two Factors with Moderator Effects**
 We specify a confirmatory factor analysis model with two latent factors, $\eta_1$ and $\eta_2$, and seven observed indicators $\mathbf{x} = (x_1, \dots, x_4)^\top$ and $\mathbf{y} = (y_1, \dots, y_3)^\top$. 
 Along their respective residuals ${\epsilon_1,...,\epsilon_4}$ and ${\delta_1,..., \delta_3}$. 
 The first factor loads onto indicators $x_1$ to $x_4$, the second onto $y_1$ to $y_3$. 
-A continuous moderator variable \( Z \) introduces conditional heterogeneity into selected measurement parameters (i.e. intercepts, loadings and latent factor covariance) using one of three functional forms (linear, quadratic or sigmoid).
+A continuous moderator variable $Z$ introduces conditional heterogeneity into selected measurement parameters (i.e. intercepts, loadings and latent factor covariance) using one of three functional forms (linear, quadratic or sigmoid).
 
-\[
+$$
 \mathbf{x} = \boldsymbol{\nu}_x(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta_1 + \boldsymbol{\varepsilon}(Z),
-\]
-\[
+$$
+$$
 \mathbf{y} = \boldsymbol{\nu}_y(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta_2 + \boldsymbol{\delta}(Z),
-\]
+$$
+
 where:
-\begin{itemize}
-  \item $\boldsymbol{\nu}_x(Z)$ and $\boldsymbol{\nu}_y(Z)$ are the $4 \times 1$ and $3 \times 1$ vectors of intercepts for $\mathbf{x}$ and $\mathbf{y}$, respectively,
-  \item $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ loading vector for $\eta_1$, and $\boldsymbol{\Lambda}_y(Z)$ is the $3 \times 1$ loading vector for $\eta_2$,
-  \item $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Theta}_x(Z)\bigr)$ and $\boldsymbol{\delta}(Z) \sim \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Theta}_y(Z)\bigr)$ are the residual vectors for $\mathbf{x}$ and $\mathbf{y}$,
-  \item $\boldsymbol{\eta} = (\eta_1, \eta_2)^\top \sim \mathcal{N}\bigl(\boldsymbol{\mu}_\eta(Z), \boldsymbol{\Phi}_\eta(Z)\bigr)$ is the latent factor vector,
-  \item $Z = h(M)$ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate $M$.
-\end{itemize}
 
-\vspace{\baselineskip}
-\textbf{Moderator Transformation}
+- $\boldsymbol{\nu}_x(Z)$ and $\boldsymbol{\nu}_y(Z)$ are the $4 \times 1$ and $3 \times 1$ vectors of intercepts for $\mathbf{x}$ and $\mathbf{y}$, respectively,
+- $\boldsymbol{\Lambda}_x(Z)$ is the $4 \times 1$ loading vector for $\eta_1$, and $\boldsymbol{\Lambda}_y(Z)$ is the $3 \times 1$ loading vector for $\eta_2$,
+- $\boldsymbol{\varepsilon}(Z) \sim \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Theta}_x(Z)\bigr)$ and $\boldsymbol{\delta}(Z) \sim \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Theta}_y(Z)\bigr)$ are the residual vectors for $\mathbf{x}$ and $\mathbf{y}$,
+- $\boldsymbol{\eta} = (\eta_1, \eta_2)^\top \sim \mathcal{N}\bigl(\boldsymbol{\mu}_\eta(Z), \boldsymbol{\Phi}_\eta(Z)\bigr)$ is the latent factor vector,
+- $Z = h(M)$ is the effective moderator entering the model equations, obtained by transforming a raw continuous covariate $M$.
 
-A raw continuous covariate
-\[
-M \sim \mathcal{N}(0,1)
-\]
-is transformed deterministically into an effective moderator
-\[
+
+#### Moderator Transformation
+
+Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
+
+The effective moderator is defined as
+$$
 Z = h(M),
-\]
-where $h(\cdot)$ is chosen from a finite set of transformation functions. Each transformation type is treated as a separate level in the simulation design and is fully crossed with the remaining design factors.
+$$
 
-The following moderator transformations are implemented:
+where $$h(\cdot)$$ is chosen from the following deterministic transformation functions.
+Each transformation type is treated as a distinct condition in the simulation design:
 
-\begin{enumerate}
-    \item \textbf{Linear:}
-    \[
-    h(M) = M.
-    \]
-    This yields an unbounded moderator symmetric around zero.
+1. **Linear:**
+   $$
+   h(M) = M
+   $$
+In this case, the effective moderator is bounded to the interval $(-1,1)$ and symmetric around zero.
 
-    \item \textbf{Quadratic:}
-    \[
-    h(M) = M^2.
-    \]
-    The resulting moderator is non-negative and right-skewed, with most probability mass concentrated near zero.
+2. **Sigmoid:**
+   $$
+   h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
+   \qquad a=-1,\; b=1,\; c=0,\; k>0.
+   $$
+This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator symmetric around zero, exhibiting diminishing sensitivity at extreme values.
 
-    \item \textbf{Sigmoid:}
-    \[
-    h(M) = 2 \cdot \mathrm{logit}^{-1}(\delta M) - 1,
-    \]
-    where $\delta$ is a fixed slope parameter. This transformation maps $\mathbb{R}$ to $(-1,1)$ and generates a bounded moderator symmetric around zero.
-\end{enumerate}
+3. **Quadratic:**
+   $$
+   h(M) = 2M^2 - 1
+   $$
+This transformation captures symmetric nonlinear moderation as a function of distance from the center while remaining bounded in $(-1,1)$.
 
-\vspace{\baselineskip}
+4. **Noise:**
+   $$
+   h(M) = 0
+   $$
+   
+In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator.
 
-\textbf{Factor Loadings}
+Null moderation is represented by the noise-moderator condition $(Z=0)$, not by $\delta=0$; moderation coefficients are held fixed across conditions.
+All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. Nonlinearity in moderation arises exclusively through the transformation $Z = h(M)$, not through nonlinear parameter functions.
+
+#### Factor Loadings
 
 For each latent factor, all baseline loadings for that factor are
 fixed at 0.7. For the two-factor model in Study~2, this yields
 
-\[
+$$
 \boldsymbol{\Lambda}_x =
 \begin{bmatrix}
 0.7\\
@@ -409,38 +377,31 @@ fixed at 0.7. For the two-factor model in Study~2, this yields
 0.7\\
 0.7
 \end{bmatrix},
-\]
-with $x_4$ and $y_3$ serving as reference indicators.
+$$
 
 Moderation of factor loadings is introduced only for the first two $x$-indicators.
 For each moderated indicator $i \in \{1,2\}$,
-\[
+$$
 \lambda_{xi}(Z) = \lambda_{xi} + \delta_{\lambda} Z .
-\]
+$$
 
 To ensure that moderated loadings remain within an admissible interval,
-\[
+$$
 \lambda_{xi}(Z) \in [0.3,\,1.0],
-\]
-the moderation coefficients are restricted to
-\[
-\delta_{\lambda} \in [-0.4,\,0.3],
-\]
-and evaluated on the discrete grid (leaving out the zero effect)
-\[
-\delta_{\lambda} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
-\]
+$$
 
-All remaining loadings remain fixed across conditions:
-\[
-\lambda_{x3}(Z)=0.7,\quad
-\lambda_{x4}(Z)=0.7,\quad
-\lambda_{yj}(Z)=0.7 \quad (j=1,2),\qquad
-\lambda_{y3}(Z)=0.7.
-\]
+the moderation coefficients are restricted to
+$$
+\delta_{\lambda} \in [-0.4,\,0.3],
+$$
+
+and evaluated on the discrete grid (leaving out the zero effect)
+$$
+\delta_{\lambda} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
+$$
 
 Thus, the loading matrices take the form
-\[
+$$
 \boldsymbol{\Lambda}_x(Z)=
 \begin{bmatrix}
 \lambda_{x1}(Z)\\
@@ -455,102 +416,74 @@ Thus, the loading matrices take the form
 0.7\\
 0.7
 \end{bmatrix},
-\]
+$$
+
 yielding fully crossed combinations of (i) moderator transformation type
 $Z=h(M)$, (ii) moderated vs.\ unmoderated indicators, and
 (iii) moderation strength $\delta_{\lambda}$.
 
-\vspace{\baselineskip}
-\textbf{Residual Variances}
+#### Residual Variances
+
 
 Item reliabilities are varied deterministically across simulation conditions
-using the fixed grid
-\[
-\text{Reliability}_i \in \{0.60,\,0.70,\,0.80,\,0.95\}.
-\]
+using the fixed grid.
+$$
+Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}
+$$
 
 Baseline residual variances are derived analytically from a fixed latent variance
 $\psi_\eta=\psi_0>0$ and indicator-specific reliability values:
-\[
-\text{Reliability}_i
-=
-\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}
-\quad \Rightarrow \quad
-\theta_{i0}
-=
-\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
+
+$$
+Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
      {\text{Reliability}_i}.
-\]
-
-Baseline factor loadings in Study~2 follow the fixed measurement structure:
-\[
-\lambda_{x1}=\lambda_{x2}=\lambda_{x3}=0.7,\qquad
-\lambda_{x4}=0.7,
-\]
-\[
-\lambda_{y1}=\lambda_{y2}=0.7,\qquad
-\lambda_{y3}=0.7.
-\]
-These values are used to compute the corresponding baseline residual variances
-$\theta_{10},\dots,\theta_{70}$.
-
-Residual-variance moderation is then introduced multiplicatively as
-\[
-\theta_i(Z)
-=
-\theta_{i0}\,\bigl(1+\delta_{\theta} Z\bigr),
-\]
-where $\delta_{\theta}$ is the residual-variance moderation coefficient.
-Indicators that are not subject to residual moderation use $\delta_{\theta}=0$
-and therefore retain $\theta(Z)=\theta_{0}$ for all $Z$.
-
-Since residual-variance moderation operates solely through the multiplicative
-term above, variation in factor loadings does not affect residual variances.
-Indicators with $\delta_{\theta}=0$ therefore retain their baseline values
-$\theta_{i0}$ for all $Z$.
-
-\subsubsubsection{\textbf{Latent Variable Distribution}}
+$$
+#### Latent Variable Distribution
 
 Latent means are held constant at zero for both latent factors:
-\[
+
+$$
 \boldsymbol{\mu}_\eta(Z) = 
 \begin{bmatrix}
 0 \\[4pt]
 0
 \end{bmatrix}.
-\]
+$$
 
 Latent variances are allowed to vary with the effective moderator $Z$ through
 the log-linear specification
-\[
+
+$$
 \sigma^2_{\eta_j}(Z)
   = \exp\!\left(\beta_{0j} + \beta_{1j} Z\right),
 \qquad j = 1,2,
-\]
+$$
 ensuring positivity for all variance values.
 
-The parameters governing baseline variance and moderation strength are selected
+The baseline variance is set to 1 and moderation strength is selected
 from discrete grids:
-\[
-\beta_{0j} \in \{-0.5,\,0,\,0.5\},
-\qquad
-\beta_{1j} \in \{-0.5,\,0,\,0.5\}.
-\]
+
+$$
+\delta_{\sigma_\eta} \in \{-0.4,\,-0.2,\,0.2,\,0.3\}.
+$$
 
 The latent covariance between $\eta_1$ and $\eta_2$ is fixed across all
 conditions:
-\[
+
+$$
 \phi_{12}(Z) = 0.4,
-\]
+$$
+
 yielding the latent covariance matrix
-\[
+$$
 \boldsymbol{\Phi}_\eta(Z)
 =
 \begin{bmatrix}
 \sigma^2_{\eta_1}(Z) & 0.4 \\
 0.4 & \sigma^2_{\eta_2}(Z)
 \end{bmatrix}.
-\]
+$$
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 {\small % reduce font size for figure caption only
@@ -588,9 +521,9 @@ yielding the latent covariance matrix
 \end{sidewaysfigure}
 }
 
-\newpage
+\pagebreak
 
-\subsection{What will be the different factors of the data-generating mechanism?} 
+## What will be the different factors of the data-generating mechanism? 
 
 %\explanation{A factor can be a parameter/setting/process/etc. that determines the data-generating mechanism and is varied across simulation conditions.}
 

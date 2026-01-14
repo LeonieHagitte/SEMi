@@ -1,7 +1,7 @@
 ---
 title: "SEMi-Complete by Design"
 subtitle: "A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees"
-author: "Leonie"
+author: "Leonie Hagitte"
 format: 
   revealjs:
     theme: simple
@@ -43,19 +43,31 @@ Additionally, in approximately **50% of cases** where configural invariance was 
 
 Structural Equation Model (SEM) Trees integrate **confirmatory SEM** with **recursive partitioning**[@Brandmaier2013; @Brandmaier2016; @Arnold2021].
 
-Key characteristics: - Automatically detect **heterogeneity in model parameters** - Identify **subgroups** in which measurement or structural parameters differ - Allow data-driven detection of **non-invariance**
+Key characteristics:
 
-SEM Trees are particularly useful when grouping variables are unknown or continuous.
+-   Automatically detect **heterogeneity in model parameters**\
+-   Identify **subgroups** in which measurement or structural parameters differ\
+-   Allow data-driven detection of **non-invariance**
+
+SEM Trees are particularly useful when grouping variables are unknown or continuous and if you have plenty.
 
 ------------------------------------------------------------------------
 
 ## Advantages and Limitations of SEM Trees
 
-**Advantages** - Flexible, exploratory identification of non-invariance - Can handle complex interaction structures - Transparent subgroup definitions
+**Strengths**
 
-**Limitations** - Risk of overfitting without cross-validation - Results depend on splitting criteria - Less suitable for strict confirmatory hypothesis testing
+-   Flexible, exploratory identification of non-invariance\
+-   Can handle complex interaction structures\
+-   Transparent subgroup definitions\
+-   Should perform well with sigmoid effects
 
-SEM Trees should therefore be interpreted as **exploratory diagnostic tools**.
+**Limitations**
+
+-   Risk of overfitting without cross-validation\
+-   Results depend on splitting criteria\
+-   Less suitable for strict confirmatory hypothesis testing\
+-   The functional form could be harder to retrieve
 
 ------------------------------------------------------------------------
 
@@ -66,35 +78,56 @@ Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by
 -   Item parameters (loadings, intercepts)\
 -   Factor means and variances
 
-to vary **continuously** as functions of observed covariates (e.g., age, gender, SES).
+to vary **continuously** as functions of observed covariates (e.g., age, gender, SES). This means MI is conceptualized as the moderation of certain parameters/ the whole model by a external variable.
 
-This framework directly models measurement non-invariance instead of testing it sequentially.
+This therefore directly models measurement non-invariance instead of testing it sequentially.
 
 ------------------------------------------------------------------------
 
 ## Strengths and Challenges of MNLFA
 
-**Strengths** - Handles both categorical and continuous moderators - Avoids arbitrary group discretization - Provides fine-grained modeling of parameter variation
+**Strengths**
 
-**Challenges** - High model complexity - Strong distributional and functional form assumptions - Requires large sample sizes and careful model specification
+-   Handles both categorical and continuous moderators\
+-   Avoids arbitrary group discretization\
+-   Provides fine-grained modeling of parameter variation\
+-   Is suited for nonlinear relationships
 
-MNLFA is most appropriate when theory suggests **systematic moderation** of measurement parameters.
+**Limitations**
+
+-   High model complexity\
+-   Strong distributional and functional form assumptions\
+-   Requires large sample sizes and careful model specification\
+
+MNLFA is most appropriate when **theory** suggests **systematic moderation** of measurement parameters.
 
 ------------------------------------------------------------------------
 
 ## Exploratory vs. Confirmatory Approaches
 
+So the question arises when to use which method for MI testing?
+
+-   I would argue that this is a question of the substantive nature of your research question\
+-   MI testing should be pursued with rigor and diligent documentation\
+-   However it is not necessarily always a prerequisite to have **Residual Invariance** established\
+-   So how far you are progessed in a theoretical foundation is key\
+-   And what question you want to answer also determines the required invariance level\
 
 ------------------------------------------------------------------------
 
-## Exploratory Vs. Confirmatory Methods
-
 ## Simulation
+
+Monte Carlo simulation to compare SEM trees and MNLFA
+
 
 ## Trial Run
 
 ## Questions & Concerns
 
-```{r}
-1 + 1
-```
+-   How do I ensure that the comparison is fair, the best?
+-   What conditions would you like to see simulated?
+-   Did i forget something in the simukation set-up?
+-   What makes a simulation most useful in your opinion?
+-   
+
+## References
