@@ -1,0 +1,100 @@
+---
+title: "SEMi-Complete by Design"
+subtitle: "A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees"
+author: "Leonie"
+format: 
+  revealjs:
+    theme: simple
+    slide-number: true
+    incremental: true
+bibliography: bibliography.bib
+---
+
+## Why Care About Measurement Invariance?
+
+Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups [@Cheung2000; @Meredith1964].\
+Violations of MI imply that observed group differences may reflect **measurement artifacts** rather than substantive differences in the underlying constructs[@Putnick2016].
+
+Without MI, conclusions about group differences in means, variances, or relations are not statistically justified[@Putnick2016].
+
+------------------------------------------------------------------------
+
+## Why Care About Measurement Invariance?
+
+-   Measurement invariance is often **implicitly assumed** rather than empirically tested\
+-   The majority of psychological studies do **not test for MI** [@Maassen2025; @Rohrer2025]\
+-   When MI is tested, reporting standards are frequently insufficient for replication [@Putnick2016; @Maassen2025]
+
+As a result, the validity of many reported group comparisons remains unclear.
+
+------------------------------------------------------------------------
+
+## Empirical Evidence on MI Violations
+
+Recent literature reviews highlight the severity of the problem:
+
+> *“None of the reported MI tests were reproducible, and only 26% of the 174 newly performed MI tests reached sufficient (scalar) invariance, with MI failing completely in 58% of tests.”*[@Maassen2025]
+
+Additionally, in approximately **50% of cases** where configural invariance was rejected, the **number of latent factors differed between groups**, indicating fundamentally different measurement structures[@Maassen2025].
+
+------------------------------------------------------------------------
+
+## SEM Trees
+
+Structural Equation Model (SEM) Trees integrate **confirmatory SEM** with **recursive partitioning**[@Brandmaier2013; @Brandmaier2016; @Arnold2021].
+
+Key characteristics: - Automatically detect **heterogeneity in model parameters** - Identify **subgroups** in which measurement or structural parameters differ - Allow data-driven detection of **non-invariance**
+
+SEM Trees are particularly useful when grouping variables are unknown or continuous.
+
+------------------------------------------------------------------------
+
+## Advantages and Limitations of SEM Trees
+
+**Advantages** - Flexible, exploratory identification of non-invariance - Can handle complex interaction structures - Transparent subgroup definitions
+
+**Limitations** - Risk of overfitting without cross-validation - Results depend on splitting criteria - Less suitable for strict confirmatory hypothesis testing
+
+SEM Trees should therefore be interpreted as **exploratory diagnostic tools**.
+
+------------------------------------------------------------------------
+
+## MNLFA (Moderated Nonlinear Factor Analysis)
+
+Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by allowing:
+
+-   Item parameters (loadings, intercepts)\
+-   Factor means and variances
+
+to vary **continuously** as functions of observed covariates (e.g., age, gender, SES).
+
+This framework directly models measurement non-invariance instead of testing it sequentially.
+
+------------------------------------------------------------------------
+
+## Strengths and Challenges of MNLFA
+
+**Strengths** - Handles both categorical and continuous moderators - Avoids arbitrary group discretization - Provides fine-grained modeling of parameter variation
+
+**Challenges** - High model complexity - Strong distributional and functional form assumptions - Requires large sample sizes and careful model specification
+
+MNLFA is most appropriate when theory suggests **systematic moderation** of measurement parameters.
+
+------------------------------------------------------------------------
+
+## Exploratory vs. Confirmatory Approaches
+
+
+------------------------------------------------------------------------
+
+## Exploratory Vs. Confirmatory Methods
+
+## Simulation
+
+## Trial Run
+
+## Questions & Concerns
+
+```{r}
+1 + 1
+```
