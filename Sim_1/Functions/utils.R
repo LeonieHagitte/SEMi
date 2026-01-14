@@ -17,7 +17,7 @@ truth_from_sim <- function(sim, link_label) {
 }
 
 # ---------- Parse analysis model syntax to infer assumptions ------------------
-# Works for your mxsem builders and CFA baseline.
+# Works for mxsem builders and CFA baseline.
 assumptions_from_syntax <- function(model_syntax, method = c("MNLFA","SEMTREE")) {
   method <- match.arg(method)
   
@@ -66,7 +66,7 @@ assumptions_from_syntax <- function(model_syntax, method = c("MNLFA","SEMTREE"))
   ref_fixed_1   <- grepl("\\b1\\*y4\\b", model_syntax, perl = TRUE)
   ref_moderated <- 4L %in% load_moderated
   
-  # Link: your builders are linear in M for loadings, log link for Θ when present.
+  # Link: builders are linear in M for loadings, log link for Θ when present.
   link_label <- if (length(theta_moderated)) "linear (λ), log-linear (Θ)" else "linear (λ)"
   
   list(

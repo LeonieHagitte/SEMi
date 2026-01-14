@@ -7,7 +7,7 @@ library(purrr)
 library(OpenMx)
 
 # dependencies
-source(here("Sim_1", "Functions", "dataprep_functions.R"))
+source(here("Sim_1", "Functions", "dataprep_functions2.R"))
 source(here("Sim_1", "Functions", "analysis.R"))
 source(here("Sim_1", "Functions", "dataprep_wrapper.R"))
 source(here("Sim_1", "Functions", "eval_functions.R"))
@@ -28,7 +28,7 @@ DESIGN <- tidyr::expand_grid(
   delta_theta_full  = 0.20,
   delta_lambda_12   = 0.20,
   moderator_1_type  = MOD_TYPES,               
-  rep               = 1:100
+  rep               = 1#:10
 )
 
 set.seed(42)
@@ -58,54 +58,48 @@ run_one <- function(row) {
   mnlfa_variants <- list(
     MNLFA_linear_full    = build_mnlfa_linear_full(),
     MNLFA_linear_partial = build_mnlfa_linear_partial(),
-    MNLFA_none           = build_cfa_baseline()   # 🔹 include unmoderated MNLFA
+    MNLFA_none           = build_cfa_baseline()   # include unmoderated MNLFA
   )
-  cfa_base    <- build_cfa_baseline()
+  cfa_base <- build_cfa_baseline()
   delta_names <- paste0("delta_lambda_y", 1:3)
   
-  # 🔹 Instead of one `fit_mnlfa`, now iterate over *all* variants:
+  # Iterate over *all* variants
   rows <- lapply(names(mnlfa_variants), function(vname) {
     mnlfa_model <- mnlfa_variants[[vname]]
-# ------------- debug attempt ----------
-    assumed_M <- assumptions_from_syntax(mnlfa_model, method = "MNLFA")
     
-    # λ- and Θ- delta labels that actually exist in THIS syntax
+    # --- CI targets present in THIS syntax ---
+    assumed_M <- assumptions_from_syntax(mnlfa_model, method = "MNLFA")
     lambda_targets <- if (length(assumed_M$load_items))  paste0("delta_lambda_y", assumed_M$load_items) else character(0)
     theta_targets  <- if (length(assumed_M$theta_items)) paste0("delta_theta_y",  assumed_M$theta_items) else character(0)
     delta_names    <- c(lambda_targets, theta_targets)
-    
-    # (Optional) quick log to reassure yourself during runs
-    # message("Variant ", vname, ": requesting CIs for ", paste(delta_names, collapse=", "))
-    
-    fit_mnlfa <- run_analysis(
-      dat, mnlfa_model,
-      method       = "MNLFA",
-      mx_intervals = length(delta_names) > 0,  # <-- only if we actually have targets
-      delta_names  = delta_names               # <-- may be character(0)
-    )
-    
+    need_intervals <- length(delta_names) > 0
 # --------------------------------------    
-    # 3) Fit methods
-    fit_mnlfa <- run_analysis(
-      dat, mnlfa_model,
-      method       = "MNLFA",
-      mx_intervals = TRUE,
-      delta_names  = delta_names
-    )
-    fit_tree <- run_analysis(dat, cfa_base, method = "SEMTREE")
+    # 3) Fit methods (timed)
+    mx_t <- system.time({
+      fit_mnlfa <- run_analysis(
+        dat, mnlfa_model,
+        method       = "MNLFA",
+        mx_intervals = need_intervals,   # only ask for CIs if targets exist
+        delta_names  = delta_names       # may be character(0)
+      )
+    })[["elapsed"]]
+    
+    tr_t <- system.time({
+      fit_tree <- run_analysis(dat, cfa_base, method = "SEMTREE")
+    })[["elapsed"]]
     
     # --- δ metrics with error handling ---
     if (inherits(fit_mnlfa, c("MxModel","MxRAMModel"))) {
       dm <- delta_metrics_any(fit_mnlfa, truths, label_prefix = "delta_")
     } else {
-      if (inherits(fit_mnlfa, "simpleError")) print(fit_mnlfa)  # 🔹 optional logging
+      if (inherits(fit_mnlfa, "simpleError")) print(fit_mnlfa)  # optional logging
       dm <- list(bias = NA_real_, rmse_abs = NA_real_, coverage = NA_real_)
     }
     delta_bias     <- if (is.null(dm$bias))      NA_real_ else dm$bias
     delta_rmse     <- if (is.null(dm$rmse_abs))  NA_real_ else dm$rmse_abs
     delta_coverage <- if (is.null(dm$coverage))  NA_real_ else dm$coverage
     
-    # --- MNLFA detection (single robust block, 🔹 removed duplication) ---
+    # --- MNLFA detection (single robust block, removed duplication) ---
     if (inherits(fit_mnlfa, c("MxModel","MxRAMModel"))) {
       det_m <- tryCatch(
         detect_moderation_mxsem(fit_mnlfa, label_prefix = "delta_", alpha = 0.05),
@@ -124,7 +118,7 @@ run_one <- function(row) {
     tree_split_on_M  <- (k_M  > 0)
     tree_split_on_M2 <- (k_M2 > 0)
     
-    # --- truth & assumptions (🔹 now inside loop so it matches variant) ---
+    # --- truth & assumptions ---
     truth     <- truth_from_sim(sim, link_label = row$moderator_1_type)
     assumed_M <- assumptions_from_syntax(mnlfa_model, method = "MNLFA")
     assumed_T <- assumptions_from_syntax(cfa_base,    method = "SEMTREE")
@@ -136,7 +130,7 @@ run_one <- function(row) {
       reliability       = row$reliability,
       lambda            = row$lambda,
       moderator_1_type  = row$moderator_1_type,
-      variant_label     = vname,  # 🔹 identify which MNLFA model
+      variant_label     = vname,  #identify which MNLFA model
       
       mnlfa_detect      = mnlfa_detect,
       mnlfa_n_sig       = mnlfa_n_sig,
@@ -153,6 +147,9 @@ run_one <- function(row) {
       delta_bias        = delta_bias,
       delta_rmse        = delta_rmse,
       delta_coverage    = delta_coverage,
+      
+      runtime_mxsem     = as.numeric(mx_t),
+      runtime_semtree   = as.numeric(tr_t),
       
       # --- TRUE (DGP)
       true_link           = truth$true_link,
@@ -174,7 +171,7 @@ run_one <- function(row) {
     )
   })
   
-  dplyr::bind_rows(rows)  # 🔹 return all rows together
+  dplyr::bind_rows(rows)  # return all rows together
 }
 
 
@@ -206,6 +203,21 @@ summary_tree <- results %>%
 
 print(summary_mnlfa)
 print(summary_tree)
+
+# -----------------------------------------------------------------------------
+evaluation_runtimes <- results %>%
+  dplyr::select(N, moderator_1_type, variant_label, runtime_mxsem, runtime_semtree) %>%
+  tidyr::pivot_longer(
+    c(runtime_mxsem, runtime_semtree),
+    names_to  = "method",
+    values_to = "runtime_seconds"
+  ) %>%
+  dplyr::mutate(
+    method = dplyr::recode(method,
+                           runtime_mxsem   = ifelse(variant_label == "MNLFA_none", "mxsem_null", "mxsem"),
+                           runtime_semtree = "semtree"
+    )
+  )
 
 # ---- Persist results (bottom of sim1_script.R) ------------------------------
 # 'results' must be a tibble/data.frame with columns produced by run_one():

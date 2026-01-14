@@ -1,0 +1,20 @@
+\usepackage{csquotes}
+\usepackage{amsmath, amssymb, bm}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{rotating}
+
+\captionsetup{justification=raggedright,singlelinecheck=false}
+
+\input{configurations.tex}
+
+\setboolean{showinstructions}{true}
+\setboolean{showexamples}{true}
+\setboolean{showexplanations}{true}
+
+\usepackage[style=apa, sortcites=true, sorting=nyt, backend=biber]{biblatex}
+\DeclareLanguageMapping{american}{american-apa}
+\addbibresource{bibliography.bib}
