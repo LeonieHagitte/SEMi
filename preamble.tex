@@ -1,3 +1,5 @@
+% preamble.tex (do NOT load biblatex here)
+
 \usepackage{csquotes}
 \usepackage{amsmath, amssymb, bm}
 \usepackage{graphicx}
@@ -9,12 +11,6 @@
 
 \captionsetup{justification=raggedright,singlelinecheck=false}
 
-\input{configurations.tex}
+% Only keep this if you later see an APA language-mapping error
+% \DeclareLanguageMapping{american}{american-apa}
 
-\setboolean{showinstructions}{true}
-\setboolean{showexamples}{true}
-\setboolean{showexplanations}{true}
-
-\usepackage[style=apa, sortcites=true, sorting=nyt, backend=biber]{biblatex}
-\DeclareLanguageMapping{american}{american-apa}
-\addbibresource{bibliography.bib}

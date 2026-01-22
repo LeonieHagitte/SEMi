@@ -1,8 +1,6 @@
 ---
 title: "SEMi-Complete by Design: A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM-Trees"
-author:
-  - "Leonie Hagitte"
-  - "Andreas M. Brandmaier"
+author: "Leonie Hagitte; Andreas M. Brandmaier"
 date: "2025-12-10"
 
 output:
@@ -17,9 +15,13 @@ classoption: [man]
 
 bibliography: bibliography.bib
 biblio-style: apa
+biblatexoptions:
+  - backend=biber
+  - sortcites=true
+  - sorting=nyt
 lang: american
-
 ---
+
 
 
 ```{r setup, include=FALSE}
@@ -525,11 +527,9 @@ $$
 
 ## What will be the different factors of the data-generating mechanism? 
 
-%\explanation{A factor can be a parameter/setting/process/etc. that determines the data-generating mechanism and is varied across simulation conditions.}
-
 The simulation design includes several manipulated factors that govern the data-generating mechanism (DGM). These factors are varied across simulation conditions and apply consistently to both studies, unless otherwise noted.
 
-\subsubsection*{Core DGM Factors (Applied in Both Studies)}
+#### Core DGM Factors (Applied in Both Studies)
 
 The following factors are systematically varied in both studies using a grid search design:
 
@@ -565,7 +565,7 @@ The following factors are systematically varied in both studies using a grid sea
     \item \textbf{Model misspecification of moderator form:} The DGM defines \( Z \) using one of the three functional forms above, while the analytical model assumes either a \textit{linear} or \textit{quadratic} moderator effect.
 \end{itemize}
 
-\subsubsection*{Study-Specific Factors}
+#### Study-Specific Factors 
 
 \paragraph{Study 1.} Focuses on functional form misspecification and data-related conditions:
 
@@ -597,7 +597,7 @@ The following factors are systematically varied in both studies using a grid sea
     \end{enumerate}
 \end{itemize}
 
-\subsection{If there is more than one factor: How will the factor levels be combined and how many simulation conditions will this create?}
+### If there is more than one factor: How will the factor levels be combined and how many simulation conditions will this create? 
 
 We employ a full grid search, in which parameter values are sampled from pre-specified discrete values. 
 A total of 6000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near \(p = 0.8\)) achieve an approximate width of \(\pm 1\%\). This is based on the calculation:
@@ -607,7 +607,6 @@ A total of 6000 simulation replications should ideally be conducted. This number
 which yields a standard error consistent with the desired precision for evaluating simulation outcomes within this study.
 To ensure computational feasability, we propose an iterative approach whereby initial pilot simulations \(n=100\) are conducted to amongst others, estimate the needed simulation time. These estimates then inform a more principled determination of the total number of replications, targeting a predefined precision threshold.
 
-\vspace{\baselineskip}
 
 The factors that vary across simulation conditions include:
 \begin{itemize}
@@ -621,21 +620,15 @@ The factors that vary across simulation conditions include:
 \end{itemize}
 
 
-\section{Estimands and Targets}
-\subsection{What will be the estimands and/or targets of the simulation study?}      
-
-%\explanation{Estimands and other targets jointly refer to the practical aims of the compared methods. For example, an estimand/target could be the true effect size estimated by the compared methods \parencite[see][for more information]{Siepe2024}. Please also specify if some targets are considered more important than others, i.e., if the simulation study will have primary and secondary outcomes.} 
-
-\subsection{What will be the estimands and/or targets of the simulation study?}
+## Estimands and Targets
+### What will be the estimands and/or targets of the simulation study? 
 
 The primary estimands in this simulation study pertain to the detection and accurate estimation of measurement non-invariance (MI) due to moderation effects on measurement parameters. Specifically, we assess whether the estimation methods compared can correctly identify the presence or absence of moderation in factor loadings, intercepts, and residual variances, reflecting the true data-generating structure. Consequently, key simulation outcomes include Type I error rates and statistical power associated with detecting such moderation effects, as well as bias and variability in the recovered parameter estimates.
 
 Secondary estimands include model-level indicators of fit (e.g., RMSEA with confidence intervals, SRMR, CFI), which serve as auxiliary diagnostics for methods that yield such metrics (i.e., MNLFA). These are not applicable to tree-based approaches and are thus interpreted as method-specific targets rather than general evaluative criteria.
 
-\section{Methods}
-\subsection{How many and which methods will be included and which quantities will be extracted?}
-    
-%\explanation{Be as specific as possible regarding the methods that will be compared, and provide a justification for both the choice of methods and their model parameters. This can also include code which will be used to estimate the different methods or models in the simulation with all relevant model parameters. Setting different prior hyperparameters might also be regarded as using different methods. Where package defaults are used, state this. Where they are not used, state what values are used instead.}
+## Methods 
+### How many and which methods will be included and which quantities will be extracted? 
 
 We will compare the following methods:
     \begin{itemize}
@@ -660,10 +653,8 @@ In contrast, non-parametric Tree-based approaches do not yield direct parameter 
 This distinction ensures that each method is evaluated according to its own inferential framework, while maintaining comparability in terms of its ability to detect MI reliably.
 
 
-\section{Performance Measures}
-\subsection{Which performance measures will be used?}    
-
-%\explanation{Please provide details on why they were chosen and on how these measures will be calculated. Ideally, provide formulas for the performance measures to avoid ambiguity. Some models in psychology, such as item response theory or time series models, often contain multiple parameters of interest, and their number may vary across conditions. With a large number of estimated parameters, their performance measures are often combined. If multiple estimates are aggregated, specify how this aggregation will be performed. For example, if there are multiple parameters in a particular condition, the mean of the individual biases of these parameters or the bias of each individual parameter may be reported.}  
+## Performance Measures 
+### Which performance measures will be used?     
 
 For the MNLFA \textbf{exclusively}, we will evaluate the following performance measures:
 
@@ -711,10 +702,8 @@ For the SEM trees \textbf{as well as} for the MNLFA we will evaluate:
 Performance measures calculated for multiple parameters (e.g., factor loadings) will be aggregated by reporting the mean value across parameters. 
 
 
-\subsection{How will Monte Carlo uncertainty of the estimated performance measures be calculated and reported?} 
+### How will Monte Carlo uncertainty of the estimated performance measures be calculated and reported? 
     
-%\explanation{Ideally, Monte Carlo uncertainty can be reported in the form of Monte Carlo Standard Errors (MCSEs). Please see \textcite{Siepe2024} and \textcite{Morris2019} for a list of formulae to calculate the MCSE related to common performance measures, more accurate jackknife-based MCSEs are available through the \texttt{rsimsum} \parencite{Gasparini2018} and \texttt{simhelpers} \parencite{Simhelpers2022} R packages, the \texttt{SimDesign} \parencite{Chalmers2020} R package can compute confidence intervals for performance measures via bootstrapping. Monte Carlo uncertainty can additionally be visualized using plots appropriate for illustrating variability, such as MCSE error bars, histograms, boxplots, or violin plots of performance measure estimates, if possible (e.g., bias).}
-
 We will quantify Monte Carlo uncertainty using Monte Carlo Standard Errors (MCSEs) for each performance measure, calculated as follows:
 
 \begin{itemize}
@@ -739,9 +728,7 @@ We will quantify Monte Carlo uncertainty using Monte Carlo Standard Errors (MCSE
 
 \vspace{\baselineskip}
 
-\subsection{How many simulation repetitions will be used for each condition?}  
-
-%\explanation{Please also indicate whether the chosen number of simulation repetitions is based on sample size calculations, on computational constraints, rules of thumb, or any other heuristic or combination of these strategies. Formulas for sample size planning in simulation studies are provided in \textcite{Siepe2024}. If there is a lack of knowledge on a quantity for computing the Monte Carlo standard error (MCSE) of an estimated performance measure (e.g., the variance of the estimator is needed to compute the MCSE for the bias), pilot simulations may be needed to obtain a guess for realistic/worst-case values.}
+### How many simulation repetitions will be used for each condition?  
 
 A total of 6000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near \(p = 0.8\)) achieve an approximate width of \(\pm 1\%\). This is based on the calculation:
 \[
@@ -750,9 +737,8 @@ A total of 6000 simulation replications should ideally be conducted. This number
 which yields a standard error consistent with the desired precision for evaluating simulation outcomes within this study.
 To ensure computational feasability, we propose an iterative approach whereby initial pilot simulations \(n=100\) are conducted to amongst others, estimate the needed simulation time. These estimates then inform a more principled determination of the total number of replications, targeting a predefined precision threshold.
 
-\subsection{How will missing values due to non-convergence or other reasons be handled?}
+### How will missing values due to non-convergence or other reasons be handled? 
     
-%\explanation{`Convergence' means that a method successfully produces the outcomes of interest (e.g., an estimate, a prediction, a \textit{p}-value, a sample size, etc.) that are required for estimating the performance measures. Non-convergence of some repetitions or whole conditions of simulation studies occurs regularly, e.g., for numerical reasons. It is possible to impute non-converged repetitions, exclude all non-converged repetitions or to implement mechanisms that repeat certain parts of the simulation (such as data generation or model fitting) until convergence is achieved. Further, it is important to consider at which proportion of failed repetitions a whole condition will be excluded from the analysis. See \textcite{Pawel2024} for more guidance on handling missing values in simulation studies.}
 
 Non-convergence or other missing values may occur during model estimation. We plan to:
 
@@ -765,60 +751,29 @@ Non-convergence or other missing values may occur during model estimation. We pl
 No imputation of missing estimates will be performed.
 
 
-\subsection{How do you plan on interpreting the performance measures? \textmd{(optional)}}
-    
-\explanation{It can be specified what a `relevant difference' in performance, or what `acceptable' and `unacceptable' levels of performance might be to avoid post-hoc interpretation of performance. Furthermore, some researchers use regression models to analyze the results of simulations and compute effect sizes for different factors, or to assess the strength of evidence for the influence of a certain factor \parencite{Skrondal2000, Chipman2022}. If such an approach will be used, please provide as many details as possible on the planned analyses.}
-    
-\begin{examplebox}
-We define a type I error rate larger than 5\% as non-acceptable performance. Amongst methods that exhibit acceptable performance regarding the type I error rate (within the MCSE), we consider a method X as performing better than a method Y in a certain simulation condition if the lower bound for the estimated power of method X ($\widehat{\text{Pow}}-\text{MCSE}$) is greater than the upper bound for the estimated power of method Y ($\widehat{\text{Pow}}+\text{MCSE}$).
-\end{examplebox} 
+### How do you plan on interpreting the performance measures? 
 
 \textit{Answer:}
 
-\section{Other}
-\subsection{Which statistical software/packages do you plan to use?}   
-
-\explanation{Likely, not all software used can be prespecified before conducting the simulation. However, the main packages used for model fitting are usually known in advance and can be listed here, ideally with version numbers.} 
-    
-\begin{examplebox}
-We will use the following packages of \texttt{R} version 4.3.1 \parencite{R2020} in their most recent versions: The \texttt{mvtnorm} package \parencite{Genz2009} to generate data, the \texttt{lm()} function included in the \texttt{stats} package \parencite{R2020} to fit the different models, the \texttt{SimDesign} package \parencite{Chalmers2020} to set up  and run the simulation study, and the \texttt{ggplot2} package \parencite{Wickham2016} to create visualizations.  
-\end{examplebox}
+## Other 
+### Which statistical software/packages do you plan to use?    
 
 \textit{Answer:}
 
-\subsection{Which computational environment do you plan to use?} 
-    
-\explanation{Please specify the operating system and its version which you intend to use. If the study is performed on multiple machines or servers, provide information for each one of them, if possible.}
-    
-\begin{examplebox}
-We will run the simulation study on a Windows 11 machine. The complete output of \texttt{sessionInfo()} will be saved and reported in the supplementary materials.
-\end{examplebox}
+### Which computational environment do you plan to use?  
 
 \textit{Answer:}
 
-\subsection{Which other steps will you undertake to make simulation results reproducible? \textmd{(optional)}} 
-    
-\explanation{This can include sharing the code and full or intermediate results of the simulation in an open online repository. Additionally, this may include supplemental materials or interactive data visualizations, such as a shiny application.}
-    
-\begin{examplebox}
-We will upload the fully reproducible simulation script and a data set containing all relevant estimates, standard errors, and \textit{p}-values for each repetition of the simulation to OSF (\url{https://osf.io/dfgvu/}) and GitHub (\url{https://github.com/bsiepe/SimPsychReview}). 
-\end{examplebox}
+### Which other steps will you undertake to make simulation results reproducible? 
 
 \textit{Answer:}
 
-\subsection{Is there anything else you want to preregister? \textmd{(optional)}}
+### Is there anything else you want to preregister? 
     
-\explanation{For example, the answer could include the most likely obstacles in the simulation design, and the plans to overcome them, or measures that increase the trust in the preregistration date (e.g., setting the seed based on a future event), as explained in the introduction of this template.}
-    
-\begin{examplebox}
-No.
-\end{examplebox} 
 
 \textit{Answer:}
 
-\newpage
-\section*{References}
+\pagebreak
+## References 
 \nocite{Siepe2024}
 \printbibliography[heading=none]
-
-\end{document}

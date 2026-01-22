@@ -58,10 +58,6 @@
       <file>apa.bbx</file>
       <file>apa.cbx</file>
       <file>biblatex.cfg</file>
-      <file>english.lbx</file>
-      <file>american.lbx</file>
-      <file>american-apa.lbx</file>
-      <file>english-apa.lbx</file>
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="1">

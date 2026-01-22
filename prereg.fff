@@ -1,0 +1,32 @@
+\begin{sidewaysfigure}
+\noindent{\textbf{Analytical Models Study 2}}
+\centering
+
+\begin{subfigure}[b]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tikz_model2.0.png}
+    \caption{Model 2.0}
+\end{subfigure}
+\hspace{0.3cm} % tighter space
+\begin{subfigure}[b]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tikz_model2.1.png}
+    \caption{Model 2.1}
+\end{subfigure}
+
+\vspace{0.3cm} % reduced vertical space
+
+\begin{subfigure}[b]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tikz_model2.2.png}
+    \caption{Model 2.2}
+\end{subfigure}
+\hspace{0.3cm} % tighter space
+\begin{subfigure}[b]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{tikz_model2.3.png}
+    \caption{Model 2.3}
+\end{subfigure}
+
+\caption{We specify a confirmatory factor analysis model with two latent factors, $\eta_1$ and $\xi_1$, and seven observed indicators, $\mathbf{x} = (x_1, \dots, x_4)^\top$ and $\mathbf{y} = (y_1, y_2, y_3)^\top$, along with their respective residuals, $\varepsilon_1, \dots, \varepsilon_4$ and $\delta_1, \delta_2, \delta_3$. The first factor, $\eta_1$, loads onto indicators $x_1$ to $x_4$, while the second factor, $\xi_1$, loads onto indicators $y_1$ to $y_3$. A continuous moderator variable $Z$ introduces conditional heterogeneity into selected measurement parameters, including residuals, intercepts, factor loadings, and latent factor covariance, using one of two functional forms (linear or quadratic). Red dashed arrows indicate model misspecifications.}
+\end{sidewaysfigure}

@@ -6,7 +6,10 @@
 <script src="Semi-Complete by Design_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="Semi-Complete by Design_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="Semi-Complete by Design_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Leonie Hagitte">
@@ -50,6 +53,7 @@
       margin-left: 2em;
     }  </style>
   <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-2c1b5f745a11cfad616ebade4a4a7d24.css">
+  <link rel="stylesheet" href="reveal.css">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -65,6 +69,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -161,39 +166,46 @@ Leonie Hagitte
 </section>
 <section id="why-care-about-measurement-invariance" class="slide level2">
 <h2>Why Care About Measurement Invariance?</h2>
-<p>Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups <span class="citation" data-cites="Cheung2000 Meredith1964">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Cheung and Rensvold 2000</a>; <a href="#/questions-concerns" role="doc-biblioref" onclick="">Meredith 1964</a>)</span>.<br>
-Violations of MI imply that observed group differences may reflect <strong>measurement artifacts</strong> rather than substantive differences in the underlying constructs<span class="citation" data-cites="Putnick2016">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
-<p>Without MI, conclusions about group differences in means, variances, or relations are not statistically justified<span class="citation" data-cites="Putnick2016">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
+<p>Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups <span class="citation" data-cites="Cheung2000 Meredith1964">(<a href="#/references" role="doc-biblioref" onclick="">Cheung and Rensvold 2000</a>; <a href="#/references" role="doc-biblioref" onclick="">Meredith 1964</a>)</span>.<br>
+Violations of MI imply that observed group differences may reflect <strong>measurement artifacts</strong> rather than substantive differences in the underlying constructs<span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
+<ul>
+<li class="fragment">Without MI, conclusions about group differences in means, variances, or relations are not statistically justified<span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</li>
+</ul>
 </section>
 <section id="why-care-about-measurement-invariance-1" class="slide level2">
 <h2>Why Care About Measurement Invariance?</h2>
 <ul>
-<li class="fragment">Measurement invariance is often <strong>implicitly assumed</strong> rather than empirically tested<br>
+<li>Measurement invariance is often <strong>implicitly assumed</strong> rather than empirically tested<br>
 </li>
-<li class="fragment">The majority of psychological studies do <strong>not test for MI</strong> <span class="citation" data-cites="Maassen2025 Rohrer2025">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Maassen et al. 2025</a>; <a href="#/questions-concerns" role="doc-biblioref" onclick="">Rohrer and Paulewicz 2025</a>)</span><br>
+<li>The majority of psychological studies do <strong>not test for MI</strong> <span class="citation" data-cites="Maassen2025 Rohrer2025">(<a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>; <a href="#/references" role="doc-biblioref" onclick="">Rohrer and Paulewicz 2025</a>)</span><br>
 </li>
-<li class="fragment">When MI is tested, reporting standards are frequently insufficient for replication <span class="citation" data-cites="Putnick2016 Maassen2025">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>; <a href="#/questions-concerns" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span></li>
+<li>When MI is tested, reporting standards are frequently insufficient for replication <span class="citation" data-cites="Putnick2016 Maassen2025">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span></li>
+<li><span class="citation" data-cites="Rohrer2025">Rohrer and Paulewicz (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> also note that only &lt;5% of comparison studies reported MI in a recent review.</li>
 </ul>
-<p>As a result, the validity of many reported group comparisons remains unclear.</p>
+<ul>
+<li class="fragment">As a result, the validity of many reported group comparisons remains unclear.</li>
+</ul>
 </section>
 <section id="empirical-evidence-on-mi-violations" class="slide level2">
 <h2>Empirical Evidence on MI Violations</h2>
 <p>Recent literature reviews highlight the severity of the problem:</p>
-<blockquote>
-<p><em>“None of the reported MI tests were reproducible, and only 26% of the 174 newly performed MI tests reached sufficient (scalar) invariance, with MI failing completely in 58% of tests.”</em><span class="citation" data-cites="Maassen2025">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span></p>
-</blockquote>
-<p>Additionally, in approximately <strong>50% of cases</strong> where configural invariance was rejected, the <strong>number of latent factors differed between groups</strong>, indicating fundamentally different measurement structures<span class="citation" data-cites="Maassen2025">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span>.</p>
+<ul>
+<li class="fragment"><blockquote>
+<p><em>“None of the reported MI tests were reproducible, and only 26% of the 174 newly performed MI tests reached sufficient (scalar) invariance, with MI failing completely in 58% of tests.”</em><span class="citation" data-cites="Maassen2025">(<a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span></p>
+</blockquote></li>
+<li class="fragment">Additionally, in approximately <strong>50% of cases</strong> where configural invariance was rejected, the <strong>number of latent factors differed between groups</strong>, indicating fundamentally different measurement structures <span class="citation" data-cites="Maassen2025">(<a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span>.</li>
+</ul>
 </section>
 <section id="sem-trees" class="slide level2">
 <h2>SEM Trees</h2>
-<p>Structural Equation Model (SEM) Trees integrate <strong>confirmatory SEM</strong> with <strong>recursive partitioning</strong><span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/questions-concerns" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/questions-concerns" role="doc-biblioref" onclick="">2016</a>; <a href="#/questions-concerns" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
+<p>Structural Equation Model (SEM) Trees integrate <strong>confirmatory SEM</strong> with <strong>recursive partitioning</strong> <span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/references" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/references" role="doc-biblioref" onclick="">2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
 <p>Key characteristics:</p>
 <ul>
-<li class="fragment">Automatically detect <strong>heterogeneity in model parameters</strong><br>
+<li>Automatically detect <strong>heterogeneity in model parameters</strong><br>
 </li>
-<li class="fragment">Identify <strong>subgroups</strong> in which measurement or structural parameters differ<br>
+<li>Identify <strong>subgroups</strong> in which measurement or structural parameters differ<br>
 </li>
-<li class="fragment">Allow data-driven detection of <strong>non-invariance</strong></li>
+<li>Allow data-driven detection of <strong>non-invariance</strong></li>
 </ul>
 <p>SEM Trees are particularly useful when grouping variables are unknown or continuous and if you have plenty.</p>
 </section>
@@ -228,8 +240,8 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 </li>
 <li class="fragment">Factor means and variances</li>
 </ul>
-<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES). This means MI is conceptualized as the moderation of certain parameters/ the whole model by a external variable.</p>
-<p>This therefore directly models measurement non-invariance instead of testing it sequentially.</p>
+<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES) <span class="citation" data-cites="Kolbe2024 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>. This means MI is conceptualized as the <strong>moderation</strong> of certain parameters by a external variable.</p>
+<p>This therefore directly models measurement non-invariance instead of testing it sequentially <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe, Jorgensen, and Molenaar 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
 </section>
 <section id="strengths-and-challenges-of-mnlfa" class="slide level2">
 <h2>Strengths and Challenges of MNLFA</h2>
@@ -262,7 +274,7 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 </li>
 <li class="fragment">MI testing should be pursued with rigor and diligent documentation<br>
 </li>
-<li class="fragment">However it is not necessarily always a prerequisite to have <em>Residual Invariance</em> established<br>
+<li class="fragment">However it is not necessarily always a prerequisite to have <strong>Residual Invariance</strong> established<br>
 </li>
 <li class="fragment">So how far you are progessed in a theoretical foundation is key<br>
 </li>
@@ -273,17 +285,214 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 <section id="simulation" class="slide level2">
 <h2>Simulation</h2>
 <p>Monte Carlo simulation to compare SEM trees and MNLFA</p>
+<ul>
+<li>I am about to preregister the simulation, using the template from <span class="citation" data-cites="Siepe2024">Siepe et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span>.</li>
+<li>Data will be generated parametrically</li>
+<li>Different population models
+<ul>
+<li>Single-Factor cfa model with four manifest indicators <span class="math display">\[
+\mathbf{x} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon},
+\qquad
+\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon).
+\]</span><br>
+</li>
+<li>Two-Factor cfa model with four manifest indicators <span class="math display">\[
+\mathbf{x} = \boldsymbol{\nu}_x(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta_1 + \boldsymbol{\varepsilon}(Z),
+\]</span> <span class="math display">\[
+\mathbf{y} = \boldsymbol{\nu}_y(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta_2 + \boldsymbol{\delta}(Z),
+\]</span></li>
+</ul></li>
+</ul>
 </section>
-<section id="trial-run" class="slide level2">
-<h2>Trial Run</h2>
+<section id="simulation-1" class="slide level2 scrollable">
+<h2>Simulation</h2>
+<p>Let <span class="math inline">\(M \sim \mathcal{U}(-1,1)\)</span> denote a bounded continuous covariate.</p>
+<p><strong>The effective moderator is defined as:</strong> <span class="math display">\[
+Z = h(M),
+\]</span></p>
+<ol type="1">
+<li><p><strong>Linear:</strong></p>
+<p><span class="math display">\[
+h(M) = M
+\]</span></p></li>
+<li><p><strong>Sigmoid:</strong></p>
+<p><span class="math display">\[
+h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
+\qquad a=-1,\; b=1,\; c=0,\; k&gt;0.
+\]</span></p></li>
+<li><p><strong>Quadratic:</strong></p>
+<p><span class="math display">\[
+h(M) = 2M^2 - 1
+\]</span></p></li>
+</ol>
 </section>
-<section id="questions-concerns" class="slide level2 smaller scrollable">
+<section id="simulation-2" class="slide level2">
+<h2>Simulation</h2>
+<p><strong>Analytical Model Study 1</strong></p>
+
+<img data-src="tikz_model1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<section id="simulation-3" class="slide level2">
+<h2>Simulation</h2>
+<p><strong>Analytical Model Study 2</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="tikz_model2.0.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="tikz_model2.0.png"></a> <em>Model 2.0</em></p>
+</div><div class="column" style="width:50%;">
+<p><a href="tikz_model2.1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="tikz_model2.1.png"></a> <em>Model 2.1</em></p>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="tikz_model2.2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="tikz_model2.2.png"></a> <em>Model 2.2</em></p>
+</div><div class="column" style="width:50%;">
+<p><a href="tikz_model2.3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img data-src="tikz_model2.3.png"></a> <em>Model 2.3</em></p>
+</div></div>
+</section>
+<section id="study-specific-factors" class="slide level2">
+<h2>Study-Specific Factors</h2>
+<p><strong>Study 1: Functional-Form Misspecification</strong></p>
+<p>Focuses on moderator misspecification and data-related conditions:</p>
+<ul>
+<li><strong>Analysis model:</strong> Linear or quadratic moderator</li>
+<li><strong>Sample size:</strong> <span class="math inline">\(N \in \{300, 500, 700, 1000\}\)</span></li>
+<li><strong>Indicator reliability:</strong> .60, .70, .80, .95</li>
+<li><strong>No structural misspecification:</strong><br>
+Factor structure and residuals match the generating model</li>
+</ul>
+</section>
+<section id="study-specific-factors-1" class="slide level2 scrollable">
+<h2>Study-Specific Factors</h2>
+<p><strong>Study 2: Structural Misspecification</strong></p>
+<p>Extends Study 1 by introducing factor-structure misspecification:</p>
+<p><em>Same DGM and moderator variation, sample size and reliability as Study 1</em></p>
+<ul>
+<li><p><strong>Analysis model:</strong> Linear or quadratic moderator</p></li>
+<li><p><strong>Structural misspecification (between-subjects):</strong></p>
+<ol type="1">
+<li><strong>None:</strong> Correct factor structure<br>
+</li>
+<li><strong>Cross-loadings:</strong><br>
+Items <span class="math inline">\(y_5\)</span>, <span class="math inline">\(y_6\)</span> load on a second factor <span class="math display">\[
+\lambda^{(CL)}_5,\; \lambda^{(CL)}_6 \in \{0.3, 0.4\}
+\]</span></li>
+<li><strong>Correlated residuals:</strong><br>
+<span class="math display">\[
+\text{Cov}(\varepsilon_1, \varepsilon_5),\;
+\text{Cov}(\varepsilon_2, \varepsilon_6)
+\in \{0.2, 0.3\}
+\]</span></li>
+<li><strong>Combined:</strong> Cross-loadings and residual correlations</li>
+</ol></li>
+</ul>
+</section>
+<section id="trial-run-data-generating-model" class="slide level2">
+<h2>Trial Run: Data-Generating Model</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Measurement model</strong><br>
+Single-factor CFA with one latent factor <span class="math inline">\(\eta\)</span> and four indicators <span class="math inline">\(y_1\)</span>–<span class="math inline">\(y_4\)</span>: <span class="math display">\[
+\mathbf{y} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta + \boldsymbol{\varepsilon}(Z)
+\]</span></p>
+<p><strong>Moderator variable</strong><br>
+The moderator <span class="math inline">\(Z\)</span> is defined as a transformation of <span class="math inline">\(X\)</span>:</p>
+<ul>
+<li>Linear: <span class="math inline">\(Z = X\)</span></li>
+<li>Quadratic: <span class="math inline">\(Z = X^2\)</span></li>
+<li>Sigmoid: <span class="math display">\[
+Z = \frac{1}{1 + \exp\!\bigl(-\gamma(X - c)\bigr)}
+\]</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Baseline parameters</strong></p>
+<ul>
+<li>Factor loadings: <span class="math inline">\(\lambda = 0.70\)</span></li>
+<li>Target reliability: <span class="math inline">\(0.80\)</span></li>
+</ul>
+<p><strong>True moderation patterns (model_type)</strong></p>
+<ul>
+<li><strong>NULL:</strong> No moderation<br>
+</li>
+<li><strong>1.1:</strong> Loadings of <span class="math inline">\(y_1\)</span>–<span class="math inline">\(y_4\)</span> moderated<br>
+<span class="math display">\[
+\delta = 0.20
+\]</span></li>
+<li><strong>1.2:</strong> Loadings of <span class="math inline">\(y_1\)</span>, <span class="math inline">\(y_2\)</span> moderated only<br>
+<span class="math display">\[
+\delta = 0.20
+\]</span></li>
+</ul>
+<p><strong>Design factors</strong></p>
+<ul>
+<li>Sample size: <span class="math inline">\(N \in \{250,\; 500\}\)</span></li>
+<li>Replications: <span class="math inline">\(100\)</span> per condition</li>
+</ul>
+</div></div>
+</section>
+<section id="trial-run-analytical-models" class="slide level2">
+<h2>Trial Run: Analytical Models</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="sem-trees-nonparametric-detection">SEM Trees (nonparametric detection)</h3>
+<p><strong>Baseline CFA</strong> <span class="math display">\[
+\eta \sim y_1 + y_2 + y_3 + 1\cdot y_4
+\]</span></p>
+<p><strong>Predictors</strong></p>
+<ul>
+<li><span class="math inline">\(M\)</span>: true moderator<br>
+</li>
+<li><span class="math inline">\(M_2\)</span>: noise covariate</li>
+</ul>
+<p><strong>Evaluation criteria</strong></p>
+<ul>
+<li>Splits on <span class="math inline">\(M\)</span> (true positives)</li>
+<li>No splits on <span class="math inline">\(M\)</span> under NULL</li>
+<li>No splits on <span class="math inline">\(M_2\)</span> (false positives)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="mnlfa-parametric-detection">MNLFA (parametric detection)</h3>
+<p><strong>Linear full moderation</strong></p>
+<ul>
+<li><span class="math inline">\(\delta\)</span>-loadings on <span class="math inline">\(y_1\)</span>, <span class="math inline">\(y_2\)</span>, <span class="math inline">\(y_3\)</span></li>
+<li><span class="math inline">\(y_4\)</span> fixed as marker</li>
+</ul>
+<p><strong>Linear partial moderation</strong></p>
+<ul>
+<li><span class="math inline">\(\delta\)</span>-loadings on <span class="math inline">\(y_1\)</span>, <span class="math inline">\(y_2\)</span> only</li>
+</ul>
+<p><strong>None (negative control)</strong></p>
+<ul>
+<li>Unmoderated CFA</li>
+</ul>
+</div></div>
+</section>
+<section id="preliminary-results" class="slide level2">
+<h2>Preliminary Results</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="Sim_1/Results/Rplot1.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img data-src="Sim_1/Results/Rplot1.jpeg"></a> <em>True-Positive Rate</em></p>
+</div><div class="column" style="width:50%;">
+<p><a href="Sim_1/Results/Rplot2.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img data-src="Sim_1/Results/Rplot2.jpeg"></a> <em>False-Positive Rate</em></p>
+</div></div>
+</section>
+<section id="questions-concerns" class="slide level2">
 <h2>Questions &amp; Concerns</h2>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<p><br>
+</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>How do I ensure that the comparison is fair, the best?</li>
+<li>What conditions would you like to see simulated?</li>
+<li>What should I consider/ keep a eye on when programming it?</li>
+<li>Did I forget something in the simulation set-up?</li>
+<li>This is huge currently - what can I drop?</li>
+<li>What makes a simulation most useful in your opinion?</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="https://imgs.xkcd.com/comics/modeling_study.png"></p>
+</div></div>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Arnold2021" class="csl-entry" role="listitem">
@@ -298,6 +507,15 @@ Brandmaier, A. M., J. J. Prindle, J. J. McArdle, and U. Lindenberger. 2016. <spa
 <div id="ref-Cheung2000" class="csl-entry" role="listitem">
 Cheung, Gordon W., and Roger B. Rensvold. 2000. <span>“Assessing <span>Extreme</span> and <span>Acquiescence</span> <span>Response</span> <span>Sets</span> in <span>Cross</span>-<span>Cultural</span> <span>Research</span> <span>Using</span> <span>Structural</span> <span>Equations</span> <span>Modeling</span>.”</span> <em>Journal of Cross-Cultural Psychology</em> 31 (2): 187–212. <a href="https://doi.org/10.1177/0022022100031002003">https://doi.org/10.1177/0022022100031002003</a>.
 </div>
+<div id="ref-Curran2014" class="csl-entry" role="listitem">
+Curran, Patrick J., James S. McGinley, Daniel J. Bauer, Andrea M. Hussong, Alison Burns, Laurie Chassin, Kenneth Sher, and Robert Zucker. 2014. <span>“A <span>Moderated</span> <span>Nonlinear</span> <span>Factor</span> <span>Model</span> for the <span>Development</span> of <span>Commensurate</span> <span>Measures</span> in <span>Integrative</span> <span>Data</span> <span>Analysis</span>.”</span> <em>Multivariate Behavioral Research</em> 49 (3): 214–31. <a href="https://doi.org/10.1080/00273171.2014.889594">https://doi.org/10.1080/00273171.2014.889594</a>.
+</div>
+<div id="ref-Kolbe2021" class="csl-entry" role="listitem">
+Kolbe, Laura, Terrence D. Jorgensen, and Dylan Molenaar. 2021. <span>“The <span>Impact</span> of <span>Unmodeled</span> <span>Heteroskedasticity</span> on <span>Assessing</span> <span>Measurement</span> <span>Invariance</span> in <span>Single</span>-Group <span>Models</span>.”</span> <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 28 (1): 82–98. <a href="https://doi.org/10.1080/10705511.2020.1766357">https://doi.org/10.1080/10705511.2020.1766357</a>.
+</div>
+<div id="ref-Kolbe2024" class="csl-entry" role="listitem">
+Kolbe, Laura, Dylan Molenaar, Suzanne Jak, and Terrence D. Jorgensen. 2024. <span>“<span class="nocase">Assessing Measurement Invariance with Moderated Nonlinear Factor Analysis Using the R Package OpenMx</span>.”</span> <em>Psychological Methods</em> 29 (2): 388–406. <a href="https://doi.org/10.1037/met0000501">https://doi.org/10.1037/met0000501</a>.
+</div>
 <div id="ref-Maassen2025" class="csl-entry" role="listitem">
 Maassen, Esther, E. Damiano D’Urso, Marcel A. L. M. van Assen, Michèle B. Nuijten, Kim De Roover, and Jelte M. Wicherts. 2025. <span>“<span class="nocase">The Dire Disregard of Measurement Invariance Testing in Psychological Science</span>.”</span> <em>Psychological Methods</em> 30 (5): 966–79. <a href="https://doi.org/10.1037/met0000624">https://doi.org/10.1037/met0000624</a>.
 </div>
@@ -309,6 +527,9 @@ Putnick, Diane L., and Marc H. Bornstein. 2016. <span>“Measurement Invariance 
 </div>
 <div id="ref-Rohrer2025" class="csl-entry" role="listitem">
 Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement Invariance Causally.”</span> <em>Current Research in Ecological and Social Psychology</em> 9: 100241. <a href="https://doi.org/10.1016/j.cresp.2025.100241">https://doi.org/10.1016/j.cresp.2025.100241</a>.
+</div>
+<div id="ref-Siepe2024" class="csl-entry" role="listitem">
+Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Daniel W. Heck, and Samuel Pawel. 2024. <span>“Simulation Studies for Methodological Research in Psychology: A Standardized Structure for Planning, Preregistration, and Reporting.”</span> <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000695">https://doi.org/10.1037/met0000695</a>.
 </div>
 </div>
 </section>
@@ -528,42 +749,80 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
       });
     </script>
     
+
     <script>
+
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
       // slide changes (different for each slide format).
+
       (function () {
+
         // dispatch for htmlwidgets
+
         function fireSlideEnter() {
+
           const event = window.document.createEvent("Event");
+
           event.initEvent("slideenter", true, true);
+
           window.document.dispatchEvent(event);
+
         }
+
+    
 
         function fireSlideChanged(previousSlide, currentSlide) {
+
           fireSlideEnter();
 
+    
+
           // dispatch for shiny
+
           if (window.jQuery) {
+
             if (previousSlide) {
+
               window.jQuery(previousSlide).trigger("hidden");
+
             }
+
             if (currentSlide) {
+
               window.jQuery(currentSlide).trigger("shown");
+
             }
+
           }
+
         }
+
+    
 
         // hookup for slidy
+
         if (window.w3c_slidy) {
+
           window.w3c_slidy.add_observer(function (slide_num) {
+
             // slide_num starts at position 1
+
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
           });
+
         }
 
+    
+
       })();
+
     </script>
+
+    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -732,6 +991,38 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
         }
       });
       </script>
+    <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+    (function() {
+      let previousOnload = window.onload;
+      window.onload = () => {
+        if (previousOnload) {
+          previousOnload();
+        }
+        lightboxQuarto.on('slide_before_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          const href = trigger.getAttribute('href');
+          if (href !== null) {
+            const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+            if (imgEl !== null) {
+              const srcAttr = imgEl.getAttribute("src");
+              if (srcAttr && srcAttr.startsWith("data:")) {
+                slideConfig.href = srcAttr;
+              }
+            }
+          } 
+        });
+      
+        lightboxQuarto.on('slide_after_load', (data) => {
+          const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(slideNode);
+          }
+        });
+      
+      };
+      
+    })();
+              </script>
     
 
 </body></html>
