@@ -14,7 +14,7 @@ lock_dir <- "locks"
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
 DESIGN <- tidyr::expand_grid(
-  popmodel     = c("NULL","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
+  popmodel     = c("NULL","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3"),
   N            = c(300, 500, 700, 1000),
   reliability  = c(0.60, 0.70, 0.80, 0.95),
   lambda       = 0.70,

@@ -28,7 +28,7 @@ library(partykit)
 
 # -----------------------------------------------------------------------------
 # ---------------------- unrestricted CFA (SEM Tree base) NULL -----------------
-mi_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
+mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   
   manVars <- grep("^x\\d+$", names(data), value = TRUE)
   p <- length(manVars)
@@ -383,4 +383,90 @@ mi_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   ))
   }
 # ------------------------------------------------------------------------
+
+tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
+  
+  stopifnot(nfactors==1) # TODO: latent covariance matrix is not populated correctly
+  
+  manVars <- grep("^x\\d+$", names(data), value = TRUE)
+  p <- length(manVars)
+  
+  mxdata <- mxData(observed = data, type = "raw")
+  
+  # Intercept Matrices
+  matT0 <- mxMatrix(type = "Full", 
+                    nrow = 1, 
+                    ncol = p, 
+                    free = TRUE, 
+                    values = 0.6,
+                    name = "matT0") #The matrix matT0 is a full matrix containing the baseline intercepts.
+  
+  # Loading Matrices
+  matL0 <- mxMatrix(type="Full", #matL0 is a full matrix containing the baseline factor loadings
+                    nrow=p, 
+                    ncol = nfactors, 
+                    free= TRUE, 
+                    values= rep(1, p),
+                    name="matL0")
+  
+  # Residual Variances 
+  matE0 <- mxMatrix(type="Diag", # matE0 is a diagonal matrix containing the baseline residual variances 
+                    nrow=p, 
+                    ncol=p,
+                    free=TRUE,
+                    values = 1,
+                    name="matE0")
+  
+  # Latent factor variance
+  matP0 <- mxMatrix(type="Symm", 
+                    nrow = nfactors, #because only one latent factor 
+                    ncol = nfactors,
+                    free= FALSE,
+                    values= 1, #todo - assumes nfactors is 1
+                    name="matP0")
+  
+  # latent factor mean
+  matA0 <- mxMatrix(type="Full", #matA0 is a matrix containing the baseline common-factor means 
+                    nrow = 1, 
+                    ncol = nfactors,
+                    free=FALSE, #fixed
+                    values = 0, # to 0
+                    name="matA0")
+  
+  # -----------------------------------------------------------------------------
+  matT <- mxAlgebra(expression = matT0, name="matT") #intercepts baseline
+  
+  matL <- mxAlgebra(expression = matL0, name="matL") #loadings baseline
+  
+  matE <- mxAlgebra(expression = matE0, name="matE") #residual variances
+  
+  matA <- mxAlgebra(expression = matA0, name="matA") #matrix of common-factor means
+  
+  matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
+  
+  # ------------ Matrices for model implied moments -------
+  matM <- mxAlgebra(matT + t(matL) %*% matA, name="matM")
+  
+  matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
+                    name="matC")
+  
+  # ------------ Model expectations and fit-function -------
+  expTr <- mxExpectationNormal(covariance="matC", means = "matM", dimnames=manVars)
+  
+  fitTr <- mxFitFunctionML() #mxFitFunctionML() function stored in fitF is used to 
+  #indicate that the free parameters of the configural 
+  #model should be estimated using full-information maximum likelihood.
+  
+  modbase <- mxModel(model="baseline",
+                       matT, matT0, 
+                       matL, matL0,
+                       matE, matE0, 
+                       matP, matP0, 
+                       matA, matA0, 
+                       matM, matC, expTr, 
+                       fitTr, mxdata)
+  
+  #The model can be fitted to the data using the mxRun() function. 
+  fitbase <- mxRun(modbase)
+}
 # ------------------------------------------------------------------------

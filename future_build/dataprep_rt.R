@@ -95,11 +95,6 @@ gen_matrixA <- function(popmodel,
   {
     LAMBDA[,1] <- LAMBDA[,1] + delta_lambda * hm1 + delta_lambda * hm2 + (delta_lambda*delta_lambda) * hm12 # interaction version 
   }
-  else if (popmodel == "1.32") #1.32 = full loadings moderated by hm1 and full intercepts moderated by hm2
-  {
-    LAMBDA[,1] <- LAMBDA[,1] + delta_lambda * hm1
-    NU[,1] <- NU[,1] + delta_nu * hm2
-  }
   
   # Residual Variance
   lambda_i <- LAMBDA[, 1]
@@ -150,10 +145,12 @@ gen_dataA <- function(N, params, return_latent = TRUE){
 }
 
 # ------------------------ Test ---------------------------
-#set.seed(1)
-#pa <- gen_matrixA(popmodel="1.12", moderator="linear", m1=TRUE)
-#sa <- gen_dataA(N=20, params=pa)
-#head(sa$data)
+set.seed(1)
+pa <- gen_matrixA(popmodel="1.12", moderator="linear", m1=TRUE)
+sa <- gen_dataA(N=200, params=pa)
+head(sa$data)
+data <- sa$data
+head(data)
 
 # ------------------------ Person-level moderation version -------------------
 
@@ -269,5 +266,7 @@ gen_dataC <- function(N, params, return_latent=TRUE){
 #pc <- gen_paramsC(popmodel="1.12", moderator="linear")
 #sc <- gen_dataC(N=20, params=pc)
 #head(sc$data)
+#data <- sc$data
+#head(data)
 
 
