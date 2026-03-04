@@ -34,7 +34,7 @@ library(partykit)
 build_cfa_baseline <- function() {
   "
   # Measurement: marker loading on y4
-  f1 =~ y1 + y2 + y3 + 1*y4
+  f1 =~ y1 + y2 + y3 + y4
 
   # Residual variances (Θ): free
   y1 ~~ y1
@@ -43,7 +43,7 @@ build_cfa_baseline <- function() {
   y4 ~~ y4
 
   # Latent variance (Ψ): free; latent mean fixed for ID
-  f1 ~~ f1
+  f1 ~~ 1
   f1 ~ 0*1
 
   # Intercepts (means) of observed variables: free
