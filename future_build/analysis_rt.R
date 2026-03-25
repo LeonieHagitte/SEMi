@@ -43,7 +43,8 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
                     values = 1,
                     name = "matT0") #The matrix matT0 is a full matrix containing the baseline intercepts.
   #All baseline intercepts are freely estimated with starting values of one by setting free=TRUE and values=1. 
-  matB1 <- mxMatrix(type="Full", 
+ 
+   matB1 <- mxMatrix(type="Full", 
                     nrow = 1, 
                     ncol=p,#Matrix matB1 and matB2 are full matrices containing the direct effects of the background variables M1 and M2, respectively, on the intercepts.
                     free=TRUE, 
@@ -195,7 +196,12 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   #The model can be fitted to the data using the mxRun() function. 
   fitConfig <- mxRun(modConfig)
   
-  if (!is.null(fitConfig$output$status) && fitConfig$output$status == 0) {
+  ##################################################################################
+  print(fitConfig$output$status)
+  str(fitConfig$output$status)
+  #####################################################################################
+  
+  if (!is.null(fitConfig$output$status$code) && fitConfig$output$status$code == 0) {
     # ---------------------- metric moderated model --------------------------
     
     # Intercept Matrices
@@ -246,8 +252,7 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
     matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
     
     # ------------ Matrices for model implied moments -------
-    matM <- mxAlgebra(expression = matT + t(matL)*matA,
-                      name="matM")
+    matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
     
     matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
                       name="matC")
@@ -273,7 +278,7 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
     
     #The model can be fitted to the data using the mxRun() function. 
     fitmetric <- mxRun(modmetric)
-    if (is.null(fitmetric$output$status) || fitmetric$output$status != 0) {
+    if (is.null(fitmetric$output$status$code) || fitmetric$output$status$code != 0) {
       stop("Metric model did not converge; scalar not run.")
     }
     
@@ -384,14 +389,26 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   }
 # ------------------------------------------------------------------------
 
-tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
+tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c("m1","m2","m0"),
+                          control = semtree::semtree_control(method = "score"), verbose = FALSE){
   
-  stopifnot(nfactors==1) # TODO: latent covariance matrix is not populated correctly
+  stopifnot(nfactors==1) #ToDO: latent covariance matrix is not populated correctly
   
-  manVars <- grep("^x\\d+$", names(data), value = TRUE)
+  dat <- as.data.frame(data)
+  
+  manVars <- grep("^x\\d+$", names(dat), value = TRUE)
   p <- length(manVars)
   
-  mxdata <- mxData(observed = data, type = "raw")
+  if (p == 0) {
+    stop("No manifest variables found. Expected columns like x1, x2, ...")
+  }
+  
+  miss_p <- setdiff(predictors, names(dat))
+  if (length(miss_p) > 0) {
+    stop("Missing SEMTREE predictor columns: ", paste(miss_p, collapse = ", "))
+  }
+  
+  mxdata <- mxData(observed = dat, type = "raw")
   
   # Intercept Matrices
   matT0 <- mxMatrix(type = "Full", 
@@ -399,6 +416,7 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
                     ncol = p, 
                     free = TRUE, 
                     values = 0.6,
+                    labels = paste0("nu_", 1:p),
                     name = "matT0") #The matrix matT0 is a full matrix containing the baseline intercepts.
   
   # Loading Matrices
@@ -407,6 +425,7 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
                     ncol = nfactors, 
                     free= TRUE, 
                     values= rep(1, p),
+                    labels = paste0("lambda_", 1:p),
                     name="matL0")
   
   # Residual Variances 
@@ -445,7 +464,7 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
   
   # ------------ Matrices for model implied moments -------
-  matM <- mxAlgebra(matT + t(matL) %*% matA, name="matM")
+  matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
   
   matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
                     name="matC")
@@ -468,5 +487,148 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   
   #The model can be fitted to the data using the mxRun() function. 
   fitbase <- mxRun(modbase)
+  
+  # ---------------- Metric stage: loadings ----------------
+  metric_constraints <- semtree::semtree.constraints(
+    focus.parameters = paste0("lambda_", 1:p)
+  )
+  
+  metric_tree <- tryCatch(
+    semtree::semtree(
+      model = modbase,
+      data = dat,
+      predictors = predictors,
+      control = control,
+      constraints = metric_constraints,
+      verbose = verbose
+    ),
+    error = identity
+  )
+  
+  metric_split <- !(inherits(metric_tree, "error")) &&
+    length(partykit::nodeids(metric_tree, terminal = FALSE)) > 0
+  
+  scalar_tree <- NULL
+  scalar_split <- NA
+  
+  # ---------------- Scalar stage: intercepts ----------------
+  if (!metric_split) {
+    scalar_constraints <- semtree::semtree.constraints(
+      focus.parameters = paste0("nu_", 1:p)
+    )
+    
+    scalar_tree <- tryCatch(
+      semtree::semtree(
+        model = modbase,
+        data = dat,
+        predictors = predictors,
+        control = control,
+        constraints = scalar_constraints,
+        verbose = verbose
+      ),
+      error = identity
+    )
+    
+    scalar_split <- !(inherits(scalar_tree, "error")) &&
+      length(partykit::nodeids(scalar_tree, terminal = FALSE)) > 0
+  }
+  
+  return(list(
+    baseline_model = modbase,
+    baseline_fit = fitbase,
+    
+    metric_tree = metric_tree,
+    metric_split = metric_split,
+    
+    scalar_tree = scalar_tree,
+    scalar_split = scalar_split
+    
+  ))
 }
 # ------------------------------------------------------------------------
+
+run_analysis <- function(data,
+                         methods = c("MNLFA", "SEMTREE"),
+                         nfactors = 1,
+                         alpha = 0.05,
+                         predictors = c("m1", "m2", "m0")) {
+  
+  methods <- match.arg(methods, choices = c("MNLFA", "SEMTREE"), several.ok = TRUE)
+  dat <- as.data.frame(data)
+  
+  out <- list(methods = methods)
+  
+  if ("MNLFA" %in% methods) {
+    out$mnlfa <- tryCatch(
+      mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
+      error = identity
+    )
+  }
+  
+  if ("SEMTREE" %in% methods) {
+    out$semtree <- tryCatch(
+      tree_analysis(data = dat,
+                    nfactors = nfactors,
+                    predictors = predictors),
+      error = identity
+    )
+  }
+  
+  return(out)
+}
+# ----------------------------------------------------------------------
+
+semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
+  
+  out <- list()
+  for (m in moderators) {
+    out[[paste0("tree_split_on_", m)]] <- NA
+    out[[paste0("tree_n_splits_", m)]] <- NA_integer_
+  }
+  
+  if (inherits(st, "error") || is.null(st)) return(out)
+  if (!methods::is(st, "semtree")) return(out)
+  
+  pt <- tryCatch(methods::slot(st, "tree"), error = function(e) NULL)
+  if (!inherits(pt, "party")) return(out)
+  
+  ids <- partykit::nodeids(pt, terminal = FALSE)
+  split_vars <- character(0)
+  
+  if (length(ids) > 0) {
+    split_vars <- unlist(partykit::nodeapply(pt, ids, FUN = function(nd) {
+      sp <- partykit::split_node(nd)
+      if (is.null(sp)) return(NULL)
+      names(partykit::data_party(pt))[partykit::varid_split(sp)]
+    }))
+  }
+  
+  for (m in moderators) {
+    k <- sum(split_vars == m, na.rm = TRUE)
+    out[[paste0("tree_split_on_", m)]] <- (k > 0)
+    out[[paste0("tree_n_splits_", m)]] <- as.integer(k)
+  }
+  
+  out
+}
+
+# -----------------------------------------------------------------------
+getPredictorsFromTree <- function(st) {
+  if (inherits(st, "error") || is.null(st)) return(NULL)
+  if (!methods::is(st, "semtree")) return(NULL)
+  
+  pt <- tryCatch(methods::slot(st, "tree"), error = function(e) NULL)
+  if (!inherits(pt, "party")) return(NULL)
+  
+  ids <- partykit::nodeids(pt, terminal = FALSE)
+  if (length(ids) == 0L) return(character(0))
+  
+  split_vars <- unlist(partykit::nodeapply(pt, ids, FUN = function(nd) {
+    sp <- partykit::split_node(nd)
+    if (is.null(sp)) return(NULL)
+    names(partykit::data_party(pt))[partykit::varid_split(sp)]
+  }))
+  
+  split_vars
+}
+

@@ -214,7 +214,9 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   dlam12_vec <- rep(0,p);
   dnu12_vec <- rep(0,p)
   
-  if (popmodel == "1.1") {
+  if (popmodel == "0"|| popmodel == "NULL"){
+    #no moderation; keep all d-vectors at 0
+  } else if (popmodel == "1.1") {
     dlam1_vec[] <- dlam
   } else if (popmodel == "1.11") {
     dnu1_vec[] <- dnu
