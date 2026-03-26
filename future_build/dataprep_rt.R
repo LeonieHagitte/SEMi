@@ -145,12 +145,12 @@ gen_dataA <- function(N, params, return_latent = TRUE){
 }
 
 # ------------------------ Test ---------------------------
-set.seed(1)
-pa <- gen_matrixA(popmodel="1.12", moderator="linear", m1=TRUE)
-sa <- gen_dataA(N=200, params=pa)
-head(sa$data)
-data <- sa$data
-head(data)
+#set.seed(1)
+#pa <- gen_matrixA(popmodel="1.12", moderator="linear", m1=TRUE)
+#sa <- gen_dataA(N=200, params=pa)
+#head(sa$data)
+#data <- sa$data
+#head(data)
 
 # ------------------------ Person-level moderation version -------------------
 
@@ -202,9 +202,12 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   eps <- .Machine$double.eps
   m1 <- runif(N, -1 + eps, 1 - eps)
   m2 <- runif(N, -1+eps, 1-eps)
+  m0 <- runif(N, -1 + eps, 1 - eps)   # uninformed moderator
+  
   hm1  <- mod_h(m1, type = moderator, k = k)
   hm2 <- mod_h(m2, type=moderator, k=k)
   hm12 <- hm1 * hm2
+  hm0  <- rep(0, N)   # keep uninformed
     
   # item moderation pattern
   dlam1_vec  <- rep(0,p);
@@ -258,6 +261,8 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   data$m2 <- m2
   data$hm2 <- hm2
   data$hm12 <- hm12
+  data$m0 <- m0
+  data$hm0 <- hm0
   
   out <- list(data=data, params=params)
   if (return_latent) out$eta <- eta

@@ -27,8 +27,42 @@ library(semtree)
 library(partykit)
 
 # -----------------------------------------------------------------------------
+get_fit_indices <- function(fit) {
+  refs <- OpenMx::mxRefModels(fit, run = TRUE)
+  summ <- summary(fit, refModels = refs)
+  
+  list(
+    cfi = unname(summ$CFI),
+    rmsea = unname(summ$RMSEA)
+  )
+}
+
+compare_fit_deterioration <- function(fit_less, fit_more,
+                                      cfi_cut = 0.01,
+                                      rmsea_cut = 0.015) {
+  idx_less <- get_fit_indices(fit_less)
+  idx_more <- get_fit_indices(fit_more)
+  
+  delta_cfi <- idx_more$cfi - idx_less$cfi
+  delta_rmsea <- idx_more$rmsea - idx_less$rmsea
+  
+  retain <- !is.na(delta_cfi) &&
+    !is.na(delta_rmsea) &&
+    delta_cfi >= -cfi_cut &&
+    delta_rmsea <= rmsea_cut
+  
+  list(
+    less_cfi = idx_less$cfi,
+    less_rmsea = idx_less$rmsea,
+    more_cfi = idx_more$cfi,
+    more_rmsea = idx_more$rmsea,
+    delta_cfi = delta_cfi,
+    delta_rmsea = delta_rmsea,
+    retain = retain
+  )
+}
 # ---------------------- unrestricted CFA (SEM Tree base) NULL -----------------
-mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
+mnlfa_analysis <- function(data, p = 4, nfactors = 1) {
   
   manVars <- grep("^x\\d+$", names(data), value = TRUE)
   p <- length(manVars)
@@ -169,7 +203,7 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
   
   # ------------ Matrices for model implied moments -------
-  matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
+  matM <- mxAlgebra(matT + matA %*% t(matL), name = "matM")
   
   matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
                     name="matC")
@@ -195,11 +229,6 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
   
   #The model can be fitted to the data using the mxRun() function. 
   fitConfig <- mxRun(modConfig)
-  
-  ##################################################################################
-  print(fitConfig$output$status)
-  str(fitConfig$output$status)
-  #####################################################################################
   
   if (!is.null(fitConfig$output$status$code) && fitConfig$output$status$code == 0) {
     # ---------------------- metric moderated model --------------------------
@@ -252,7 +281,7 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
     matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
     
     # ------------ Matrices for model implied moments -------
-    matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
+    matM <- mxAlgebra(matT + matA %*% t(matL), name = "matM")
     
     matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
                       name="matC")
@@ -281,11 +310,11 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
     if (is.null(fitmetric$output$status$code) || fitmetric$output$status$code != 0) {
       stop("Metric model did not converge; scalar not run.")
     }
+    metric_fit <- compare_fit_deterioration(fitConfig, fitmetric)
     
-    miTest1 <- mxCompare(fitConfig, fitmetric)
-    p_metric <- miTest1$p[2]  # safest for two-model compare
+    metric_retained <- isTRUE(metric_fit$retain)
     
-    if (!is.na(p_metric) && p_metric >= alpha) {
+    if (metric_retained) {
       # ---------------------- Scalar moderated model --------------------------
       
       # Intercept Matrices
@@ -350,7 +379,7 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
       matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
       
       # ------------ Matrices for model implied moments -------
-      matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
+      matM <- mxAlgebra(matT + matA %*% t(matL), name = "matM")
       
       matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
                         name="matC")
@@ -376,23 +405,38 @@ mnlfa_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1) {
       
       #The model can be fitted to the data using the mxRun() function. 
       fitscalar <- mxRun(modscalar)
-      miTest2 <- mxCompare(fitmetric, fitscalar)
+      if (is.null(fitscalar$output$status$code) || fitscalar$output$status$code != 0) {
+        stop("Scalar model did not converge.")
+      }
+      
+      scalar_fit <- compare_fit_deterioration(fitmetric, fitscalar)
+      scalar_retained <- isTRUE(scalar_fit$retain)
     }
   }
   return(list(
     fitConfig = fitConfig,
-    fitMetric = fitmetric,
+    fitMetric = if (exists("fitmetric")) fitmetric else NULL,,
     fitScalar = if (exists("fitscalar")) fitscalar else NULL,
-    miTest_metric = if (exists("miTest1")) miTest1 else NULL,
-    miTest_scalar = if (exists("miTest2")) miTest2 else NULL
+    metric_fit = if (exists("metric_fit")) metric_fit else NULL,
+    scalar_fit = if (exists("scalar_fit")) scalar_fit else NULL
   ))
   }
-# ------------------------------------------------------------------------
 
-tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c("m1","m2","m0"),
-                          control = semtree::semtree_control(method = "score"), verbose = FALSE){
+# -----------------------------------------------------#####################################
+tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
+                              predictors = c("m1", "m2","m0"),
+                              control = NULL, verbose = FALSE){
   
-  stopifnot(nfactors==1) #ToDO: latent covariance matrix is not populated correctly
+  if (is.null(control)) {
+    control <- semtree::semtree_control(
+      method = "score",
+      alpha = alpha,
+      max.depth = 3,
+      bonferroni = TRUE,
+      min.N = 50
+    )}
+  
+    stopifnot(nfactors == 1)  # TODO: extend latent covariance structure for nfactors > 1
   
   dat <- as.data.frame(data)
   
@@ -408,94 +452,83 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c(
     stop("Missing SEMTREE predictor columns: ", paste(miss_p, collapse = ", "))
   }
   
+  latVars <- "F1"
+  
   mxdata <- mxData(observed = dat, type = "raw")
   
-  # Intercept Matrices
-  matT0 <- mxMatrix(type = "Full", 
-                    nrow = 1, 
-                    ncol = p, 
-                    free = TRUE, 
-                    values = 0.6,
-                    labels = paste0("nu_", 1:p),
-                    name = "matT0") #The matrix matT0 is a full matrix containing the baseline intercepts.
+  # ---------------- RAM paths ----------------
+  # Manifest intercepts (nu_i)
+  path_nu <- mxPath(
+    from = "one",
+    to = manVars,
+    arrows = 1,
+    free = TRUE,
+    values = rep(0.6, p),
+    labels = paste0("nu_", 1:p)
+  )
   
-  # Loading Matrices
-  matL0 <- mxMatrix(type="Full", #matL0 is a full matrix containing the baseline factor loadings
-                    nrow=p, 
-                    ncol = nfactors, 
-                    free= TRUE, 
-                    values= rep(1, p),
-                    labels = paste0("lambda_", 1:p),
-                    name="matL0")
+  # Factor loadings (lambda_i)
+  path_lambda <- mxPath(
+    from = latVars,
+    to = manVars,
+    arrows = 1,
+    free = TRUE,
+    values = rep(1, p),
+    labels = paste0("lambda_", 1:p)
+  )
   
-  # Residual Variances 
-  matE0 <- mxMatrix(type="Diag", # matE0 is a diagonal matrix containing the baseline residual variances 
-                    nrow=p, 
-                    ncol=p,
-                    free=TRUE,
-                    values = 1,
-                    name="matE0")
+  # Residual variances
+  path_resid <- mxPath(
+    from = manVars,
+    arrows = 2,
+    free = TRUE,
+    values = rep(1, p)
+  )
   
-  # Latent factor variance
-  matP0 <- mxMatrix(type="Symm", 
-                    nrow = nfactors, #because only one latent factor 
-                    ncol = nfactors,
-                    free= FALSE,
-                    values= 1, #todo - assumes nfactors is 1
-                    name="matP0")
+  # Latent variance fixed to 1
+  path_latvar <- mxPath(
+    from = latVars,
+    arrows = 2,
+    free = FALSE,
+    values = 1
+  )
   
-  # latent factor mean
-  matA0 <- mxMatrix(type="Full", #matA0 is a matrix containing the baseline common-factor means 
-                    nrow = 1, 
-                    ncol = nfactors,
-                    free=FALSE, #fixed
-                    values = 0, # to 0
-                    name="matA0")
+  # Latent mean fixed to 0
+  path_latmean <- mxPath(
+    from = "one",
+    to = latVars,
+    arrows = 1,
+    free = FALSE,
+    values = 0
+  )
   
-  # -----------------------------------------------------------------------------
-  matT <- mxAlgebra(expression = matT0, name="matT") #intercepts baseline
+  fitTr <- mxFitFunctionML()
   
-  matL <- mxAlgebra(expression = matL0, name="matL") #loadings baseline
+  modbase <- mxModel(
+    model = "baseline",
+    type = "RAM",
+    manifestVars = manVars,
+    latentVars = latVars,
+    path_nu,
+    path_lambda,
+    path_resid,
+    path_latvar,
+    path_latmean,
+    fitTr,
+    mxdata
+  )
   
-  matE <- mxAlgebra(expression = matE0, name="matE") #residual variances
-  
-  matA <- mxAlgebra(expression = matA0, name="matA") #matrix of common-factor means
-  
-  matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
-  
-  # ------------ Matrices for model implied moments -------
-  matM <- mxAlgebra(matT + t(matL %*% matA), name="matM")
-  
-  matC <- mxAlgebra(expression = matL %*% matP%*%t(matL) + matE ,
-                    name="matC")
-  
-  # ------------ Model expectations and fit-function -------
-  expTr <- mxExpectationNormal(covariance="matC", means = "matM", dimnames=manVars)
-  
-  fitTr <- mxFitFunctionML() #mxFitFunctionML() function stored in fitF is used to 
-  #indicate that the free parameters of the configural 
-  #model should be estimated using full-information maximum likelihood.
-  
-  modbase <- mxModel(model="baseline",
-                       matT, matT0, 
-                       matL, matL0,
-                       matE, matE0, 
-                       matP, matP0, 
-                       matA, matA0, 
-                       matM, matC, expTr, 
-                       fitTr, mxdata)
-  
-  #The model can be fitted to the data using the mxRun() function. 
+  # The model can be fitted to the data using mxRun()
   fitbase <- mxRun(modbase)
   
   # ---------------- Metric stage: loadings ----------------
   metric_constraints <- semtree::semtree.constraints(
-    focus.parameters = paste0("lambda_", 1:p)
+    focus.parameters = c("lambda_1", "lambda_2", "lambda_3", "lambda_4") #paste0("lambda_", 1:p) #########################flag
   )
   
   metric_tree <- tryCatch(
     semtree::semtree(
-      model = modbase,
+      model = fitbase,
       data = dat,
       predictors = predictors,
       control = control,
@@ -506,7 +539,8 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c(
   )
   
   metric_split <- !(inherits(metric_tree, "error")) &&
-    length(partykit::nodeids(metric_tree, terminal = FALSE)) > 0
+    methods::is(metric_tree, "semtree") &&
+    length(partykit::nodeids(methods::slot(metric_tree, "tree"), terminal = FALSE)) > 0
   
   scalar_tree <- NULL
   scalar_split <- NA
@@ -514,12 +548,12 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c(
   # ---------------- Scalar stage: intercepts ----------------
   if (!metric_split) {
     scalar_constraints <- semtree::semtree.constraints(
-      focus.parameters = paste0("nu_", 1:p)
+      focus.parameters = c("nu_1", "nu_2", "nu_3", "nu_4") #paste0("nu_", 1:p)
     )
     
     scalar_tree <- tryCatch(
       semtree::semtree(
-        model = modbase,
+        model = fitbase,
         data = dat,
         predictors = predictors,
         control = control,
@@ -530,7 +564,8 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c(
     )
     
     scalar_split <- !(inherits(scalar_tree, "error")) &&
-      length(partykit::nodeids(scalar_tree, terminal = FALSE)) > 0
+      methods::is(scalar_tree, "semtree") &&
+      length(partykit::nodeids(methods::slot(scalar_tree, "tree"), terminal = FALSE)) > 0
   }
   
   return(list(
@@ -542,7 +577,6 @@ tree_analysis <- function(data, p = 4, alpha=0.05, nfactors = 1, predictors = c(
     
     scalar_tree = scalar_tree,
     scalar_split = scalar_split
-    
   ))
 }
 # ------------------------------------------------------------------------
@@ -560,14 +594,14 @@ run_analysis <- function(data,
   
   if ("MNLFA" %in% methods) {
     out$mnlfa <- tryCatch(
-      mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
+      mnlfa_analysis(data = dat, nfactors = nfactors),
       error = identity
     )
   }
   
   if ("SEMTREE" %in% methods) {
     out$semtree <- tryCatch(
-      tree_analysis(data = dat,
+      tree_analysis_ram(data = dat,
                     nfactors = nfactors,
                     predictors = predictors),
       error = identity
@@ -632,3 +666,33 @@ getPredictorsFromTree <- function(st) {
   split_vars
 }
 
+# -----------------------------------------------------------------------
+
+append_results <- function(out, results_path) {
+  existing_header <- names(read.csv(results_path, nrows = 0, check.names = FALSE))
+  
+  # add missing columns as NA
+  missing_cols <- setdiff(existing_header, names(out))
+  for (nm in missing_cols) {
+    out[[nm]] <- NA
+  }
+  
+  # check for unexpected extra columns
+  extra_cols <- setdiff(names(out), existing_header)
+  if (length(extra_cols) > 0) {
+    stop("Output has extra columns not present in results file: ",
+         paste(extra_cols, collapse = ", "))
+  }
+  
+  # reorder to match the file
+  out <- out[, existing_header, drop = FALSE]
+  
+  write.table(
+    out,
+    file = results_path,
+    sep = ",",
+    row.names = FALSE,
+    col.names = FALSE,
+    append = TRUE
+  )
+}

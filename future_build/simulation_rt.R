@@ -25,17 +25,15 @@ DESIGN <- tidyr::expand_grid(
   delta_lambda = c(-0.3, -0.2, 0.2, 0.3),
   delta_nu     = c(-1, -0.5, 0.5, 1),
   moderator    = MOD_TYPES,
-  rep          = 1:10
-)
-
-# Optional: enforces a fixed ordering before row-number ids
-DESIGN <- dplyr::arrange(
-  DESIGN,
-  popmodel, N, reliability, lambda, intercepts, delta_lambda, delta_nu, moderator, rep
-)
-
-DESIGN$job_id <- seq_len(nrow(DESIGN))
-DESIGN$seed   <- DESIGN$job_id  #seed is set equal to job_id -simple deterministic mapping
+  seed          = 1:2
+)%>%
+  dplyr::arrange(
+    popmodel, N, reliability, lambda, intercepts,
+    delta_lambda, delta_nu, moderator, seed
+  ) %>%
+  dplyr::mutate(
+    job_id = dplyr::row_number()
+  )
 
 manifest <- transform(
   DESIGN,
@@ -51,7 +49,6 @@ if (!file.exists(manifest_path)) {
 }
 if (!dir.exists(lock_dir)) dir.create(lock_dir, recursive = TRUE)
 
-
 if (!file.exists(results_path)) {
   write.csv(
     data.frame(
@@ -64,16 +61,20 @@ if (!file.exists(results_path)) {
       delta_lambda = numeric(),
       delta_nu = numeric(),
       moderator = character(),
-      rep = integer(),
       seed = integer(),
       
       mnlfa_model = character(),
       mnlfa_det = logical(),
       
-      mnlfa_metric_p = numeric(),
-      mnlfa_scalar_p = numeric(),
-      mnlfa_metric_detected = logical(),
-      mnlfa_scalar_detected = logical(),
+      mnlfa_metric_delta_cfi = numeric(),
+      mnlfa_metric_delta_rmsea = numeric(),
+      mnlfa_metric_retain = logical(),
+      
+      mnlfa_scalar_delta_cfi = numeric(),
+      mnlfa_scalar_delta_rmsea = numeric(),
+      mnlfa_scalar_retain = logical(),
+      
+      mnlfa_final_decision = character(),
       
       tree_metric_split = logical(),
       tree_scalar_split = logical(),
@@ -125,24 +126,28 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     data = df,
     methods = c("MNLFA", "SEMTREE"),
     nfactors = 1,
-    alpha = 0.05,
-    predictors = c("m1", "m2") #m0 not included
+    predictors = c("m1", "m2","m0") 
   )
   
   # ---------------------------
-  mnlfa_metric_p <- NA_real_
-  mnlfa_scalar_p <- NA_real_
-  mnlfa_metric_detected <- NA
-  mnlfa_scalar_detected <- NA
+  mnlfa_metric_delta_cfi <- NA_real_
+  mnlfa_metric_delta_rmsea <- NA_real_
+  mnlfa_metric_retain <- NA
+  
+  mnlfa_scalar_delta_cfi <- NA_real_
+  mnlfa_scalar_delta_rmsea <- NA_real_
+  mnlfa_scalar_retain <- NA
   
   if (!inherits(res$mnlfa, "error")) {
-    if (!is.null(res$mnlfa$miTest_metric)) {
-      mnlfa_metric_p <- res$mnlfa$miTest_metric$p[2]
-      mnlfa_metric_detected <- !is.na(mnlfa_metric_p) && mnlfa_metric_p < 0.05
+    if (!is.null(res$mnlfa$metric_fit)) {
+      mnlfa_metric_delta_cfi <- res$mnlfa$metric_fit$delta_cfi
+      mnlfa_metric_delta_rmsea <- res$mnlfa$metric_fit$delta_rmsea
+      mnlfa_metric_retain <- res$mnlfa$metric_fit$retain
     }
-    if (!is.null(res$mnlfa$miTest_scalar)) {
-      mnlfa_scalar_p <- res$mnlfa$miTest_scalar$p[2]
-      mnlfa_scalar_detected <- !is.na(mnlfa_scalar_p) && mnlfa_scalar_p < 0.05
+    if (!is.null(res$mnlfa$scalar_fit)) {
+      mnlfa_scalar_delta_cfi <- res$mnlfa$scalar_fit$delta_cfi
+      mnlfa_scalar_delta_rmsea <- res$mnlfa$scalar_fit$delta_rmsea
+      mnlfa_scalar_retain <- res$mnlfa$scalar_fit$retain
     }
   }
   
@@ -158,17 +163,21 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   }
   
   mnlfa_det <- FALSE
-  if (!is.na(mnlfa_metric_p) && mnlfa_metric_p < 0.05) mnlfa_det <- TRUE
-  if (!is.na(mnlfa_scalar_p) && mnlfa_scalar_p < 0.05) mnlfa_det <- TRUE
+  if (identical(mnlfa_metric_retain, FALSE)) mnlfa_det <- TRUE
+  if (identical(mnlfa_scalar_retain, FALSE)) mnlfa_det <- TRUE
   
   mnlfa_final_decision <- NA_character_
-  if (!is.na(mnlfa_metric_p) && mnlfa_metric_p < 0.05) {
+  
+  if (identical(mnlfa_metric_retain, FALSE)) {
     mnlfa_final_decision <- "noninvariance_at_metric"
-  } else if (!is.na(mnlfa_scalar_p) && mnlfa_scalar_p < 0.05) {
+  } else if (identical(mnlfa_metric_retain, TRUE) &&
+             identical(mnlfa_scalar_retain, FALSE)) {
     mnlfa_final_decision <- "noninvariance_at_scalar"
-  } else {
+  } else if (identical(mnlfa_metric_retain, TRUE) &&
+             (is.null(res$mnlfa$fitScalar) || identical(mnlfa_scalar_retain, TRUE))) {
     mnlfa_final_decision <- "scalar_invariance_retained"
   }
+  
   # ---------------------------
   tree_metric_split <- NA
   tree_scalar_split <- NA
@@ -189,12 +198,12 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     
     metric_info <- semtree_detects_moderation(
       res$semtree$metric_tree,
-      moderators = c("m1", "m2") ############## m0 not yet included
+      moderators = c("m1", "m2","m0") 
     )
     
     scalar_info <- semtree_detects_moderation(
       res$semtree$scalar_tree,
-      moderators = c("m1", "m2") ############## m0 not yet included
+      moderators = c("m1", "m2","m0") 
     )
     
     tree_metric_split_on_m1 <- metric_info$tree_split_on_m1
@@ -219,7 +228,6 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     delta_lambda   = row$delta_lambda,
     delta_nu       = row$delta_nu,
     moderator      = row$moderator,
-    rep            = row$rep,
     seed           = row$seed,
     
     mnlfa_model    = mnlfa_model,
@@ -235,20 +243,24 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_n_splits_m1 = tree_scalar_n_splits_m1,
     tree_scalar_n_splits_m2 = tree_scalar_n_splits_m2,
     
-    mnlfa_metric_p        = mnlfa_metric_p,
-    mnlfa_scalar_p        = mnlfa_scalar_p,
-    mnlfa_metric_detected = mnlfa_metric_detected,
-    mnlfa_scalar_detected = mnlfa_scalar_detected,
+    mnlfa_metric_delta_cfi   = mnlfa_metric_delta_cfi,
+    mnlfa_metric_delta_rmsea = mnlfa_metric_delta_rmsea,
+    mnlfa_metric_retain      = mnlfa_metric_retain,
+    
+    mnlfa_scalar_delta_cfi   = mnlfa_scalar_delta_cfi,
+    mnlfa_scalar_delta_rmsea = mnlfa_scalar_delta_rmsea,
+    mnlfa_scalar_retain      = mnlfa_scalar_retain,
+    
+    mnlfa_final_decision     = mnlfa_final_decision,
     
     tree_metric_split     = tree_metric_split,
     tree_scalar_split     = tree_scalar_split
   )
   }
 
-# ---------------------------
-
+# ------- TEST --------------------
 t1 <- Sys.time()
-out <- run_one(DESIGN[2, ])
+out <- run_one(DESIGN[1, ])
 t2 <- Sys.time()
 
 elapsed_one <- as.numeric(difftime(t2, t1, units = "secs"))
@@ -256,11 +268,20 @@ elapsed_one
 out
 str(out)
 
-write.table(
-  out,
-  file = results_path,
-  sep = ",",
-  row.names = FALSE,
-  col.names = FALSE,
-  append = TRUE
+# ------- FULL RUN ----------------
+t1 <- Sys.time()
+
+all_results <- purrr::map_dfr(
+  seq_len(nrow(DESIGN)),
+  ~ run_one(DESIGN[.x, ])
 )
+
+t2 <- Sys.time()
+
+elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
+elapsed_total_sec <- as.numeric(difftime(t2, t1, units = "secs"))
+
+elapsed_total_min
+elapsed_total_sec
+
+append_results(all_results, results_path)
