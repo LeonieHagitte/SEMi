@@ -728,7 +728,7 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
       scalar_split <- !is.null(scalar_tree$caption) &&
         !identical(scalar_tree$caption, "TERMINAL")
     }
-    scalar_test = scalar_test
+    scalar_test <- extract_tree_test(scalar_tree, alpha = alpha)
   }
   
   return(list(
