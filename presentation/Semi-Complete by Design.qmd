@@ -37,6 +37,7 @@ Violations of MI imply that observed group differences may reflect **measurement
 -   As a result, the validity of many reported group comparisons remains unclear.
 :::
 
+<!--
 ------------------------------------------------------------------------
 
 ## Empirical Evidence on MI Violations
@@ -49,6 +50,7 @@ Recent literature reviews highlight the severity of the problem:
 -   Additionally, in approximately **50% of cases** where configural invariance was rejected, the **number of latent factors differed between groups**, indicating fundamentally different measurement structures [@Maassen2025].
 :::
 ------------------------------------------------------------------------
+-->
 
 ## SEM Trees
 
@@ -101,7 +103,7 @@ This therefore directly models measurement non-invariance instead of testing it 
 
 ------------------------------------------------------------------------
 
-## Strengths and Challenges of MNLFA
+## Advantages and Limitations of MNLFA
 
 **Strengths** 
 
@@ -122,6 +124,7 @@ This therefore directly models measurement non-invariance instead of testing it 
 
 MNLFA is most appropriate when **theory** suggests **systematic moderation** of measurement parameters.
 
+<!---
 ------------------------------------------------------------------------
 
 ## Exploratory vs. Confirmatory Approaches
@@ -136,6 +139,7 @@ So the question arises when to use which method for MI testing?
 -   And what question you want to answer also determines the required invariance level\
 :::
 ------------------------------------------------------------------------
+-->
 
 ## Simulation
 
@@ -234,8 +238,6 @@ Focuses on moderator-form misspecification and data-related conditions, without 
 - **Intercept moderation:** $\Delta_\nu \in \{-1,-0.5,0.5,1\}$
 - **No structural misspecification:** factor structure and residual specification match the generating model
 
----
-
 <!--
 ## Study-Specific Factors 
 
@@ -273,41 +275,43 @@ Single-factor CFA with one latent factor $\eta$ and four indicators $y_1$–$y_4
 $$
 \mathbf{y} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta + \boldsymbol{\varepsilon}(Z)
 $$
+**Moderation structure**
 
-**Moderator variable**  
-The moderator $Z$ is defined as a transformation of $X$:
+Multiple observed moderators are included:
 
-- Linear: $Z = X$
-- Quadratic: $Z = X^2$
-- Sigmoid:
-  $$
-  Z = \frac{1}{1 + \exp\!\bigl(-\gamma(X - c)\bigr)}
-  $$
+- $m_1$: primary moderator  
+- $m_2$: secondary moderator  
+- $m_0$: noise covariate  
+
+Functional forms:
+- Linear: $h(m)=m$  
+- Quadratic: $h(m)=2m^2-1$  
+- Noise (null condition)
 
 :::
 ::: {.column width="50%"}
 
 **Baseline parameters**
 
-- Factor loadings: $\lambda = 0.70$
-- Target reliability: $0.80$
+- Factor loadings: $\lambda = 0.70$  
+- Indicator reliability: $0.60,\;0.95$
 
-**True moderation patterns (model\_type)**
+**Population model**
 
-- **NULL:** No moderation  
-- **1.1:** Loadings of $y_1$–$y_4$ moderated  
-  $$
-  \delta = 0.20
-  $$
-- **1.2:** Loadings of $y_1$, $y_2$ moderated only  
-  $$
-  \delta = 0.20
-  $$
+- **NULL (0):** No moderation  
+- **1.22:** Partial metric *and* scalar noninvariance  
+  - Loadings $x_1, x_2$ moderated  
+  - Intercepts $x_1, x_2$ moderated  
 
-**Design factors**
+**Effect sizes**
 
-- Sample size: $N \in \{250,\; 500\}$
-- Replications: $100$ per condition
+- $\Delta_\lambda \in \{-0.3, 0.3\}$  
+- $\Delta_\nu \in \{-1, 1\}$  
+
+**Design factors (trial run)**
+
+- Sample size: $N \in \{300,\;1000\}$  
+- Replications: pilot (e.g., 5–15 seeds per condition) 
 
 :::
 :::
@@ -319,53 +323,105 @@ The moderator $Z$ is defined as a transformation of $X$:
 
 ### SEM Trees (nonparametric detection)
 
-**Baseline CFA**
-$$
-\eta \sim y_1 + y_2 + y_3 + 1\cdot y_4
-$$
+**Baseline model**
+- Single-factor CFA (RAM specification)
 
 **Predictors**
+- $m_1$, $m_2$, $m_0$
 
-- $M$: true moderator  
-- $M_2$: noise covariate
+**Procedure**
+- Score-based recursive partitioning  
+- Bonferroni-corrected split tests  
+- Pre-pruning:
+  - $\alpha = .05$
+  - max depth = 3
+  - minimum node size = 50
 
-**Evaluation criteria**
+**Evaluation**
 
-- Splits on $M$ (true positives)
-- No splits on $M$ under NULL
-- No splits on $M_2$ (false positives)
+- Global tree test (significance)  
+- Root split detection (which variable)  
+- Type I error: splits under NULL  
+- Power: splits under true moderation  
 
 :::
 ::: {.column width="50%"}
 
 ### MNLFA (parametric detection)
 
-**Linear full moderation**
+**Model specification (OpenMx)**
 
-- $\delta$-loadings on $y_1$, $y_2$, $y_3$
-- $y_4$ fixed as marker
+Moderation modeled linearly via definition variables:
 
-**Linear partial moderation**
+- Loadings: $\Lambda(Z)$  
+- Intercepts: $\nu(Z)$  
 
-- $\delta$-loadings on $y_1$, $y_2$ only
+**Sequential testing strategy**
 
-**None (negative control)**
+1. Configural model  
+2. Metric model (no loading moderation)  
+3. Scalar model (no loading + intercept moderation)  
 
-- Unmoderated CFA
+**Decision criteria**
+
+- Likelihood-ratio tests (LRT)  
+- $\Delta$CFI, $\Delta$RMSEA  
+
+**Key assumption**
+
+- Moderation is **linear** in the analysis model  
 
 :::
 :::
+<!--
+## Trial Run: What Is Being Tested? 
+
+This pilot simulation focuses on **functional-form misspecification**:
+
+::: {.incremental}
+- Data-generating process may be **nonlinear** (quadratic)
+- MNLFA assumes **linear moderation**
+- SEM Trees make **no functional-form assumptions**
+:::
+
+**Key comparison**
+
+- **MNLFA**: efficient under correct specification  
+- **SEMTREE**: flexible under misspecification  
 
 
-## Preliminary Results
+**Expected pattern**
+
+- Linear moderation → MNLFA advantage  
+- Nonlinear moderation → SEMTREE advantage  
+- Noise → Type I error control
+-->
+
+## Preliminary Results 
+
+**Overall Results**
+
+| Level  | Method   | Type   | Value |
+|--------|----------|--------|-------|
+| Metric | MNLFA    | Power  | 0.619 |
+| Metric | MNLFA    | Type I | 0.138 |
+| Metric | SEMTREE  | Power  | 0.611 |
+| Metric | SEMTREE  | Type I | 0.075 |
+| Scalar | MNLFA    | Power  | 0.459 |
+| Scalar | MNLFA    | Type I | 0.150 |
+| Scalar | SEMTREE  | Power  | 0.683 |
+| Scalar | SEMTREE  | Type I | 0.050 |
+
+## Preliminary Results 
+
 ::: {.columns}
 ::: {.column width="50%"}
-![](Sim_1/Results/Rplot1.jpeg){.lightbox}
-*True-Positive Rate*
+![](metric.png){.lightbox}
+*Metric Level MI Testing*
 :::
 ::: {.column width="50%"}
-![](Sim_1/Results/Rplot2.jpeg){.lightbox}
-*False-Positive Rate*
+![](scalar.png){.lightbox}
+*Scalar Level MI Testing*
 :::
 :::
 
@@ -383,6 +439,77 @@ $$
 ::: {.column width="40%"}
 ![](https://imgs.xkcd.com/comics/modeling_study.png)
 :::
+:::
+
+
+## Preliminary Results 
+
+**Type I Error and Power Metric Stage**
+
+| N    | Reliability | Moderator  | MNLFA Type I | MNLFA Power | SEMTREE Type I | SEMTREE Power |
+|------|------------|-----------|-------------|-------------|----------------|---------------|
+| 300  | 0.60       | linear    | 0.200       | 1.000       | 0.050          | 0.988         |
+| 300  | 0.60       | noise     | 0.200       | 0.200       | 0.050          | 0.050         |
+| 300  | 0.60       | quadratic | 0.200       | 0.740       | 0.050          | 0.575         |
+| 300  | 0.95       | linear    | 0.150       | 1.000       | 0.050          | 1.000         |
+| 300  | 0.95       | noise     | 0.150       | 0.150       | 0.050          | 0.050         |
+| 300  | 0.95       | quadratic | 0.150       | 0.755       | 0.050          | 0.750         |
+| 1000 | 0.60       | linear    | 0.150       | 1.000       | 0.100          | 1.000         |
+| 1000 | 0.60       | noise     | 0.150       | 0.150       | 0.100          | 0.100         |
+| 1000 | 0.60       | quadratic | 0.150       | 0.862       | 0.100          | 0.725         |
+| 1000 | 0.95       | linear    | 0.050       | 1.000       | 0.100          | 1.000         |
+| 1000 | 0.95       | noise     | 0.050       | 0.050       | 0.100          | 0.100         |
+| 1000 | 0.95       | quadratic | 0.050       | 0.792       | 0.100          | 1.000         |
+
+## Preliminary Results 
+
+**Type I Error and Power Scalar Stage**
+
+| N    | Reliability | Moderator  | MNLFA Type I | MNLFA Power | SEMTREE Type I | SEMTREE Power |
+|------|------------|-----------|-------------|-------------|----------------|---------------|
+| 300  | 0.60       | linear    | 0.100       | 1.000       | 0.100          | 1.000         |
+| 300  | 0.60       | noise     | 0.100       | 0.100       | 0.100          | 0.100         |
+| 300  | 0.60       | quadratic | 0.100       | 0.273       | 0.100          | 1.000         |
+| 300  | 0.95       | linear    | 0.100       | 1.000       | 0.100          | 1.000         |
+| 300  | 0.95       | noise     | 0.100       | 0.100       | 0.100          | 0.100         |
+| 300  | 0.95       | quadratic | 0.100       | 0.245       | 0.100          | 1.000         |
+| 1000 | 0.60       | linear    | 0.200       | 1.000       | 0.000          | 1.000         |
+| 1000 | 0.60       | noise     | 0.200       | 0.200       | 0.000          | 0.000         |
+| 1000 | 0.60       | quadratic | 0.200       | 0.175       | 0.000          | 1.000         |
+| 1000 | 0.95       | linear    | 0.200       | 1.000       | 0.000          | 1.000         |
+| 1000 | 0.95       | noise     | 0.200       | 0.200       | 0.000          | 0.000         |
+| 1000 | 0.95       | quadratic | 0.200       | 0.417       | 0.000          | 1.000         |
+
+## Preliminary Interpretation
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+### MNLFA 
+
+- High power for detecting **metric noninvariance**  
+- **Elevated Type I error** and **reduced power** at the scalar level  
+- Sensitive to **functional-form misspecification**  
+  - Linear analysis vs. nonlinear data-generating processes  
+- Sequential testing may propagate misspecification across steps  
+
+:::
+
+::: {.column width="50%"}
+
+### SEM Trees
+
+- **Well-controlled Type I error** across conditions  
+- Competitive power, especially for **scalar noninvariance**  
+- Performance varies with:
+  - Sample size  
+  - Reliability  
+  - Pruning / stopping rules  
+- Potentially **conservative** in low-signal settings  
+
+:::
+
 :::
 
 ## References

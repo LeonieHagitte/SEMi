@@ -63,6 +63,36 @@ print(scalar_summary)
 print(condition_summary)
 
 ######
+library(dplyr)
+library(tidyr)
+
+full_table <- condition_summary %>%
+  select(
+    N, reliability, moderator, n_replications,
+    
+    # metric
+    mnlfa_metric_type1, mnlfa_metric_power,
+    tree_metric_type1, tree_metric_power,
+    
+    # scalar
+    mnlfa_scalar_type1, mnlfa_scalar_power,
+    tree_scalar_type1, tree_scalar_power
+  )
+
+long_table <- full_table %>%
+  pivot_longer(
+    cols = -c(N, reliability, moderator, n_replications),
+    names_to = "measure",
+    values_to = "value"
+  ) %>%
+  mutate(
+    level  = ifelse(grepl("metric", measure), "Metric", "Scalar"),
+    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
+    type   = ifelse(grepl("type1", measure), "Type I", "Power")
+  ) %>%
+  select(N, reliability, moderator, level, method, type, value)
+######
+
 
 overall_metric <- metric_summary %>%
   transmute(
