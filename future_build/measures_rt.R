@@ -1,6 +1,8 @@
 # measures_rt.R
 
 library(tidyverse)
+library(dplyr)
+library(tidyr)
 
 results_path <- "results.csv"
 
@@ -59,3 +61,106 @@ condition_summary <- results %>%
 print(metric_summary)
 print(scalar_summary)
 print(condition_summary)
+
+######
+
+overall_metric <- metric_summary %>%
+  transmute(
+    level = "metric",
+    mnlfa_type1 = mnlfa_metric_type1,
+    mnlfa_power = mnlfa_metric_power,
+    tree_type1  = tree_metric_type1,
+    tree_power  = tree_metric_power
+  )
+
+overall_scalar <- scalar_summary %>%
+  transmute(
+    level = "scalar",
+    mnlfa_type1 = mnlfa_scalar_type1,
+    mnlfa_power = mnlfa_scalar_power,
+    tree_type1  = tree_scalar_type1,
+    tree_power  = tree_scalar_power
+  )
+
+overall_table <- bind_rows(overall_metric, overall_scalar) %>%
+  pivot_longer(
+    cols = -level,
+    names_to = "measure",
+    values_to = "value"
+  ) %>%
+  mutate(
+    method = ifelse(grepl("^mnlfa", measure), "MNLFA", "SEMTREE"),
+    type   = ifelse(grepl("type1", measure), "Type I", "Power")
+  ) %>%
+  select(level, method, type, value) %>%
+  arrange(level, method, type)
+
+overall_table
+
+####
+
+condition_table <- condition_summary %>%
+  select(N, reliability, moderator,
+         starts_with("mnlfa_"),
+         starts_with("tree_")) %>%
+  arrange(N, reliability, moderator)
+
+condition_table
+#####
+library(ggplot2)
+
+
+ggplot(overall_table, aes(x = method, y = value, fill = type)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ level) +
+  labs(
+    x = NULL,
+    y = "Rate"
+  ) +
+  theme_minimal()
+
+####
+
+metric_plot_data <- condition_summary %>%
+  select(N, reliability, moderator,
+         mnlfa_metric_type1, mnlfa_metric_power,
+         tree_metric_type1, tree_metric_power) %>%
+  pivot_longer(
+    cols = -c(N, reliability, moderator),
+    names_to = "measure",
+    values_to = "value"
+  ) %>%
+  mutate(
+    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
+    stat = ifelse(grepl("type1", measure), "Type I", "Power")
+  )
+
+ggplot(metric_plot_data,
+       aes(x = factor(N), y = value, fill = method)) +
+  geom_col(position = "dodge") +
+  facet_grid(stat ~ reliability + moderator) +
+  labs(x = "Sample size (N)", y = "Rate") +
+  theme_minimal()
+####
+
+scalar_plot_data <- condition_summary %>%
+  select(N, reliability, moderator,
+         mnlfa_scalar_type1, mnlfa_scalar_power,
+         tree_scalar_type1, tree_scalar_power) %>%
+  pivot_longer(
+    cols = -c(N, reliability, moderator),
+    names_to = "measure",
+    values_to = "value"
+  ) %>%
+  mutate(
+    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
+    stat = ifelse(grepl("type1", measure), "Type I", "Power")
+  )
+
+####
+ggplot(scalar_plot_data,
+       aes(x = factor(N), y = value, fill = method)) +
+  geom_col(position = "dodge") +
+  facet_grid(stat ~ reliability + moderator) +
+  labs(x = "Sample size (N)", y = "Rate") +
+  theme_minimal()

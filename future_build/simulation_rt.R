@@ -417,8 +417,8 @@ TEST_DESIGN <- tidyr::expand_grid(
   intercepts   = 1,
   delta_lambda = c(-0.3, 0.3),
   delta_nu     = c(-1, 1),
-  moderator    = c("linear", "noise"),
-  seed         = 1:5
+  moderator    = c("linear", "quadratic", "noise"),
+  seed         = 1:15
 ) %>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,

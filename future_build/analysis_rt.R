@@ -690,7 +690,7 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
   scalar_test <- NULL
   
   # ---------------- Scalar stage: intercepts ----------------
-  if (!isTRUE(metric_split)) {
+ # if (!isTRUE(metric_split)) {
     scalar_constraints <- semtree::semtree.constraints(
       focus.parameters = paste0("nu_", 1:p)
     )
@@ -729,7 +729,7 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
         !identical(scalar_tree$caption, "TERMINAL")
     }
     scalar_test <- extract_tree_test(scalar_tree, alpha = alpha)
-  }
+  #}
   
   return(list(
     baseline_model = modbase,
