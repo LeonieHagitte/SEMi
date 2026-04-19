@@ -304,48 +304,49 @@ Violations of MI imply that observed group differences may reflect <strong>measu
 </ul></li>
 </ul>
 </section>
-<section id="simulation-1" class="slide level2 scrollable">
+<section id="simulation-1" class="slide level2">
 <h2>Simulation</h2>
 <p>Let <span class="math inline">\(M \sim \mathcal{U}(-1,1)\)</span> denote a bounded continuous covariate.</p>
-<p><strong>The effective moderator is defined as:</strong> <span class="math display">\[
-Z = h(M),
-\]</span></p>
-<ol type="1">
-<li><p><strong>Linear:</strong></p>
-<p><span class="math display">\[
-h(M) = M
+<p><strong>Moderation is introduced via transformations of <span class="math inline">\(M\)</span>:</strong></p>
+<ul>
+<li><p>Linear: <span class="math display">\[
+h_1(M) = M
 \]</span></p></li>
-<li><p><strong>Sigmoid:</strong></p>
-<p><span class="math display">\[
-h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
-\qquad a=-1,\; b=1,\; c=0,\; k&gt;0.
+<li><p>Quadratic: <span class="math display">\[
+h_2(M) = 2M^2 - 1
 \]</span></p></li>
-<li><p><strong>Quadratic:</strong></p>
-<p><span class="math display">\[
-h(M) = 2M^2 - 1
+<li><p>Sigmoid: <span class="math display">\[
+h_3(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)}
 \]</span></p></li>
-</ol>
-</section>
-<section id="simulation-2" class="slide level2">
-<h2>Simulation</h2>
-<p><strong>Analytical Model Study 1</strong></p>
+</ul>
+<p>These transformed variables enter the model as <strong>separate moderators</strong>, allowing for flexible functional forms of parameter variation. <!--
+## Simulation  
 
-<img data-src="tikz_model1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section id="simulation-3" class="slide level2">
-<h2>Simulation</h2>
-<p><strong>Analytical Model Study 2</strong></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><a href="tikz_model2.0.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="tikz_model2.0.png"></a> <em>Model 2.0</em></p>
-</div><div class="column" style="width:50%;">
-<p><a href="tikz_model2.1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="tikz_model2.1.png"></a> <em>Model 2.1</em></p>
-</div></div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><a href="tikz_model2.2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="tikz_model2.2.png"></a> <em>Model 2.2</em></p>
-</div><div class="column" style="width:50%;">
-<p><a href="tikz_model2.3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img data-src="tikz_model2.3.png"></a> <em>Model 2.3</em></p>
-</div></div>
+**Analytical Model Study 2**
+
+::: {.columns}
+::: {.column width="50%"}
+![](tikz_model2.0.png){.lightbox}
+*Model 2.0*
+:::
+::: {.column width="50%"}
+![](tikz_model2.1.png){.lightbox}
+*Model 2.1*
+:::
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+![](tikz_model2.2.png){.lightbox}
+*Model 2.2*
+:::
+::: {.column width="50%"}
+![](tikz_model2.3.png){.lightbox}
+*Model 2.3*
+:::
+:::
+
+--></p>
 </section>
 <section id="study-specific-factors" class="slide level2">
 <h2>Study-Specific Factors</h2>
@@ -359,30 +360,34 @@ h(M) = 2M^2 - 1
 Factor structure and residuals match the generating model</li>
 </ul>
 </section>
-<section id="study-specific-factors-1" class="slide level2 scrollable">
-<h2>Study-Specific Factors</h2>
-<p><strong>Study 2: Structural Misspecification</strong></p>
-<p>Extends Study 1 by introducing factor-structure misspecification:</p>
-<p><em>Same DGM and moderator variation, sample size and reliability as Study 1</em></p>
-<ul>
-<li><p><strong>Analysis model:</strong> Linear or quadratic moderator</p></li>
-<li><p><strong>Structural misspecification (between-subjects):</strong></p>
-<ol type="1">
-<li><strong>None:</strong> Correct factor structure<br>
-</li>
-<li><strong>Cross-loadings:</strong><br>
-Items <span class="math inline">\(y_5\)</span>, <span class="math inline">\(y_6\)</span> load on a second factor <span class="math display">\[
-\lambda^{(CL)}_5,\; \lambda^{(CL)}_6 \in \{0.3, 0.4\}
-\]</span></li>
-<li><strong>Correlated residuals:</strong><br>
-<span class="math display">\[
-\text{Cov}(\varepsilon_1, \varepsilon_5),\;
-\text{Cov}(\varepsilon_2, \varepsilon_6)
-\in \{0.2, 0.3\}
-\]</span></li>
-<li><strong>Combined:</strong> Cross-loadings and residual correlations</li>
-</ol></li>
-</ul>
+<section class="slide level2">
+
+<!--
+## Study-Specific Factors 
+
+**Study 2: Structural Misspecification**
+
+Extends Study 1 by introducing factor-structure misspecification: 
+
+*Same DGM and moderator variation, sample size and reliability as Study 1*
+
+- **Analysis model:** Linear or quadratic moderator
+- **Structural misspecification (between-subjects):**
+
+  1. **None:** Correct factor structure  
+  2. **Cross-loadings:**  
+     Items $y_5$, $y_6$ load on a second factor
+     $$
+     \lambda^{(CL)}_5,\; \lambda^{(CL)}_6 \in \{0.3, 0.4\}
+     $$
+  3. **Correlated residuals:**  
+     $$
+     \text{Cov}(\varepsilon_1, \varepsilon_5),\;
+     \text{Cov}(\varepsilon_2, \varepsilon_6)
+     \in \{0.2, 0.3\}
+     $$
+  4. **Combined:** Cross-loadings and residual correlations
+-->
 </section>
 <section id="trial-run-data-generating-model" class="slide level2">
 <h2>Trial Run: Data-Generating Model</h2>
@@ -468,9 +473,9 @@ Z = \frac{1}{1 + \exp\!\bigl(-\gamma(X - c)\bigr)}
 <h2>Preliminary Results</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p><a href="Sim_1/Results/Rplot1.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img data-src="Sim_1/Results/Rplot1.jpeg"></a> <em>True-Positive Rate</em></p>
+<p><a href="Sim_1/Results/Rplot1.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="Sim_1/Results/Rplot1.jpeg"></a> <em>True-Positive Rate</em></p>
 </div><div class="column" style="width:50%;">
-<p><a href="Sim_1/Results/Rplot2.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img data-src="Sim_1/Results/Rplot2.jpeg"></a> <em>False-Positive Rate</em></p>
+<p><a href="Sim_1/Results/Rplot2.jpeg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="Sim_1/Results/Rplot2.jpeg"></a> <em>False-Positive Rate</em></p>
 </div></div>
 </section>
 <section id="questions-concerns" class="slide level2">
@@ -481,11 +486,9 @@ Z = \frac{1}{1 + \exp\!\bigl(-\gamma(X - c)\bigr)}
 <div class="column" style="width:60%;">
 <ul>
 <li>How do I ensure that the comparison is fair, the best?</li>
-<li>What conditions would you like to see simulated?</li>
-<li>What should I consider/ keep a eye on when programming it?</li>
+<li>What Prepruning to use for enhancing power of the trees?</li>
+<li>What alternetive can i use other than significance testing for model fit evaluation?</li>
 <li>Did I forget something in the simulation set-up?</li>
-<li>This is huge currently - what can I drop?</li>
-<li>What makes a simulation most useful in your opinion?</li>
 </ul>
 </div><div class="column" style="width:40%;">
 <p><img data-src="https://imgs.xkcd.com/comics/modeling_study.png"></p>
@@ -748,82 +751,6 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

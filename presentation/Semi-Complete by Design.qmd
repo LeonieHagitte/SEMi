@@ -162,39 +162,35 @@ $$
 
 Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
 
-**The effective moderator is defined as:**
+**Moderation is introduced via transformations of $M$:**
+
+- Linear:
 $$
-Z = h(M),
+  h_1(M) = M
 $$
 
-1. **Linear:**
+- Quadratic:
+$$
+  h_2(M) = 2M^2 - 1
+$$
 
-   $$
-   h(M) = M
-   $$
+- Sigmoid:
+$$
+  h_3(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)}
+$$
+- Noise:
+No systematic relationship with parameters
 
-2. **Sigmoid:**
+These transformed variables enter the model as **separate moderators**, allowing for flexible functional forms of parameter variation.
 
-   $$
-   h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
-   \qquad a=-1,\; b=1,\; c=0,\; k>0.
-   $$
-
-3. **Quadratic:**
-
-   $$
-   h(M) = 2M^2 - 1
-   $$
 
 ## Simulation 
-
 **Analytical Model Study 1**
-```{r, echo=FALSE, fig.align="center", out.width="70%"}
-knitr::include_graphics("tikz_model1.png")
 
-```
+![](tikz_model1.png){.lightbox}
 
-## Simulation 
+<!--
+## Simulation  
 
 **Analytical Model Study 2**
 
@@ -220,20 +216,27 @@ knitr::include_graphics("tikz_model1.png")
 :::
 :::
 
+-->
+
 ## Study-Specific Factors
 
-**Study 1: Functional-Form Misspecification**
+**Study 1: Functional-Form and Measurement-Parameter Misspecification**
 
-Focuses on moderator misspecification and data-related conditions:
+Focuses on moderator-form misspecification and data-related conditions, without structural misspecification.
 
-- **Analysis model:** Linear or quadratic moderator
+- **Data-generating moderator form:** linear, sigmoid, quadratic, or noise
+- **MNLFA analysis model:** linear moderation
+- **SEMTREE analysis model:** recursive partitioning
+- **Population models:** $0, 1.1, 1.11, 1.12, 1.2, 1.21, 1.22, 1.3$
 - **Sample size:** $N \in \{300, 500, 700, 1000\}$
-- **Indicator reliability:** .60, .70, .80, .95
-- **No structural misspecification:**  
-  Factor structure and residuals match the generating model
+- **Indicator reliability:** $.60, .70, .80, .95$
+- **Loading moderation:** $\Delta_\lambda \in \{-0.3,-0.2,0.2,0.3\}$
+- **Intercept moderation:** $\Delta_\nu \in \{-1,-0.5,0.5,1\}$
+- **No structural misspecification:** factor structure and residual specification match the generating model
 
 ---
 
+<!--
 ## Study-Specific Factors 
 
 **Study 2: Structural Misspecification**
@@ -258,6 +261,7 @@ Extends Study 1 by introducing factor-structure misspecification:
      \in \{0.2, 0.3\}
      $$
   4. **Combined:** Cross-loadings and residual correlations
+-->
 
 ## Trial Run: Data-Generating Model
 
@@ -372,11 +376,9 @@ $$
 ::: {.columns}
 ::: {.column width="60%"}
 -   How do I ensure that the comparison is fair, the best?
--   What conditions would you like to see simulated?
--   What should I consider/ keep a eye on when programming it?
+-   What Prepruning to use for enhancing power of the trees?
+-   What alternetive can i use other than significance testing for model fit evaluation?
 -   Did I forget something in the simulation set-up?
--   This is huge currently - what can I drop?
--   What makes a simulation most useful in your opinion?
 :::
 ::: {.column width="40%"}
 ![](https://imgs.xkcd.com/comics/modeling_study.png)
