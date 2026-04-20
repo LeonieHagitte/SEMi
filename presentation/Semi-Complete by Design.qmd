@@ -25,7 +25,6 @@ format:
 bibliography: bibliography.bib
 output-file: index
 ---
-
 ## Why Care About Measurement Invariance?
 
 ::: {.lead}
@@ -48,18 +47,27 @@ Without MI, conclusions about group differences in means, variances, or relation
 In empirical practice, MI is often assumed rather than systematically evaluated.
 :::
 
-::: {.design-grid}
+::: {.columns}
+::: {.column width="50%"}
 
 ::: {.design-card}
-### Common practice
+**Common practice**
+
 - Measurement invariance is often **implicitly assumed** rather than empirically tested.
 - The majority of psychological studies do **not test for MI** [@Maassen2025; @Rohrer2025].
 :::
 
+:::
+::: {.column width="50%"}
+
 ::: {.design-card}
-### Reporting quality
+**Reporting quality**
+
 - When MI is tested, reporting standards are often insufficient for replication [@Putnick2016; @Maassen2025].
 - Fewer than 5% of comparison studies reported MI in a recent review [@Rohrer2025].
+:::
+
+:::
 :::
 
 ::: {.highlight-box}
@@ -72,147 +80,286 @@ The validity of many reported group comparisons therefore remains unclear.
 
 ------------------------------------------------------------------------
 
+## MNLFA (Moderated Nonlinear Factor Analysis)
+
+::: {.lead}
+Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by allowing measurement and latent-variable parameters to vary continuously as functions of observed covariates [@Kolbe2024; @Curran2014].
+:::
+
+::: {.highlight-box}
+In this framework, measurement invariance is conceptualized as the **moderation** of model parameters by an external variable.
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Parameters that may vary**  
+
+- Item parameters: loadings, intercepts 
+- Factor means 
+- Factor variances 
+
+:::
+::: {.column width="50%"}
+
+**Moderators** 
+
+- Continuous covariates
+- Categorical covariates
+- Examples: age, gender, SES
+
+:::
+:::
+
+::: {.takeaway}
+MNLFA therefore models measurement noninvariance directly, rather than evaluating it only through sequential group-based tests [@Kolbe2021; @Curran2014].
+:::
+------------------------------------------------------------------------
+
+## Advantages and Limitations of MNLFA
+
+::: {.columns}
+::: {.column width="50%"}
+
+::: {.design-card}
+**Advantages**
+
+- Handles both categorical and continuous moderators
+- Avoids arbitrary group discretization
+- Provides fine-grained modeling of parameter variation
+- Is suited for nonlinear relationships
+:::
+
+:::
+::: {.column width="50%"}
+
+::: {.design-card}
+**Limitations**
+
+- High model complexity
+- Strong distributional and functional-form assumptions
+- Requires large sample sizes
+- Requires careful model specification
+:::
+
+:::
+:::
+
+::: {.takeaway}
+MNLFA is most appropriate when **theory** suggests **systematic moderation** of measurement parameters.
+:::
+------------------------------------------------------------------------
+
 ## SEM Trees
 
-Structural Equation Model (SEM) Trees integrate **confirmatory SEM** with **recursive partitioning** [@Brandmaier2013; @Brandmaier2016; @Arnold2021].
+::: {.lead}
+Structural Equation Model (SEM) Trees combine confirmatory structural equation modeling with recursive partitioning to detect parameter heterogeneity across subgroups [@Brandmaier2013; @Brandmaier2016; @Arnold2021].
+:::
 
-Key characteristics:
+::: {.highlight-box}
+SEM Trees identify subgroups in which model parameters differ by recursively splitting the sample based on covariates.
+:::
 
--   Automatically detect **heterogeneity in model parameters**\
--   Identify **subgroups** in which measurement or structural parameters differ\
--   Allow data-driven detection of **non-invariance**
+::: {.columns}
+::: {.column width="50%"}
 
-SEM Trees are particularly useful when grouping variables are unknown or continuous and if you have plenty.
+**Core mechanism** 
+
+- Score-based tests for parameter instability  
+- Recursive binary partitioning  
+- Tree-structured subgroup identification  
+
+:::
+::: {.column width="50%"}
+
+**What is detected** 
+
+- Heterogeneity in measurement parameters 
+- Heterogeneity in structural parameters  
+- Data-driven detection of noninvariance  
+
+:::
+:::
+
+::: {.takeaway}
+SEM Trees are particularly useful when relevant grouping variables are unknown, continuous, or high-dimensional.
+:::
 
 ------------------------------------------------------------------------
 
 ## Advantages and Limitations of SEM Trees
 
-**Strengths** 
- 
-:::{.incremental}
--   Flexible, exploratory identification of non-invariance\
--   Can handle complex interaction structures\
--   Transparent subgroup definitions\
--   Should perform well with sigmoid effects
+::: {.columns}
+::: {.column width="50%"}
+
+::: {.design-card}
+**Advantages**
+
+- Flexible, exploratory detection of noninvariance  
+- Can capture complex interaction structures  
+- Transparent and interpretable subgroup definitions  
+- Does not require pre-specified grouping variables  
+
 :::
 
-**Limitations** 
-
-:::{.incremental}
--   Risk of overfitting without cross-validation\
--   Results depend on splitting criteria\
--   Less suitable for strict confirmatory hypothesis testing\
--   The functional form could be harder to retrieve
 :::
-------------------------------------------------------------------------
+::: {.column width="50%"}
 
-## MNLFA (Moderated Nonlinear Factor Analysis)
+::: {.design-card}
+**Limitations**
 
-Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by allowing:
+- Risk of overfitting without pruning or cross-validation  
+- Results depend on splitting criteria and stopping rules  
+- Less suitable for strictly confirmatory hypothesis testing  
+- Functional form of moderation is not explicitly parameterized  
 
-:::{.incremental}
--   Item parameters (loadings, intercepts)\
--   Factor means and variances
 :::
 
-to vary **continuously** as functions of observed covariates (e.g., age, gender, SES) [@Kolbe2024;@Curran2014]. 
-This means MI is conceptualized as the **moderation** of certain parameters by a external variable.
-
-This therefore directly models measurement non-invariance instead of testing it sequentially [@Kolbe2021; @Curran2014].
-
-------------------------------------------------------------------------
-
-## Advantages and Limitations of MNLFA
-
-**Strengths** 
-
-:::{.incremental}
--   Handles both categorical and continuous moderators\
--   Avoids arbitrary group discretization\
--   Provides fine-grained modeling of parameter variation\
--   Is suited for nonlinear relationships
-::: 
-
-**Limitations** 
-
-:::{.incremental}
--   High model complexity\
--   Strong distributional and functional form assumptions\
--   Requires large sample sizes and careful model specification\
-::: 
-
-MNLFA is most appropriate when **theory** suggests **systematic moderation** of measurement parameters.
-
-<!---
-------------------------------------------------------------------------
-
-## Exploratory vs. Confirmatory Approaches
-
-So the question arises when to use which method for MI testing? 
-
-:::{.incremental}
--   I would argue that this is a question of the substantive nature of your research question\
--   MI testing should be pursued with rigor and diligent documentation\
--   However it is not necessarily always a prerequisite to have **Residual Invariance** established\
--   So how far you are progessed in a theoretical foundation is key\
--   And what question you want to answer also determines the required invariance level\
 :::
+:::
+
+::: {.takeaway}
+SEM Trees trade parametric efficiency for flexibility and are most informative in exploratory or misspecified settings.
+:::
+
 ------------------------------------------------------------------------
--->
 
-## Simulation
+## From Methods to Comparison
 
-Monte Carlo simulation to compare SEM trees and MNLFA  
+::: {.lead}
+MNLFA and SEM Trees represent fundamentally different approaches to detecting measurement noninvariance.
+:::
 
--   I am about to preregister the simulation, using the template from @Siepe2024. 
--   Data will be generated parametrically
--   Different population models
-    -   Single-Factor cfa model with four manifest indicators
+::: {.columns}
+::: {.column width="50%"}
+
+**MNLFA** 
+
+- Parametric 
+- Requires specification of functional form 
+- Efficient under correct model specification 
+
+:::
+::: {.column width="50%"}
+
+**SEM Trees** 
+
+- Nonparametric 
+- No functional-form assumptions 
+- Flexible under misspecification 
+
+:::
+:::
+
+::: {.takeaway}
+The relative performance of both approaches depends on the alignment between the data-generating process and the assumptions of the analysis model.
+:::
+
+------------------------------------------------------------------------
+
+## Simulation Framework
+
+::: {.lead}
+A Monte Carlo simulation is conducted to compare MNLFA and SEM Trees under varying forms of measurement noninvariance.
+:::
+
+::: {.columns}
+::: {.column width="48%"}
+
+**Design features**
+
+- Parametric data generation  
+- Multiple population models  
+- Single-factor and two-factor CFA structures  
+
+:::
+::: {.column width="52%"}
+
+**Indicator structure**
+
+- Single-factor model: four manifest indicators  
+- Two-factor model: one factor with four indicators, one factor with three indicators  
+
+:::
+:::
+
+**Single-factor model**
+
 $$
-\mathbf{x} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon},
-\qquad
-\boldsymbol{\varepsilon} \sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon).
-$$  
-    -   Two-Factor cfa model with four manifest indicators
-$$
-\mathbf{x} = \boldsymbol{\nu}_x(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta_1 + \boldsymbol{\varepsilon}(Z),
-$$
-$$
-\mathbf{y} = \boldsymbol{\nu}_y(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta_2 + \boldsymbol{\delta}(Z),
+\begin{aligned}
+\mathbf{x} &= \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon}, \\
+\boldsymbol{\varepsilon} &\sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon)
+\end{aligned}
 $$
 
-## Simulation
+**Two-factor model**
 
+$$
+\mathbf{x} = \boldsymbol{\nu}_x(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta_1 + \boldsymbol{\varepsilon}(Z)
+$$
+
+$$
+\mathbf{y} = \boldsymbol{\nu}_y(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta_2 + \boldsymbol{\delta}(Z)
+$$
+
+------------------------------------------------------------------------
+
+## Simulation: Moderator Functions
+
+::: {.lead}
 Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
+:::
 
 **Moderation is introduced via transformations of $M$:**
 
-- Linear:
+::: {.columns}
+::: {.column width="25%"}
+
+**Linear** 
+
 $$
-  h_1(M) = M
+h_1(M) = M
 $$
 
-- Quadratic:
+:::
+::: {.column width="35%"}
+
+**Quadratic** 
+
 $$
-  h_2(M) = 2M^2 - 1
+h_2(M) = 2M^2 - 1
 $$
 
-- Sigmoid:
-$$
-  h_3(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)}
-$$
-- Noise:
-No systematic relationship with parameters
+:::
+::: {.column width="37%"}
 
-These transformed variables enter the model as **separate moderators**, allowing for flexible functional forms of parameter variation.
+**Sigmoid** 
 
+$$
+h_3(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)}
+$$
+
+:::
+:::
+
+**Noise** 
+
+No systematic relationship with model parameters.
+
+::: {.takeaway}
+Each transformed variable enters the model as a separate moderator, allowing controlled variation in the functional form of parameter moderation.
+:::
+
+------------------------------------------------------------------------
 
 ## Simulation 
 **Analytical Model Study 1**
 
-![](tikz_model1.png){.lightbox}
+![](tikz_model1.png){.lightbox fig-align="center" width="75%"}
 
+::: {.takeaway}
+Highlighted components indicate parameters subject to moderation. Analysis is conducted sequentially.
+:::
 <!--
 ## Simulation  
 
@@ -242,21 +389,38 @@ These transformed variables enter the model as **separate moderators**, allowing
 
 -->
 
-## Study-Specific Factors
+## Study 1: Design Factors
 
-**Study 1: Functional-Form and Measurement-Parameter Misspecification**
+::: {.lead}
+Study 1 examines the impact of functional-form misspecification under controlled data-generating conditions without structural misspecification.
+:::
 
-Focuses on moderator-form misspecification and data-related conditions, without structural misspecification.
+::: {.columns}
+::: {.column width="50%"}
 
-- **Data-generating moderator form:** linear, sigmoid, quadratic, or noise
-- **MNLFA analysis model:** linear moderation
-- **SEMTREE analysis model:** recursive partitioning
-- **Population models:** $0, 1.1, 1.11, 1.12, 1.2, 1.21, 1.22, 1.3$
-- **Sample size:** $N \in \{300, 500, 700, 1000\}$
-- **Indicator reliability:** $.60, .70, .80, .95$
-- **Loading moderation:** $\Delta_\lambda \in \{-0.3,-0.2,0.2,0.3\}$
-- **Intercept moderation:** $\Delta_\nu \in \{-1,-0.5,0.5,1\}$
-- **No structural misspecification:** factor structure and residual specification match the generating model
+**Data-generating process**
+
+- **Moderator form:** linear, sigmoid, quadratic, or noise  
+- **Population models:** 8 distinct model conditions
+- **Loading moderation:** $\Delta_\lambda \in \{-0.3, -0.2, 0.2, 0.3\}$  
+- **Intercept moderation:** $\Delta_\nu \in \{-1, -0.5, 0.5, 1\}$  
+- **Indicator reliability:** $.60, .70, .80, .95$  
+
+:::
+::: {.column width="50%"}
+
+**Analysis and sampling**
+
+- **MNLFA:** linear moderation  
+- **SEMTREE:** recursive partitioning  
+- **Sample size:** $N \in \{300, 500, 700, 1000\}$  
+
+:::
+:::
+
+::: {.takeaway}
+Functional-form misspecification arises when nonlinear data-generating mechanisms are analyzed under linear moderation assumptions in MNLFA, while SEM Trees impose no parametric form.
+:::
 
 <!--
 ## Study-Specific Factors 
@@ -287,26 +451,28 @@ Extends Study 1 by introducing factor-structure misspecification:
 
 ## Trial Run: Data-Generating Model
 
+::: {.lead}
+The pilot isolates a simple single-factor setting in order to assess initial type I error and power patterns before scaling the full simulation design.
+:::
+
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Measurement model**  
-Single-factor CFA with one latent factor $\eta$ and four indicators $y_1$–$y_4$:
-$$
-\mathbf{y} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta + \boldsymbol{\varepsilon}(Z)
-$$
-**Moderation structure**
+**Measurement model**
 
-Multiple observed moderators are included:
+Single-factor CFA with one latent factor $\eta$ and four indicators $y_1$–$y_4$
 
-- $m_1$: primary moderator  
-- $m_2$: secondary moderator  
-- $m_0$: noise covariate  
+**Moderation structure** 
 
-Functional forms:
-- Linear: $h(m)=m$  
-- Quadratic: $h(m)=2m^2-1$  
-- Noise (null condition)
+- $M_1$: primary moderator  
+- $M_2$: secondary moderator  
+- $M_0$: noise covariate  
+
+**Functional forms**
+
+- Linear: $h(M)=M$  
+- Quadratic: $h(M)=2M^2-1$  
+- Noise: null condition  
 
 :::
 ::: {.column width="50%"}
@@ -316,22 +482,19 @@ Functional forms:
 - Factor loadings: $\lambda = 0.70$  
 - Indicator reliability: $0.60,\;0.95$
 
-**Population model**
+**Population conditions**
 
-- **NULL (0):** No moderation  
-- **1.22:** Partial metric *and* scalar noninvariance  
-  - Loadings $x_1, x_2$ moderated  
-  - Intercepts $x_1, x_2$ moderated  
+- Null condition
+- Noninvariance condition:  
+  - moderated loadings: $x_1, x_2$  
+  - moderated intercepts: $x_1, x_2$
 
-**Effect sizes**
+**Trial-run settings**
 
 - $\Delta_\lambda \in \{-0.3, 0.3\}$  
 - $\Delta_\nu \in \{-1, 1\}$  
-
-**Design factors (trial run)**
-
 - Sample size: $N \in \{300,\;1000\}$  
-- Replications: pilot (e.g., 5–15 seeds per condition) 
+- Replications: pilot run (e.g., 5--15 seeds per condition)
 
 :::
 :::
@@ -341,15 +504,17 @@ Functional forms:
 ::: {.columns}
 ::: {.column width="50%"}
 
-### SEM Trees (nonparametric detection)
+**SEM Trees (nonparametric)**
 
-**Baseline model**
+**Model**
 - Single-factor CFA (RAM specification)
 
-**Predictors**
+**Predictors** 
+
 - $m_1$, $m_2$, $m_0$
 
-**Procedure**
+**Estimation procedure** 
+
 - Score-based recursive partitioning  
 - Bonferroni-corrected split tests  
 - Pre-pruning:
@@ -357,42 +522,42 @@ Functional forms:
   - max depth = 3
   - minimum node size = 50
 
-**Evaluation**
+**Evaluation** 
 
-- Global tree test (significance)  
-- Root split detection (which variable)  
-- Type I error: splits under NULL  
-- Power: splits under true moderation  
+- Global tree test  
+- Root split detection  
+- Type I error (splits under null)  
+- Power (splits under true moderation)  
 
 :::
 ::: {.column width="50%"}
 
-### MNLFA (parametric detection)
+**MNLFA (parametric)**
 
-**Model specification (OpenMx)**
-
-Moderation modeled linearly via definition variables:
-
+**Model**
+- Moderation via definition variables (OpenMx)
 - Loadings: $\Lambda(Z)$  
 - Intercepts: $\nu(Z)$  
 
-**Sequential testing strategy**
+**Estimation procedure** 
 
-1. Configural model  
-2. Metric model (no loading moderation)  
-3. Scalar model (no loading + intercept moderation)  
+- Sequential invariance testing: 
+  1. Configural model 
+  2. Metric model  
+  3. Scalar model  
 
-**Decision criteria**
+**Evaluation** 
 
 - Likelihood-ratio tests (LRT)  
 - $\Delta$CFI, $\Delta$RMSEA  
 
-**Key assumption**
+**Key assumption** 
 
-- Moderation is **linear** in the analysis model  
+- Moderation is linear in the analysis model  
 
 :::
 :::
+
 <!--
 ## Trial Run: What Is Being Tested? 
 
@@ -424,13 +589,17 @@ This pilot simulation focuses on **functional-form misspecification**:
 | Level  | Method   | Type   | Value |
 |--------|----------|--------|-------|
 | Metric | MNLFA    | Power  | 0.619 |
-| Metric | MNLFA    | Type I | 0.138 |
+| Metric | MNLFA    | Type I | **0.138** |
 | Metric | SEMTREE  | Power  | 0.611 |
-| Metric | SEMTREE  | Type I | 0.075 |
+| Metric | SEMTREE  | Type I | **0.075** |
 | Scalar | MNLFA    | Power  | 0.459 |
-| Scalar | MNLFA    | Type I | 0.150 |
-| Scalar | SEMTREE  | Power  | 0.683 |
-| Scalar | SEMTREE  | Type I | 0.050 |
+| Scalar | MNLFA    | Type I | **0.150** |
+| Scalar | SEMTREE  | Power  | **0.683** |
+| Scalar | SEMTREE  | Type I | **0.050** |
+
+::: {.result-strip}
+MNLFA shows elevated Type I error, whereas SEM Trees provide better error control and stronger scalar-level power under these pilot conditions.
+:::
 
 ## Preliminary Results 
 
@@ -444,6 +613,9 @@ This pilot simulation focuses on **functional-form misspecification**:
 *Scalar Level MI Testing*
 :::
 :::
+::: {.takeaway}
+At the metric stage, MNLFA Type I error decreases, reaching 0.050 only when both sample size and reliability are high, whereas SEM Trees remain comparatively stable. At the scalar stage, SEM Trees retain high power under quadratic moderation, while MNLFA power drops markedly.
+:::
 
 ## Questions & Concerns 
 
@@ -453,7 +625,8 @@ This pilot simulation focuses on **functional-form misspecification**:
 ::: {.column width="60%"}
 -   How do I ensure that the comparison is fair, the best?
 -   What Prepruning to use for enhancing power of the trees?
--   What alternetive can i use other than significance testing for model fit evaluation?
+-   When do tree splits count as correct?
+-   What alternative can i use other than significance testing for model fit evaluation?
 -   Did I forget something in the simulation set-up?
 :::
 ::: {.column width="40%"}
@@ -503,33 +676,35 @@ This pilot simulation focuses on **functional-form misspecification**:
 ## Preliminary Interpretation
 
 ::: {.columns}
-
 ::: {.column width="50%"}
 
 ### MNLFA 
 
 - High power for detecting **metric noninvariance**  
-- **Elevated Type I error** and **reduced power** at the scalar level  
+- **Elevated Type I error** at both levels  
+- **Reduced power at the scalar level**  
 - Sensitive to **functional-form misspecification**  
   - Linear analysis vs. nonlinear data-generating processes  
-- Sequential testing may propagate misspecification across steps  
+- Sequential testing may **propagate misspecification**  
 
 :::
-
 ::: {.column width="50%"}
 
 ### SEM Trees
 
-- **Well-controlled Type I error** across conditions  
-- Competitive power, especially for **scalar noninvariance**  
-- Performance varies with:
+- **More stable Type I error control** across conditions  
+- Competitive power, particularly for **scalar noninvariance**  
+- Performance depends on:
   - Sample size  
   - Reliability  
   - Pruning / stopping rules  
-- Potentially **conservative** in low-signal settings  
+- May be **conservative in low-signal settings**  
 
 :::
+:::
 
+::: {.takeaway}
+MNLFA is efficient under correct specification but sensitive to misspecification, whereas SEM Trees provide more robust error control at the cost of potential conservatism.
 :::
 
 ## References

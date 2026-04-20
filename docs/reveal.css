@@ -180,16 +180,35 @@
   line-height: 1.25;
 }
 
+.result-strip {
+  margin: 0.2em 0 0.45em 0;
+  padding: 0.3em 0.55em;
+  background: #eef4f8;
+  border-radius: 8px;
+  font-size: 0.75em;   /* reduced size */
+  color: #203746;
+  line-height: 1.25;
+}
+
 /* ---------- Equations ---------- */
 
-.reveal .math.display {
-  margin: 0.4em auto 0.45em auto;
-  padding: 0.28em 0.65em;
+.reveal .math.display,
+.reveal .MathJax_Display,
+.reveal mjx-container[display="true"] {
+  display: block;
+  margin: 0.45em auto 0.55em auto;
+  text-align: center;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.reveal mjx-container[display="true"] {
+  padding: 0.35em 0.6em;
   background: #f5f8fb;
   border: 1px solid #d9e3ea;
   border-left: 5px solid #8aa6bc;
   border-radius: 8px;
-  width: 94%;
   box-sizing: border-box;
 }
 
@@ -199,10 +218,11 @@
   margin-bottom: 0.18em;
 }
 
-.reveal .math.inline {
-  font-size: 0.98em;
+.eq-note {
+  font-size: 0.8em;
+  color: #31424f;
+  margin-top: 0.2em;
 }
-
 /* ---------- Code / citations / footnotes ---------- */
 
 .reveal code {
