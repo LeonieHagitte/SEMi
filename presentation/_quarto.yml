@@ -1,0 +1,6 @@
+project:
+  output-dir: ../docs
+
+format:
+  revealjs:
+    css: reveal.css

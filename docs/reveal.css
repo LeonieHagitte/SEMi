@@ -1,0 +1,14 @@
+/* Overall slide font size (applies to most text) */
+  .reveal {
+    font-size: 28px;   /* try 26–32px; default is often ~40px depending on theme */
+      line-height: 1.2;
+  }
+
+/* Optional: scale headings down relative to the theme defaults */
+  .reveal h1 { font-size: 1.8em; }
+.reveal h2 { font-size: 1.4em; }
+.reveal h3 { font-size: 1.15em; }
+
+/* Optional: code often looks oversized in slides */
+  .reveal code { font-size: 0.85em; }
+.reveal pre code { font-size: 0.8em; }

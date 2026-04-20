@@ -6,11 +6,11 @@
 <script src="Semi-Complete by Design_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="Semi-Complete by Design_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="Semi-Complete by Design_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.25">
+  <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content="Leonie Hagitte">
   <title>SEMi-Complete by Design</title>
@@ -52,7 +52,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-0fde88a82f0356838740f155f1088782.css">
+  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-2c1b5f745a11cfad616ebade4a4a7d24.css">
   <link rel="stylesheet" href="reveal.css">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -1153,7 +1153,7 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1227,14 +1227,13 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
