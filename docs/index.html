@@ -52,7 +52,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-2c1b5f745a11cfad616ebade4a4a7d24.css">
+  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
   <link rel="stylesheet" href="reveal.css">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -153,7 +153,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">SEMi-Complete by Design</h1>
-  <p class="subtitle">A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees</p>
+  <p class="subtitle">A Monte Carlo Simulation to Assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -166,43 +166,46 @@ Leonie Hagitte
 </section>
 <section id="why-care-about-measurement-invariance" class="slide level2">
 <h2>Why Care About Measurement Invariance?</h2>
-<p>Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups <span class="citation" data-cites="Cheung2000 Meredith1964">(<a href="#/references" role="doc-biblioref" onclick="">Cheung and Rensvold 2000</a>; <a href="#/references" role="doc-biblioref" onclick="">Meredith 1964</a>)</span>.<br>
-Violations of MI imply that observed group differences may reflect <strong>measurement artifacts</strong> rather than substantive differences in the underlying constructs<span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
-<ul>
-<li class="fragment">Without MI, conclusions about group differences in means, variances, or relations are not statistically justified<span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</li>
-</ul>
+<div class="lead">
+<p>Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups <span class="citation" data-cites="Cheung2000 Meredith1964">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Cheung and Rensvold 2000</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Meredith 1964</a>)</span>.</p>
+</div>
+<div class="highlight-box">
+<p>Violations of MI imply that observed group differences may reflect <strong>measurement artifacts</strong> rather than substantive differences in the underlying constructs <span class="citation" data-cites="Putnick2016">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
+</div>
+<div class="takeaway">
+<p>Without MI, conclusions about group differences in means, variances, or relations are not statistically justified <span class="citation" data-cites="Putnick2016">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
+</div>
 </section>
-<section id="why-care-about-measurement-invariance-1" class="slide level2">
+<section id="why-care-about-measurement-invariance-1" class="slide level2 smaller scrollable">
 <h2>Why Care About Measurement Invariance?</h2>
+<div class="lead">
+<p>In empirical practice, MI is often assumed rather than systematically evaluated.</p>
+</div>
+<div class="design-grid">
+<section id="common-practice" class="design-card">
+<h3>Common practice</h3>
 <ul>
-<li>Measurement invariance is often <strong>implicitly assumed</strong> rather than empirically tested<br>
-</li>
-<li>The majority of psychological studies do <strong>not test for MI</strong> <span class="citation" data-cites="Maassen2025 Rohrer2025">(<a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>; <a href="#/references" role="doc-biblioref" onclick="">Rohrer and Paulewicz 2025</a>)</span><br>
-</li>
-<li>When MI is tested, reporting standards are frequently insufficient for replication <span class="citation" data-cites="Putnick2016 Maassen2025">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span></li>
-<li><span class="citation" data-cites="Rohrer2025">Rohrer and Paulewicz (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> also note that only &lt;5% of comparison studies reported MI in a recent review.</li>
+<li>Measurement invariance is often <strong>implicitly assumed</strong> rather than empirically tested.</li>
+<li>The majority of psychological studies do <strong>not test for MI</strong> <span class="citation" data-cites="Maassen2025 Rohrer2025">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Maassen et al. 2025</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Rohrer and Paulewicz 2025</a>)</span>.</li>
 </ul>
-<ul>
-<li class="fragment">As a result, the validity of many reported group comparisons remains unclear.</li>
-</ul>
-<!--
-------------------------------------------------------------------------
-
-## Empirical Evidence on MI Violations
-
-Recent literature reviews highlight the severity of the problem:
-
-:::{.incremental}
--   > *“None of the reported MI tests were reproducible, and only 26% of the 174 newly performed MI tests reached sufficient (scalar) invariance, with MI failing completely in 58% of tests.”*[@Maassen2025]
-
--   Additionally, in approximately **50% of cases** where configural invariance was rejected, the **number of latent factors differed between groups**, indicating fundamentally different measurement structures [@Maassen2025].
-:::
-------------------------------------------------------------------------
--->
 </section>
+<section id="reporting-quality" class="design-card">
+<h3>Reporting quality</h3>
+<ul>
+<li>When MI is tested, reporting standards are often insufficient for replication <span class="citation" data-cites="Putnick2016 Maassen2025">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span>.</li>
+<li>Fewer than 5% of comparison studies reported MI in a recent review <span class="citation" data-cites="Rohrer2025">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Rohrer and Paulewicz 2025</a>)</span>.</li>
+</ul>
+</section>
+<div class="highlight-box">
+<p>Recent re-analyses indicate that only <strong>26%</strong> of tested models achieved scalar invariance, while MI failed completely in <strong>58%</strong> of cases; in roughly <strong>50%</strong> of configural failures, the underlying factor structure differed between groups <span class="citation" data-cites="Maassen2025">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Maassen et al. 2025</a>)</span>.</p>
+</div>
+<div class="takeaway">
+<p>The validity of many reported group comparisons therefore remains unclear.</p>
+</div>
+<hr>
 <section id="sem-trees" class="slide level2">
 <h2>SEM Trees</h2>
-<p>Structural Equation Model (SEM) Trees integrate <strong>confirmatory SEM</strong> with <strong>recursive partitioning</strong> <span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/references" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/references" role="doc-biblioref" onclick="">2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
+<p>Structural Equation Model (SEM) Trees integrate <strong>confirmatory SEM</strong> with <strong>recursive partitioning</strong> <span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">2016</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
 <p>Key characteristics:</p>
 <ul>
 <li>Automatically detect <strong>heterogeneity in model parameters</strong><br>
@@ -212,6 +215,7 @@ Recent literature reviews highlight the severity of the problem:
 <li>Allow data-driven detection of <strong>non-invariance</strong></li>
 </ul>
 <p>SEM Trees are particularly useful when grouping variables are unknown or continuous and if you have plenty.</p>
+<hr>
 </section>
 <section id="advantages-and-limitations-of-sem-trees" class="slide level2">
 <h2>Advantages and Limitations of SEM Trees</h2>
@@ -235,6 +239,7 @@ Recent literature reviews highlight the severity of the problem:
 </li>
 <li class="fragment">The functional form could be harder to retrieve</li>
 </ul>
+<hr>
 </section>
 <section id="mnlfa-moderated-nonlinear-factor-analysis" class="slide level2">
 <h2>MNLFA (Moderated Nonlinear Factor Analysis)</h2>
@@ -244,8 +249,9 @@ Recent literature reviews highlight the severity of the problem:
 </li>
 <li class="fragment">Factor means and variances</li>
 </ul>
-<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES) <span class="citation" data-cites="Kolbe2024 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>. This means MI is conceptualized as the <strong>moderation</strong> of certain parameters by a external variable.</p>
-<p>This therefore directly models measurement non-invariance instead of testing it sequentially <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe, Jorgensen, and Molenaar 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
+<p>to vary <strong>continuously</strong> as functions of observed covariates (e.g., age, gender, SES) <span class="citation" data-cites="Kolbe2024 Curran2014">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Kolbe et al. 2024</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>. This means MI is conceptualized as the <strong>moderation</strong> of certain parameters by a external variable.</p>
+<p>This therefore directly models measurement non-invariance instead of testing it sequentially <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Kolbe, Jorgensen, and Molenaar 2021</a>; <a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
+<hr>
 </section>
 <section id="advantages-and-limitations-of-mnlfa" class="slide level2">
 <h2>Advantages and Limitations of MNLFA</h2>
@@ -290,7 +296,7 @@ So the question arises when to use which method for MI testing?
 <h2>Simulation</h2>
 <p>Monte Carlo simulation to compare SEM trees and MNLFA</p>
 <ul>
-<li>I am about to preregister the simulation, using the template from <span class="citation" data-cites="Siepe2024">Siepe et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span>.</li>
+<li>I am about to preregister the simulation, using the template from <span class="citation" data-cites="Siepe2024">Siepe et al. (<a href="#/why-care-about-measurement-invariance-1" role="doc-biblioref" onclick="">2024</a>)</span>.</li>
 <li>Data will be generated parametrically</li>
 <li>Different population models
 <ul>
@@ -922,9 +928,11 @@ This pilot simulation focuses on **functional-form misspecification**:
 </ul>
 </div></div>
 </section>
-<section id="references" class="slide level2 smaller scrollable">
+<section id="references" class="slide level2">
 <h2>References</h2>
 
+</section>
+</div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Arnold2021" class="csl-entry" role="listitem">
 Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. <span>“Score-Guided Structural Equation Model Trees.”</span> <em>Frontiers in Psychology</em> 11: 3913. <a href="https://doi.org/10.3389/fpsyg.2020.564403">https://doi.org/10.3389/fpsyg.2020.564403</a>.
@@ -992,7 +1000,7 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
@@ -1003,7 +1011,7 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -1125,7 +1133,7 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
         previewLinks: false,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'none',
+        transition: 'fade',
 
         // Transition speed (default/fast/slow)
         transitionSpeed: 'default',
@@ -1145,12 +1153,12 @@ Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Dani
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1440,
 
-        height: 700,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
-        margin: 0.1,
+        margin: 4.0e-2,
 
         math: {
           mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',

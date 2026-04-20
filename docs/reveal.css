@@ -1,14 +1,381 @@
-/* Overall slide font size (applies to most text) */
-  .reveal {
-    font-size: 28px;   /* try 26–32px; default is often ~40px depending on theme */
-      line-height: 1.2;
-  }
+/* ---------- Global typography ---------- */
 
-/* Optional: scale headings down relative to the theme defaults */
-  .reveal h1 { font-size: 1.8em; }
-.reveal h2 { font-size: 1.4em; }
-.reveal h3 { font-size: 1.15em; }
+:root {
+  --r-main-font: "Aptos", "Helvetica Neue", "Arial", sans-serif;
+  --r-heading-font: "Aptos Display", "Helvetica Neue", "Arial", sans-serif;
+  --r-code-font: "JetBrains Mono", "Fira Code", "Consolas", monospace;
 
-/* Optional: code often looks oversized in slides */
-  .reveal code { font-size: 0.85em; }
-.reveal pre code { font-size: 0.8em; }
+  --r-main-font-size: 30px;
+  --r-heading-color: #14324a;
+  --r-main-color: #1d1d1f;
+  --r-link-color: #1f5f8b;
+  --r-link-color-hover: #163f5c;
+  --r-selection-background-color: rgba(31, 95, 139, 0.18);
+  --r-background-color: #fcfcfb;
+}
+
+/* overall slide canvas */
+.reveal {
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* main slide body */
+.reveal .slides section {
+  text-align: left;
+  padding: 0.2em 0.4em 0.4em 0.4em;
+}
+
+/* ---------- Headings ---------- */
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  color: var(--r-heading-color);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  margin-bottom: 0.45em;
+}
+
+.reveal h1 {
+  font-size: 1.8em;
+}
+
+.reveal h2 {
+  font-size: 1.28em;
+  border-bottom: 2px solid rgba(20, 50, 74, 0.14);
+  padding-bottom: 0.18em;
+  margin-bottom: 0.55em;
+}
+
+.reveal h3 {
+  font-size: 0.96em;
+  margin-top: 0.35em;
+}
+
+/* ---------- Paragraphs and lists ---------- */
+
+.reveal p,
+.reveal li {
+  font-size: 0.98em;
+  line-height: 1.38;
+  color: var(--r-main-color);
+}
+
+.reveal p {
+  margin: 0.35em 0 0.55em 0;
+}
+
+.reveal ul,
+.reveal ol {
+  display: block;
+  margin: 0.35em 0 0.45em 1.1em;
+  padding-left: 0.2em;
+}
+
+.reveal li {
+  margin-bottom: 0.28em;
+}
+
+.reveal strong {
+  color: #0f3550;
+  font-weight: 700;
+}
+
+.reveal em {
+  color: #3b4956;
+}
+
+/* ---------- Title slide ---------- */
+
+.reveal .title-slide {
+  text-align: left !important;
+  padding-top: 1.6em !important;
+}
+
+.reveal .title-slide h1 {
+  font-size: 2.0em;
+  margin-bottom: 0.22em;
+  border-bottom: none;
+}
+
+.reveal .title-slide .subtitle {
+  font-size: 0.95em;
+  line-height: 1.35;
+  color: #456174;
+  margin-top: 0.25em;
+  max-width: 85%;
+}
+
+.reveal .title-slide .author,
+.reveal .title-slide .date {
+  font-size: 0.72em;
+  color: #5b6670;
+  margin-top: 1.1em;
+}
+
+/* ---------- Columns ---------- */
+
+.reveal .columns {
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.reveal .column {
+  min-width: 0;
+}
+
+/* ---------- Tables ---------- */
+
+.reveal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.68em;
+  margin-top: 0.35em;
+  margin-bottom: 0.4em;
+}
+
+.reveal table th {
+  background: #eef3f7;
+  color: #14324a;
+  font-weight: 700;
+  border-bottom: 2px solid #d2dde7;
+  padding: 0.45em 0.5em;
+}
+
+.reveal table td {
+  border-bottom: 1px solid #e7ebef;
+  padding: 0.42em 0.5em;
+  vertical-align: top;
+}
+
+.reveal table tr:nth-child(even) td {
+  background: rgba(238, 243, 247, 0.35);
+}
+
+/* ---------- Figures and images ---------- */
+
+.reveal img {
+  border: none;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  max-height: 68vh;
+  object-fit: contain;
+}
+
+.reveal figure {
+  margin: 0.35em 0 0.35em 0;
+}
+
+.reveal figcaption,
+.reveal .quarto-figure-caption,
+.reveal p.caption {
+  font-size: 0.55em;
+  color: #5b6670;
+  margin-top: 0.45em;
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* ---------- Equations ---------- */
+
+.reveal .math.display {
+  margin: 0.4em auto 0.45em auto;
+  padding: 0.28em 0.65em;
+  background: #f5f8fb;
+  border: 1px solid #d9e3ea;
+  border-left: 5px solid #8aa6bc;
+  border-radius: 8px;
+  width: 94%;
+  box-sizing: border-box;
+}
+
+.eq-caption {
+  font-size: 0.72em;
+  color: #5a6975;
+  margin-bottom: 0.18em;
+}
+
+.reveal .math.inline {
+  font-size: 0.98em;
+}
+
+/* ---------- Code / citations / footnotes ---------- */
+
+.reveal code {
+  font-family: var(--r-code-font);
+  font-size: 0.9em;
+  background: rgba(20, 50, 74, 0.06);
+  padding: 0.08em 0.24em;
+  border-radius: 4px;
+}
+
+.reveal pre code {
+  font-size: 0.72em;
+  line-height: 1.35;
+}
+
+.reveal .citation,
+.reveal .footnote-ref,
+.reveal .quarto-citation {
+  font-size: 0.8em;
+}
+
+.reveal .footnotes {
+  font-size: 0.52em;
+  color: #5b6670;
+  border-top: 1px solid #dde5eb;
+  margin-top: 0.7em;
+  padding-top: 0.35em;
+}
+
+/* ---------- Slide number ---------- */
+
+.reveal .slide-number {
+  font-size: 0.42em;
+  color: #5f6b75;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.18em 0.42em;
+  border-radius: 6px;
+  right: 18px;
+  bottom: 14px;
+}
+
+/* ---------- Horizontal rules ---------- */
+
+.reveal hr,
+.reveal section .slide-break {
+  border: none;
+  border-top: 1px solid #d8e0e6;
+  margin: 0.7em 0;
+}
+
+/* ---------- Incremental fragments ---------- */
+
+.reveal .fragment {
+  transition: opacity 220ms ease;
+}
+
+/* ---------- Utility classes you can add selectively ---------- */
+
+.small {
+  font-size: 0.84em;
+}
+
+.xsmall {
+  font-size: 0.72em;
+}
+
+.tight p,
+.tight li {
+  line-height: 1.24;
+}
+
+.highlight-box {
+  background: rgba(31, 95, 139, 0.06);
+  border-left: 5px solid rgba(31, 95, 139, 0.55);
+  padding: 0.5em 0.7em;
+  border-radius: 8px;
+  margin: 0.45em 0 0.55em 0;
+}
+
+.centered-caption figcaption,
+.centered-caption p.caption {
+  text-align: center;
+}
+
+/* ---------- Structural blocks ---------- */
+
+.lead {
+  font-size: 1.02em;
+  line-height: 1.32;
+  color: #243746;
+  margin-bottom: 0.55em;
+  max-width: 92%;
+}
+
+.takeaway {
+  margin-top: 0.65em;
+  padding: 0.42em 0.65em;
+  background: rgba(20, 50, 74, 0.05);
+  border-left: 5px solid rgba(20, 50, 74, 0.45);
+  border-radius: 8px;
+  font-size: 0.9em;
+  line-height: 1.28;
+}
+
+.modelbox {
+  margin: 0.45em 0 0.5em 0;
+  padding: 0.35em 0.65em;
+  background: rgba(20, 50, 74, 0.025);
+  border: 1px solid rgba(20, 50, 74, 0.10);
+  border-radius: 10px;
+}
+
+.modelbox p {
+  margin: 0.15em 0 0.25em 0;
+}
+
+.slide-label {
+  display: inline-block;
+  font-size: 0.62em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #33546e;
+  margin-bottom: 0.35em;
+}
+
+.spacer-sm {
+  height: 0.25em;
+}
+
+.spacer-md {
+  height: 0.55em;
+}
+
+
+.eq-note {
+  font-size: 0.8em;
+  color: #31424f;
+  margin-top: 0.2em;
+}
+
+.design-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem 1rem;
+  margin-top: 0.4em;
+}
+
+.design-card {
+  background: #f7f9fb;
+  border: 1px solid #dbe4ea;
+  border-radius: 10px;
+  padding: 0.5em 0.65em 0.45em 0.65em;
+}
+
+.design-card h3 {
+  margin: 0 0 0.18em 0;
+  font-size: 0.82em;
+  color: #17354d;
+}
+
+.design-card p,
+.design-card li {
+  font-size: 0.74em;
+  line-height: 1.25;
+  margin: 0.12em 0;
+}
+
+.design-card ul {
+  margin: 0.15em 0 0 0.9em;
+}
+
+.mono {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.95em;
+}

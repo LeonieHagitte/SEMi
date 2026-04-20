@@ -1,57 +1,76 @@
 ---
 title: "SEMi-Complete by Design"
-subtitle: "A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees"
+subtitle: "A Monte Carlo Simulation to Assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees"
 author: "Leonie Hagitte"
 format: 
   revealjs:
-    theme: simple
-    slide-number: true
+    theme: white
+    slide-number: c/t
     incremental: false
     scrollable: true
+    center: false
+    width: 1440
+    height: 900
+    margin: 0.04
+    transition: fade
+    background-transition: none
+    controls: true
+    hash: true
     css: reveal.css
+    smaller: false
+    chalkboard: false
     text: |
-        \usepackage{rotating}
-        \usepackage{subcaption}
+      \usepackage{rotating}
+      \usepackage{subcaption}
 bibliography: bibliography.bib
 output-file: index
 ---
 
 ## Why Care About Measurement Invariance?
 
-Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups [@Cheung2000; @Meredith1964].\
-Violations of MI imply that observed group differences may reflect **measurement artifacts** rather than substantive differences in the underlying constructs[@Putnick2016].
+::: {.lead}
+Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups [@Cheung2000; @Meredith1964].
+:::
 
-::: {.incremental}
--   Without MI, conclusions about group differences in means, variances, or relations are not statistically justified[@Putnick2016].
+::: {.highlight-box}
+Violations of MI imply that observed group differences may reflect **measurement artifacts** rather than substantive differences in the underlying constructs [@Putnick2016].
+:::
+
+::: {.takeaway}
+Without MI, conclusions about group differences in means, variances, or relations are not statistically justified [@Putnick2016].
 :::
 
 ------------------------------------------------------------------------
 
 ## Why Care About Measurement Invariance?
 
--   Measurement invariance is often **implicitly assumed** rather than empirically tested\
--   The majority of psychological studies do **not test for MI** [@Maassen2025; @Rohrer2025]\
--   When MI is tested, reporting standards are frequently insufficient for replication [@Putnick2016; @Maassen2025]
--   @Rohrer2025 also note that only <5% of comparison studies reported MI in a recent review.
-
-:::{.incremental}
--   As a result, the validity of many reported group comparisons remains unclear.
+::: {.lead}
+In empirical practice, MI is often assumed rather than systematically evaluated.
 :::
 
-<!--
-------------------------------------------------------------------------
+::: {.design-grid}
 
-## Empirical Evidence on MI Violations
-
-Recent literature reviews highlight the severity of the problem:
-
-:::{.incremental}
--   > *“None of the reported MI tests were reproducible, and only 26% of the 174 newly performed MI tests reached sufficient (scalar) invariance, with MI failing completely in 58% of tests.”*[@Maassen2025]
-
--   Additionally, in approximately **50% of cases** where configural invariance was rejected, the **number of latent factors differed between groups**, indicating fundamentally different measurement structures [@Maassen2025].
+::: {.design-card}
+### Common practice
+- Measurement invariance is often **implicitly assumed** rather than empirically tested.
+- The majority of psychological studies do **not test for MI** [@Maassen2025; @Rohrer2025].
 :::
+
+::: {.design-card}
+### Reporting quality
+- When MI is tested, reporting standards are often insufficient for replication [@Putnick2016; @Maassen2025].
+- Fewer than 5% of comparison studies reported MI in a recent review [@Rohrer2025].
+:::
+
+::: {.highlight-box}
+Recent re-analyses indicate that only **26%** of tested models achieved scalar invariance, while MI failed completely in **58%** of cases; in roughly **50%** of configural failures, the underlying factor structure differed between groups [@Maassen2025].
+:::
+
+::: {.takeaway}
+The validity of many reported group comparisons therefore remains unclear.
+:::
+
 ------------------------------------------------------------------------
--->
 
 ## SEM Trees
 
