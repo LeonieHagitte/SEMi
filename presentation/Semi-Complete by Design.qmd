@@ -13,6 +13,7 @@ format:
         \usepackage{rotating}
         \usepackage{subcaption}
 bibliography: bibliography.bib
+output-file: index
 ---
 
 ## Why Care About Measurement Invariance?
