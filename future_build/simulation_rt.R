@@ -254,10 +254,21 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   }
   # truth indicators
   # ---------------------------
-  true_any_noninvariance <- row$popmodel != "0"
-  true_metric_noninvariance <- row$popmodel != "0" && row$delta_lambda != 0
-  true_scalar_noninvariance <- row$popmodel != "0" && row$delta_nu != 0
+  has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3")
+  has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22")
+  
   true_structured_moderator <- row$moderator != "noise"
+  
+  true_metric_noninvariance <- has_metric &&
+    row$delta_lambda != 0 &&
+    true_structured_moderator
+  
+  true_scalar_noninvariance <- has_scalar &&
+    row$delta_nu != 0 &&
+    true_structured_moderator
+  
+  true_any_noninvariance <- true_metric_noninvariance ||
+    true_scalar_noninvariance
   # ---------------------------
   
   error_msg <- NA_character_

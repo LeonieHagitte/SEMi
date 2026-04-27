@@ -194,3 +194,4 @@ ggplot(scalar_plot_data,
   facet_grid(stat ~ reliability + moderator) +
   labs(x = "Sample size (N)", y = "Rate") +
   theme_minimal()
+

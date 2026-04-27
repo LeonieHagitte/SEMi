@@ -50,14 +50,20 @@ Leonie Hagitte, Andreas M. Brandmaier
 
 ## Provide a description of the project.
 
-Ensuring the validity of psychological assessments is crucial, yet differential item functioning (DIF) can threaten measurement invariance (MI) when test items function differently across groups [@Bauer2020]. Recent calls for improved DIF detection methods emphasize the need for more advanced statistical approaches [@Lee2024]. 
-Moderated nonlinear factor analysis (MNLFA) is a recent approach for assessing MI via parameter moderation within a single-group confirmatory factor analysis framework. MLNFA evaluates MI across multiple continuous and categorical covariates, and accounts for heteroskedasticity by modeling factor and residual variances as functions of these covariates. While MNLFA offers continuous moderation of several parameters of SEMs (e.g.: factor loadings, covariances etc.), it requires a priori specification of covariates and their functional relationships [@Bauer2017; @Kolbe2024].
-In contrast, structural equation modeling (SEM) trees and forests are data-driven, non-parametric methods that use recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF [@Brandmaier2016; @Brandmaier2013].
-In this study, we conducted a Monte Carlo simulation to compare the performance of MNLFA and SEM trees and forests in detecting DIF and assessing MI under varying conditions. Specifically, we evaluate their effectiveness in identifying non-invariance and detecting relevant covariates. Our findings will inform best practices for selecting statistical techniques to test MI in psychological assessment.
+Ensuring the validity of psychological assessments is crucial, yet differential item functioning (DIF) can threaten measurement invariance (MI) when test items function differently across groups [@Bauer2020]. 
+Recent calls for improved DIF detection methods emphasize the need for more advanced statistical approaches [@Lee2024]. 
+Moderated nonlinear factor analysis (MNLFA) is a recent approach for assessing MI via parameter moderation within a single-group confirmatory factor analysis framework. 
+MLNFA evaluates MI across multiple continuous and categorical covariates, and accounts for heteroskedasticity by modeling factor and residual variances as functions of these covariates. While MNLFA offers continuous moderation of several parameters of SEMs (e.g.: factor loadings, covariances etc.), it requires a priori specification of covariates and their functional relationships [@Bauer2017; @Kolbe2024].
+In contrast, structural equation modeling (SEM) trees and forests are data-driven, non-parametric methods that use recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. 
+These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF [@Brandmaier2016; @Brandmaier2013].
+In this study, we conducted a Monte Carlo simulation to compare the performance of MNLFA and SEM trees and forests in detecting DIF and assessing MI under varying conditions. 
+Specifically, we evaluate their effectiveness in identifying non-invariance and detecting relevant covariates. 
+Our findings will inform best practices for selecting statistical techniques to test MI in psychological assessment.
   
 ## Did any of the contributors already conduct related simulation studies on this specific question?
 
-Neither of the authors has conducted simulation studies that are of immediate relevance to the current project before. However, Andreas Brandmaier was involved in conducting simulation studies on SEM trees/ SEM forests as well as SEM modeling in general e.g.[@Buchberger2024; @SilvaDíaz2025; @Arnold2021]. 
+Neither of the authors has conducted simulation studies that are of immediate relevance to the current project before. 
+However, Andreas Brandmaier was involved in conducting simulation studies on SEM trees/ SEM forests as well as SEM modeling in general e.g.[@Buchberger2024; @SilvaDíaz2025; @Arnold2021]. 
 
 # Aims 
 ## What is the aim of the simulation study?
@@ -74,7 +80,9 @@ Different population structural equation models (SEM) with latent variables and 
 ## Study 1
 **Single-Factor Model with Moderated Parameters**
 
-We specify a confirmatory factor analysis model (model 1) with a single latent factor $\eta$ and four observed indicators $\mathbf{x} = (x_1, \dots, x_4)^\top$. The influence of a continuous moderator is introduced into selected parameters via predefined transformation functions applied to an underlying raw moderator variable. The population model is:
+We specify a confirmatory factor analysis model (model 1) with a single latent factor $\eta$ and four observed indicators $\mathbf{x} = (x_1, \dots, x_4)^\top$. 
+The influence of continuous moderator variables is introduced into selected parameters via predefined transformation functions applied to underlying raw moderator variables.  
+The population model is:
 
 $$
 \mathbf{x} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon},
@@ -125,8 +133,11 @@ This transformation captures symmetric nonlinear moderation as a function of dis
    $$
    h(M) = 0
    $$
-In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator. Null moderation is represented by the noise-moderator condition $(Z=0)$, not by $\delta=0$; moderation coefficients are held fixed across conditions.
-All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. Nonlinearity in moderation arises exclusively through the transformation $Z = h(M)$, not through nonlinear parameter functions.
+In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator. 
+Null moderation is represented by the noise-moderator condition $(Z=0)$, not by $\delta=0$; moderation coefficients are held fixed across conditions.
+All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. 
+Nonlinearity in moderation arises exclusively through the transformation $Z = h(M)$, not through nonlinear parameter functions.
+The transformation $h(M)$ is part of the DGM in every moderation condition. 
 
 ```{r echo=FALSE, include=TRUE,warning=FALSE, message=FALSE}
 library(dplyr)
@@ -138,7 +149,8 @@ M <- runif(N, -1, 1)
 # transformations h(M)
 linM   <- M
 quadM  <- 2 * M^2 - 1
-a <- -1; b <- 1; c <- 0; k <- 10
+a <- -1; b <- 1; c <- 0; 
+k <- 10
 sigM   <- a + (b - a) / (1 + exp(-k * (M - c)))
 
 df_h <- data.frame(
@@ -341,26 +353,10 @@ $$
 $$
 such that the intercepts of all four indicators vary with $Z$.
 
-Baseline intercepts are varied deterministically across simulation conditions using the fixed grid
-  $$
-\nu_i \in \mathcal{G}_\nu = \{-1,\, 0,\, 1\},
-  $$
-providing low, medium, and high intercept levels centered around zero. 
+Baseline intercepts are set to 1 across simulation conditions.
 
 
 ### Latent Distribution 
-
-Latent mean moderation was specified deterministically as:
-$$
-\mu_\eta(Z) = \alpha + \delta_\eta Z,
-$$
-
-with both parameters selected from discrete sets:  
-
-$$
-\alpha \in \{0\}, \qquad
-\delta_\eta \in \{-1.0,\,-0.5,\,0.5,\,1.0\}.
-$$
 
 The latent variance was modeled to be fixed at 1.
 
@@ -373,8 +369,9 @@ knitr::include_graphics("presentation/tikz_model1.png")
 
 ```
   
-The analytical model will also have one latent factor $\eta_1$. With four manifest indicators ${x_1,..., x_4}$, their factor loadings ${\lambda_1,..., \lambda_4}$ and their respective residuals ${\epsilon_1,..., \epsilon_4}$. In the analytical model the residuals will be assumed and modeled to be uncorrelated. Furthermore, the model includes a moderator variable $Z$, which can moderate the intercepts and factor loadings from none, one or two of the manifest variables. The moderator variable $Z$ will be modeled as linear or quadratic.
-
+The analytical model will contain one latent factor $\eta_1$, with four manifest indicators ${x_1,..., x_4}$, their factor loadings ${\lambda_1,..., \lambda_4}$ and their respective residuals ${\epsilon_1,..., \epsilon_4}$. 
+In the analytical model the residuals will be assumed and modeled to be uncorrelated. 
+For MNLFA, moderation of selected intercepts and factor loadings is modeled parametrically. In the main study, two MNLFA specifications will be evaluated: one assuming linear moderation in the observed moderator(s), and one assuming quadratic moderation. Therefore, MNLFA is correctly specified only when the analytical functional form matches the DGM transformation $h(M)$, and is otherwise intentionally misspecified. For most population models, the MNLFA includes $M_1$ as the focal moderator. In the interaction population model, an additional MNLFA specification includes $M_1$, $M_2$, and $M_1 \times M_2$.
 
 ## Study 2  
 
@@ -631,10 +628,12 @@ The following factors are systematically varied in both studies using a grid sea
 
 
 #### Functional form of moderation  
-The moderator variable $Z$ is defined as a transformation of $X \in [-1, 1]$, evaluated systematically using three functional forms:
-1. Linear
-2. Quadratic 
-3. Sigmoid
+The effective moderator $Z = h(M)$ is evaluated systematically using the following DGM functions:
+
+1. Linear  
+2. Quadratic  
+3. Sigmoid  
+4. Noise/null moderation, $h(M)=0$
 
 #### Strength of moderation 
 In each case where parameters are subjected to moderation, the strength of the moderation $\delta$ is varied:
@@ -651,10 +650,11 @@ $$
     \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
 $$
 
-
-#### Model misspecification of moderator form 
-The DGM defines $Z$ using one of the three functional forms above, while the analytical model assumes either a *linear* or *quadratic* moderator effect.
-
+#### Model misspecification of moderator form  
+The DGM always defines the effective moderator through $Z=h(M)$. 
+In MNLFA, the analytical model is fitted using prespecified parametric forms, namely linear and quadratic moderation. 
+Consequently, MNLFA is correctly specified when the fitted analytical form corresponds to the DGM transformation and misspecified otherwise. 
+SEM trees do not impose a parametric functional form, but they must identify the correct moderator variable(s) from the candidate set.
 
 ### Study-Specific Factors 
 
@@ -662,7 +662,7 @@ The DGM defines $Z$ using one of the three functional forms above, while the ana
 Focuses on functional form misspecification and data-related conditions: 
 
 **Sample sizes:** $N \in \{300, 500, 700, 1000\}$ 
-**Intercepts:** Intercept baselines are varied across simulation conditions $\nu_i \in \mathcal{G}_\nu = \{-1,\, 0,\, 1\}$  
+**Intercepts:** Intercept baselines are set to 1 across simulation conditions.  
 **Indicator reliabilities:** *Low* (.6), *moderate* (.7), *moderate to high* (.8), or *high* (.95).
 
 #### Study 2. 
@@ -705,7 +705,7 @@ The factors that vary across simulation conditions include:
 
 The primary estimands in this simulation study pertain to the detection and accurate estimation of measurement non-invariance (MI) due to moderation effects on measurement parameters. Specifically, we assess whether the estimation methods compared can correctly identify the presence or absence of moderation in factor loadings, intercepts, and residual variances, reflecting the true data-generating structure. Consequently, key simulation outcomes include Type I error rates and statistical power associated with detecting such moderation effects, as well as bias and variability in the recovered parameter estimates.
 
-Secondary estimands include model-level indicators of fit (e.g., RMSEA with confidence intervals, SRMR, CFI), which serve as auxiliary diagnostics for methods that yield such metrics (i.e., MNLFA). These are not applicable to tree-based approaches and are thus interpreted as method-specific targets rather than general evaluative criteria.
+Secondary estimands include model-level indicators of fit (e.g., Kullback–Leibler divergence, AIC), which serve as auxiliary diagnostics for methods that yield such metrics (i.e., MNLFA). These are not to the same extent applicable to tree-based approaches and are thus interpreted as method-specific targets rather than general evaluative criteria.
 
 ## Methods 
 ### How many and which methods will be included and which quantities will be extracted? 
@@ -715,13 +715,16 @@ We will compare the following methods:
 1) **Moderated Nonlinear Factor Analysis:** MNLFA was initially introduced by @Bauer2009 within the framework of integrative data analysis and was subsequently extended into a general approach for assessing measurement invariance and moderation [@Bauer2017]. The fundamental principle of MNLFA is the parameterization of both measurement and structural model parameters as functions of one or more moderator variables. MNLFA accommodates both frequentist estimation methods, such as maximum likelihood (ML), and Bayesian techniques, including Markov Chain Monte Carlo (MCMC), thereby offering methodological flexibility aligned with specific analytical objectives [@Muench2024].
 
         
-2) **SEM Trees:** Structural equation modeling (SEM) trees were originally introduced by @Brandmaier2013 as a way to systematically search for important covariates and their interactions in data, creating homogeneous subgroups. The method was refined later on by @Brandmaier2016 and @Arnold2021.  SEM trees and forests are data-driven, non-parametric methods that build upon the decision tree paradigm, thus using recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF.
+2) **SEM Trees:** Structural equation modeling (SEM) trees were originally introduced by @Brandmaier2013 as a way to systematically search for important covariates and their interactions in data, creating homogeneous subgroups. 
+The method was refined later on by @Brandmaier2016 and @Arnold2021. 
+SEM trees and forests are data-driven, non-parametric methods that build upon the decision tree paradigm, thus using recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. 
+These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF.
 
 ```{r}
 
 ```
 
-For the parametric MNLFA, we will extract estimated moderated parameters (e.g., factor loadings, intercepts), their associated standard errors, and two-sided $p$-values for testing the null hypothesis of no moderation effect. Additionally, model fit indices such as RMSEA (with confidence intervals), SRMR, and CFI will be recorded.  
+For the parametric MNLFA, we will extract estimated moderated parameters (e.g., factor loadings, intercepts), their associated standard errors, and two-sided $p$-values for testing the null hypothesis of no moderation effect. Additionally, model fit indices such as Kullback–Leibler divergence, AIC and the LRT-statistics will be recorded.  
 
 For the parameter estimates and fit indices, we will summarize their distributions across simulation replications by reporting key quantiles (2.5th, 50th, and 97.5th percentiles). The null hypothesis will be rejected if the associated $p$-value is less than the conventional significance level of 0.05.
 
@@ -729,14 +732,13 @@ In contrast, non-parametric Tree-based approaches do not yield direct parameter 
 We use score-based SEM-trees[@Arnold2021].
 Their detection of MI/ non-invariance is operationalized via the presence of at least one split in the correct condition at the correct respective level of focus parameters.
 Those splits, introducing a subgroup, will be evaluated at the significance level: 0.05, using the “maximally selected likelihood-ratio”[@Arnold2021].
-Additionally, a Bonferroni-Holm correction to account for multiple comparisons at each node.
+Additionally, a Bonferroni correction to account for multiple comparisons at each node.
 The trees will be allowed to split on the focus parameters relevant for the invariance testing (the means of the intercepts, factor loadings and the latent covariance in study 2).
 Candidate subgroup structures are assessed by testing whether they produce statistically significant differences in the specified model parameters across groups.
 Differences in factor variances between subgroups are permitted in the model, but they are not used as criteria for selecting or evaluating covariates. 
-Furthermore, pre-pruning will be applied, limiting the maximum depth of the tree to 1 and `min.N` and `min.bucket` are set to be equal and both set to XX?.
+Furthermore, pre-pruning will be applied, limiting the maximum depth of the tree to 3 and `min.N` is set to 50.
 Because the MNLFA also considers directly the form of the moderation, which the SEM trees do not, we further want to use SEM forests for generating partial dependence plots to get an approximation of the functional form of the moderating variables.  
 With this distinction we aim to ensure that each method is evaluated according to its own inferential framework, while maintaining comparability in terms of its ability to detect MI reliably.
-
 
 ## Performance Measures 
 ### Which performance measures will be used?     

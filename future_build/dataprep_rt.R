@@ -2,7 +2,7 @@
 # Two functions, one population parameter generator and one data generator
 # mxdata1 is used data label in analysis_rt.R
 
-mod_h <- function(M, type = c("linear","sigmoid","quadratic","noise"), k = 2.0){
+mod_h <- function(M, type = c("linear","sigmoid","quadratic","noise"), k = 10.0){ #what k to choose?
 
    if (any(!is.finite(M))) stop("M must be finite.")
    if (any(M <= -1 | M >= 1)) stop("M must lie in the interval (-1, 1).")
@@ -26,7 +26,7 @@ gen_paramsC <- function(popmodel,
                         nu = 1,
                         reliability = 0.8,
                         moderator = c("linear","sigmoid","quadratic","noise"),
-                        k = 2,
+                        k = 10,
                         delta_lambda = 0.2,
                         delta_nu = 0.5,
                         delta_eta = 0.5,
