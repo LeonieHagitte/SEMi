@@ -1,6 +1,6 @@
 ---
 title: "SEMi-Complete by Design: A Monte Carlo simulation to assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM-Trees"
-author: "Leonie Hagitte; Andreas M. Brandmaier"
+author: 'Leonie Hagitte$^{1,2,3}$, Andreas M. Brandmaier$^{2,3,4}$'
 date: "2025-12-10"
 
 output:
@@ -8,11 +8,23 @@ output:
     latex_engine: pdflatex
     includes:
       in_header: preamble.tex
+    keep_tex: true
 
 documentclass: apa7
-classoption: 
+classoption:
   - man
   - floatsintext
+
+header-includes:
+  - |
+    \setlength{\parskip}{0pt}
+    \affiliation{{\footnotesize
+    $^{1}$Goethe University Frankfurt; 
+    $^{2}$Max Planck Institute for Human Development, Berlin, Germany; 
+    $^{3}$MSB Medical School Berlin, Berlin, Germany; 
+    $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany
+    }}
+
 bibliography: bibliography.bib
 biblio-style: apa
 biblatexoptions:
@@ -21,8 +33,6 @@ biblatexoptions:
   - sorting=nyt
 lang: american
 ---
-
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -359,7 +369,7 @@ The latent variance was modeled to be fixed at 1.
 ### Analytical Model Study 1
 
 ```{r, echo=FALSE, fig.align="center", out.width="70%"}
-knitr::include_graphics("tikz_model1.png")
+knitr::include_graphics("presentation/tikz_model1.png")
 
 ```
   
@@ -596,13 +606,13 @@ $$
 
 \begin{subfigure}[b]{0.47\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{tikz_model2.0.png}
+    \includegraphics[width=\linewidth]{presentation/tikz_model2.0.png}
     \caption{Model 2.0}
 \end{subfigure}
 \hspace{0.3cm} % tighter space
 \begin{subfigure}[b]{0.47\textwidth}
     \centering
-    \includegraphics[width=\linewidth]{tikz_model2.1.png}
+    \includegraphics[width=\linewidth]{presentation/tikz_model2.1.png}
     \caption{Model 2.1}
 \end{subfigure}
 
