@@ -2,6 +2,8 @@ library(tidyverse)
 library(furrr)
 library(dplyr)
 library(tibble)
+library(future)
+
 
 source("dataprep_rt.R")
 source("analysis_rt.R")
@@ -10,8 +12,31 @@ source("analysis_rt.R")
 manifest_path <- "progress_manifest.csv"
 results_path  <- "results.csv"
 lock_dir <- "locks"
-
-
+# -----------------------------------
+parallel_seeds <- function(n, seed = NULL) {
+  if (is.null(seed)) {
+    cli::cli_abort("{.arg seed} must be provided.")
+  }
+  
+  RNGkind("L'Ecuyer-CMRG")
+  set.seed(seed)
+  
+  cli::cli_inform(
+    "RNG kind set to {.val L'Ecuyer-CMRG} with {.arg seed = {seed}}."
+  )
+  
+  purrr::accumulate(
+    seq_len(n - 1),
+    \(s, x) parallel::nextRNGStream(s),
+    .init = .Random.seed
+  )
+}
+# ---------------------------------
+seed_tbl <- tibble(
+  rep_id = seq_len(15),
+  seed = parallel_seeds(n = 15, seed = 42)
+)
+# ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
 DESIGN <- tidyr::expand_grid(
@@ -25,11 +50,11 @@ DESIGN <- tidyr::expand_grid(
   delta_lambda = c(-0.3, -0.2, 0.2, 0.3),
   delta_nu     = c(-1, -0.5, 0.5, 1),
   moderator    = MOD_TYPES,
-  seed          = 1:1
+  seed_tbl
 )%>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator, seed
+    delta_lambda, delta_nu, moderator, rep_id
   ) %>%
   dplyr::mutate(
     job_id = dplyr::row_number()
@@ -61,7 +86,7 @@ if (!file.exists(results_path)) {
       delta_lambda = numeric(),
       delta_nu = numeric(),
       moderator = character(),
-      seed = integer(),
+      rep_id = integer(),
       
       true_any_noninvariance = logical(),
       true_metric_noninvariance = logical(),
@@ -121,16 +146,20 @@ if (!file.exists(results_path)) {
       tree_scalar_n_splits_m2 = integer(),
       tree_scalar_n_splits_m0 = integer(),
       
-      error_msg = character()
+      error_msg = character(),
+      mnlfa_error_msg = character(),
+      semtree_error_msg = character()
     ),
     results_path,
     row.names = FALSE
   )
 }
+
+
 ##############################################################################
 run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
 
-  set.seed(row$seed)
+  .Random.seed <<- row$seed[[1]]
 
   popmodel_use <- row$popmodel
   
@@ -163,7 +192,17 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     alpha = 0.05,
     predictors = c("m1", "m2", "m0")
   )
+  # ---------------------------
+  mnlfa_error_msg <- NA_character_
+  semtree_error_msg <- NA_character_
   
+  if (inherits(res$mnlfa, "error")) {
+    mnlfa_error_msg <- conditionMessage(res$mnlfa)
+  }
+  
+  if (inherits(res$semtree, "error")) {
+    semtree_error_msg <- conditionMessage(res$semtree)
+  }
   # ---------------------------
   mnlfa_metric_delta_cfi <- NA_real_
   mnlfa_metric_delta_rmsea <- NA_real_
@@ -354,7 +393,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     delta_lambda   = as.numeric(row$delta_lambda),
     delta_nu       = as.numeric(row$delta_nu),
     moderator      = as.character(row$moderator),
-    seed           = as.integer(row$seed),
+    rep_id = as.integer(row$rep_id),
     
     true_any_noninvariance    = as.logical(true_any_noninvariance),
     true_metric_noninvariance = as.logical(true_metric_noninvariance),
@@ -414,7 +453,9 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_n_splits_m2 = as.integer(tree_scalar_n_splits_m2),
     tree_scalar_n_splits_m0 = as.integer(tree_scalar_n_splits_m0),
 
-    error_msg = as.character(error_msg)
+    error_msg = as.character(error_msg),
+    mnlfa_error_msg = as.character(mnlfa_error_msg),
+    semtree_error_msg = as.character(semtree_error_msg)
   )
   }
 
@@ -429,11 +470,11 @@ TEST_DESIGN <- tidyr::expand_grid(
   delta_lambda = c(-0.3, 0.3),
   delta_nu     = c(-1, 1),
   moderator    = c("linear", "quadratic", "noise"),
-  seed         = 1:15
+  seed_tbl
 ) %>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator, seed
+    delta_lambda, delta_nu, moderator, rep_id
   ) %>%
   dplyr::mutate(job_id = dplyr::row_number())
 
@@ -445,6 +486,22 @@ safe_run_one <- function(row) {
     error = function(e) {
       message("Error in job ", row$job_id, ": ", e$message)
       
+      has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3")
+      has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22")
+      
+      true_structured_moderator <- row$moderator != "noise"
+      
+      true_metric_noninvariance <- has_metric &&
+        row$delta_lambda != 0 &&
+        true_structured_moderator
+      
+      true_scalar_noninvariance <- has_scalar &&
+        row$delta_nu != 0 &&
+        true_structured_moderator
+      
+      true_any_noninvariance <- true_metric_noninvariance ||
+        true_scalar_noninvariance
+      
       tibble(
         job_id         = as.integer(row$job_id),
         popmodel       = as.character(row$popmodel),
@@ -455,12 +512,12 @@ safe_run_one <- function(row) {
         delta_lambda   = as.numeric(row$delta_lambda),
         delta_nu       = as.numeric(row$delta_nu),
         moderator      = as.character(row$moderator),
-        seed           = as.integer(row$seed),
+        rep_id = as.integer(row$rep_id),
         
-        true_any_noninvariance    = row$popmodel != "0",
-        true_metric_noninvariance = row$popmodel != "0" && row$delta_lambda != 0,
-        true_scalar_noninvariance = row$popmodel != "0" && row$delta_nu != 0,
-        true_structured_moderator = row$moderator != "noise",
+        true_any_noninvariance    = as.logical(true_any_noninvariance),
+        true_metric_noninvariance = as.logical(true_metric_noninvariance),
+        true_scalar_noninvariance = as.logical(true_scalar_noninvariance),
+        true_structured_moderator = as.logical(true_structured_moderator),
         
         mnlfa_model = NA_character_,
         mnlfa_det = NA,
@@ -503,20 +560,20 @@ safe_run_one <- function(row) {
         
         tree_metric_split_on_m1 = NA,
         tree_metric_split_on_m2 = NA,
+        tree_metric_split_on_m0 = NA,
         tree_metric_n_splits_m1 = NA_integer_,
         tree_metric_n_splits_m2 = NA_integer_,
+        tree_metric_n_splits_m0 = NA_integer_,
         
         tree_scalar_split_on_m1 = NA,
         tree_scalar_split_on_m2 = NA,
+        tree_scalar_split_on_m0 = NA,
         tree_scalar_n_splits_m1 = NA_integer_,
         tree_scalar_n_splits_m2 = NA_integer_,
-        
-        tree_metric_split_on_m0 = NA,
-        tree_metric_n_splits_m0 = NA_integer_,
-        
-        tree_scalar_split_on_m0 = NA,
         tree_scalar_n_splits_m0 = NA_integer_,
         
+        mnlfa_error_msg = NA_character_,
+        semtree_error_msg = NA_character_,
         error_msg = conditionMessage(e)
       )
     }
@@ -525,28 +582,48 @@ safe_run_one <- function(row) {
 
 t1 <- Sys.time()
 #out <- run_one(DESIGN[1, ])
-results_list <- vector("list", nrow(DESIGN))
+#############################################
+library(furrr)
+library(future)
+library(tidyverse)
 
-for (i in seq_len(nrow(DESIGN))) {
-  cat("Running job", i, "of", nrow(DESIGN), "\n")
-  
-  res <- safe_run_one(DESIGN[i, ])
-  
-  if (!is.null(res)) {
-    results_list[[i]] <- res
-  }
+plan(list(multisession, sequential))
+
+simulate_seed <- function(design_for_seed, seed) {
+  purrr::pmap(
+    design_for_seed,
+    function(...) {
+      row <- tibble::tibble(...)
+      safe_run_one(row)
+    }
+  )
 }
+
+t1 <- Sys.time()
+
+results <- DESIGN %>%
+  group_by(rep_id) %>%
+  nest(.key = "design") %>%
+  mutate(
+    result = future_map2(
+      design,
+      seed,
+      simulate_seed,
+      .options = furrr::furrr_options(seed = TRUE)
+    )
+  ) %>%
+  select(result) %>%
+  unnest(result) %>%
+  unnest(result)
+
 t2 <- Sys.time()
 
-elapsed_one <- as.numeric(difftime(t2, t1, units = "secs"))
-elapsed_one
+elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
+elapsed_total_min
 
-#out
-#str(out)
-results <- dplyr::bind_rows(results_list)
+saveRDS(results, "results_parallel.rds")
 append_results(results, results_path)
-
-glimpse(results)
+########################################
 
 results %>%
   dplyr::count(popmodel, moderator, true_any_noninvariance)

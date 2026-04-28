@@ -37,6 +37,16 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \newsavebox\pandoc@box
@@ -112,14 +122,7 @@
 \captionsetup{justification=raggedright,singlelinecheck=false}
 
 
-\setlength{\parskip}{0pt}
-\affiliation{{\footnotesize
-$^{1}$Goethe University Frankfurt; 
-$^{2}$Max Planck Institute for Human Development, Berlin, Germany; 
-$^{3}$MSB Medical School Berlin, Berlin, Germany; 
-$^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany
-}}
-
+\affiliation{$^{1}$Goethe University Frankfurt; $^{2}$Max Planck Institute for Human Development, Berlin, Germany; $^{3}$MSB Medical School Berlin, Berlin, Germany; $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -219,10 +222,11 @@ indicators will be simulated in two different simulation studies:
 
 We specify a confirmatory factor analysis model (model 1) with a single
 latent factor \(\eta\) and four observed indicators
-\(\mathbf{x} = (x_1, \dots, x_4)^\top\). The influence of a continuous
-moderator is introduced into selected parameters via predefined
-transformation functions applied to an underlying raw moderator
-variable. The population model is:
+\(\mathbf{x} = (x_1, \dots, x_4)^\top\). The influence of continuous
+moderator variables is introduced into selected parameters via
+predefined transformation functions applied to underlying raw moderator
+variables.\\
+The population model is:
 
 \[
 \mathbf{x} = \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon},
@@ -292,7 +296,8 @@ distinct condition in the simulation design:
   conditions. All parameter-level moderation effects are specified as
   linear functions of the effective moderator \(Z\). Nonlinearity in
   moderation arises exclusively through the transformation \(Z = h(M)\),
-  not through nonlinear parameter functions.
+  not through nonlinear parameter functions. The transformation \(h(M)\)
+  is part of the DGM in every moderation condition.
 \end{enumerate}
 
 \pandocbounded{\includegraphics[keepaspectratio]{prereg_files/figure-latex/unnamed-chunk-1-1.pdf}}
@@ -357,9 +362,9 @@ yields an admissible range \[
 For moderator transformations beyond the linear case (quadratic or
 sigmoid), the functional form of \(\lambda_{xi}(Z)\) is adapted
 accordingly, and the same discrete set of admissible moderation
-strengths is applied. This yields fully crossed combinations of (i) type
-of moderator transformation, (ii) number of moderated items, and (iii)
-moderation strength.
+strengths is applied. This yields crossed combinations of (i) moderator
+transformation, (ii) moderated parameter type, (iii) number of moderated
+items, and (iv) moderation strength.
 
 \subsubsection{Factor loading matrix}\label{factor-loading-matrix}
 
@@ -373,93 +378,157 @@ moderation strength.
 \end{bmatrix}
 \]
 
-Under partial moderation, only \(\lambda_1(Z)\) and \(\lambda_2(Z)\)
-depend on \(Z\), while \(\lambda_3(Z)=\lambda_3\) and
-\(\lambda_4(Z)=\lambda_4\). Under full moderation, all four loadings
-vary with \(Z\).
+Loading moderation is manipulated via the pattern of moderated items and
+the magnitude of the moderation effect. For each indicator \(i\), the
+loading is modeled as
 
-\textbf{Null Model:} Neither factor loadings, nor intercepts are
-moderated via Z. There is no moderation present in this DGP.
+\[
+\lambda_i(Z) = \lambda_i + \delta_{\lambda} Z,
+\]
 
-\textbf{Full moderation (Model 1.1):} All factor loadings and all
-intercepts vary with \(Z\): \[
-    \lambda_{xi}(Z) = \lambda_{xi} + \delta_{\lambda} Z, 
-    \qquad
-    \nu_{i}(Z) = \nu_{i} + \delta_{\nu} Z,
-  \] \textbf{Partial moderation (Model 1.2):} Only the loadings of items
-\(1\) and \(2\) and their intercepts can be moderated by Z: \[
-    \lambda_{x1}(Z) = \lambda_{x1} + \delta_{\lambda} Z,
-    \qquad
-    \lambda_{x2}(Z) = \lambda_{x2} + \delta_{\lambda} Z,
-  \] \[
-    \nu_{x1}(Z) = \nu_{x1} + \delta_{\nu} Z,
-    \nu_{x2}(Z) = \nu_{x2} + \delta_{\nu} Z,
-  \] whereas all remaining loadings and intercepts as well as residual
-variances \((\theta_{i0})\) remain fixed at their baseline values.
+where \(\lambda_i\) denotes the baseline loading and
+\(\delta_{\lambda}\) controls the strength and direction of loading
+moderation.
 
-\subsubsection{Residual Variances}\label{residual-variances}
+\textbf{No loading moderation:}\\
+\[
+\delta_{\lambda}=0 \quad \text{for all } i=1,\dots,4.
+\]
+
+\textbf{Partial loading moderation:}\\
+Only the loadings of items 1 and 2 vary with \(Z\):
+
+\[
+\delta_{\lambda} \in \{-0.3,-0.2,0.2,0.3\}
+\quad \text{for } i \in \{1,2\},
+\qquad
+\delta_{\lambda}=0
+\quad \text{for } i \in \{3,4\}.
+\]
+
+\textbf{Full loading moderation:}\\
+All four loadings vary with \(Z\):
+
+\[
+\delta_{\lambda} \in \{-0.3,-0.2,0.2,0.3\}
+\quad \text{for } i=1,\dots,4.
+\]
+
+\subsubsection{Residual variances}\label{residual-variances}
 
 Item reliabilities are varied deterministically across simulation
-conditions using the fixed grid. \[
-Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}
+conditions using the fixed grid
+
+\[
+Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}.
 \]
 
 Baseline residual variances are derived analytically from a fixed latent
 variance \(\psi_\eta=\psi_0>0\) and indicator-specific reliability
-values: \[
-Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
-     {\text{Reliability}_i}.
-\] \#\#\# Intercepts
+values:
 
-Intercept moderation is manipulated via two fully crossed factors:\\
-(i) the pattern of moderated items and\\
-(ii) the magnitude of the moderation effect. For each indicator \(i\),
-the intercept is modeled as \[
+\[
+Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
+\quad \Rightarrow \quad
+\theta_{i0}=
+\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
+{\text{Reliability}_i}.
+\]
+
+The residual variances \(\theta_{i0}\) are fixed at these baseline
+values across moderator values and population models. Consequently, when
+factor loadings are moderated, reliability may vary as a function of the
+moderator. Residual variances are not manipulated as a separate source
+of non-invariance in Study 1.
+
+\subsubsection{Intercepts}\label{intercepts}
+
+Intercept moderation is manipulated via the pattern of moderated items
+and the magnitude of the moderation effect. For each indicator \(i\),
+the intercept is modeled as
+
+\[
 \nu_i(Z) = \nu_i + \delta_{\nu} Z,
-\] where \(\nu_i\) denotes the baseline intercept and \(\delta_{\nu}\)
-controls the strength and direction of intercept moderation. The pattern
-of moderated items is varied across three levels:
-
-\textbf{No intercept moderation:}
-
-\(\delta_{\nu} = 0\) for all \(i = 1,\dots,4\), such that \[
-  \nu_i(Z) = \nu_i \quad \text{for all } i.
 \]
 
-\textbf{Partial intercept moderation (items 1 and 2):}
+where \(\nu_i\) denotes the baseline intercept and \(\delta_{\nu}\)
+controls the strength and direction of intercept moderation.
 
+\textbf{No intercept moderation:}\\
 \[
-    \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i \in \{1,2\},
-    \qquad
-    \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
-\] such that only \(\nu_1(Z)\) and \(\nu_2(Z)\) vary with \(Z\).
-
-\textbf{Full intercept moderation (all items):}
-
-\[
-    \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i = 1,\dots,4,
-\] such that the intercepts of all four indicators vary with \(Z\).
-
-Baseline intercepts are varied deterministically across simulation
-conditions using the fixed grid \[
-\nu_i \in \mathcal{G}_\nu = \{-1,\, 0,\, 1\},
-  \] providing low, medium, and high intercept levels centered around
-zero.
-
-\subsubsection{Latent Distribution}\label{latent-distribution}
-
-Latent mean moderation was specified deterministically as: \[
-\mu_\eta(Z) = \alpha + \delta_\eta Z,
+\delta_{\nu}=0 \quad \text{for all } i=1,\dots,4.
 \]
 
-with both parameters selected from discrete sets:
+\textbf{Partial intercept moderation:}\\
+Only the intercepts of items 1 and 2 vary with \(Z\):
 
 \[
-\alpha \in \{0\}, \qquad
-\delta_\eta \in \{-1.0,\,-0.5,\,0.5,\,1.0\}.
+\delta_{\nu} \in \{-1.0,-0.5,0.5,1.0\}
+\quad \text{for } i \in \{1,2\},
+\qquad
+\delta_{\nu}=0
+\quad \text{for } i \in \{3,4\}.
 \]
 
-The latent variance was modeled to be fixed at 1.
+\textbf{Full intercept moderation:}\\
+All four intercepts vary with \(Z\):
+
+\[
+\delta_{\nu} \in \{-1.0,-0.5,0.5,1.0\}
+\quad \text{for } i=1,\dots,4.
+\]
+
+Baseline intercepts are set to 1 across simulation conditions.
+
+\subsubsection{Population model
+overview}\label{population-model-overview}
+
+The population models are generated by combining the loading- and
+intercept-moderation specifications above.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Loading moderation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Intercept moderation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Active moderator structure
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & none & none & none \\
+1.1 & full & none & \(Z_1=h(M_1)\) \\
+1.11 & none & full & \(Z_1=h(M_1)\) \\
+1.12 & full & full & \(Z_1=h(M_1)\) \\
+1.2 & partial, items 1--2 & none & \(Z_1=h(M_1)\) \\
+1.21 & none & partial, items 1--2 & \(Z_1=h(M_1)\) \\
+1.22 & partial, items 1--2 & partial, items 1--2 & \(Z_1=h(M_1)\) \\
+1.3 & full & none & \(Z_1=h(M_1)\), \(Z_2=h(M_2)\), and \(Z_1Z_2\) \\
+\end{longtable}
+
+For Model 1.3, the loading equation is
+
+\[
+\lambda_i(Z_1,Z_2) =
+\lambda_i
++ \delta_{\lambda 1}Z_1
++ \delta_{\lambda 2}Z_2
++ \delta_{\lambda 12}Z_1Z_2,
+\quad i=1,\dots,4.
+\]
+
+\subsubsection{Latent distribution}\label{latent-distribution}
+
+The latent variance is fixed at 1.
 
 \pagebreak
 
@@ -467,14 +536,20 @@ The latent variance was modeled to be fixed at 1.
 
 \begin{center}\includegraphics[width=0.7\linewidth]{presentation/tikz_model1} \end{center}
 
-The analytical model will also have one latent factor \(\eta_1\). With
+The analytical model will contain one latent factor \(\eta_1\), with
 four manifest indicators \({x_1,..., x_4}\), their factor loadings
 \({\lambda_1,..., \lambda_4}\) and their respective residuals
 \({\epsilon_1,..., \epsilon_4}\). In the analytical model the residuals
-will be assumed and modeled to be uncorrelated. Furthermore, the model
-includes a moderator variable \(Z\), which can moderate the intercepts
-and factor loadings from none, one or two of the manifest variables. The
-moderator variable \(Z\) will be modeled as linear or quadratic.
+will be assumed and modeled to be uncorrelated. For MNLFA, moderation of
+selected intercepts and factor loadings is modeled parametrically. In
+the main study, two MNLFA specifications will be evaluated: one assuming
+linear moderation in the observed moderator(s), and one assuming
+quadratic moderation. Therefore, MNLFA is correctly specified only when
+the analytical functional form matches the DGM transformation \(h(M)\),
+and is otherwise intentionally misspecified. For most population models,
+the MNLFA includes \(M_1\) as the focal moderator. In the interaction
+population model, an additional MNLFA specification includes \(M_1\),
+\(M_2\), and \(M_1 \times M_2\).
 
 \subsection{Study 2}\label{study-2}
 
@@ -762,9 +837,21 @@ grid search design:
 \paragraph{Functional form of
 moderation}\label{functional-form-of-moderation}
 
-The moderator variable \(Z\) is defined as a transformation of
-\(X \in [-1, 1]\), evaluated systematically using three functional
-forms: 1. Linear 2. Quadratic 3. Sigmoid
+The effective moderator \(Z = h(M)\) is evaluated systematically using
+the following DGM functions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Linear\\
+\item
+  Quadratic\\
+\item
+  Sigmoid\\
+\item
+  Noise/null moderation, \(h(M)=0\)
+\end{enumerate}
 
 \paragraph{Strength of moderation}\label{strength-of-moderation}
 
@@ -786,9 +873,13 @@ of the moderation \(\delta\) is varied:
 \paragraph{Model misspecification of moderator
 form}\label{model-misspecification-of-moderator-form}
 
-The DGM defines \(Z\) using one of the three functional forms above,
-while the analytical model assumes either a \emph{linear} or
-\emph{quadratic} moderator effect.
+The DGM always defines the effective moderator through \(Z=h(M)\). In
+MNLFA, the analytical model is fitted using prespecified parametric
+forms, namely linear and quadratic moderation. Consequently, MNLFA is
+correctly specified when the fitted analytical form corresponds to the
+DGM transformation and misspecified otherwise. SEM trees do not impose a
+parametric functional form, but they must identify the correct moderator
+variable(s) from the candidate set.
 
 \subsubsection{Study-Specific Factors}\label{study-specific-factors}
 
@@ -797,8 +888,8 @@ while the analytical model assumes either a \emph{linear} or
 Focuses on functional form misspecification and data-related conditions:
 
 \textbf{Sample sizes:} \(N \in \{300, 500, 700, 1000\}\)
-\textbf{Intercepts:} Intercept baselines are varied across simulation
-conditions \(\nu_i \in \mathcal{G}_\nu = \{-1,\, 0,\, 1\}\)\\
+\textbf{Intercepts:} Intercept baselines are set to 1 across simulation
+conditions.\\
 \textbf{Indicator reliabilities:} \emph{Low} (.6), \emph{moderate} (.7),
 \emph{moderate to high} (.8), or \emph{high} (.95).
 
@@ -875,11 +966,11 @@ Consequently, key simulation outcomes include Type I error rates and
 statistical power associated with detecting such moderation effects, as
 well as bias and variability in the recovered parameter estimates.
 
-Secondary estimands include model-level indicators of fit (e.g., RMSEA
-with confidence intervals, SRMR, CFI), which serve as auxiliary
-diagnostics for methods that yield such metrics (i.e., MNLFA). These are
-not applicable to tree-based approaches and are thus interpreted as
-method-specific targets rather than general evaluative criteria.
+Secondary estimands include model-level indicators of fit (e.g.,
+Kullback--Leibler divergence, AIC), which serve as auxiliary diagnostics
+for methods that yield such metrics (i.e., MNLFA). These are not to the
+same extent applicable to tree-based approaches and are thus interpreted
+as method-specific targets rather than general evaluative criteria.
 
 \subsection{Methods}\label{methods}
 
@@ -921,8 +1012,9 @@ We will compare the following methods:
 For the parametric MNLFA, we will extract estimated moderated parameters
 (e.g., factor loadings, intercepts), their associated standard errors,
 and two-sided \(p\)-values for testing the null hypothesis of no
-moderation effect. Additionally, model fit indices such as RMSEA (with
-confidence intervals), SRMR, and CFI will be recorded.
+moderation effect. Additionally, model fit indices such as
+Kullback--Leibler divergence, AIC and the LRT-statistics will be
+recorded.
 
 For the parameter estimates and fit indices, we will summarize their
 distributions across simulation replications by reporting key quantiles
@@ -938,7 +1030,7 @@ in the correct condition at the correct respective level of focus
 parameters. Those splits, introducing a subgroup, will be evaluated at
 the significance level: 0.05, using the ``maximally selected
 likelihood-ratio''(Arnold, Voelkle, and Brandmaier 2021). Additionally,
-a Bonferroni-Holm correction to account for multiple comparisons at each
+a Bonferroni correction to account for multiple comparisons at each
 node. The trees will be allowed to split on the focus parameters
 relevant for the invariance testing (the means of the intercepts, factor
 loadings and the latent covariance in study 2). Candidate subgroup
@@ -947,12 +1039,11 @@ significant differences in the specified model parameters across groups.
 Differences in factor variances between subgroups are permitted in the
 model, but they are not used as criteria for selecting or evaluating
 covariates. Furthermore, pre-pruning will be applied, limiting the
-maximum depth of the tree to 1 and \texttt{min.N} and
-\texttt{min.bucket} are set to be equal and both set to XX?. Because the
-MNLFA also considers directly the form of the moderation, which the SEM
-trees do not, we further want to use SEM forests for generating partial
-dependence plots to get an approximation of the functional form of the
-moderating variables.\\
+maximum depth of the tree to 3 and \texttt{min.N} is set to 50. Because
+the MNLFA also considers directly the form of the moderation, which the
+SEM trees do not, we further want to use SEM forests for generating
+partial dependence plots to get an approximation of the functional form
+of the moderating variables.\\
 With this distinction we aim to ensure that each method is evaluated
 according to its own inferential framework, while maintaining
 comparability in terms of its ability to detect MI reliably.

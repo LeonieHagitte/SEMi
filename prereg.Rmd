@@ -16,14 +16,7 @@ classoption:
   - floatsintext
 
 header-includes:
-  - |
-    \setlength{\parskip}{0pt}
-    \affiliation{{\footnotesize
-    $^{1}$Goethe University Frankfurt; 
-    $^{2}$Max Planck Institute for Human Development, Berlin, Germany; 
-    $^{3}$MSB Medical School Berlin, Berlin, Germany; 
-    $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany
-    }}
+  - \affiliation{$^{1}$Goethe University Frankfurt; $^{2}$Max Planck Institute for Human Development, Berlin, Germany; $^{3}$MSB Medical School Berlin, Berlin, Germany; $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany}
 
 bibliography: bibliography.bib
 biblio-style: apa
@@ -265,7 +258,7 @@ $$
 $$
 
 For moderator transformations beyond the linear case (quadratic or sigmoid), the functional form of $\lambda_{xi}(Z)$ is adapted accordingly, and the same discrete set of admissible moderation strengths is applied. 
-This yields fully crossed combinations of (i) type of moderator transformation, (ii) number of moderated items, and (iii) moderation strength.
+This yields crossed combinations of (i) moderator transformation, (ii) moderated parameter type, (iii) number of moderated items, and (iv) moderation strength.
 
 ### Factor loading matrix 
 
@@ -279,86 +272,123 @@ $$
 \end{bmatrix}
 $$
 
-Under partial moderation, only $\lambda_1(Z)$ and $\lambda_2(Z)$ depend on $Z$, while $\lambda_3(Z)=\lambda_3$ and $\lambda_4(Z)=\lambda_4$.
-Under full moderation, all four loadings vary with $Z$.
+Loading moderation is manipulated via the pattern of moderated items and the magnitude of the moderation effect. For each indicator $i$, the loading is modeled as
 
-**Null Model:**
-  Neither factor loadings, nor intercepts are moderated via Z. 
-  There is no moderation present in this DGP.
-
-**Full moderation (Model 1.1):**
-  All factor loadings and all intercepts vary with $Z$:
-  $$
-    \lambda_{xi}(Z) = \lambda_{xi} + \delta_{\lambda} Z, 
-    \qquad
-    \nu_{i}(Z) = \nu_{i} + \delta_{\nu} Z,
-  $$
-**Partial moderation (Model 1.2):** 
-Only the loadings of items $1$ and $2$ and their intercepts can be moderated by Z:
-  $$
-    \lambda_{x1}(Z) = \lambda_{x1} + \delta_{\lambda} Z,
-    \qquad
-    \lambda_{x2}(Z) = \lambda_{x2} + \delta_{\lambda} Z,
-  $$
-  $$
-    \nu_{x1}(Z) = \nu_{x1} + \delta_{\nu} Z,
-    \nu_{x2}(Z) = \nu_{x2} + \delta_{\nu} Z,
-  $$
-whereas all remaining loadings and intercepts as well as residual variances $(\theta_{i0})$ remain fixed at their baseline values.
-
-### Residual Variances
-
-Item reliabilities are varied deterministically across simulation conditions
-using the fixed grid.
 $$
-Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}
+\lambda_i(Z) = \lambda_i + \delta_{\lambda} Z,
 $$
 
-Baseline residual variances are derived analytically from a fixed latent variance
-$\psi_\eta=\psi_0>0$ and indicator-specific reliability values:
+where $\lambda_i$ denotes the baseline loading and $\delta_{\lambda}$ controls the strength and direction of loading moderation.
+
+**No loading moderation:**  
 $$
-Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
-     {\text{Reliability}_i}.
+\delta_{\lambda}=0 \quad \text{for all } i=1,\dots,4.
 $$
+
+**Partial loading moderation:**  
+Only the loadings of items 1 and 2 vary with $Z$:
+
+$$
+\delta_{\lambda} \in \{-0.3,-0.2,0.2,0.3\}
+\quad \text{for } i \in \{1,2\},
+\qquad
+\delta_{\lambda}=0
+\quad \text{for } i \in \{3,4\}.
+$$
+
+**Full loading moderation:**  
+All four loadings vary with $Z$:
+
+$$
+\delta_{\lambda} \in \{-0.3,-0.2,0.2,0.3\}
+\quad \text{for } i=1,\dots,4.
+$$
+
+### Residual variances
+
+Item reliabilities are varied deterministically across simulation conditions using the fixed grid
+
+$$
+Reliability_i \in \{0.60,\,0.70,\,0.80,\,0.95\}.
+$$
+
+Baseline residual variances are derived analytically from a fixed latent variance $\psi_\eta=\psi_0>0$ and indicator-specific reliability values:
+
+$$
+Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
+\quad \Rightarrow \quad
+\theta_{i0}=
+\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
+{\text{Reliability}_i}.
+$$
+
+The residual variances $\theta_{i0}$ are fixed at these baseline values across moderator values and population models. Consequently, when factor loadings are moderated, reliability may vary as a function of the moderator. 
+
 ### Intercepts  
 
-Intercept moderation is manipulated via two fully crossed factors:  
-(i) the pattern of moderated items and  
-(ii) the magnitude of the moderation effect. For each indicator $i$, the intercept is modeled as
+Intercept moderation is manipulated via the pattern of moderated items and the magnitude of the moderation effect. For each indicator $i$, the intercept is modeled as
+
 $$
 \nu_i(Z) = \nu_i + \delta_{\nu} Z,
 $$
-where $\nu_i$ denotes the baseline intercept and $\delta_{\nu}$ controls the strength and direction of intercept moderation. The pattern of moderated items is varied across three levels:
 
-**No intercept moderation:** 
+where $\nu_i$ denotes the baseline intercept and $\delta_{\nu}$ controls the strength and direction of intercept moderation.
 
-  $\delta_{\nu} = 0$ for all $i = 1,\dots,4$, such that 
+**No intercept moderation:**  
 $$
-  \nu_i(Z) = \nu_i \quad \text{for all } i.
+\delta_{\nu}=0 \quad \text{for all } i=1,\dots,4.
 $$
 
-**Partial intercept moderation (items 1 and 2):** 
-
-$$
-    \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i \in \{1,2\},
-    \qquad
-    \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
-$$
-such that only $\nu_1(Z)$ and $\nu_2(Z)$ vary with $Z$.
-
-**Full intercept moderation (all items):**  
+**Partial intercept moderation:**  
+Only the intercepts of items 1 and 2 vary with $Z$:
 
 $$
-    \delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i = 1,\dots,4,
+\delta_{\nu} \in \{-1.0,-0.5,0.5,1.0\}
+\quad \text{for } i \in \{1,2\},
+\qquad
+\delta_{\nu}=0
+\quad \text{for } i \in \{3,4\}.
 $$
-such that the intercepts of all four indicators vary with $Z$.
+
+**Full intercept moderation:**  
+All four intercepts vary with $Z$:
+
+$$
+\delta_{\nu} \in \{-1.0,-0.5,0.5,1.0\}
+\quad \text{for } i=1,\dots,4.
+$$
 
 Baseline intercepts are set to 1 across simulation conditions.
 
+### Population model overview
 
-### Latent Distribution 
+The population models are generated by combining the loading- and intercept-moderation specifications above.
 
-The latent variance was modeled to be fixed at 1.
+| Model | Loading moderation | Intercept moderation | Active moderator structure |
+|---|---|---|---|
+| 0 | none | none | none |
+| 1.1 | full | none | $Z_1=h(M_1)$ |
+| 1.11 | none | full | $Z_1=h(M_1)$ |
+| 1.12 | full | full | $Z_1=h(M_1)$ |
+| 1.2 | partial, items 1–2 | none | $Z_1=h(M_1)$ |
+| 1.21 | none | partial, items 1–2 | $Z_1=h(M_1)$ |
+| 1.22 | partial, items 1–2 | partial, items 1–2 | $Z_1=h(M_1)$ |
+| 1.3 | full | none | $Z_1=h(M_1)$, $Z_2=h(M_2)$, and $Z_1Z_2$ |
+
+For Model 1.3, the loading equation is
+
+$$
+\lambda_i(Z_1,Z_2) =
+\lambda_i
++ \delta_{\lambda 1}Z_1
++ \delta_{\lambda 2}Z_2
++ \delta_{\lambda 12}Z_1Z_2,
+\quad i=1,\dots,4.
+$$
+
+### Latent distribution 
+
+The latent variance is fixed at 1.
 
 \pagebreak
 
@@ -514,9 +544,15 @@ Baseline residual variances are derived analytically from a fixed latent varianc
 $\psi_\eta=\psi_0>0$ and indicator-specific reliability values:
 
 $$
-Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
-     {\text{Reliability}_i}.
+Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
+\quad \Rightarrow \quad
+\theta_{i0}=
+\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
+{\text{Reliability}_i}.
 $$
+The residual variances $\theta_{i0}$ are fixed at these baseline values across moderator values and population models. 
+Consequently, when factor loadings are moderated, reliability may vary as a function of the moderator. 
+
 ### Intercepts
 
 Intercept moderation is manipulated via two fully crossed factors:  

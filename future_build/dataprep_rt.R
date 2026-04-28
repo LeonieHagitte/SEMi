@@ -115,8 +115,9 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   eta <- rnorm(N, mean = MU_eta_i, sd = sqrt(psi))
   
   # residual variances from reliability (person-specific)
-  ThetaVar_Np <- (Lambda_Np^2 * psi * (1-rel)) / rel
-  
+  #ThetaVar_Np <- (Lambda_Np^2 * psi * (1-rel)) / rel
+  theta0 <- (lambda0^2 * psi * (1 - rel)) / rel
+  ThetaVar_Np <- matrix(theta0, nrow = N, ncol = p, byrow = TRUE)
   E <- matrix(rnorm(N*p), N, p) * sqrt(ThetaVar_Np)
   
   X <- Nu_Np + Lambda_Np * eta + E
