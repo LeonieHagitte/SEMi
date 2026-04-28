@@ -1174,14 +1174,38 @@ No imputation of missing estimates will be performed.
 \subsection{How do you plan on interpreting the performance
 measures?}\label{how-do-you-plan-on-interpreting-the-performance-measures}
 
-\emph{Answer:}
+The performance measures will be interpreted in terms of Type I error
+rates and statistical power. Type I error is defined as the proportion
+of replications in which a method incorrectly detects measurement
+noninvariance when none is present. Statistical power is defined as the
+proportion of replications in which a method correctly detects
+measurement noninvariance when it is truly present.
+
+Results will be evaluated both overall and conditional on design
+factors. Particular attention will be paid to whether Type I error rates
+are controlled at nominal levels and how power varies as a function of
+effect size and data-generating conditions. Comparisons between methods
+will focus on their relative sensitivity to different forms of
+noninvariance (metric vs scalar) and robustness across conditions.
 
 \section{Other}\label{other}
 
 \subsection{Which statistical software/packages do you plan to
 use?}\label{which-statistical-softwarepackages-do-you-plan-to-use}
 
-\emph{Answer:}
+All simulations and analyses will be conducted in R (R Core Team 2025).
+The MNLFA-style models will be implemented directly in
+\texttt{OpenMx}(Boker et al. 2026), using raw-data maximum likelihood
+estimation and definition-variable-style moderation through OpenMx
+algebra objects. SEM tree analyses will be performed with the
+\texttt{semtree} (Andreas M. Brandmaier et al. 2026) package using
+OpenMx RAM models. Simulation design construction, data handling,
+aggregation, and visualization will rely on \texttt{dplyr}(Wickham et
+al. 2026), \texttt{tidyr} (Wickham, Vaughan, and Girlich 2025),
+\texttt{tibble} (Müller and Wickham 2026), \texttt{purrr} (Wickham and
+Henry 2026), \texttt{furrr} (Vaughan and Dancho 2022), \texttt{future}
+(Bengtsson 2021), \texttt{parallel} (R Core Team 2025), and
+\texttt{ggplot2} (Wickham 2016).
 
 \subsection{Which computational environment do you plan to
 use?}\label{which-computational-environment-do-you-plan-to-use}
@@ -1193,10 +1217,10 @@ results
 reproducible?}\label{which-other-steps-will-you-undertake-to-make-simulation-results-reproducible}
 
 We are planning to make the code of this project publicly available.
-Software and packages will be documented via ``renv''(Ushey and Wickham
-2026) and Docker. Furthermore, we are planning to use the ``repro''
-package, as well as the ``reproducibleRchunks'' package for better
-reproducibility.
+Software and packages will be documented via \texttt{renv}(Ushey and
+Wickham 2026) and Docker. Furthermore, we are planning to use the
+\texttt{repro} package, as well as the \texttt{reproducibleRchunks}
+package for better reproducibility.
 
 \pagebreak
 
@@ -1205,6 +1229,11 @@ reproducibility.
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-semtree2026}
+Andreas M. Brandmaier, John J. Prindle, Manuel Arnold, and Caspar J. Van
+Lissa. 2026. \emph{Semtree: Recursive Partitioning for Structural
+Equation Models}. \url{https://github.com/brandmaier/semtree}.
+
 \bibitem[\citeproctext]{ref-Arnold2021}
 Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. {``Score-Guided
 Structural Equation Model Trees.''} \emph{Frontiers in Psychology} 11:
@@ -1228,6 +1257,17 @@ Bauer, D. J., and A. M. Hussong. 2009. {``Psychometric Approaches for
 Developing Commensurate Measures Across Independent Studies: Traditional
 and New Models.''} \emph{Psychological Methods} 14 (2): 101--25.
 \url{https://doi.org/10.1037/a0015583}.
+
+\bibitem[\citeproctext]{ref-future2021}
+Bengtsson, Henrik. 2021. {``A Unifying Framework for Parallel and
+Distributed Processing in r Using Futures.''} \emph{The R Journal} 13
+(2): 208--27. \url{https://doi.org/10.32614/RJ-2021-048}.
+
+\bibitem[\citeproctext]{ref-Boker2026}
+Boker, Steven M., Michael C. Neale, Hermine H. Maes, Michael Spiegel,
+Timothy R. Brick, Ryne Estabrook, Timothy C. Bates, et al. 2026.
+\emph{OpenMx: Extended Structural Equation Modelling}.
+\url{https://doi.org/10.32614/CRAN.package.OpenMx}.
 
 \bibitem[\citeproctext]{ref-Brandmaier2013}
 Brandmaier, A. M., T. von Oertzen, J. J. McArdle, and U. Lindenberger.
@@ -1272,6 +1312,10 @@ Simulation Studies to Evaluate Statistical Methods.''} \emph{Statistics
 in Medicine} 38 (11): 2074--2102.
 \url{https://doi.org/10.1002/sim.8086}.
 
+\bibitem[\citeproctext]{ref-tibble2026}
+Müller, Kirill, and Hadley Wickham. 2026. \emph{Tibble: Simple Data
+Frames}. \url{https://doi.org/10.32614/CRAN.package.tibble}.
+
 \bibitem[\citeproctext]{ref-Muench2024}
 Münch, F. F., and T. Koch. 2024. {``Testing Measurement and Structural
 Invariance in Latent Mediation Models -- a Comparison of IPCR and
@@ -1294,10 +1338,34 @@ Methods}. \url{https://doi.org/10.1037/met0000695}.
 Ushey, Kevin, and Hadley Wickham. 2026. \emph{Renv: Project
 Environments}. \url{https://doi.org/10.32614/CRAN.package.renv}.
 
+\bibitem[\citeproctext]{ref-furrr2022}
+Vaughan, Davis, and Matt Dancho. 2022. \emph{Furrr: Apply Mapping
+Functions in Parallel Using Futures}.
+\url{https://doi.org/10.32614/CRAN.package.furrr}.
+
 \bibitem[\citeproctext]{ref-Whitehead1993}
 Whitehead, John. 1993. {``{Sample Size Calculations for Ordered
 Categorical Data}.''} \emph{Statistics in Medicine} 12 (24): 2257--71.
 \url{https://doi.org/10.1002/sim.4780122404}.
+
+\bibitem[\citeproctext]{ref-ggplot2016}
+Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data
+Analysis}. Springer-Verlag New York.
+\url{https://ggplot2.tidyverse.org}.
+
+\bibitem[\citeproctext]{ref-dplyr2026}
+Wickham, Hadley, Romain François, Lionel Henry, Kirill Müller, and Davis
+Vaughan. 2026. \emph{Dplyr: A Grammar of Data Manipulation}.
+\url{https://doi.org/10.32614/CRAN.package.dplyr}.
+
+\bibitem[\citeproctext]{ref-purrr2026}
+Wickham, Hadley, and Lionel Henry. 2026. \emph{Purrr: Functional
+Programming Tools}. \url{https://doi.org/10.32614/CRAN.package.purrr}.
+
+\bibitem[\citeproctext]{ref-tidyr2025}
+Wickham, Hadley, Davis Vaughan, and Maximilian Girlich. 2025.
+\emph{Tidyr: Tidy Messy Data}.
+\url{https://doi.org/10.32614/CRAN.package.tidyr}.
 
 \end{CSLReferences}
 

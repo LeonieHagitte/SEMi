@@ -867,12 +867,21 @@ No imputation of missing estimates will be performed.
 
 ## How do you plan on interpreting the performance measures? 
 
-*Answer:*
+The performance measures will be interpreted in terms of Type I error rates and statistical power. 
+Type I error is defined as the proportion of replications in which a method incorrectly detects measurement noninvariance when none is present. 
+Statistical power is defined as the proportion of replications in which a method correctly detects measurement noninvariance when it is truly present.
+
+Results will be evaluated both overall and conditional on design factors. 
+Particular attention will be paid to whether Type I error rates are controlled at nominal levels and how power varies as a function of effect size and data-generating conditions. 
+Comparisons between methods will focus on their relative sensitivity to different forms of noninvariance (metric vs scalar) and robustness across conditions.
 
 # Other 
-## Which statistical software/packages do you plan to use?    
+## Which statistical software/packages do you plan to use?  
 
-*Answer:*
+All simulations and analyses will be conducted in R [@Rteam2025]. 
+The MNLFA-style models will be implemented directly in `OpenMx`[@Boker2026], using raw-data maximum likelihood estimation and definition-variable-style moderation through OpenMx algebra objects. 
+SEM tree analyses will be performed with the `semtree` [@semtree2026] package using OpenMx RAM models. 
+Simulation design construction, data handling, aggregation, and visualization will rely on `dplyr`[@dplyr2026], `tidyr` [@tidyr2025], `tibble` [@tibble2026], `purrr` [@purrr2026], `furrr` [@furrr2022], `future` [@future2021], `parallel` [@Rteam2025], and `ggplot2` [@ggplot2016].
 
 ## Which computational environment do you plan to use?  
 
@@ -881,8 +890,8 @@ The simulation study will be conducted in R [@Rteam2025].
 ## Which other steps will you undertake to make simulation results reproducible? 
 
 We are planning to make the code of this project publicly available. 
-Software and packages will be documented via "renv"[@renv2026] and Docker.
-Furthermore, we are planning to use the "repro" package, as well as the "reproducibleRchunks" package for better reproducibility. 
+Software and packages will be documented via `renv`[@renv2026] and Docker.
+Furthermore, we are planning to use the `repro` package, as well as the `reproducibleRchunks` package for better reproducibility. 
 
 \pagebreak
 ## References 
