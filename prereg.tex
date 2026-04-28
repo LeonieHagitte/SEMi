@@ -121,7 +121,7 @@
 
 \captionsetup{justification=raggedright,singlelinecheck=false}
 
-
+\shorttitle{SEMI-COMPLETE BY DESIGN}
 \affiliation{$^{1}$Goethe University Frankfurt; $^{2}$Max Planck Institute for Human Development, Berlin, Germany; $^{3}$MSB Medical School Berlin, Berlin, Germany; $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -438,8 +438,7 @@ Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
 The residual variances \(\theta_{i0}\) are fixed at these baseline
 values across moderator values and population models. Consequently, when
 factor loadings are moderated, reliability may vary as a function of the
-moderator. Residual variances are not manipulated as a separate source
-of non-invariance in Study 1.
+moderator.
 
 \subsubsection{Intercepts}\label{intercepts}
 
@@ -721,9 +720,17 @@ variance \(\psi_\eta=\psi_0>0\) and indicator-specific reliability
 values:
 
 \[
-Reliability_i=\frac{\lambda_{xi}^2 \psi_0}{\lambda_{xi}^2 \psi_0 + \theta_{i0}}\quad \Rightarrow \quad\theta_{i0}=\frac{\lambda_{xi}^2 \psi_0(1-\text{Reliability}_i)}
-     {\text{Reliability}_i}.
-\] \#\#\# Intercepts
+Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
+\quad \Rightarrow \quad
+\theta_{i0}=
+\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
+{\text{Reliability}_i}.
+\] The residual variances \(\theta_{i0}\) are fixed at these baseline
+values across moderator values and population models. Consequently, when
+factor loadings are moderated, reliability may vary as a function of the
+moderator.
+
+\subsubsection{Intercepts}\label{intercepts-1}
 
 Intercept moderation is manipulated via two fully crossed factors:\\
 (i) the pattern of moderated items and\\

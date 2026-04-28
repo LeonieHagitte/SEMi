@@ -32,9 +32,11 @@ parallel_seeds <- function(n, seed = NULL) {
   )
 }
 # ---------------------------------
+n_rep <- 100
+
 seed_tbl <- tibble(
-  rep_id = seq_len(15),
-  seed = parallel_seeds(n = 15, seed = 42)
+  rep_id = seq_len(n_rep),
+  seed = parallel_seeds(n = n_rep, seed = 42)
 )
 # ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
@@ -579,15 +581,17 @@ safe_run_one <- function(row) {
     }
   )
 }
+# -------------------------------------------
+done_jobs <- read.csv(results_path)$job_id
 
-t1 <- Sys.time()
-#out <- run_one(DESIGN[1, ])
+DESIGN <- DESIGN %>%
+  filter(!job_id %in% done_jobs)
 #############################################
-library(furrr)
-library(future)
-library(tidyverse)
 
-plan(list(multisession, sequential))
+plan(list(
+  tweak(multisession, workers = detectCores() - 1),
+  sequential
+))
 
 simulate_seed <- function(design_for_seed, seed) {
   purrr::pmap(
