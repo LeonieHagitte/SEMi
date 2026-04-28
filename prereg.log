@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  28 APR 2026 17:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  28 APR 2026 17:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1045,6 +1045,10 @@ nput line 125.
 
 \c@NumberOfAffiliations=\count346
 
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/placeins\place
+ins.sty
+Package: placeins 2005/04/18  v 2.2
+)
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookm
 ark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
@@ -1065,7 +1069,7 @@ Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 
 Package csquotes Warning: No style for language 'nil'.
-(csquotes)                Using fallback style on input line 142.
+(csquotes)                Using fallback style on input line 147.
 
 Package csquotes Info: Redefining alias 'default' -> 'fallback'.
 
@@ -1077,24 +1081,24 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 ) (prereg.aux)
 \openout1 = `prereg.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 142.
-LaTeX Font Info:    ... okay on input line 142.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 147.
+LaTeX Font Info:    ... okay on input line 147.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1155,9 +1159,9 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 pdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 142.
+Package hyperref Info: Link coloring OFF on input line 147.
 Class apa7 Info: Language definition file config/APA7nil.txt not found on input
- line 142.
+ line 147.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: longtable package is loaded.
@@ -1168,13 +1172,13 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 142.
-Package microtype Info: Applying patch `item' on input line 142.
-Package microtype Info: Applying patch `toc' on input line 142.
-Package microtype Info: Applying patch `eqnum' on input line 142.
-Package microtype Info: Applying patch `footnote' on input line 142.
-Package microtype Info: Applying patch `verbatim' on input line 142.
-LaTeX Info: Redefining \microtypesetup on input line 142.
+LaTeX Info: Redefining \microtypecontext on input line 147.
+Package microtype Info: Applying patch `item' on input line 147.
+Package microtype Info: Applying patch `toc' on input line 147.
+Package microtype Info: Applying patch `eqnum' on input line 147.
+Package microtype Info: Applying patch `footnote' on input line 147.
+Package microtype Info: Applying patch `verbatim' on input line 147.
+LaTeX Info: Redefining \microtypesetup on input line 147.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -1194,34 +1198,34 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 
 Class apa7 Warning: Abstract not defined.
 
-Class apa7 Info: Keywords not defined on input line 143.
+Class apa7 Info: Keywords not defined on input line 148.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-43.
+48.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-43.
+48.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-143.
+148.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-143.
+148.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 143.
+(Font)              <12> on input line 148.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 143.
+(Font)              <8> on input line 148.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 143.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 143
+(Font)              <6> on input line 148.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 148
 .
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.
@@ -1232,7 +1236,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 sa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 143
+LaTeX Font Info:    Trying to load font information for U+msb on input line 148
 .
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.
@@ -1248,13 +1252,10 @@ enc}
 
 {C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-mathit.enc}]
-Underfull \vbox (badness 1590) has occurred while \output is active []
-
-[2] [3{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm
-/lm-mathsy.enc}]
+lm-mathit.enc}] [2] [3{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fo
+nts/enc/dvips/lm/lm-mathsy.enc}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
-42.
+47.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [4{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/l
@@ -1265,76 +1266,51 @@ s/lm/lm-mathex.enc}]
 File: prereg_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
 <use prereg_files/figure-latex/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: prereg_files/figure-latex/unnamed-chunk-1-1.pdf  used 
-on input line 303.
+on input line 308.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
-Overfull \hbox (36.13383pt too wide) in paragraph at lines 303--304
+Overfull \hbox (36.13383pt too wide) in paragraph at lines 308--309
 [][]  
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[6 <./prereg_files/figure-latex/unnamed-chunk-1-1.pdf>] [7] [8] [9] [10]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[11]
+[5] [6 <./prereg_files/figure-latex/unnamed-chunk-1-1.pdf>] [7] [8] [9] [10] [1
+1]
 <presentation/tikz_model1.png, id=99, 774.895pt x 396.48125pt>
 File: presentation/tikz_model1.png Graphic file (type png)
 <use presentation/tikz_model1.png>
-Package pdftex.def Info: presentation/tikz_model1.png  used on input line 536.
+Package pdftex.def Info: presentation/tikz_model1.png  used on input line 543.
 (pdftex.def)             Requested size: 328.82707pt x 168.24518pt.
-[12 <./presentation/tikz_model1.png>] [13]
-Underfull \vbox (badness 2894) has occurred while \output is active []
-
-[14] [15] [16] [17]
+[12 <./presentation/tikz_model1.png>] [13] [14] [15] [16] [17]
 <presentation/tikz_model2.0.png, id=140, 830.10126pt x 397.485pt>
 File: presentation/tikz_model2.0.png Graphic file (type png)
 <use presentation/tikz_model2.0.png>
-Package pdftex.def Info: presentation/tikz_model2.0.png  used on input line 815
+Package pdftex.def Info: presentation/tikz_model2.0.png  used on input line 829
 .
 (pdftex.def)             Requested size: 305.7029pt x 146.38177pt.
 <presentation/tikz_model2.1.png, id=141, 821.0675pt x 398.48875pt>
 File: presentation/tikz_model2.1.png Graphic file (type png)
 <use presentation/tikz_model2.1.png>
-Package pdftex.def Info: presentation/tikz_model2.1.png  used on input line 821
+Package pdftex.def Info: presentation/tikz_model2.1.png  used on input line 835
 .
 (pdftex.def)             Requested size: 305.7029pt x 148.36275pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 [18] [19 <./presentation/tikz_model2.0.png> <./presentation/tikz_model2.1.png>]
-[20]
-Underfull \vbox (badness 3240) has occurred while \output is active []
-
-[21] [22] [23]
+[20] [21] [22] [23]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-049.
+063.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Underfull \vbox (badness 4752) has occurred while \output is active []
-
-[24] [25] [26] [27] [28]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[29]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[30] AED endfloat: Processing end Figures and Tables [31] (prereg.aux)
+) [24] [25] [26] [27] [28] [29] [30] AED endfloat: Processing end Figures and T
+ables [31] (prereg.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28817 strings out of 474486
- 538731 string characters out of 5739507
+ 28845 strings out of 474486
+ 539468 string characters out of 5739507
  1940542 words of memory out of 5000000
- 50346 multiletter control sequences out of 15000+600000
+ 50370 multiletter control sequences out of 15000+600000
  615977 words of font info for 136 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  99i,12n,107p,1503b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1358,7 +1334,7 @@ al/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Leonie.Hagitte/App
 Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/Leonie.Ha
 gitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb>
-Output written on prereg.pdf (31 pages, 594946 bytes).
+Output written on prereg.pdf (31 pages, 594198 bytes).
 PDF statistics:
  542 PDF objects out of 1000 (max. 8388607)
  125 named destinations out of 1000 (max. 500000)
