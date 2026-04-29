@@ -16,7 +16,7 @@ classoption:
   - floatsintext
 
 header-includes:
-  - \affiliation{$^{1}$Goethe University Frankfurt; $^{2}$Max Planck Institute for Human Development, Berlin, Germany; $^{3}$MSB Medical School Berlin, Berlin, Germany; $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany}
+  - \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
   - \usepackage{placeins}
   - \setlength{\textfloatsep}{6pt}
   - \setlength{\floatsep}{6pt}
@@ -49,8 +49,8 @@ Leonie Hagitte, Andreas M. Brandmaier
 
 Ensuring the validity of psychological assessments is crucial, yet differential item functioning (DIF) can threaten measurement invariance (MI) when test items function differently across groups [@Bauer2020]. 
 Recent calls for improved DIF detection methods emphasize the need for more advanced statistical approaches [@Lee2024]. 
-Moderated nonlinear factor analysis (MNLFA) is a recent approach for assessing MI via parameter moderation within a single-group confirmatory factor analysis framework. 
-MLNFA evaluates MI across multiple continuous and categorical covariates, and accounts for heteroskedasticity by modeling factor and residual variances as functions of these covariates. While MNLFA offers continuous moderation of several parameters of SEMs (e.g.: factor loadings, covariances etc.), it requires a priori specification of covariates and their functional relationships [@Bauer2017; @Kolbe2024].
+Moderated nonlinear factor analysis (MNLFA) is a recent approach for assessing MI via parameter moderation within a single-group confirmatory factor analysis framework [@Bauer2017]. 
+MLNFA evaluates MI across multiple continuous and categorical covariates, and accounts for heteroskedasticity by modeling factor and residual variances as functions of these covariates. While MNLFA offers continuous moderation of several parameters of SEMs (e.g.: factor loadings, covariances etc.), it requires a priori specification of covariates and their functional relationships, which are usually assumed to be linear [@Bauer2017; @Kolbe2024].
 In contrast, structural equation modeling (SEM) trees and forests are data-driven, non-parametric methods that use recursive partitioning to identify latent subgroups in which model parameters differ, without assuming specific functional forms or predefined covariate effects. 
 These approaches allow for nonlinear moderation of factor loadings and can reveal complex interaction effects, enabling the exploratory detection of DIF [@Brandmaier2016; @Brandmaier2013].
 In this study, we conducted a Monte Carlo simulation to compare the performance of MNLFA and SEM trees and forests in detecting DIF and assessing MI under varying conditions. 
@@ -60,7 +60,7 @@ Our findings will inform best practices for selecting statistical techniques to 
 ## Did any of the contributors already conduct related simulation studies on this specific question?
 
 Neither of the authors has conducted simulation studies that are of immediate relevance to the current project before. 
-However, Andreas Brandmaier was involved in conducting simulation studies on SEM trees/ SEM forests as well as SEM modeling in general e.g.[@Buchberger2024; @SilvaDíaz2025; @Arnold2021]. 
+However, Andreas Brandmaier was involved in conducting simulation studies on SEM trees/ SEM forests as well as SEM modeling in general [e.g., @Buchberger2024; @SilvaDíaz2025; @Arnold2021]. 
 
 # Aims 
 ## What is the aim of the simulation study?
@@ -97,7 +97,7 @@ where
 
 ### Moderator Transformation
 
-Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
+Let $M \sim \mathcal{U}(-1,1)$ denote a bounded uniformly distributed continuous covariate.
 
 The effective moderator is defined as
 $$
@@ -131,7 +131,8 @@ This transformation captures symmetric nonlinear moderation as a function of dis
    h(M) = 0
    $$
 In this condition, the moderator has no effect on any model parameter and serves as a non-informative (noise) moderator. 
-Null moderation is represented by the noise-moderator condition $(Z=0)$, not by $\delta=0$; moderation coefficients are held fixed across conditions.
+
+The absence of moderation is represented by the noise-moderator condition $(Z=0)$, not by setting $\delta=0$; moderation coefficients are held fixed across conditions.
 All parameter-level moderation effects are specified as linear functions of the effective moderator $Z$. 
 Nonlinearity in moderation arises exclusively through the transformation $Z = h(M)$, not through nonlinear parameter functions.
 The transformation $h(M)$ is part of the DGM in every moderation condition. 
@@ -433,7 +434,7 @@ where:
 
 ### Moderator Transformation  
 
-Let $M \sim \mathcal{U}(-1,1)$ denote a bounded continuous covariate.
+Let $M \sim \mathcal{U}(-1,1)$ denote a bounded, uniformly distributed continuous covariate.
 
 The effective moderator is defined as
 $$
@@ -475,7 +476,7 @@ All parameter-level moderation effects are specified as linear functions of the 
 ### Factor Loadings
 
 For each latent factor, all baseline loadings for that factor are
-fixed at 0.7. For the two-factor model in Study~2, this yields
+fixed at 0.7. For the two-factor model in Study 2, this yields
 
 $$
 \boldsymbol{\Lambda}_x =
@@ -707,17 +708,17 @@ SEM trees do not impose a parametric functional form, but they must identify the
 #### Study 1. 
 Focuses on functional form misspecification and data-related conditions: 
 
-**Sample sizes:** $N \in \{300, 500, 700, 1000\}$ 
-**Intercepts:** Intercept baselines are set to 1 across simulation conditions.  
-**Indicator reliabilities:** *Low* (.6), *moderate* (.7), *moderate to high* (.8), or *high* (.95).
+- **Sample sizes:** $N \in \{300, 500, 700, 1,000\}$ 
+- **Intercepts:** Intercept baselines are set to 1 across simulation conditions.  
+- **Indicator reliabilities:** *Low* (.6), *moderate* (.7), *moderate to high* (.8), or *high* (.95).
 
 #### Study 2. 
 Builds on Study 1 and introduces additional model misspecification in the factor structure: 
 
-**Structural model misspecifications:** (between-subjects factor)
-  **1. No misspecification:** Factor structure matches the analysis model.
-  **2. Cross-loadings:** Items $y_5$, $y_6$ additionally load on a second latent factor:  
-**Latent Covariance:** The latent covariance is moderated by $Z$. 
+- **Structural model misspecifications:** (between-subjects factor)
+  - **1. No misspecification:** Factor structure matches the analysis model.
+  - **2. Cross-loadings:** Items $y_5$, $y_6$ additionally load on a second latent factor:  
+- **Latent Covariance:** The latent covariance is moderated by $Z$. 
 The baseline variance is set to 1 and moderation strength is selected from:
 
 $$
@@ -727,7 +728,7 @@ $$
 ### If there is more than one factor: How will the factor levels be combined and how many simulation conditions will this create? 
 
 We employ a full grid search, in which parameter values are sampled from pre-specified discrete values. 
-A total of 6000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near $p = 0.8$ achieve an approximate width of $\pm 1\%$. This is based on the calculation:
+A total of 6,000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near a binomial success probability of $p = 0.8$ achieve an approximate width of $\pm 1\%$. This is based on the calculation:
 
 $$
 \text{SE} = 2 \times \sqrt{\frac{p(1-p)}{6000}},
@@ -743,7 +744,7 @@ The factors that vary across simulation conditions include:
 - The degree of model misspecification (none, cross-loadings, correlated residuals, combined)
 - Item reliabilities (ranging from 0.6 to 0.95)
 - Moderator strength parameters 
-- Sample sizes per group (i.e. 300, 500, 700, 1000)
+- Sample sizes per group (i.e. 300, 500, 700, 1,000)
 
 
 ## Estimands and Targets
@@ -774,7 +775,7 @@ For the parametric MNLFA, we will extract estimated moderated parameters (e.g., 
 
 For the parameter estimates and fit indices, we will summarize their distributions across simulation replications by reporting key quantiles (2.5th, 50th, and 97.5th percentiles). The null hypothesis will be rejected if the associated $p$-value is less than the conventional significance level of 0.05.
 
-In contrast, non-parametric Tree-based approaches do not yield direct parameter estimates with standard errors. 
+In contrast, non-parametric tree-based approaches do not yield direct parameter estimates with standard errors. 
 We use score-based SEM-trees[@Arnold2021].
 Their detection of MI/ non-invariance is operationalized via the presence of at least one split in the correct condition at the correct respective level of focus parameters.
 Those splits, introducing a subgroup, will be evaluated at the significance level: 0.05, using the “maximally selected likelihood-ratio”[@Arnold2021].
@@ -858,7 +859,7 @@ is the sample standard deviation of the effect estimates.
  
 ## How many simulation repetitions will be used for each condition?  
 
-A total of 6000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near $p = 0.8$) achieve an approximate width of $\pm 1\%$. This is based on the calculation:
+A total of 6,000 simulation replications should ideally be conducted. This number was chosen to ensure that the confidence intervals for key estimated proportions (e.g., power or Type I error rates near a binomial success probability of $p = 0.8$) achieve an approximate width of $\pm 1\%$. This is based on the calculation:
 $$
 \text{SE} = 2 \times \sqrt{\frac{p(1-p)}{6000}},
 $$
