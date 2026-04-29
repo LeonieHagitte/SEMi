@@ -32,7 +32,7 @@ parallel_seeds <- function(n, seed = NULL) {
   )
 }
 # ---------------------------------
-n_rep <- 100
+n_rep <- 50
 
 seed_tbl <- tibble(
   rep_id = seq_len(n_rep),
@@ -62,14 +62,15 @@ DESIGN <- tidyr::expand_grid(
     job_id = dplyr::row_number()
   )
 
-manifest <- transform(
-  DESIGN,
-  status = "PENDING",           # PENDING | RUNNING | DONE | ERROR
-  started_at = NA_character_,
-  finished_at = NA_character_,
-  worker = NA_character_,
-  error_msg = NA_character_
-)
+manifest <- DESIGN %>%
+  select(-seed) %>%
+  mutate(
+    status = "PENDING",
+    started_at = NA_character_,
+    finished_at = NA_character_,
+    worker = NA_character_,
+    error_msg = NA_character_
+  )
 
 if (!file.exists(manifest_path)) {
   write.csv(manifest, manifest_path, row.names = FALSE)
@@ -589,17 +590,14 @@ DESIGN <- DESIGN %>%
 #############################################
 
 plan(list(
-  tweak(multisession, workers = detectCores() - 1),
+  tweak(multisession, workers = parallel::detectCores() - 1),
   sequential
 ))
 
 simulate_seed <- function(design_for_seed, seed) {
-  purrr::pmap(
-    design_for_seed,
-    function(...) {
-      row <- tibble::tibble(...)
-      safe_run_one(row)
-    }
+  purrr::map(
+    seq_len(nrow(design_for_seed)),
+    ~ safe_run_one(design_for_seed[.x, ])
   )
 }
 
@@ -609,6 +607,12 @@ results <- DESIGN %>%
   group_by(rep_id) %>%
   nest(.key = "design") %>%
   mutate(
+    design = purrr::map2(
+      design,
+      rep_id,
+      ~ dplyr::mutate(.x, rep_id = .y)
+    ),
+    seed = purrr::map(design, ~ .x$seed[[1]]),
     result = future_map2(
       design,
       seed,
