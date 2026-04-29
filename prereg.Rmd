@@ -111,14 +111,14 @@ Each transformation type is treated as a distinct condition in the simulation de
    $$
    h(M) = M
    $$
-In this case, the effective moderator is bounded to the interval $(-1,1)$ and symmetric around zero.
+In this case, the effective moderator is bounded to the interval $(-1,1)$ and rotation symmetric around zero.
 
 2. **Sigmoid:**
    $$
    h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
    \qquad a=-1,\; b=1,\; c=0,\; k>0.
    $$
-This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator symmetric around zero, exhibiting diminishing sensitivity at extreme values.
+This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator, rotation symmetric around zero, exhibiting diminishing sensitivity at extreme values.
 
 3. **Quadratic:**
    $$
@@ -323,8 +323,8 @@ $$
 Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
 \quad \Rightarrow \quad
 \theta_{i0}=
-\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
-{\text{Reliability}_i}.
+\frac{\lambda_i^2 \psi_0(1-{Reliability}_i)}
+{{Reliability}_i}.
 $$
 
 The residual variances $\theta_{i0}$ are fixed at these baseline values across moderator values and population models. Consequently, when factor loadings are moderated, reliability may vary as a function of the moderator. 
@@ -413,7 +413,7 @@ For MNLFA, moderation of selected intercepts and factor loadings is modeled para
 
 ## Two Factors with Moderator Effects   
 We specify a confirmatory factor analysis model with two latent factors, $\eta_1$ and $\eta_2$, and seven observed indicators $\mathbf{x} = (x_1, \dots, x_4)^\top$ and $\mathbf{y} = (y_1, \dots, y_3)^\top$. 
-Along their respective residuals ${\epsilon_1,...,\epsilon_4}$ and ${\delta_1,..., \delta_3}$. 
+Along their respective residuals ${\epsilon_1,...,\epsilon_4}$ and ${\varepsilon_5,..., \varepsilon_7}$. 
 The first factor loads onto indicators $x_1$ to $x_4$, the second onto $y_1$ to $y_3$. 
 A continuous moderator variable $Z$ introduces conditional heterogeneity into selected measurement parameters (i.e. intercepts, loadings and latent factor covariance) using one of three functional forms (linear, quadratic or sigmoid).
 
@@ -448,14 +448,14 @@ Each transformation type is treated as a distinct condition in the simulation de
    $$
    h(M) = M
    $$
-In this case, the effective moderator is bounded to the interval $(-1,1)$ and symmetric around zero.
+In this case, the effective moderator is bounded to the interval $(-1,1)$ and rotation symmetric around zero.
 
 2. **Sigmoid:**
    $$
    h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
    \qquad a=-1,\; b=1,\; c=0,\; k>0.
    $$
-This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator symmetric around zero, exhibiting diminishing sensitivity at extreme values.
+This transformation maps the input to the open interval $(-1, 1)$ and yields a bounded moderator, rotation symmetric around zero, exhibiting diminishing sensitivity at extreme values.
 
 3. **Quadratic:**
    $$
@@ -553,8 +553,8 @@ $$
 Reliability_i=\frac{\lambda_i^2 \psi_0}{\lambda_i^2 \psi_0 + \theta_{i0}}
 \quad \Rightarrow \quad
 \theta_{i0}=
-\frac{\lambda_i^2 \psi_0(1-\text{Reliability}_i)}
-{\text{Reliability}_i}.
+\frac{\lambda_i^2 \psi_0(1-{Reliability}_i)}
+{{Reliability}_i}.
 $$
 The residual variances $\theta_{i0}$ are fixed at these baseline values across moderator values and population models. 
 Consequently, when factor loadings are moderated, reliability may vary as a function of the moderator. 
@@ -660,7 +660,7 @@ $$
     \caption{Model 2.1}
 \end{subfigure}
 
-\caption{We specify a confirmatory factor analysis model with two latent factors, $\eta_1$ and $\xi_1$, and seven observed indicators, $\mathbf{x} = (x_1, \dots, x_4)^\top$ and $\mathbf{y} = (y_1, y_2, y_3)^\top$, along with their respective residuals, $\varepsilon_1, \dots, \varepsilon_4$ and $\delta_1, \delta_2, \delta_3$. The first factor, $\eta_1$, loads onto indicators $x_1$ to $x_4$, while the second factor, $\xi_1$, loads onto indicators $y_1$ to $y_3$. A continuous moderator variable $Z$ introduces conditional heterogeneity into selected measurement parameters, including intercepts, factor loadings, and latent factor covariance, using one of two functional forms (linear or quadratic). Red dashed arrows indicate model misspecifications.}
+\caption{We specify a confirmatory factor analysis model with two latent factors, $\eta_1$ and $\xi_1$, and seven observed indicators, $\mathbf{x} = (x_1, \dots, x_4)^\top$ and $\mathbf{y} = (y_1, y_2, y_3)^\top$, along with their respective residuals, $\varepsilon_1, \dots, \varepsilon_4$ and $\varepsilon_5, \varepsilon_6, \varepsilon_7$. The first factor, $\eta_1$, loads onto indicators $x_1$ to $x_4$, while the second factor, $\xi_1$, loads onto indicators $y_1$ to $y_3$. A continuous moderator variable $Z$ introduces conditional heterogeneity into selected measurement parameters, including intercepts, factor loadings, and latent factor covariance, using one of two functional forms (linear or quadratic). Red dashed arrows indicate model misspecifications.}
 \end{sidewaysfigure}
 
 \pagebreak
@@ -778,7 +778,7 @@ For the parameter estimates and fit indices, we will summarize their distributio
 In contrast, non-parametric tree-based approaches do not yield direct parameter estimates with standard errors. 
 We use score-based SEM-trees[@Arnold2021].
 Their detection of MI/ non-invariance is operationalized via the presence of at least one split in the correct condition at the correct respective level of focus parameters.
-Those splits, introducing a subgroup, will be evaluated at the significance level: 0.05, using the “maximally selected likelihood-ratio”[@Arnold2021].
+Those splits, introducing a subgroup, will be evaluated at the significance level: 0.05.
 Additionally, a Bonferroni correction to account for multiple comparisons at each node.
 The trees will be allowed to split on the focus parameters relevant for the invariance testing (the means of the intercepts, factor loadings and the latent covariance in study 2).
 Candidate subgroup structures are assessed by testing whether they produce statistically significant differences in the specified model parameters across groups.
