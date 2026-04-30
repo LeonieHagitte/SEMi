@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  29 APR 2026 14:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  30 APR 2026 08:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1227,24 +1227,24 @@ df  used on input line 304.
 (pdftex.def)             Requested size: 422.77664pt x 292.6908pt.
 [5] [6 <./prereg_files/figure-latex/fig-moderation-functions-1.pdf>] [7] [8] [9
 ] [10] [11]
-<presentation/tikz_model1.png, id=101, 774.895pt x 396.48125pt>
+<presentation/tikz_model1.png, id=101, 522.95375pt x 271.0125pt>
 File: presentation/tikz_model1.png Graphic file (type png)
 <use presentation/tikz_model1.png>
 Package pdftex.def Info: presentation/tikz_model1.png  used on input line 537.
-(pdftex.def)             Requested size: 328.82707pt x 168.24518pt.
+(pdftex.def)             Requested size: 328.82707pt x 170.41208pt.
 [12 <./presentation/tikz_model1.png>] [13] [14] [15]
-<presentation/tikz_model2.0.png, id=130, 830.10126pt x 397.485pt>
+<presentation/tikz_model2.0.png, id=130, 607.26875pt x 288.07625pt>
 File: presentation/tikz_model2.0.png Graphic file (type png)
 <use presentation/tikz_model2.0.png>
 Package pdftex.def Info: presentation/tikz_model2.0.png  used on input line 767
 .
-(pdftex.def)             Requested size: 305.7029pt x 146.38177pt.
-<presentation/tikz_model2.1.png, id=131, 821.0675pt x 398.48875pt>
+(pdftex.def)             Requested size: 305.7029pt x 145.02238pt.
+<presentation/tikz_model2.1.png, id=131, 588.1975pt x 277.035pt>
 File: presentation/tikz_model2.1.png Graphic file (type png)
 <use presentation/tikz_model2.1.png>
 Package pdftex.def Info: presentation/tikz_model2.1.png  used on input line 773
 .
-(pdftex.def)             Requested size: 305.7029pt x 148.36275pt.
+(pdftex.def)             Requested size: 305.7029pt x 143.98293pt.
 [16] [17 <./presentation/tikz_model2.0.png> <./presentation/tikz_model2.1.png>]
 [18] [19] [20] [21]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
@@ -1286,7 +1286,7 @@ al/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Leonie.Hagitte/App
 Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb><C:/Users/Leonie.Ha
 gitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb>
-Output written on prereg.pdf (30 pages, 594265 bytes).
+Output written on prereg.pdf (30 pages, 631568 bytes).
 PDF statistics:
  535 PDF objects out of 1000 (max. 8388607)
  122 named destinations out of 1000 (max. 500000)
