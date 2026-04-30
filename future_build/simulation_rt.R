@@ -606,6 +606,7 @@ t1 <- Sys.time()
 results <- DESIGN %>%
   group_by(rep_id) %>%
   nest(.key = "design") %>%
+  ungroup() %>%
   mutate(
     design = purrr::map2(
       design,

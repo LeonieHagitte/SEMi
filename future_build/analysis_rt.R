@@ -773,6 +773,39 @@ run_analysis <- function(data,
 }
 # ----------------------------------------------------------------------
 
+#semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
+#  
+#  out <- list()
+#  for (m in moderators) {
+#    out[[paste0("tree_split_on_", m)]] <- NA
+#    out[[paste0("tree_n_splits_", m)]] <- NA_integer_
+#  }
+#  
+#  if (inherits(st, "error") || is.null(st)) return(out)
+#  if (!methods::is(st, "semtree")) return(out)
+#  
+#  # No split occurred
+#  if (!is.null(st$caption) && identical(st$caption, "TERMINAL")) {
+#    for (m in moderators) {
+#      out[[paste0("tree_split_on_", m)]] <- FALSE
+#      out[[paste0("tree_n_splits_", m)]] <- 0L
+#    }
+#    return(out)
+#  }
+#  
+#  # For the current semtree object structure, a non-terminal root indicates a split.
+#  split_var <- NULL
+#  if (!is.null(st$result) && !is.null(st$result$name.max)) {
+#    split_var <- st$result$name.max
+#  }
+#  
+#  for (m in moderators) {
+#    out[[paste0("tree_split_on_", m)]] <- identical(split_var, m)
+#    out[[paste0("tree_n_splits_", m)]] <- as.integer(identical(split_var, m))
+#  }
+#  
+#  out
+#}
 semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
   
   out <- list()
@@ -784,45 +817,89 @@ semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
   if (inherits(st, "error") || is.null(st)) return(out)
   if (!methods::is(st, "semtree")) return(out)
   
-  # No split occurred
-  if (!is.null(st$caption) && identical(st$caption, "TERMINAL")) {
-    for (m in moderators) {
-      out[[paste0("tree_split_on_", m)]] <- FALSE
-      out[[paste0("tree_n_splits_", m)]] <- 0L
+  collect_splits <- function(node) {
+    if (is.null(node)) return(character(0))
+    
+    splits <- character(0)
+    
+    if (methods::is(node, "semtree")) {
+      if (!is.null(node$caption) && identical(node$caption, "TERMINAL")) {
+        return(character(0))
+      }
+      
+      if (!is.null(node$result) && !is.null(node$result$name.max)) {
+        splits <- c(splits, as.character(node$result$name.max))
+      }
     }
-    return(out)
+    
+    if (is.list(node)) {
+      child_splits <- unlist(
+        lapply(node, collect_splits),
+        use.names = FALSE
+      )
+      splits <- c(splits, child_splits)
+    }
+    
+    splits
   }
   
-  # For the current semtree object structure, a non-terminal root indicates a split.
-  split_var <- NULL
-  if (!is.null(st$result) && !is.null(st$result$name.max)) {
-    split_var <- st$result$name.max
-  }
+  split_vars <- collect_splits(st)
   
   for (m in moderators) {
-    out[[paste0("tree_split_on_", m)]] <- identical(split_var, m)
-    out[[paste0("tree_n_splits_", m)]] <- as.integer(identical(split_var, m))
+    n_m <- sum(split_vars == m, na.rm = TRUE)
+    out[[paste0("tree_split_on_", m)]] <- n_m > 0
+    out[[paste0("tree_n_splits_", m)]] <- as.integer(n_m)
   }
   
   out
 }
-
 # -----------------------------------------------------------------------
+#getPredictorsFromTree <- function(st) {
+#  if (inherits(st, "error") || is.null(st)) return(NULL)
+#  if (!methods::is(st, "semtree")) return(NULL)
+#  
+#  if (!is.null(st$caption) && identical(st$caption, "TERMINAL")) {
+#    return(character(0))
+#  }
+#  
+#  if (!is.null(st$result) && !is.null(st$result$name.max)) {
+#    return(st$result$name.max)
+#  }
+#  
+#  NULL
+#}
 getPredictorsFromTree <- function(st) {
   if (inherits(st, "error") || is.null(st)) return(NULL)
   if (!methods::is(st, "semtree")) return(NULL)
   
-  if (!is.null(st$caption) && identical(st$caption, "TERMINAL")) {
-    return(character(0))
+  collect_splits <- function(node) {
+    if (is.null(node)) return(character(0))
+    
+    splits <- character(0)
+    
+    if (methods::is(node, "semtree")) {
+      if (!is.null(node$caption) && identical(node$caption, "TERMINAL")) {
+        return(character(0))
+      }
+      
+      if (!is.null(node$result) && !is.null(node$result$name.max)) {
+        splits <- c(splits, as.character(node$result$name.max))
+      }
+    }
+    
+    if (is.list(node)) {
+      child_splits <- unlist(
+        lapply(node, collect_splits),
+        use.names = FALSE
+      )
+      splits <- c(splits, child_splits)
+    }
+    
+    splits
   }
   
-  if (!is.null(st$result) && !is.null(st$result$name.max)) {
-    return(st$result$name.max)
-  }
-  
-  NULL
+  unique(collect_splits(st))
 }
-
 # -----------------------------------------------------------------------
 
 append_results <- function(out, results_path) {
