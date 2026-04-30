@@ -5,7 +5,8 @@ SEM trees and forests (Brandmaier et al., 2013; Brandmaier et al., 2016) could p
 SEM trees allow for non-linear DIF effects and provide a way to systematically search for important covariates (and their interactions).
 In this project, we design a simulation study to investigate the conditions under which each of the two methods returns favorable results.
 
-This simulation study is preregistered at: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19891930.svg)](https://doi.org/10.5281/zenodo.19891930)
+This simulation study is preregistered. 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19891930.svg)](https://doi.org/10.5281/zenodo.19891930)
 
 ## Simulation 
 Find the simulation in the "future_build" folder.
