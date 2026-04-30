@@ -4,8 +4,7 @@ The moderated nonlinear factor analysis (MNLFA) approach allows for simultaneous
 SEM trees and forests (Brandmaier et al., 2013; Brandmaier et al., 2016) could provide a viable alternative to exploring DIF in latent factor models.
 SEM trees allow for non-linear DIF effects and provide a way to systematically search for important covariates (and their interactions).
 In this project, we design a simulation study to investigate the conditions under which each of the two methods returns favorable results.
-
-This simulation study is preregistered.   
+   
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19891930.svg)](https://doi.org/10.5281/zenodo.19891930)
 
 ## Simulation 
