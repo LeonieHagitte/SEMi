@@ -32,7 +32,7 @@ parallel_seeds <- function(n, seed = NULL) {
   )
 }
 # ---------------------------------
-n_rep <- 50
+n_rep <- 25
 
 seed_tbl <- tibble(
   rep_id = seq_len(n_rep),
