@@ -1,4 +1,3 @@
-library(tidyverse)
 library(furrr)
 library(dplyr)
 library(tibble)
