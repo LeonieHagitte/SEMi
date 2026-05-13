@@ -15,7 +15,7 @@ lock_dir <- "locks"
 # -----------------------------------
 set.seed(42)
 # ---------------------------------
-n_rep <- 10
+n_rep <- 100 # needs to be larger, or as large as SLURM_ARRAY
 
 # ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
