@@ -11,6 +11,7 @@ source("analysis_rt.R")
 manifest_path <- "progress_manifest.csv"
 results_path  <- "results.csv"
 lock_dir <- "locks"
+
 # -----------------------------------
 set.seed(42)
 # ---------------------------------
@@ -20,7 +21,7 @@ n_rep <- 10
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
 DESIGN <- tidyr::expand_grid(
-  popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3"),
+  popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
   reliability  = c(0.60, 0.70, 0.80, 0.95),
   lambda       = 0.70,
@@ -47,6 +48,34 @@ DESIGN <- DESIGN %>%
     seed = round(runif(nrow(DESIGN),0,.Machine$integer.max))
     
   )
+# ---------- Split on rep_id, for similarly long runtimes ------
+chunk_id <- NULL
+n_chunks <- NULL
+
+args <- commandArgs(trailingOnly = TRUE)
+
+if (length(args) > 0) {
+  chunk_id <- as.integer(args[1])
+  n_chunks <- as.integer(args[2])
+  
+  rep_ids <- sort(unique(DESIGN$rep_id))
+  
+  if (n_chunks > length(rep_ids)) {
+    stop("n_chunks cannot be larger than number of replications.")
+  }
+  
+  rep_chunks <- split(
+    rep_ids,
+    cut(seq_along(rep_ids), n_chunks, labels = FALSE)
+  )
+  
+  reps_this_chunk <- rep_chunks[[chunk_id]]
+  
+  DESIGN <- DESIGN %>%
+    dplyr::filter(rep_id %in% reps_this_chunk)
+}
+# --------------------------------------------------------------
+
 
 manifest <- DESIGN %>%
   select(-seed) %>%
