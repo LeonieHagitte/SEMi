@@ -573,6 +573,29 @@ simulate_seed <- function(design_for_seed, seed) {
   )
 }
 
+## ----------- get splitter from command line argument ----------
+##
+
+# get command line arguments
+args <- commandArgs(trailingOnly = TRUE)
+
+if (length(args)>0) {
+  chunk_id <- as.integer(args[1])
+  n_chunks <- as.integer(args[2])
+
+  all_indices <- nrow(DESIGN)
+
+  chunks <- split(all_indices, cut(seq_along(all_indices),
+                                   n_chunks, labels = FALSE))
+  my_indices <- chunks[[chunk_id]]
+  
+  DESIGN <- DESIGN[my_indices, ]
+
+}
+
+#
+# -- Start Simulation --
+
 t1 <- Sys.time()
 
 results <- DESIGN %>%
