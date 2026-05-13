@@ -357,7 +357,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   }
   
   # ---------------------------
-  c(
+  tibble(
     job_id         = as.integer(row$job_id),
     popmodel       = as.character(row$popmodel),
     N              = as.integer(row$N),
@@ -450,7 +450,7 @@ safe_run_one <- function(row) {
       true_any_noninvariance <- true_metric_noninvariance ||
         true_scalar_noninvariance
       
-      c(
+      tibble(
         job_id         = as.integer(row$job_id),
         popmodel       = as.character(row$popmodel),
         N              = as.integer(row$N),
@@ -559,7 +559,7 @@ if (length(args)>0) {
 }
 
 # only for debugging purposes, run only first two rows:
- DESIGN <- DESIGN[1:4, ]
+# DESIGN <- DESIGN[1:4, ]
 
 
 #
@@ -569,15 +569,17 @@ t1 <- Sys.time()
 
 # run across all rows (use future package's parallelization)
 results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
-  data.frame(safe_run_one(DESIGN[i, , drop = FALSE]))
+  safe_run_one(DESIGN[i, , drop = FALSE])
 },simplify = TRUE)
+
+results <- t(results)
 
 t2 <- Sys.time()
 
 elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
 elapsed_total_min
 
-if (!is.null(chunk_id)) {
+if (is.null(chunk_id)) {
   saveRDS(results, "results_parallel.rds")
 } else {
   saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
