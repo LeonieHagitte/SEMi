@@ -72,7 +72,7 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   m0 <- runif(N, -1 + eps, 1 - eps)   # uninformed moderator
   
   hm1  <- mod_h(m1, type = moderator, k = k)
-  hm2 <- mod_h(m2, type=moderator, k=k)
+  hm2 <- mod_h(m2, type = moderator, k = k)
   hm12 <- hm1 * hm2
   hm0  <- rep(0, N)   # keep uninformed
     
@@ -136,12 +136,16 @@ gen_dataC <- function(N, params, return_latent=TRUE){
   if (return_latent) out$eta <- eta
   out
 }
-# ------------- Test ---------------------------
-#set.seed(1)
-#pc <- gen_paramsC(popmodel="1.12", moderator="linear")
-#sc <- gen_dataC(N=20, params=pc)
-#head(sc$data)
-#data <- sc$data
-#head(data)
 
-
+add_analysis_form <- function(data,
+                               analysis_form = c("linear", "quadratic"),
+                               k = 10) {
+  analysis_form <- match.arg(analysis_form)
+  data <- as.data.frame(data)
+  
+  data$am1 <- mod_h(data$m1, type = analysis_form, k = k)
+  data$am2 <- mod_h(data$m2, type = analysis_form, k = k)
+  data$am12 <- data$am1 * data$am2
+  
+  data
+}

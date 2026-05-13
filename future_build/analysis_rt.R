@@ -1,23 +1,3 @@
-# analysis_rt.R
-# -----------------------------------------------------------------------------
-# Purpose
-#   Provide analysis-model builders used by your driver:
-#     - build_cfa_baseline(): unmoderated CFA for SEM Tree partitioning
-#     - build_mnlfa_syntax(): MNLFA-style model with loading moderation via
-#       a latent-by-observed interaction .
-#
-
-#mxMatrix(type = , #type can be "Diag", "Full" or "Symm"
-#         nrow = , #nrow: refers to the number of rows of the matrix.
-#         ncol = , #ncol: refers to the number of columns of the matrix.
-#        free = , #free: indicates which elements of the matrix can be freely estimated (TRUE or T) or are fixed parameters (FALSE or F).
-#         values = , #reflects the values of the elements in the matrix. If an element is freely estimated, it reflects the starting value. If an element is not freely estimated, it reflects the fixed value.
-#         name = , #refers to the user-specified name of the matrix which is used within OpenMx when performing an operation on this matrix.
-#         ) 
-
-#p = number of manifest variables
-#nfactors = number of latent factors
-
 library(lavaan)
 library(dplyr)
 library(purrr)
@@ -27,90 +7,6 @@ library(semtree)
 library(partykit)
 
 # -----------------------------------------------------------------------------
-get_fit_indices <- function(fit) {
-  out <- list(
-    cfi = NA_real_,
-    rmsea = NA_real_,
-    cfi_available = FALSE,
-    rmsea_available = FALSE,
-    fit_index_note = NA_character_
-  )
-  
-  refs <- tryCatch(OpenMx::mxRefModels(fit, run = TRUE), error = identity)
-  if (inherits(refs, "error")) {
-    out$fit_index_note <- conditionMessage(refs)
-    return(out)
-  }
-  
-  summ <- tryCatch(summary(fit, refModels = refs), error = identity)
-  if (inherits(summ, "error")) {
-    out$fit_index_note <- conditionMessage(summ)
-    return(out)
-  }
-  
-  if (!is.null(summ$CFI) && length(summ$CFI) == 1 && is.finite(summ$CFI)) {
-    out$cfi <- unname(as.numeric(summ$CFI))
-    out$cfi_available <- TRUE
-  }
-  
-  if (!is.null(summ$RMSEA) && length(summ$RMSEA) == 1 && is.finite(summ$RMSEA)) {
-    out$rmsea <- unname(as.numeric(summ$RMSEA))
-    out$rmsea_available <- TRUE
-  }
-  
-  if (!out$cfi_available || !out$rmsea_available) {
-    out$fit_index_note <- "Reference-model-based fit indices incomplete; likely due to definition variables."
-  }
-  
-  out
-}
-
-compare_fit_deterioration <- function(fit_less, fit_more,
-                                      cfi_cut = 0.01,
-                                      rmsea_cut = 0.015) {
-  idx_less <- get_fit_indices(fit_less)
-  idx_more <- get_fit_indices(fit_more)
-  
-  delta_cfi <- if (idx_less$cfi_available && idx_more$cfi_available) {
-    idx_more$cfi - idx_less$cfi
-  } else {
-    NA_real_
-  }
-  
-  delta_rmsea <- if (idx_less$rmsea_available && idx_more$rmsea_available) {
-    idx_more$rmsea - idx_less$rmsea
-  } else {
-    NA_real_
-  }
-  
-  decision_basis <- NA_character_
-  retain <- NA
-  
-  if (!is.na(delta_cfi) && !is.na(delta_rmsea)) {
-    retain <- delta_cfi >= -cfi_cut && delta_rmsea <= rmsea_cut
-    decision_basis <- "cfi_and_rmsea"
-  } else if (!is.na(delta_cfi)) {
-    retain <- delta_cfi >= -cfi_cut
-    decision_basis <- "cfi_only"
-  } else {
-    decision_basis <- "not_available"
-  }
-  
-  list(
-    less_cfi = idx_less$cfi,
-    less_rmsea = idx_less$rmsea,
-    more_cfi = idx_more$cfi,
-    more_rmsea = idx_more$rmsea,
-    delta_cfi = delta_cfi,
-    delta_rmsea = delta_rmsea,
-    cfi_available = !is.na(delta_cfi),
-    rmsea_available = !is.na(delta_rmsea),
-    decision_basis = decision_basis,
-    retain = retain,
-    fit_index_note_less = idx_less$fit_index_note,
-    fit_index_note_more = idx_more$fit_index_note
-  )
-}
 
 
 compare_models_lrt <- function(fit_less, fit_more, alpha = 0.05) {
@@ -287,14 +183,14 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   matV1 <- mxMatrix(type="Full", nrow = 1, 
                     ncol = 1,
                     free=FALSE,
-                    labels="data.m1",
-                    name="m1")
+                    labels="data.am1",
+                    name="am1")
   
   matV2 <- mxMatrix(type="Full", nrow = 1, 
                     ncol = 1,
                     free=FALSE,
-                    labels="data.m2",
-                    name="m2")
+                    labels="data.am2",
+                    name="am2")
   # -----------------------------------------------------------------------------
   #The mxAlgebra() function can be used to define a matrix of model parameters as
   #a function of background variables. The first argument of this function, 
@@ -304,16 +200,16 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   #function. A name for the defined matrix can be assigned with the name argument
   
   # -----------------------------------------------------------------------------
-  matT <- mxAlgebra(expression = matT0 +  matB1*m1 + matB2*m2, # linear moderation function for the indicator intercepts
+  matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
                     name="matT") #intercepts
   
-  matL <- mxAlgebra(expression = matL0 + matC1*m1 + matC2*m2, # linear moderation function for the factor loadings
+  matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
                     name="matL") #loadings
   
-  matE <- mxAlgebra(expression = matE0*exp (matD1*m1 + matD2*m2), # log-linear function for the residual variances
+  matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
                     name="matE") #residual variances
   
-  matA <- mxAlgebra(expression = matA0 + matG1*m1 + matG2*m2, #common-factor means modeled as a linear function of the background variables
+  matA <- mxAlgebra(expression = matA0 + matG1*am1 + matG2*am2, #common-factor means modeled as a linear function of the background variables
                     name="matA") #matrix of common-factor means
   
   matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
@@ -382,16 +278,16 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       name="matC2")
     
     # -----------------------------------------------------------------------------
-    matT <- mxAlgebra(expression = matT0 +  matB1*m1 + matB2*m2, # linear moderation function for the indicator intercepts
+    matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
                       name="matT") #intercepts
     
-    matL <- mxAlgebra(expression = matL0 + matC1*m1 + matC2*m2, # linear moderation function for the factor loadings
+    matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
                       name="matL") #loadings
     
-    matE <- mxAlgebra(expression = matE0*exp (matD1*m1 + matD2*m2), # log-linear function for the residual variances
+    matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
                       name="matE") #residual variances
     
-    matA <- mxAlgebra(expression = matA0 + matG1*m1 + matG2*m2, #common-factor means modeled as a linear function of the background variables
+    matA <- mxAlgebra(expression = matA0 + matG1*am1 + matG2*am2, #common-factor means modeled as a linear function of the background variables
                       name="matA") #matrix of common-factor means
     
     matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
@@ -428,8 +324,6 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
     }
     
     metric_lrt <- compare_models_lrt(fitConfig, fitmetric, alpha = alpha)
-    
-    metric_fit <- compare_fit_deterioration(fitConfig, fitmetric)
     
     if (!is.null(fitmetric) &&
         !is.null(fitmetric$output$status$code) &&
@@ -483,16 +377,16 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         name="matG2")
       
       # -----------------------------------------------------------------------------
-      matT <- mxAlgebra(expression = matT0 +  matB1*m1 + matB2*m2, # linear moderation function for the indicator intercepts
+      matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
                         name="matT") #intercepts
       
-      matL <- mxAlgebra(expression = matL0 + matC1*m1 + matC2*m2, # linear moderation function for the factor loadings
+      matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
                         name="matL") #loadings
       
-      matE <- mxAlgebra(expression = matE0*exp (matD1*m1 + matD2*m2), # log-linear function for the residual variances
+      matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
                         name="matE") #residual variances
       
-      matA <- mxAlgebra(expression = matA0 + matG1*m1 + matG2*m2, #common-factor means modeled as a linear function of the background variables
+      matA <- mxAlgebra(expression = matA0 + matG1*am1 + matG2*am2, #common-factor means modeled as a linear function of the background variables
                         name="matA") #matrix of common-factor means
       
       matP <- mxAlgebra(matP0, name="matP") #latent covariance matrix in the covariance algebra - for a single-factor CFA, that matrix is simply 1×1 and is the factor variance
@@ -531,15 +425,12 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
       scalar_lrt  <- compare_models_lrt(fitmetric, fitscalar, alpha = alpha)
       omnibus_lrt <- compare_models_lrt(fitConfig, fitscalar, alpha = alpha)
       
-      scalar_fit <- compare_fit_deterioration(fitmetric, fitscalar)
     }
   }
   return(list(
     fitConfig = fitConfig,
     fitMetric = if (exists("fitmetric")) fitmetric else NULL,
     fitScalar = if (exists("fitscalar")) fitscalar else NULL,
-    metric_fit = if (exists("metric_fit")) metric_fit else NULL,
-    scalar_fit = if (exists("scalar_fit")) scalar_fit else NULL,
     metric_lrt = if (exists("metric_lrt")) metric_lrt else NULL,
     scalar_lrt = if (exists("scalar_lrt")) scalar_lrt else NULL,
     omnibus_lrt = if (exists("omnibus_lrt")) omnibus_lrt else NULL
@@ -548,7 +439,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
 
 # -----------------------------------------------------#####################################
 tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
-                              predictors = c("m1", "m2","m0"),
+                              predictors = c("am1", "am2","m0"),
                               control = NULL, verbose = FALSE){
   
   if (is.null(control)) {
@@ -748,7 +639,7 @@ run_analysis <- function(data,
                          methods = c("MNLFA", "SEMTREE"),
                          nfactors = 1,
                          alpha = 0.05,
-                         predictors = c("m1", "m2", "m0")) {
+                         predictors = c("am1", "am2", "m0")) {
   
   methods <- match.arg(methods, choices = c("MNLFA", "SEMTREE"), several.ok = TRUE)
   dat <- as.data.frame(data)
@@ -773,7 +664,7 @@ run_analysis <- function(data,
 }
 # ----------------------------------------------------------------------
 
-#semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
+#semtree_detects_moderation <- function(st, moderators = c("am1", "am2", "m0")) {
 #  
 #  out <- list()
 #  for (m in moderators) {
@@ -806,7 +697,7 @@ run_analysis <- function(data,
 #  
 #  out
 #}
-semtree_detects_moderation <- function(st, moderators = c("m1", "m2", "m0")) {
+semtree_detects_moderation <- function(st, moderators = c("am1", "am2", "m0")) {
   
   out <- list()
   for (m in moderators) {

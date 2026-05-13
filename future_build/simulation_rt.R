@@ -52,11 +52,12 @@ DESIGN <- tidyr::expand_grid(
   delta_lambda = c(-0.3, -0.2, 0.2, 0.3),
   delta_nu     = c(-1, -0.5, 0.5, 1),
   moderator    = MOD_TYPES,
+  analysis_form = c("linear", "quadratic"),
   seed_tbl
 )%>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator, rep_id
+    delta_lambda, delta_nu, moderator,analysis_form, rep_id
   ) %>%
   dplyr::mutate(
     job_id = dplyr::row_number()
@@ -89,6 +90,7 @@ if (!file.exists(results_path)) {
       delta_lambda = numeric(),
       delta_nu = numeric(),
       moderator = character(),
+      analysis_form = character(),
       rep_id = integer(),
       
       true_any_noninvariance = logical(),
@@ -98,14 +100,6 @@ if (!file.exists(results_path)) {
       
       mnlfa_model = character(),
       mnlfa_det = logical(),
-      
-      mnlfa_metric_delta_cfi = numeric(),
-      mnlfa_metric_delta_rmsea = numeric(),
-      mnlfa_metric_retain = logical(),
-      
-      mnlfa_scalar_delta_cfi = numeric(),
-      mnlfa_scalar_delta_rmsea = numeric(),
-      mnlfa_scalar_retain = logical(),
       
       mnlfa_final_decision = character(),
       
@@ -135,18 +129,18 @@ if (!file.exists(results_path)) {
       tree_scalar_p_uncorrected = numeric(),
       tree_scalar_reject = logical(),
       
-      tree_metric_split_on_m1 = logical(),
-      tree_metric_split_on_m2 = logical(),
+      tree_metric_split_on_am1 = logical(),
+      tree_metric_split_on_am2 = logical(),
       tree_metric_split_on_m0 = logical(),
-      tree_metric_n_splits_m1 = integer(),
-      tree_metric_n_splits_m2 = integer(),
+      tree_metric_n_splits_am1 = integer(),
+      tree_metric_n_splits_am2 = integer(),
       tree_metric_n_splits_m0 = integer(),
       
-      tree_scalar_split_on_m1 = logical(),
-      tree_scalar_split_on_m2 = logical(),
+      tree_scalar_split_on_am1 = logical(),
+      tree_scalar_split_on_am2 = logical(),
       tree_scalar_split_on_m0 = logical(),
-      tree_scalar_n_splits_m1 = integer(),
-      tree_scalar_n_splits_m2 = integer(),
+      tree_scalar_n_splits_am1 = integer(),
+      tree_scalar_n_splits_am2 = integer(),
       tree_scalar_n_splits_m0 = integer(),
       
       error_msg = character(),
@@ -184,6 +178,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   df <- sim$data
   
+  df <- add_analysis_form(
+    data = df,
+    analysis_form = row$analysis_form,
+    k = params$k
+  )
   # ensure required columns exist for analyses
   if (!"m0" %in% names(df)) df$m0 <- 0
   
@@ -193,7 +192,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     methods = c("MNLFA", "SEMTREE"),
     nfactors = 1,
     alpha = 0.05,
-    predictors = c("m1", "m2", "m0")
+    predictors = c("am1", "am2", "m0")
   )
   # ---------------------------
   mnlfa_error_msg <- NA_character_
@@ -207,13 +206,6 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     semtree_error_msg <- conditionMessage(res$semtree)
   }
   # ---------------------------
-  mnlfa_metric_delta_cfi <- NA_real_
-  mnlfa_metric_delta_rmsea <- NA_real_
-  mnlfa_metric_retain <- NA
-  
-  mnlfa_scalar_delta_cfi <- NA_real_
-  mnlfa_scalar_delta_rmsea <- NA_real_
-  mnlfa_scalar_retain <- NA
   
   mnlfa_metric_lrt_chisq <- NA_real_
   mnlfa_metric_lrt_df <- NA_real_
@@ -231,16 +223,6 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   mnlfa_omnibus_lrt_reject <- NA
   
   if (!inherits(res$mnlfa, "error")) {
-    if (!is.null(res$mnlfa$metric_fit)) {
-      mnlfa_metric_delta_cfi <- res$mnlfa$metric_fit$delta_cfi
-      mnlfa_metric_delta_rmsea <- res$mnlfa$metric_fit$delta_rmsea
-      mnlfa_metric_retain <- res$mnlfa$metric_fit$retain
-    }
-    if (!is.null(res$mnlfa$scalar_fit)) {
-      mnlfa_scalar_delta_cfi <- res$mnlfa$scalar_fit$delta_cfi
-      mnlfa_scalar_delta_rmsea <- res$mnlfa$scalar_fit$delta_rmsea
-      mnlfa_scalar_retain <- res$mnlfa$scalar_fit$retain
-    }
     if (!is.null(res$mnlfa$metric_lrt)) {
       mnlfa_metric_lrt_chisq <- res$mnlfa$metric_lrt$chisq_diff
       mnlfa_metric_lrt_df <- res$mnlfa$metric_lrt$df_diff
@@ -276,28 +258,31 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   mnlfa_det <- NA
   
-  if (identical(mnlfa_metric_retain, FALSE) || identical(mnlfa_scalar_retain, FALSE)) {
+  if (identical(mnlfa_metric_lrt_reject, TRUE) ||
+      identical(mnlfa_scalar_lrt_reject, TRUE)) {
     mnlfa_det <- TRUE
-  } else if (identical(mnlfa_metric_retain, TRUE) &&
-             (identical(mnlfa_scalar_retain, TRUE) || is.na(mnlfa_scalar_retain))) {
+  } else if (identical(mnlfa_metric_lrt_reject, FALSE) &&
+             (identical(mnlfa_scalar_lrt_reject, FALSE) ||
+              is.na(mnlfa_scalar_lrt_reject))) {
     mnlfa_det <- FALSE
   }
   
   mnlfa_final_decision <- NA_character_
   
-  if (identical(mnlfa_metric_retain, FALSE)) {
-    mnlfa_final_decision <- "noninvariance_at_metric"
-  } else if (identical(mnlfa_metric_retain, TRUE) &&
-             identical(mnlfa_scalar_retain, FALSE)) {
-    mnlfa_final_decision <- "noninvariance_at_scalar"
-  } else if (identical(mnlfa_metric_retain, TRUE) &&
-             (is.null(res$mnlfa$fitScalar) || identical(mnlfa_scalar_retain, TRUE))) {
-    mnlfa_final_decision <- "scalar_invariance_retained"
+  if (identical(mnlfa_metric_lrt_reject, TRUE)) {
+    mnlfa_final_decision <- "noninvariance_at_metric_lrt"
+  } else if (identical(mnlfa_metric_lrt_reject, FALSE) &&
+             identical(mnlfa_scalar_lrt_reject, TRUE)) {
+    mnlfa_final_decision <- "noninvariance_at_scalar_lrt"
+  } else if (identical(mnlfa_metric_lrt_reject, FALSE) &&
+             (identical(mnlfa_scalar_lrt_reject, FALSE) ||
+              is.na(mnlfa_scalar_lrt_reject))) {
+    mnlfa_final_decision <- "scalar_invariance_retained_lrt"
   }
   # truth indicators
   # ---------------------------
-  has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3")
-  has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22")
+  has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3", "1.32")
+  has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22", "1.32")
   
   true_structured_moderator <- row$moderator != "noise"
   
@@ -318,15 +303,15 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   tree_metric_split <- NA
   tree_scalar_split <- NA
   
-  tree_metric_split_on_m1 <- NA
-  tree_metric_split_on_m2 <- NA
-  tree_metric_n_splits_m1 <- NA_integer_
-  tree_metric_n_splits_m2 <- NA_integer_
+  tree_metric_split_on_am1 <- NA
+  tree_metric_split_on_am2 <- NA
+  tree_metric_n_splits_am1 <- NA_integer_
+  tree_metric_n_splits_am2 <- NA_integer_
   
-  tree_scalar_split_on_m1 <- NA
-  tree_scalar_split_on_m2 <- NA
-  tree_scalar_n_splits_m1 <- NA_integer_
-  tree_scalar_n_splits_m2 <- NA_integer_
+  tree_scalar_split_on_am1 <- NA
+  tree_scalar_split_on_am2 <- NA
+  tree_scalar_n_splits_am1 <- NA_integer_
+  tree_scalar_n_splits_am2 <- NA_integer_
   
   tree_metric_split_on_m0 <- NA
   tree_metric_n_splits_m0 <- NA_integer_
@@ -360,12 +345,12 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     
     metric_info <- semtree_detects_moderation(
       res$semtree$metric_tree,
-      moderators = c("m1", "m2", "m0")
+      moderators = c("am1", "am2", "m0")
     )
     
     scalar_info <- semtree_detects_moderation(
       res$semtree$scalar_tree,
-      moderators = c("m1", "m2", "m0")
+      moderators = c("am1", "am2", "m0")
     )
     
     tree_metric_split_on_m0 <- metric_info$tree_split_on_m0
@@ -374,15 +359,15 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_split_on_m0 <- scalar_info$tree_split_on_m0
     tree_scalar_n_splits_m0 <- scalar_info$tree_n_splits_m0
     
-    tree_metric_split_on_m1 <- metric_info$tree_split_on_m1
-    tree_metric_split_on_m2 <- metric_info$tree_split_on_m2
-    tree_metric_n_splits_m1 <- metric_info$tree_n_splits_m1
-    tree_metric_n_splits_m2 <- metric_info$tree_n_splits_m2
+    tree_metric_split_on_am1 <- metric_info$tree_split_on_am1
+    tree_metric_split_on_am2 <- metric_info$tree_split_on_am2
+    tree_metric_n_splits_am1 <- metric_info$tree_n_splits_am1
+    tree_metric_n_splits_am2 <- metric_info$tree_n_splits_am2
     
-    tree_scalar_split_on_m1 <- scalar_info$tree_split_on_m1
-    tree_scalar_split_on_m2 <- scalar_info$tree_split_on_m2
-    tree_scalar_n_splits_m1 <- scalar_info$tree_n_splits_m1
-    tree_scalar_n_splits_m2 <- scalar_info$tree_n_splits_m2
+    tree_scalar_split_on_am1 <- scalar_info$tree_split_on_am1
+    tree_scalar_split_on_am2 <- scalar_info$tree_split_on_am2
+    tree_scalar_n_splits_am1 <- scalar_info$tree_n_splits_am1
+    tree_scalar_n_splits_am2 <- scalar_info$tree_n_splits_am2
   }
   
   # ---------------------------
@@ -396,6 +381,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     delta_lambda   = as.numeric(row$delta_lambda),
     delta_nu       = as.numeric(row$delta_nu),
     moderator      = as.character(row$moderator),
+    analysis_form = as.character(row$analysis_form),
     rep_id = as.integer(row$rep_id),
     
     true_any_noninvariance    = as.logical(true_any_noninvariance),
@@ -405,14 +391,6 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     
     mnlfa_model    = as.character(mnlfa_model),
     mnlfa_det      = as.logical(mnlfa_det),
-    
-    mnlfa_metric_delta_cfi   = as.numeric(mnlfa_metric_delta_cfi),
-    mnlfa_metric_delta_rmsea = as.numeric(mnlfa_metric_delta_rmsea),
-    mnlfa_metric_retain      = as.logical(mnlfa_metric_retain),
-    
-    mnlfa_scalar_delta_cfi   = as.numeric(mnlfa_scalar_delta_cfi),
-    mnlfa_scalar_delta_rmsea = as.numeric(mnlfa_scalar_delta_rmsea),
-    mnlfa_scalar_retain      = as.logical(mnlfa_scalar_retain),
     
     mnlfa_final_decision     = as.character(mnlfa_final_decision),
     
@@ -442,18 +420,18 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_p_uncorrected = as.numeric(tree_scalar_p_uncorrected),
     tree_scalar_reject       = as.logical(tree_scalar_reject),
     
-    tree_metric_split_on_m1 = as.logical(tree_metric_split_on_m1),
-    tree_metric_split_on_m2 = as.logical(tree_metric_split_on_m2),
+    tree_metric_split_on_am1 = as.logical(tree_metric_split_on_am1),
+    tree_metric_split_on_am2 = as.logical(tree_metric_split_on_am2),
     tree_metric_split_on_m0 = as.logical(tree_metric_split_on_m0),
-    tree_metric_n_splits_m1 = as.integer(tree_metric_n_splits_m1),
-    tree_metric_n_splits_m2 = as.integer(tree_metric_n_splits_m2),
+    tree_metric_n_splits_am1 = as.integer(tree_metric_n_splits_am1),
+    tree_metric_n_splits_am2 = as.integer(tree_metric_n_splits_am2),
     tree_metric_n_splits_m0 = as.integer(tree_metric_n_splits_m0),
     
-    tree_scalar_split_on_m1 = as.logical(tree_scalar_split_on_m1),
-    tree_scalar_split_on_m2 = as.logical(tree_scalar_split_on_m2),
+    tree_scalar_split_on_am1 = as.logical(tree_scalar_split_on_am1),
+    tree_scalar_split_on_am2 = as.logical(tree_scalar_split_on_am2),
     tree_scalar_split_on_m0 = as.logical(tree_scalar_split_on_m0),
-    tree_scalar_n_splits_m1 = as.integer(tree_scalar_n_splits_m1),
-    tree_scalar_n_splits_m2 = as.integer(tree_scalar_n_splits_m2),
+    tree_scalar_n_splits_am1 = as.integer(tree_scalar_n_splits_am1),
+    tree_scalar_n_splits_am2 = as.integer(tree_scalar_n_splits_am2),
     tree_scalar_n_splits_m0 = as.integer(tree_scalar_n_splits_m0),
 
     error_msg = as.character(error_msg),
@@ -473,11 +451,12 @@ TEST_DESIGN <- tidyr::expand_grid(
   delta_lambda = c(-0.3, 0.3),
   delta_nu     = c(-1, 1),
   moderator    = c("linear", "quadratic", "noise"),
+  analysis_form = c("linear", "quadratic"),
   seed_tbl
 ) %>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator, rep_id
+    delta_lambda, delta_nu, moderator,analysis_form, rep_id
   ) %>%
   dplyr::mutate(job_id = dplyr::row_number())
 
@@ -489,8 +468,8 @@ safe_run_one <- function(row) {
     error = function(e) {
       message("Error in job ", row$job_id, ": ", e$message)
       
-      has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3")
-      has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22")
+      has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3","1.32")
+      has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22","1.32")
       
       true_structured_moderator <- row$moderator != "noise"
       
@@ -515,6 +494,7 @@ safe_run_one <- function(row) {
         delta_lambda   = as.numeric(row$delta_lambda),
         delta_nu       = as.numeric(row$delta_nu),
         moderator      = as.character(row$moderator),
+        analysis_form = as.character(row$analysis_form),
         rep_id = as.integer(row$rep_id),
         
         true_any_noninvariance    = as.logical(true_any_noninvariance),
@@ -524,14 +504,6 @@ safe_run_one <- function(row) {
         
         mnlfa_model = NA_character_,
         mnlfa_det = NA,
-        
-        mnlfa_metric_delta_cfi = NA_real_,
-        mnlfa_metric_delta_rmsea = NA_real_,
-        mnlfa_metric_retain = NA,
-        
-        mnlfa_scalar_delta_cfi = NA_real_,
-        mnlfa_scalar_delta_rmsea = NA_real_,
-        mnlfa_scalar_retain = NA,
         
         mnlfa_final_decision = NA_character_,
         
@@ -561,18 +533,18 @@ safe_run_one <- function(row) {
         tree_scalar_p_uncorrected = NA_real_,
         tree_scalar_reject = NA,
         
-        tree_metric_split_on_m1 = NA,
-        tree_metric_split_on_m2 = NA,
+        tree_metric_split_on_am1 = NA,
+        tree_metric_split_on_am2 = NA,
         tree_metric_split_on_m0 = NA,
-        tree_metric_n_splits_m1 = NA_integer_,
-        tree_metric_n_splits_m2 = NA_integer_,
+        tree_metric_n_splits_am1 = NA_integer_,
+        tree_metric_n_splits_am2 = NA_integer_,
         tree_metric_n_splits_m0 = NA_integer_,
         
-        tree_scalar_split_on_m1 = NA,
-        tree_scalar_split_on_m2 = NA,
+        tree_scalar_split_on_am1 = NA,
+        tree_scalar_split_on_am2 = NA,
         tree_scalar_split_on_m0 = NA,
-        tree_scalar_n_splits_m1 = NA_integer_,
-        tree_scalar_n_splits_m2 = NA_integer_,
+        tree_scalar_n_splits_am1 = NA_integer_,
+        tree_scalar_n_splits_am2 = NA_integer_,
         tree_scalar_n_splits_m0 = NA_integer_,
         
         mnlfa_error_msg = NA_character_,
@@ -646,149 +618,3 @@ results %>%
     tree_metric_reject_rate = mean(tree_metric_reject, na.rm = TRUE),
     tree_scalar_reject_rate = mean(tree_scalar_reject, na.rm = TRUE)
   )
-
-# ------- FULL RUN ----------------
-#t1 <- Sys.time()
-
-#all_results <- purrr::map_dfr(
-#  seq_len(nrow(DESIGN)),
-#  ~ run_one(DESIGN[.x, ])
-#)
-
-#t2 <- Sys.time()
-
-#elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
-#elapsed_total_sec <- as.numeric(difftime(t2, t1, units = "secs"))
-
-#elapsed_total_min
-#elapsed_total_sec
-
-#append_results(all_results, results_path)
-
-
-
-
-# -------------------------------
-# TEST: single controlled run
-# -------------------------------
-
-
-
-#set.seed(123)
-
-# ---- Define ONE condition ----
-#test_row <- tibble(
-#  job_id = 1,
-#  popmodel = "1.22",   # contains moderation
-#  N = 500,
-#  reliability = 0.80,
-#  lambda = 0.70,
-#  intercepts = 1,
-#  delta_lambda = 0.3,
-#  delta_nu = 1,
-#  moderator = "linear",
-#  seed = 123
-#)
-
-# ---- Generate data ----
-#params <- gen_paramsC(
-#  popmodel      = test_row$popmodel,
-#  lambda        = test_row$lambda,
-#  nu            = test_row$intercepts,
-#  reliability   = test_row$reliability,
-#  moderator     = test_row$moderator,
-#  delta_lambda  = test_row$delta_lambda,
-#  delta_nu      = test_row$delta_nu
-#)
-
-#sim <- gen_dataC(
-#  N = test_row$N,
-#  params = params
-#)
-
-#df <- sim$data
-
-# ensure required columns
-#if (!"m0" %in% names(df)) df$m0 <- 0
-
-# ---- Run analysis ----
-#res <- run_analysis(
-#  data = df,
-#  methods = c("MNLFA", "SEMTREE"),
-#  nfactors = 1,
-#  alpha = 0.05,
-#  predictors = c("m1", "m2", "m0")
-#)
-
-# ------- FULL RUN ----------------
-#t1 <- Sys.time()
-
-#all_results <- purrr::map_dfr(
-#  seq_len(nrow(DESIGN)),
-#  ~ run_one(DESIGN[.x, ])
-#)
-
-#t2 <- Sys.time()
-
-#elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
-#elapsed_total_sec <- as.numeric(difftime(t2, t1, units = "secs"))
-
-#elapsed_total_min
-#elapsed_total_sec
-
-#append_results(all_results, results_path)
-
-
-
-
-# -------------------------------
-# TEST: single controlled run
-# -------------------------------
-
-
-
-#set.seed(123)
-
-# ---- Define ONE condition ----
-#test_row <- tibble(
-#  job_id = 1,
-#  popmodel = "1.22",   # contains moderation
-#  N = 500,
-#  reliability = 0.80,
-#  lambda = 0.70,
-#  intercepts = 1,
-#  delta_lambda = 0.3,
-#  delta_nu = 1,
-#  moderator = "linear",
-#  seed = 123
-#)
-
-# ---- Generate data ----
-#params <- gen_paramsC(
-#  popmodel      = test_row$popmodel,
-#  lambda        = test_row$lambda,
-#  nu            = test_row$intercepts,
-#  reliability   = test_row$reliability,
-#  moderator     = test_row$moderator,
-#  delta_lambda  = test_row$delta_lambda,
-#  delta_nu      = test_row$delta_nu
-#)
-
-#sim <- gen_dataC(
-#  N = test_row$N,
-#  params = params
-#)
-
-#df <- sim$data
-
-# ensure required columns
-#if (!"m0" %in% names(df)) df$m0 <- 0
-
-# ---- Run analysis ----
-#res <- run_analysis(
-#  data = df,
-#  methods = c("MNLFA", "SEMTREE"),
-#  nfactors = 1,
-#  alpha = 0.05,
-#  predictors = c("m1", "m2", "m0")
-#)
