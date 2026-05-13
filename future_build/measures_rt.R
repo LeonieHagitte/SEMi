@@ -1,8 +1,8 @@
 # measures_rt.R
 
-library(tidyverse)
 library(dplyr)
 library(tidyr)
+library(tibble)
 
 results_path <- "results.csv"
 
@@ -10,188 +10,129 @@ results <- read.csv(results_path, stringsAsFactors = FALSE) %>%
   tibble::as_tibble()
 
 # ---------------------------
-# overall metric performance
+# helper functions
 # ---------------------------
-metric_summary <- results %>%
-  summarise(
-    mnlfa_metric_type1 = mean(mnlfa_metric_lrt_reject[true_metric_noninvariance == FALSE], na.rm = TRUE),
-    mnlfa_metric_power = mean(mnlfa_metric_lrt_reject[true_metric_noninvariance == TRUE], na.rm = TRUE),
-    
-    tree_metric_type1  = mean(tree_metric_reject[true_metric_noninvariance == FALSE], na.rm = TRUE),
-    tree_metric_power  = mean(tree_metric_reject[true_metric_noninvariance == TRUE], na.rm = TRUE)
+rate_by_truth <- function(decision, truth) {
+  tibble(
+    type1 = mean(decision[truth == FALSE], na.rm = TRUE),
+    power = mean(decision[truth == TRUE],  na.rm = TRUE),
+    n_type1 = sum(!is.na(decision[truth == FALSE])),
+    n_power = sum(!is.na(decision[truth == TRUE]))
   )
+}
+
+rate_tree_by_truth <- function(reject, correct_split, truth) {
+  detection <- reject == TRUE
+  correct_detection <- reject == TRUE & correct_split == TRUE
+  
+  tibble(
+    type1_detection = mean(detection[truth == FALSE], na.rm = TRUE),
+    power_detection = mean(detection[truth == TRUE], na.rm = TRUE),
+    
+    type1_wrong_split = mean(detection[truth == TRUE & correct_split == FALSE], na.rm = TRUE),
+    power_correct_split = mean(correct_detection[truth == TRUE], na.rm = TRUE),
+    
+    n_type1 = sum(!is.na(reject[truth == FALSE])),
+    n_power = sum(!is.na(reject[truth == TRUE]))
+  )
+}
+# ---------------------------
+# overall Type I error and power
+# ---------------------------
+overall_performance <- bind_rows(
+  rate_by_truth(results$mnlfa_metric_lrt_reject, results$true_metric_noninvariance) %>%
+    mutate(method = "MNLFA", level = "metric"),
+  
+  rate_tree_by_truth(results$tree_metric_reject, results$tree_metric_correct_split, results$true_metric_noninvariance) %>%
+    transmute(
+      type1 = type1_detection,
+      power = power_correct_split,
+      n_type1,
+      n_power,
+      method = "SEMTREE",
+      level = "metric"
+    ),
+  
+  rate_by_truth(results$mnlfa_scalar_lrt_reject, results$true_scalar_noninvariance) %>%
+    mutate(method = "MNLFA", level = "scalar"),
+  
+  rate_tree_by_truth(results$tree_scalar_reject, results$tree_scalar_correct_split, results$true_scalar_noninvariance) %>%
+    transmute(
+      type1 = type1_detection,
+      power = power_correct_split,
+      n_type1,
+      n_power,
+      method = "SEMTREE",
+      level = "scalar"
+    )
+) %>%
+  select(level, method, type1, power, n_type1, n_power)
+
+print(overall_performance)
 
 # ---------------------------
-# overall scalar performance
+# condition-specific Type I error and power
 # ---------------------------
-scalar_summary <- results %>%
+condition_performance <- results %>%
+  group_by(
+    N, reliability, popmodel, moderator, analysis_form,
+    delta_lambda, delta_nu
+  ) %>%
   summarise(
-    mnlfa_scalar_type1 = mean(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == FALSE], na.rm = TRUE),
-    mnlfa_scalar_power = mean(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == TRUE], na.rm = TRUE),
-    
-    tree_scalar_type1  = mean(tree_scalar_reject[true_scalar_noninvariance == FALSE], na.rm = TRUE),
-    tree_scalar_power  = mean(tree_scalar_reject[true_scalar_noninvariance == TRUE], na.rm = TRUE)
-  )
-
-# ---------------------------
-# stratified performance
-# ---------------------------
-condition_summary <- results %>%
-  group_by(N, reliability, moderator) %>%
-  summarise(
-    n_replications = n(),
+    n_rows = n(),
     
     mnlfa_metric_type1 = mean(mnlfa_metric_lrt_reject[true_metric_noninvariance == FALSE], na.rm = TRUE),
-    mnlfa_metric_power = mean(mnlfa_metric_lrt_reject[true_metric_noninvariance == TRUE], na.rm = TRUE),
+    mnlfa_metric_power = mean(mnlfa_metric_lrt_reject[true_metric_noninvariance == TRUE],  na.rm = TRUE),
     
-    tree_metric_type1  = mean(tree_metric_reject[true_metric_noninvariance == FALSE], na.rm = TRUE),
-    tree_metric_power  = mean(tree_metric_reject[true_metric_noninvariance == TRUE], na.rm = TRUE),
+    tree_metric_type1 = mean(tree_metric_reject[true_metric_noninvariance == FALSE], na.rm = TRUE),
+    tree_metric_power = mean(
+      (tree_metric_reject == TRUE & tree_metric_correct_split == TRUE)[true_metric_noninvariance == TRUE],
+      na.rm = TRUE
+    ),
     
     mnlfa_scalar_type1 = mean(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == FALSE], na.rm = TRUE),
-    mnlfa_scalar_power = mean(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == TRUE], na.rm = TRUE),
+    mnlfa_scalar_power = mean(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == TRUE],  na.rm = TRUE),
     
-    tree_scalar_type1  = mean(tree_scalar_reject[true_scalar_noninvariance == FALSE], na.rm = TRUE),
-    tree_scalar_power  = mean(tree_scalar_reject[true_scalar_noninvariance == TRUE], na.rm = TRUE),
+    tree_scalar_type1 = mean(tree_scalar_reject[true_scalar_noninvariance == FALSE], na.rm = TRUE),
+    tree_scalar_power = mean(
+      (tree_scalar_reject == TRUE & tree_scalar_correct_split == TRUE)[true_scalar_noninvariance == TRUE],
+      na.rm = TRUE
+    ),
     
-    tree_scalar_available = mean(!is.na(tree_scalar_reject)),
+    n_metric_type1 = sum(!is.na(mnlfa_metric_lrt_reject[true_metric_noninvariance == FALSE])),
+    n_metric_power = sum(!is.na(mnlfa_metric_lrt_reject[true_metric_noninvariance == TRUE])),
+    n_scalar_type1 = sum(!is.na(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == FALSE])),
+    n_scalar_power = sum(!is.na(mnlfa_scalar_lrt_reject[true_scalar_noninvariance == TRUE])),
     
     .groups = "drop"
   )
 
-print(metric_summary)
-print(scalar_summary)
-print(condition_summary)
+print(condition_performance)
 
-######
-library(dplyr)
-library(tidyr)
-
-full_table <- condition_summary %>%
-  select(
-    N, reliability, moderator, n_replications,
-    
-    # metric
-    mnlfa_metric_type1, mnlfa_metric_power,
-    tree_metric_type1, tree_metric_power,
-    
-    # scalar
-    mnlfa_scalar_type1, mnlfa_scalar_power,
-    tree_scalar_type1, tree_scalar_power
-  )
-
-long_table <- full_table %>%
+condition_performance_long <- condition_performance %>%
   pivot_longer(
-    cols = -c(N, reliability, moderator, n_replications),
+    cols = c(
+      mnlfa_metric_type1,
+      mnlfa_metric_power,
+      tree_metric_type1,
+      tree_metric_power,
+      mnlfa_scalar_type1,
+      mnlfa_scalar_power,
+      tree_scalar_type1,
+      tree_scalar_power
+    ),
     names_to = "measure",
-    values_to = "value"
-  ) %>%
-  mutate(
-    level  = ifelse(grepl("metric", measure), "Metric", "Scalar"),
-    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
-    type   = ifelse(grepl("type1", measure), "Type I", "Power")
-  ) %>%
-  select(N, reliability, moderator, level, method, type, value)
-######
-
-
-overall_metric <- metric_summary %>%
-  transmute(
-    level = "metric",
-    mnlfa_type1 = mnlfa_metric_type1,
-    mnlfa_power = mnlfa_metric_power,
-    tree_type1  = tree_metric_type1,
-    tree_power  = tree_metric_power
-  )
-
-overall_scalar <- scalar_summary %>%
-  transmute(
-    level = "scalar",
-    mnlfa_type1 = mnlfa_scalar_type1,
-    mnlfa_power = mnlfa_scalar_power,
-    tree_type1  = tree_scalar_type1,
-    tree_power  = tree_scalar_power
-  )
-
-overall_table <- bind_rows(overall_metric, overall_scalar) %>%
-  pivot_longer(
-    cols = -level,
-    names_to = "measure",
-    values_to = "value"
+    values_to = "rate"
   ) %>%
   mutate(
     method = ifelse(grepl("^mnlfa", measure), "MNLFA", "SEMTREE"),
-    type   = ifelse(grepl("type1", measure), "Type I", "Power")
+    level = ifelse(grepl("metric", measure), "metric", "scalar"),
+    estimand = ifelse(grepl("type1", measure), "type1", "power")
   ) %>%
-  select(level, method, type, value) %>%
-  arrange(level, method, type)
-
-overall_table
-
-####
-
-condition_table <- condition_summary %>%
-  select(N, reliability, moderator,
-         starts_with("mnlfa_"),
-         starts_with("tree_")) %>%
-  arrange(N, reliability, moderator)
-
-condition_table
-#####
-library(ggplot2)
-
-
-ggplot(overall_table, aes(x = method, y = value, fill = type)) +
-  geom_col(position = "dodge") +
-  facet_wrap(~ level) +
-  labs(
-    x = NULL,
-    y = "Rate"
-  ) +
-  theme_minimal()
-
-####
-
-metric_plot_data <- condition_summary %>%
-  select(N, reliability, moderator,
-         mnlfa_metric_type1, mnlfa_metric_power,
-         tree_metric_type1, tree_metric_power) %>%
-  pivot_longer(
-    cols = -c(N, reliability, moderator),
-    names_to = "measure",
-    values_to = "value"
-  ) %>%
-  mutate(
-    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
-    stat = ifelse(grepl("type1", measure), "Type I", "Power")
+  select(
+    N, reliability, popmodel, moderator, analysis_form,
+    delta_lambda, delta_nu,
+    method, level, estimand, rate
   )
 
-ggplot(metric_plot_data,
-       aes(x = factor(N), y = value, fill = method)) +
-  geom_col(position = "dodge") +
-  facet_grid(stat ~ reliability + moderator) +
-  labs(x = "Sample size (N)", y = "Rate") +
-  theme_minimal()
-####
-
-scalar_plot_data <- condition_summary %>%
-  select(N, reliability, moderator,
-         mnlfa_scalar_type1, mnlfa_scalar_power,
-         tree_scalar_type1, tree_scalar_power) %>%
-  pivot_longer(
-    cols = -c(N, reliability, moderator),
-    names_to = "measure",
-    values_to = "value"
-  ) %>%
-  mutate(
-    method = ifelse(grepl("mnlfa", measure), "MNLFA", "SEMTREE"),
-    stat = ifelse(grepl("type1", measure), "Type I", "Power")
-  )
-
-####
-ggplot(scalar_plot_data,
-       aes(x = factor(N), y = value, fill = method)) +
-  geom_col(position = "dodge") +
-  facet_grid(stat ~ reliability + moderator) +
-  labs(x = "Sample size (N)", y = "Rate") +
-  theme_minimal()
-
+print(condition_performance_long)
