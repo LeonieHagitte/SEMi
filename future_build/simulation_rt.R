@@ -549,10 +549,10 @@ safe_run_one <- function(row) {
   )
 }
 # -------------------------------------------
-done_jobs <- read.csv(results_path)$job_id
+#done_jobs <- read.csv(results_path)$job_id
 
-DESIGN <- DESIGN %>%
-  filter(!job_id %in% done_jobs)
+#DESIGN <- DESIGN %>%
+#  filter(!job_id %in% done_jobs)
 #############################################
 
 plan(list(
@@ -567,24 +567,24 @@ plan(list(
 ## with i and j being the first two arguments
 
 # get command line arguments
-args <- commandArgs(trailingOnly = TRUE)
+#args <- commandArgs(trailingOnly = TRUE)
 
-if (length(args)>0) {
+#if (length(args)>0) {
   
-  if (length(args)==1) args[2]=100
+#  if (length(args)==1) args[2]=100
   
-  chunk_id <- as.integer(args[1])
-  n_chunks <- as.integer(args[2]) 
+#  chunk_id <- as.integer(args[1])
+#  n_chunks <- as.integer(args[2]) 
 
-  all_indices <- seq_len(nrow(DESIGN))
+#  all_indices <- seq_len(nrow(DESIGN))
 
-  chunks <- split(all_indices, cut(seq_along(all_indices),
-                                   n_chunks, labels = FALSE))
-  my_indices <- chunks[[chunk_id]]
+#  chunks <- split(all_indices, cut(seq_along(all_indices),
+#                                  n_chunks, labels = FALSE))
+#  my_indices <- chunks[[chunk_id]]
   
-  DESIGN <- DESIGN[my_indices, ]
+#  DESIGN <- DESIGN[my_indices, ]
 
-}
+#}
 
 # only for debugging purposes, run only first two rows:
 # DESIGN <- DESIGN[1:4, ]
