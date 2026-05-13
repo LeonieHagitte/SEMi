@@ -527,7 +527,7 @@ DESIGN <- DESIGN %>%
 #############################################
 
 plan(list(
-  tweak(multisession, workers = parallelly::availableWorkers() - 1),
+  tweak(multisession, workers = length(parallelly::availableWorkers()) - 1),
   sequential
 ))
 
