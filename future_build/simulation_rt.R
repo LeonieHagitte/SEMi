@@ -456,11 +456,9 @@ safe_run_one <- function(row) {
 
 #############################################
 
-plan(list(
-  tweak(multisession, workers = parallelly::availableWorkers() - 1),
-  sequential
-))
+n_workers <- max(1, parallelly::availableCores() - 1)
 
+plan(multisession, workers = n_workers)
 
 
 ## ----------- get splitter from command line argument ----------
