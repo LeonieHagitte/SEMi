@@ -585,18 +585,7 @@ if (is.null(chunk_id)) {
   saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
 }
 
-append_results(results, results_path)
+# this should be done later in a 
+# collection script
+#append_results(results, results_path)
 ########################################
-
-results %>%
-  dplyr::count(popmodel, moderator, true_any_noninvariance)
-
-results %>%
-  dplyr::summarise(
-    n_rows = dplyr::n(),
-    n_errors = sum(!is.na(error_msg)),
-    mnlfa_metric_reject_rate = mean(mnlfa_metric_lrt_reject, na.rm = TRUE),
-    mnlfa_scalar_reject_rate = mean(mnlfa_scalar_lrt_reject, na.rm = TRUE),
-    tree_metric_reject_rate = mean(tree_metric_reject, na.rm = TRUE),
-    tree_scalar_reject_rate = mean(tree_scalar_reject, na.rm = TRUE)
-  )
