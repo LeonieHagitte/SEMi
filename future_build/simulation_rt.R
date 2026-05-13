@@ -7,11 +7,6 @@ library(future)
 source("dataprep_rt.R")
 source("analysis_rt.R")
 
-
-manifest_path <- "progress_manifest.csv"
-results_path  <- "results.csv"
-lock_dir <- "locks"
-
 # -----------------------------------
 set.seed(42)
 # ---------------------------------
@@ -75,96 +70,6 @@ if (length(args) > 0) {
     dplyr::filter(rep_id %in% reps_this_chunk)
 }
 # --------------------------------------------------------------
-
-
-manifest <- DESIGN %>%
-  select(-seed) %>%
-  mutate(
-    status = "PENDING",
-    started_at = NA_character_,
-    finished_at = NA_character_,
-    worker = NA_character_,
-    error_msg = NA_character_
-  )
-
-if (!file.exists(manifest_path)) {
-  write.csv(manifest, manifest_path, row.names = FALSE)
-}
-if (!dir.exists(lock_dir)) dir.create(lock_dir, recursive = TRUE)
-
-if (!file.exists(results_path)) {
-  write.csv(
-    data.frame(
-      job_id = integer(),
-      popmodel = character(),
-      N = integer(),
-      reliability = numeric(),
-      lambda = numeric(),
-      intercepts = numeric(),
-      delta_lambda = numeric(),
-      delta_nu = numeric(),
-      moderator = character(),
-      analysis_form = character(),
-      rep_id = integer(),
-      
-      true_any_noninvariance = logical(),
-      true_metric_noninvariance = logical(),
-      true_scalar_noninvariance = logical(),
-      true_structured_moderator = logical(),
-      
-      mnlfa_model = character(),
-      mnlfa_det = logical(),
-      
-      mnlfa_final_decision = character(),
-      
-      mnlfa_metric_lrt_chisq = numeric(),
-      mnlfa_metric_lrt_df = numeric(),
-      mnlfa_metric_lrt_p = numeric(),
-      mnlfa_metric_lrt_reject = logical(),
-      
-      mnlfa_scalar_lrt_chisq = numeric(),
-      mnlfa_scalar_lrt_df = numeric(),
-      mnlfa_scalar_lrt_p = numeric(),
-      mnlfa_scalar_lrt_reject = logical(),
-      
-      mnlfa_omnibus_lrt_chisq = numeric(),
-      mnlfa_omnibus_lrt_df = numeric(),
-      mnlfa_omnibus_lrt_p = numeric(),
-      mnlfa_omnibus_lrt_reject = logical(),
-      
-      tree_metric_split = logical(),
-      tree_scalar_split = logical(),
-      
-      tree_metric_p = numeric(),
-      tree_metric_p_uncorrected = numeric(),
-      tree_metric_reject = logical(),
-      
-      tree_scalar_p = numeric(),
-      tree_scalar_p_uncorrected = numeric(),
-      tree_scalar_reject = logical(),
-      
-      tree_metric_split_on_am1 = logical(),
-      tree_metric_split_on_am2 = logical(),
-      tree_metric_split_on_m0 = logical(),
-      tree_metric_n_splits_am1 = integer(),
-      tree_metric_n_splits_am2 = integer(),
-      tree_metric_n_splits_m0 = integer(),
-      
-      tree_scalar_split_on_am1 = logical(),
-      tree_scalar_split_on_am2 = logical(),
-      tree_scalar_split_on_m0 = logical(),
-      tree_scalar_n_splits_am1 = integer(),
-      tree_scalar_n_splits_am2 = integer(),
-      tree_scalar_n_splits_m0 = integer(),
-      
-      error_msg = character(),
-      mnlfa_error_msg = character(),
-      semtree_error_msg = character()
-    ),
-    results_path,
-    row.names = FALSE
-  )
-}
 
 
 ##############################################################################
@@ -548,11 +453,7 @@ safe_run_one <- function(row) {
     }
   )
 }
-# -------------------------------------------
-#done_jobs <- read.csv(results_path)$job_id
 
-#DESIGN <- DESIGN %>%
-#  filter(!job_id %in% done_jobs)
 #############################################
 
 plan(list(
