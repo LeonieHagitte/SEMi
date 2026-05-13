@@ -1,4 +1,3 @@
-library(tidyverse)
 library(furrr)
 library(dplyr)
 library(tibble)
@@ -13,31 +12,10 @@ manifest_path <- "progress_manifest.csv"
 results_path  <- "results.csv"
 lock_dir <- "locks"
 # -----------------------------------
-parallel_seeds <- function(n, seed = NULL) {
-  if (is.null(seed)) {
-    cli::cli_abort("{.arg seed} must be provided.")
-  }
-  
-  RNGkind("L'Ecuyer-CMRG")
-  set.seed(seed)
-  
-  cli::cli_inform(
-    "RNG kind set to {.val L'Ecuyer-CMRG} with {.arg seed = {seed}}."
-  )
-  
-  purrr::accumulate(
-    seq_len(n - 1),
-    \(s, x) parallel::nextRNGStream(s),
-    .init = .Random.seed
-  )
-}
+set.seed(42)
 # ---------------------------------
-n_rep <- 25
+n_rep <- 10
 
-seed_tbl <- tibble(
-  rep_id = seq_len(n_rep),
-  seed = parallel_seeds(n = n_rep, seed = 42)
-)
 # ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
@@ -53,7 +31,7 @@ DESIGN <- tidyr::expand_grid(
   delta_nu     = c(-1, -0.5, 0.5, 1),
   moderator    = MOD_TYPES,
   analysis_form = c("linear", "quadratic"),
-  seed_tbl
+  rep_id = 1:n_rep
 )%>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
@@ -61,6 +39,13 @@ DESIGN <- tidyr::expand_grid(
   ) %>%
   dplyr::mutate(
     job_id = dplyr::row_number()
+  ) 
+
+DESIGN <- DESIGN %>%
+  dplyr::mutate(
+    # randomly draw one seed per each row
+    seed = round(runif(nrow(DESIGN),0,.Machine$integer.max))
+    
   )
 
 manifest <- DESIGN %>%
@@ -156,7 +141,7 @@ if (!file.exists(results_path)) {
 ##############################################################################
 run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
 
-  .Random.seed <<- row$seed[[1]]
+  set.seed(row$seed)
 
   popmodel_use <- row$popmodel
   
@@ -440,27 +425,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   )
   }
 
-# ------- TEST --------------------
 
-TEST_DESIGN <- tidyr::expand_grid(
-  popmodel     = c("0", "1.22"),
-  N            = c(300, 1000),
-  reliability  = c(0.60, 0.95),
-  lambda       = 0.70,
-  intercepts   = 1,
-  delta_lambda = c(-0.3, 0.3),
-  delta_nu     = c(-1, 1),
-  moderator    = c("linear", "quadratic", "noise"),
-  analysis_form = c("linear", "quadratic"),
-  seed_tbl
-) %>%
-  dplyr::arrange(
-    popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator,analysis_form, rep_id
-  ) %>%
-  dplyr::mutate(job_id = dplyr::row_number())
-
-DESIGN <- TEST_DESIGN
 
 safe_run_one <- function(row) {
   tryCatch(
@@ -562,59 +527,64 @@ DESIGN <- DESIGN %>%
 #############################################
 
 plan(list(
-  tweak(multisession, workers = parallel::detectCores() - 1),
+  tweak(multisession, workers = parallelly::availableWorkers() - 1),
   sequential
 ))
 
-simulate_seed <- function(design_for_seed, seed) {
-  purrr::map(
-    seq_len(nrow(design_for_seed)),
-    ~ safe_run_one(design_for_seed[.x, ])
-  )
+
+
+## ----------- get splitter from command line argument ----------
+## order the simulation to only round the i-th of j many chunks
+## with i and j being the first two arguments
+
+# get command line arguments
+args <- commandArgs(trailingOnly = TRUE)
+
+if (length(args)>0) {
+  
+  if (length(args)==1) args[2]=100
+  
+  chunk_id <- as.integer(args[1])
+  n_chunks <- as.integer(args[2]) 
+
+  all_indices <- seq_len(nrow(DESIGN))
+
+  chunks <- split(all_indices, cut(seq_along(all_indices),
+                                   n_chunks, labels = FALSE))
+  my_indices <- chunks[[chunk_id]]
+  
+  DESIGN <- DESIGN[my_indices, ]
+
 }
+
+# only for debugging purposes, run only first two rows:
+# DESIGN <- DESIGN[1:4, ]
+
+
+#
+# -- Start Simulation --
 
 t1 <- Sys.time()
 
-results <- DESIGN %>%
-  group_by(rep_id) %>%
-  nest(.key = "design") %>%
-  ungroup() %>%
-  mutate(
-    design = purrr::map2(
-      design,
-      rep_id,
-      ~ dplyr::mutate(.x, rep_id = .y)
-    ),
-    seed = purrr::map(design, ~ .x$seed[[1]]),
-    result = future_map2(
-      design,
-      seed,
-      simulate_seed,
-      .options = furrr::furrr_options(seed = TRUE)
-    )
-  ) %>%
-  select(result) %>%
-  unnest(result) %>%
-  unnest(result)
+# run across all rows (use future package's parallelization)
+results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
+  safe_run_one(DESIGN[i, , drop = FALSE])
+},simplify = TRUE)
+
+results <- t(results)
 
 t2 <- Sys.time()
 
 elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
 elapsed_total_min
 
-saveRDS(results, "results_parallel.rds")
-append_results(results, results_path)
+if (is.null(chunk_id)) {
+  saveRDS(results, "results_parallel.rds")
+} else {
+  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
+}
+
+# this should be done later in a 
+# collection script
+#append_results(results, results_path)
 ########################################
-
-results %>%
-  dplyr::count(popmodel, moderator, true_any_noninvariance)
-
-results %>%
-  dplyr::summarise(
-    n_rows = dplyr::n(),
-    n_errors = sum(!is.na(error_msg)),
-    mnlfa_metric_reject_rate = mean(mnlfa_metric_lrt_reject, na.rm = TRUE),
-    mnlfa_scalar_reject_rate = mean(mnlfa_scalar_lrt_reject, na.rm = TRUE),
-    tree_metric_reject_rate = mean(tree_metric_reject, na.rm = TRUE),
-    tree_scalar_reject_rate = mean(tree_scalar_reject, na.rm = TRUE)
-  )
