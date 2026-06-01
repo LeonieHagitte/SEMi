@@ -1,0 +1,202 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  man,
+  floatsintext]{apa7}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+% preamble.tex 
+
+\usepackage{csquotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{rotating}
+
+
+\captionsetup{justification=raggedright,singlelinecheck=false}
+
+\shorttitle{SEMI-COMPLETE BY DESIGN}
+\affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
+\usepackage{placeins}
+\setlength{\textfloatsep}{6pt}
+\setlength{\floatsep}{6pt}
+\setlength{\intextsep}{6pt}
+\raggedbottom
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={SEMi-Manuscript},
+  pdfauthor={Leonie Hagitte\^{}\{1,2,3\}, Andreas M. Brandmaier\^{}\{2,3,4\}},
+  pdflang={american},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{SEMi-Manuscript}
+\author{Leonie Hagitte\(^{1,2,3}\), Andreas M. Brandmaier\(^{2,3,4}\)}
+\date{2025-12-10}
+
+\begin{document}
+\maketitle
+
+Psychological research frequently is concerned with latent constructs
+that cannot be observed directly, such as intelligence or personality.
+These constructs are inferred from manifest indicators, such as item
+responses or behavioral measures, using measurement models. The quality
+of these models is central to substantive inference: if a measure does
+not adequately represent the construct of interest, even highest
+statistical rigor cannot prevent misleading conclusions (Flake and Fried
+2020; Flake et al.~2017). However, recent work has emphasized the need
+for stronger statistical methods (Flake et al.~2017; Haig 2020; Altoè et
+al.~2020) but also more explicit theoretical foundations in psychology
+(Eronen and Bringmann 2021). We argue that measurment quality is
+essential to both developments. A key aspect of measurement quality is
+measurement invariance (MI), that is, the assumption that a measurement
+model functions equivalently across groups, samples, or time points. MI
+is required when researchers compare latent means, variances, or
+relations involving latent variables across such conditions, which is
+the case in typical correlational and experimental research designs. If
+MI is violated, observed differences may reflect measurement artifacts
+rather than substantive differences in the construct.
+
+\subsection{Classical Measurement Invariance
+Testing}\label{classical-measurement-invariance-testing}
+
+MI testing in the classical sense is usually done using Multi-group
+confirmatory factor analysis (MGCFA), sometimes also referred to as
+Multi-group Structural Equation Modeling (MGSEM). Thereby MI testing
+usually proceeds through a sequence of multiple-group model comparisons
+in which equality constraints are imposed on increasingly restrictive
+sets of parameters, such as factor loadings, intercepts, and residual
+variances. Equality of the models structure in both groups is calles
+configural Invariance, and can be understood as both groups share the
+models general form (i.e.~number of latent factors and items). Equality
+of factor loadings former is referred to as metric invariance, if metric
+invariance is present it indicates that all factor loading parameters
+are equal across groups. Speciﬁcally, this suggests that the items of a
+given scale and their underlying constructs relate to each other with
+the same strengths in both groups. Furthermore, it is called scalar
+invariance if the item intercepts are invariant across groups as well.
+If scalar MI is established, this suggests that in addition to the
+factorial structure and the factor loadings, the vectors of the item
+intercepts are also invariant. Scalar invariance is necessary for the
+comparison of latent mean diﬀerences across groups, because it indicates
+that the scales that were used have the same unit of measurement as well
+as the same origin. Residual or strict invariance assumes, additionally
+to the constraints above, that variables residuals are equal across the
+groups. If the residual variance holds, the items of the scale are
+measuring the latent constructs with the same measurement error. This
+implies that it can indeed be known whether diﬀerences measured by the
+items of the tested scale between the groups are due to group diﬀerences
+in the proposed factors or due to measurement errors. What is only
+implied in those interpretations of the different MI-levels, is that the
+question which level specifically one ``needs'' to hold in ones one data
+is determined by ones research question and the goal of the inference.
+As mentioned, metric invariance for example is sufficient to varrant
+latent mean comparisons between groups. In many empirical studies this
+is what researchers aim to do, compare latent mean or sum scores of
+individuals of different groups, then metric invariance suffices as
+MI-level.
+
+\subsection{Moderated Nonlinear Factor
+Analysis}\label{moderated-nonlinear-factor-analysis}
+
+However, MGCFA testing also has some limitations (e.g.: groups need to
+be created by categorical variables; the differences of said groups are
+assumed to be linear in their difference) that were overcome with more
+contemporary approaches to MI-testing. One example, that is getting more
+popular, is the Moderated nonlinear factor analysis (MNLFA). By
+conceptualizing MI differently, it enables the possibility to have the
+groups being created via continuous and potentially nonlinear variables.
+In MNLFA testing Measurement non-invariance (MNI) is modeled as the
+moderation of the measurement model (or parts of it) by a variable,
+external to that measurement model. That moderator variable is the
+variable, that was the former ``grouping variable'' in the MGCFA
+approach. The understanding is that if any model parameters are
+moderated by that external variable, then the measurement model is not
+measurement invariant, because it performs differently dependent on that
+variable.
+
+The exogenous variable may influence any subset of the parameters in the
+measurement model. Specifically, the means, variances, and covariance of
+latent factors, as well as the item intercepts, factor loadings, and
+residual variances of any manifest indicator, may vary systematically
+across individuals as deterministic functions of the exogenous variable.
+Whether MI is present depends on which parameters are moderated by the
+exogenous variable. If moderation is limited to the latent-factor
+parameters---that is, the means, variances, and covariance --- the model
+remains consistent with MI. In contrast, moderation of item-level
+parameters, including intercepts, loadings, or residual variances,
+constitutes MNI. Accordingly, a moderation function must be specified
+for each parameter that is allowed to vary as a function of the
+exogenous variable. Because of this conceptualization, the exogenous
+variable, the moderator, can be categorical as well as continuous, as
+well as non-linear, or linear.
+
+\subsection{Structural Equation Modeling
+Trees}\label{structural-equation-modeling-trees}
+
+\end{document}
