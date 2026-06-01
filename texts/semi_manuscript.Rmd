@@ -39,21 +39,26 @@ models.
 The quality of these models is central to substantive inference: 
 if a measure does not adequately represent the construct of interest, even highest statistical rigor cannot prevent misleading conclusions (Flake and Fried 2020; Flake et al. 2017). 
 However, recent work has emphasized the need for stronger statistical methods (Flake et al. 2017; Haig 2020; Altoè et al. 2020) but also more explicit theoretical foundations in psychology (Eronen and Bringmann 2021). We argue that measurment quality is essential to both developments.
-A key aspect of measurement quality is measurement invariance (MI), that is, the
-assumption that a measurement model functions equivalently across groups, samples, or time
-points. 
-MI is required when researchers compare latent means, variances, or relations
-involving latent variables across such conditions, which is the case in typical correlational
-and experimental research designs. 
-If MI is violated, observed differences may reflect measurement artifacts rather than substantive differences in the construct. 
+A key aspect of measurement quality is measurement invariance (MI), that is, the assumption that a measurement model functions equivalently across groups, samples, or time points. 
+So MI ensures that a latent construct is measured in the same way across groups, conditions, or occasions. 
+This assumption is required whenever latent means, variances, covariances, or structural relations are compared, making MI a cornerstone of most correlational and experimental research designs. 
+Violations of MI imply that the relationship between the latent construct and its observed indicators differs across groups or conditions. 
+In such cases, differences in observed responses may not solely reflect differences in the underlying construct but may also arise from systematic differences in item functioning or measurement precision. 
+Consequently, observed group differences become ambiguous, as they may represent a combination of substantive construct differences and measurement-related distortions. 
+Without establishing MI, it is therefore impossible to determine whether apparent differences reflect true variation in the latent construct or artifacts of the measurement process.
 
 ## Classical Measurement Invariance Testing 
+
+Probably due to the nature of research questions, concerning latent constructs, Structural Equation Models (SEMs) have become a widely used approach to model such relations. 
+In that SEMs represent hypotheses about data containing latent constructs, by defining relations of observable, minfest indicators and suggested latent factors, on so called measurement models.
+Those models parameters can be estimated by minimizing a suitable discrepancy function, which also provides sample-based measures of model fit. 
+By separating construct-related variance from measurement error, latent variable models provide a more robust basis for inference than approaches that rely exclusively on observed variables.
 
 MI testing in the classical sense is usually done using Multi-group confirmatory factor analysis (MGCFA), sometimes also referred to as Multi-group Structural Equation Modeling (MGSEM). 
 Thereby MI testing usually proceeds through a sequence of multiple-group model comparisons in which
 equality constraints are imposed on increasingly restrictive sets of parameters, such as factor
 loadings, intercepts, and residual variances. 
-Equality of the models structure in both groups is calles configural Invariance, and can be understood as both groups share the models general form (i.e. number of latent factors and items). 
+Equality of the models structure in both groups is called configural invariance, and can be understood as both groups share the models general form (i.e. number of latent factors and items). 
 Equality of factor loadings former is referred to as metric invariance, if metric invariance is present it indicates that all factor loading parameters are equal across groups. 
 Speciﬁcally, this suggests that the items of a given scale and their underlying constructs relate to each other with the same strengths in both groups. 
 Furthermore, it is called scalar invariance if the item intercepts are invariant across groups as well. 
@@ -63,8 +68,11 @@ Residual or strict invariance assumes, additionally to the constraints above, th
 If the residual variance holds, the items of the scale are measuring the latent constructs with the same measurement error. 
 This implies that it can indeed be known whether diﬀerences measured by the items of the tested scale between the groups are due to group diﬀerences in the proposed factors or due to measurement errors. 
 What is only implied in those interpretations of the different MI-levels, is that the question which level specifically one "needs" to hold in ones one data is determined by ones research question and the goal of the inference. 
-As mentioned, metric invariance for example is sufficient to varrant latent mean comparisons between groups. 
+As mentioned, metric invariance for example is sufficient to warrant latent mean comparisons between groups. 
 In many empirical studies this is what researchers aim to do, compare latent mean or sum scores of individuals of different groups, then metric invariance suffices as MI-level.
+
+Traditional approaches to measurement invariance (MI) testing are largely confirmatory in nature. Researchers begin by specifying a structural equation model (SEM), typically a confirmatory factor analysis (CFA) model, that reflects substantive hypotheses about the measurement structure and relationships among variables. Subsequently, a categorical grouping variable is selected to partition the sample into two or more groups, and equality constraints are imposed and tested across these groups to evaluate different levels of MI. 
+Although this procedure is confirmatory, it nevertheless depends on several researcher decisions. In practice, two choices are particularly consequential. First, the measurement model must be specified, including the number of factors and the pattern of relationships between latent and observed variables. Second, a grouping variable must be selected and operationalized. This choice is typically guided by theoretical expectations regarding potential sources of heterogeneity in the data. Consequently, the detection of measurement non-invariance is restricted to the specific grouping variable under consideration and may overlook heterogeneity arising from other observed or unobserved characteristics.
 
 ## Moderated Nonlinear Factor Analysis 
 
@@ -83,7 +91,41 @@ In contrast, moderation of item-level parameters, including intercepts, loadings
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
 Because of this conceptualization, the exogenous variable, the moderator, can be categorical as well as continuous, as well as non-linear, or linear. 
 
-## Structural Equation Modeling Trees
+Like MGCFA, moderated nonlinear factor analysis (MNLFA) constitutes a fundamentally confirmatory approach to the assessment of measurement invariance. However, by relaxing several assumptions that are fixed in traditional MGCFA models, MNLFA places even greater demands on model specification and therefore requires more explicit modeling decisions by the researcher. 
+In practice, at least three sets of decisions are required. First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. Second, one or more moderator variables must be selected to represent potential sources of heterogeneity in the measurement process. Third, moderation functions must be specified for all parameters that are allowed to vary as a function of the moderator. This includes determining which parameters are moderated as well as specifying the functional form of each moderation effect (e.g., linear, quadratic, or another parametric form). Consequently, the detection of measurement non-invariance depends not only on the choice of moderator variables but also on the assumptions made about how these moderators influence the model parameters.
+
+## Structural Equation Model Trees
+
+Structural Equation Model Trees (SEM Trees) build on two paradigms: SEMs and on decision trees. 
+Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
+SEM Trees combine the hierarchical structure of the decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
+They differ from other model-based tree approaches, as they specifically allow to extend this general logic to models that encompass latent factors. 
+Thus, following the rationale of MNI from MNLFA testing, it becomes apparent, that SEM trees should inherently be suited to test for MNI in data. 
+This is implicitly also suggested in the study on SEM trees from @Arnold2021, where an example case is used that concerns MI. 
+Nevertheless SEM trees are rarely if at all used to test for MNI in empirical research. 
+
+In contrast to MGCFA and MNLFA, SEM trees represent a more exploratory approach to the assessment of measurement invariance. 
+Similar to these methods, SEM trees require the researcher to specify a measurement model a priori. 
+Beyond this, however, the researcher only needs to provide a set of candidate partitioning variables that may account for heterogeneity in the data. 
+These variables may be numerous and can be either categorical or continuous. 
+In this respect, the researcher decisions required by SEM trees closely resemble those of the traditional MGCFA framework.  
+In both cases, a measurement model is specified and variables that may induce heterogeneity are considered. 
+The crucial difference is that MGCFA requires the researcher to select a specific grouping variable and define its manifestation in advance, whereas SEM trees can evaluate a large set of candidate variables simultaneously and determine which, if any, are associated with violations of measurement invariance. 
+Moreover, SEM trees are able to identify nonlinear forms of moderation and data-driven partition points for continuous variables without requiring these relationships to be specified a priori.
+
+Given the specified measurement model, the SEM tree algorithm recursively partitions the sample to identify subgroups that differ with respect to model parameters. 
+Consequently, SEM trees retain the confirmatory component associated with the measurement model while adopting an exploratory approach to the identification of heterogeneity.
+This combination makes them particularly attractive for researchers who are confident in their measurement model but have limited theoretical guidance regarding the sources or structure of measurement non-invariance. 
+Because the required researcher decisions largely mirror those of the familiar MGCFA framework, the transition from traditional MI testing to SEM trees should involve a comparatively low methodological threshold. 
+At the same time, SEM trees offer substantially greater flexibility by accommodating multiple candidate moderators, continuous and categorical partitioning variables, and potentially nonlinear forms of heterogeneity. 
+Although the explicit specification of moderation mechanisms, as required, for example, in MNLFA, remains advantageous when strong theoretical expectations are available, we believe SEM trees provide a valuable alternative for exploratory analyses and early-stage research in which the relevant sources of heterogeneity are not yet well understood.
 
 
 
+
+
+
+
+
+
+# References
