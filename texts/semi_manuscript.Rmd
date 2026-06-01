@@ -111,7 +111,7 @@ This is implicitly also suggested in the study on SEM trees from @Arnold2021, wh
 Nevertheless SEM trees are rarely if at all used to test for MNI in empirical research. 
 
 In contrast to MGCFA and MNLFA, SEM trees represent a more exploratory approach to the assessment of MI. 
-Similar to these methods, SEM trees require the researcher to specify a measurement model a priori. 
+Similar to these methods, SEM trees require the researcher to specify a measurement model a priori.
 Beyond this, however, the researcher only needs to provide a set of candidate partitioning variables that may account for heterogeneity in the data. 
 These variables may be numerous and can be either categorical or continuous. 
 In this respect, the researcher decisions required by SEM trees closely resemble those of the traditional MGCFA framework.  
@@ -130,9 +130,15 @@ Although the explicit specification of moderation mechanisms, as required, for e
 
 ## Aim of Study 
 
-The aim of this simulation study is to evaluate different methods (i.e. MNLFA and SEM trees) regarding their accuracy, power, and false-positive rate in detecting MNI across different factor models. 
-To enhance the study's relevance for empirical practice, the simulation is grounded in a realistic applied-research perspective. Specifically, we consider the situation of a researcher whose understanding of measurement invariance testing is rooted in the traditional MGCFA framework and who seeks to extend this approach to more flexible methods for detecting heterogeneity. Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives that researchers may adopt when moving beyond conventional MGCFA-based invariance testing. 
+The aim of this simulation study is to compare the performance of MNLFA and SEM trees in detecting MNI, focusing on their accuracy, statistical power, and false-positive rate across different factor-model specifications. 
+To reflect both the methodological capabilities of the investigated approaches and plausible empirical scenarios, the simulation incorporates different functional forms of measurement non-invariance, including linear, quadratic, and sigmoid moderation functions. 
+We expect SEM trees to perform particularly well in conditions characterized by nonlinear moderation, especially sigmoid relationships, whereas their relative advantage should diminish in purely linear settings. 
+In contrast, MNLFA is expected to perform best when the functional form of moderation is correctly specified, particularly in linear conditions, but to be more sensitive to misspecification of the underlying moderation function. 
+For both methods, stronger moderation effects are expected to increase the detectability of measurement non-invariance. 
 
+To enhance the study's relevance for empirical practice, the simulation is grounded in a realistic applied-research perspective. 
+Specifically, we consider the situation of a researcher whose understanding of MI-testing is rooted in the traditional MGCFA framework and who seeks to extend this approach to more flexible methods for detecting heterogeneity. 
+Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives that researchers may adopt when moving beyond conventional MGCFA-based invariance testing. 
 
 # Method 
 
