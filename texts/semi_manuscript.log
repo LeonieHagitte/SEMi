@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  1 JUN 2026 12:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  1 JUN 2026 17:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1208,30 +1208,48 @@ enc}
 
 {C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-mathit.enc}] [2] [3] [4] [5] [6] [7] AED endfloat: Processing end Figures an
-d Tables [8] (semi_manuscript.aux)
+lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9{C:/Users/Leonie.Hagitte/AppData/
+Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [10]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
+06.
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [11]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 5
+29.
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [12{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
+lm-ts1.enc}] [13] AED endfloat: Processing end Figures and Tables [14] (semi_ma
+nuscript.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28061 strings out of 474486
- 525080 string characters out of 5739507
- 1932542 words of memory out of 5000000
- 49788 multiletter control sequences out of 15000+600000
- 594515 words of font info for 96 fonts, out of 8000000 for 9000
+ 28273 strings out of 474486
+ 528568 string characters out of 5739507
+ 1938542 words of memory out of 5000000
+ 49922 multiletter control sequences out of 15000+600000
+ 606766 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,11n,107p,1014b,611s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,107p,1014b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmbx12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/lm/lmmi8.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/lm/lmr12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Progra
-ms/MiKTeX/fonts/type1/public/lm/lmri12.pfb>
-Output written on semi_manuscript.pdf (8 pages, 125581 bytes).
+ublic/lm/lmbxi10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/lm/lmmi12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Leonie.Hagitte/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Leonie.Hagitte/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Leonie.H
+agitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users
+/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb>
+<C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lm
+tt12.pfb>
+Output written on semi_manuscript.pdf (14 pages, 226269 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 16 named destinations out of 1000 (max. 500000)
- 18477 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 263 PDF objects out of 1000 (max. 8388607)
+ 55 named destinations out of 1000 (max. 500000)
+ 26821 words of extra memory for PDF output out of 29859 (max. 10000000)
 

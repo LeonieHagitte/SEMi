@@ -99,7 +99,10 @@ In practice, at least three sets of decisions are required. First, the measureme
 
 ## Structural Equation Model Trees
 
-Structural Equation Model Trees (SEM Trees) build on two paradigms: SEMs and on decision trees. 
+Structural Equation Model Trees (SEM Trees) were originally introduced by Brandmaier et al. (2013) as a way to systematically search for important covariates and their interactions in data, creating homogeneous subgroups. 
+The method was refined later on by Brandmaier et al. (2016) and Arnold, Voelkle, and Brandmaier
+(2021). 
+SEM Trees build on two paradigms: SEMs and on decision trees. 
 Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
 SEM Trees combine the hierarchical structure of the decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
 They differ from other model-based tree approaches, as they specifically allow to extend this general logic to models that encompass latent factors. 
@@ -131,15 +134,103 @@ The aim of this simulation study is to evaluate different methods (i.e. MNLFA an
 To enhance the study's relevance for empirical practice, the simulation is grounded in a realistic applied-research perspective. Specifically, we consider the situation of a researcher whose understanding of measurement invariance testing is rooted in the traditional MGCFA framework and who seeks to extend this approach to more flexible methods for detecting heterogeneity. Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives that researchers may adopt when moving beyond conventional MGCFA-based invariance testing. 
 
 
-# Method
-<!-- General Design and Objectives
+# Method 
 
-Overall aim of the simulation project.
-Why two simulation studies were conducted.
+Different population SEMs with latent variables and continuous indicators will be simulated in two different simulation studies. 
+The simulation is split into two studies, to separate them on the broad structure of the population SEMs. 
+In study 1 the population model (and its variations) always contains one latent factor, whereas in study two the population model always encompasses two latent factors. 
+Study 1 focuses on functional form misspecifications and data-related conditions. 
+Study 2 builds on Study 1 and introduces additional model misspecifications in the factor structure. 
+
+
+<!-- General Design and Objectives
+why two studies are conducted
 Brief explanation that the population models differ substantially and therefore warrant separate investigations.
 -->
 
-## Core Methodological Framework
+## Core Methodological Framework 
+
+The data will be generated parametrically.
+The simulation design includes several manipulated factors that govern the data-generating mechanism (DGM). 
+These factors are varied across simulation conditions and applied consistently to both studies, unless otherwise noted. 
+The following factors are systematically varied in both studies using a grid search design:
+
+### Functional Form of Moderation  
+
+The effective moderator $Z = h(M)$ is evaluated systematically using the following DGM functions:
+
+1. Linear  
+2. Quadratic  
+3. Sigmoid  
+4. Noise/null moderation, $h(M)=0$
+
+### Strength of Moderation 
+
+In each case where parameters are subjected to moderation, the strength of the moderation $\delta$ is varied:
+
+$\delta_{\lambda}$ is evaluated at the following discrete levels:
+
+$$
+\delta_{\lambda} \in \{-0.3,\,-0.2,\,0.2,\,0.3\}.
+$$
+
+$$
+\delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i \in \{1,2\},
+    \qquad
+    \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
+$$
+
+### Model Misspecification of Moderator Form  
+
+The DGM always defines the effective moderator through $Z=h(M)$. 
+In MNLFA, the analytical model is fitted using prespecified parametric forms, namely linear and quadratic moderation. 
+Consequently, MNLFA is correctly specified when the fitted analytical form corresponds to the DGM transformation and misspecified otherwise. 
+SEM trees do not impose a parametric functional form, but they must identify the correct moderator variable(s) from the candidate set. 
+The simulation assumes that the moderators are always perfectly measured. 
+So this really reflects an ideal scenario and should be kept in mind, when interpreting the results. 
+We expect that one should see a similar picture, but with less-than-perfect reliabilities and lower power in general, should one add variation to the reliability of the moderators.
+
+### Performance Criteria 
+
+The primary estimands in this simulation study pertain to the detection and accurate
+estimation of MNI due to moderation effects on measurement parameters. 
+Specifically, we assess whether the estimation methods compared can correctly identify the presence or absence of moderation in factor loadings, intercepts, and residual variances, reflecting the true data-generating structure. 
+Consequently, key simulation outcomes include Type I error rates and statistical power associated with detecting such moderation effects, as well as bias and variability in the recovered parameter estimates.
+Secondary estimands include model-level indicators of fit (e.g., Kullback–Leibler divergence, AIC), which serve as auxiliary diagnostics for methods that yield such metrics (i.e., MNLFA). 
+These are not to the same extent applicable to tree-based approaches and are thus interpreted as method-specific targets rather than general evaluative criteria.
+
+For the parametric MNLFA, we will extract estimated moderated parameters (e.g., factor loadings, intercepts), their associated standard errors, and two-sided p-values for testing the null hypothesis of no moderation effect. 
+Additionally, model fit indices such as Kullback–Leibler divergence, AIC and the LRT-statistics will be recorded.
+For the parameter estimates and fit indices, we will summarize their distributions across simulation replications by reporting key quantiles (2.5th, 50th, and 97.5th percentiles).
+The null hypothesis will be rejected if the associated p-value is less than the conventional significance level of 0.05.
+In contrast, non-parametric tree-based approaches do not yield direct parameter estimates with standard errors. 
+We use score-based SEM-trees [@Arnold2021]. 
+Their detection of MI/ non-invariance is operationalized via the presence of at least one split in the correct condition at the correct respective level of focus parameters. 
+Those splits, introducing a subgroup, will be evaluated at the significance level: 0.05. 
+Additionally, a Bonferroni correction to account for multiple comparisons at each node.
+The trees will be allowed to split on the focus parameters relevant for the invariance testing (the means of the intercepts, factor loadings and the latent covariance in study 2). 
+Candidate subgroup structures are assessed by testing whether they produce statistically significant differences in the specified model parameters across groups. 
+Differences in factor variances between subgroups are permitted in the model, but they are not used as criteria for selecting or evaluating covariates. 
+Furthermore, pre-pruning will be applied, limiting the maximum depth of the tree to 3 and min.**N** is set to 50. 
+Because the MNLFA also directly considers the form of the moderation, which the SEM trees do not, we further want to use SEM forests for generating partial dependence plots to get an approximation of the functional form of the moderating variables.
+
+### Replications 
+
+We employ a full grid search, in which parameter values are sampled from pre-specified discrete values. 
+To ensure computational feasibility however, we followed an iterative approach whereby a initial pilot simulations $n=100$ was conducted to amongst others, estimate the needed simulation time. 
+These estimates then informed the total number of XX replications. <!--- number here! -->
+
+### Software and Implementation 
+
+All simulations and analyses will be conducted in R [@Rteam2025]. 
+The MNLFA-style models will be implemented directly in `OpenMx`[@Boker2026], using raw-data maximum likelihood estimation and definition-variable-style moderation through OpenMx algebra objects. 
+SEM tree analyses will be performed with the `semtree` [@semtree2026] package using OpenMx RAM models. 
+Simulation design construction, data handling, aggregation, and visualization will rely on `dplyr`[@dplyr2026], `tidyr` [@tidyr2025], `tibble` [@tibble2026], `purrr` [@purrr2026], `furrr` [@furrr2022], `future` [@future2021], `parallel` [@Rteam2025], and `ggplot2` [@ggplot2016].
+The simulation study will be conducted in R [@Rteam2025]. 
+
+### General Analysis Procedures 
+
+
 
 <!-- Describing everything that is identical across both studies:
 
@@ -148,7 +239,6 @@ Replications per condition.
 Evaluation metrics.
 Software and implementation.
 General analysis procedures.
-Methods being compared (MNLFA, SEM trees).
 General decision rules.
 
 -->
@@ -159,6 +249,12 @@ General decision rules.
 
 ### Simulation Conditions 
 
+Focuses on functional form misspecification and data-related conditions: 
+
+- **Sample sizes:** $N \in \{300, 500, 700, 1,000\}$ 
+- **Intercepts:** Intercept baselines are set to 1 across simulation conditions.  
+- **Indicator reliabilities:** *Low* (.6), *moderate* (.7), *moderate to high* (.8), or *high* (.95).
+
 ### Results: Study 1 
 
 ## Study 2 
@@ -166,6 +262,18 @@ General decision rules.
 ### Population Models 
 
 ### Simulation Conditions 
+
+Builds on Study 1 and introduces additional model misspecification in the factor structure: 
+
+- **Structural model misspecifications:** (between-subjects factor)
+  - **1. No misspecification:** Factor structure matches the analysis model.
+  - **2. Cross-loadings:** Items $y_5$, $y_6$ additionally load on a second latent factor (See Figure 3).  
+- **Latent Covariance:** The latent covariance is moderated by $Z$. 
+The baseline variance is set to 1 and moderation strength is selected from:
+
+$$
+\delta_{\sigma_\eta} \in \{-0.3,\,-0.2,\,0.2,\,0.3\}.
+$$
 
 ### Results: Study 2
 
