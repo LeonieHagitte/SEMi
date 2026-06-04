@@ -43,6 +43,11 @@ DESIGN <- DESIGN %>%
     seed = round(runif(nrow(DESIGN),0,.Machine$integer.max))
     
   )
+# ---------- randomly permute lines for even distribution of
+#     run times across jobs ----------------
+DESIGN <- DESIGN %>%
+  slice_sample(prop = 1) # this is a random permutation
+
 # ---------- Split on rep_id, for similarly long runtimes ------
 chunk_id <- NULL
 n_chunks <- NULL
