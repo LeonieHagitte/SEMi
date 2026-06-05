@@ -73,6 +73,33 @@ extract_tree_test <- function(st, alpha = 0.05) {
   )
 }
 
+# -------------extract moderation parameters MNLFA ----------------------------
+
+
+extract_mnlfa_moderation <- function(fit, p) {
+  if (is.null(fit) || inherits(fit, "error")) return(NULL)
+  
+  est <- OpenMx::omxGetParameters(fit)
+  
+  get_param <- function(prefix, row, col) {
+    nm <- paste0(prefix, "[", row, ",", col, "]")
+    if (nm %in% names(est)) unname(est[nm]) else NA_real_
+  }
+  
+  tibble::tibble(
+    item = paste0("x", seq_len(p)),
+    
+    mnlfa_est_dnu_am1      = purrr::map_dbl(seq_len(p), ~ get_param("matB1",  1, .x)),
+    mnlfa_est_dnu_am2      = purrr::map_dbl(seq_len(p), ~ get_param("matB2",  1, .x)),
+    mnlfa_est_dnu_am12     = purrr::map_dbl(seq_len(p), ~ get_param("matB12", 1, .x)),
+    
+    mnlfa_est_dlambda_am1  = purrr::map_dbl(seq_len(p), ~ get_param("matC1",  .x, 1)),
+    mnlfa_est_dlambda_am2  = purrr::map_dbl(seq_len(p), ~ get_param("matC2",  .x, 1)),
+    mnlfa_est_dlambda_am12 = purrr::map_dbl(seq_len(p), ~ get_param("matC12", .x, 1))
+  )
+}
+
+
 # ---------------------- unrestricted CFA (SEM Tree base) NULL -----------------
 mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   
@@ -104,6 +131,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     values = 0, 
                     name="matB2")
   
+  matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
+                     nrow = 1,
+                     ncol = p,
+                     free = TRUE,
+                     values = 0,
+                     name = "matB12")
+  
   # Loading Matrices
   matL0 <- mxMatrix(type="Full", #matL0 is a full matrix containing the baseline factor loadings
                     nrow=p, 
@@ -125,6 +159,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     free= TRUE, 
                     values = 0,
                     name="matC2")
+  
+  matC12 <- mxMatrix(type = "Full",
+                     nrow = p,
+                     ncol = nfactors,
+                     free = TRUE,
+                     values = 0,
+                     name = "matC12")
   
   # Residual Variances 
   matE0 <- mxMatrix(type="Diag", # matE0 is a diagonal matrix containing the baseline residual variances 
@@ -180,17 +221,27 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   
   # ---------- Matrices for Matrix algebra
   # Moderators as Definition Variables
-  matV1 <- mxMatrix(type="Full", nrow = 1, 
+  matV1 <- mxMatrix(type="Full", 
+                    nrow = 1, 
                     ncol = 1,
-                    free=FALSE,
-                    labels="data.am1",
-                    name="am1")
+                    free = FALSE,
+                    labels ="data.am1",
+                    name ="am1")
   
-  matV2 <- mxMatrix(type="Full", nrow = 1, 
+  matV2 <- mxMatrix(type="Full", 
+                    nrow = 1, 
                     ncol = 1,
-                    free=FALSE,
-                    labels="data.am2",
-                    name="am2")
+                    free = FALSE,
+                    labels ="data.am2",
+                    name ="am2")
+  
+  matV12 <- mxMatrix(type = "Full",
+                     nrow = 1,
+                     ncol = 1,
+                     free = FALSE,
+                     labels = "data.am12",
+                     name = "am12")
+  
   # -----------------------------------------------------------------------------
   #The mxAlgebra() function can be used to define a matrix of model parameters as
   #a function of background variables. The first argument of this function, 
@@ -200,10 +251,10 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   #function. A name for the defined matrix can be assigned with the name argument
   
   # -----------------------------------------------------------------------------
-  matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
+  matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2 + matB12*am12, # linear moderation function for the indicator intercepts
                     name="matT") #intercepts
   
-  matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
+  matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2 + matC12*am12, # linear moderation function for the factor loadings
                     name="matL") #loadings
   
   matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
@@ -229,18 +280,26 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
   
   modConfig <- mxModel(model="Configural",
                         matT, matT0, matB1, 
-                        matB2,matL, matL0,
-                        matC1, matC2, matE, 
+                        matB2, matB12, matL, matL0,
+                        matC1, matC2, matC12, matE, 
                         matE0, matD1, matD2,
                         matP, matP0, 
                         matA, matA0, 
                         matG1, matG2,
-                        matV1, matV2,
+                        matV1, matV2, matV12,
                         matM, matC, expF, 
                         fitF, mxdata)
   
   #The model can be fitted to the data using the mxRun() function. 
   fitConfig <- mxRun(modConfig)
+  
+  configural_moderation_estimates <- NULL
+  if (!is.null(fitConfig$output$status$code) && fitConfig$output$status$code == 0) {
+    configural_moderation_estimates <- extract_mnlfa_moderation(
+      fit = fitConfig,
+      p = p
+    )
+  }
   
   if (!is.null(fitConfig$output$status$code) && fitConfig$output$status$code == 0) {
     # ---------------------- metric moderated model --------------------------
@@ -261,6 +320,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       values = 0, 
                       name="matB2")
     
+    matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
+                       nrow = 1,
+                       ncol = p,
+                       free = TRUE,
+                       values = 0,
+                       name = "matB12")
+    
     # Loading Matrices
     
     matC1 <- mxMatrix(type="Full", # Matrices matC1 and matC2 are full matrices containing the direct effects of M1 and M2, respectively, on the factor loadings
@@ -277,11 +343,18 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       values = 0,
                       name="matC2")
     
+    matC12 <- mxMatrix(type = "Full",
+                       nrow = p,
+                       ncol = nfactors,
+                       free = FALSE,
+                       values = 0,
+                       name = "matC12")
+    
     # -----------------------------------------------------------------------------
-    matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
+    matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2 + matB12*am12, # linear moderation function for the indicator intercepts
                       name="matT") #intercepts
     
-    matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
+    matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2 + matC12*am12, # linear moderation function for the factor loadings
                       name="matL") #loadings
     
     matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
@@ -307,13 +380,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
     
     modmetric <- mxModel(model="Metric",
                           matT, matT0, matB1, 
-                          matB2,matL, matL0,
-                          matC1, matC2, matE, 
+                          matB2, matB12, matL, matL0,
+                          matC1, matC2, matC12, matE, 
                           matE0, matD1, matD2,
                           matP, matP0, 
                           matA, matA0, 
                           matG1, matG2,
-                          matV1, matV2,
+                          matV1, matV2, matV12,
                           matM, matC, expF, 
                           fitF, mxdata)
     
@@ -346,6 +419,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         values = 0, 
                         name="matB2")
       
+      matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
+                         nrow = 1,
+                         ncol = p,
+                         free = FALSE,
+                         values = 0,
+                         name = "matB12")
+      
       # Loading Matrices
       
       matC1 <- mxMatrix(type="Full", # Matrices matC1 and matC2 are full matrices containing the direct effects of M1 and M2, respectively, on the factor loadings
@@ -362,6 +442,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         values = 0,
                         name="matC2")
       
+      matC12 <- mxMatrix(type = "Full",
+                         nrow = p,
+                         ncol = nfactors,
+                         free = FALSE,
+                         values = 0,
+                         name = "matC12")
+      
       matG1 <- mxMatrix(type="Full", #The matG1 and matG2 matrices contain the direct effects of M1 and M2, respectively, on the common-factor means 
                         nrow = 1, 
                         ncol = 1,
@@ -377,10 +464,10 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         name="matG2")
       
       # -----------------------------------------------------------------------------
-      matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2, # linear moderation function for the indicator intercepts
+      matT <- mxAlgebra(expression = matT0 +  matB1*am1 + matB2*am2 + matB12*am12, # linear moderation function for the indicator intercepts
                         name="matT") #intercepts
       
-      matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2, # linear moderation function for the factor loadings
+      matL <- mxAlgebra(expression = matL0 + matC1*am1 + matC2*am2 + matC12*am12, # linear moderation function for the factor loadings
                         name="matL") #loadings
       
       matE <- mxAlgebra(expression = matE0*exp (matD1*am1 + matD2*am2), # log-linear function for the residual variances
@@ -406,13 +493,13 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
       
       modscalar <- mxModel(model="Scalar",
                             matT, matT0, matB1, 
-                            matB2,matL, matL0,
-                            matC1, matC2, matE, 
+                            matB2, matB12, matL, matL0,
+                            matC1, matC2, matC12, matE, 
                             matE0, matD1, matD2,
                             matP, matP0, 
                             matA, matA0, 
                             matG1, matG2,
-                            matV1, matV2,
+                            matV1, matV2, matV12,
                             matM, matC, expF, 
                             fitF, mxdata)
       
@@ -433,7 +520,9 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
     fitScalar = if (exists("fitscalar")) fitscalar else NULL,
     metric_lrt = if (exists("metric_lrt")) metric_lrt else NULL,
     scalar_lrt = if (exists("scalar_lrt")) scalar_lrt else NULL,
-    omnibus_lrt = if (exists("omnibus_lrt")) omnibus_lrt else NULL
+    omnibus_lrt = if (exists("omnibus_lrt")) omnibus_lrt else NULL,
+    configural_moderation_estimates = configural_moderation_estimates
+    
   ))
   }
 

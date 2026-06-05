@@ -75,6 +75,54 @@ if (length(args) > 0) {
     dplyr::filter(rep_id %in% reps_this_chunk)
 }
 # --------------------------------------------------------------
+mnlfa_moderation_estimate_names <- function(p = 4) {
+  base_names <- c(
+    "mnlfa_est_dnu_am1",
+    "mnlfa_est_dnu_am2",
+    "mnlfa_est_dnu_am12",
+    "mnlfa_est_dlambda_am1",
+    "mnlfa_est_dlambda_am2",
+    "mnlfa_est_dlambda_am12"
+  )
+  as.vector(outer(base_names, paste0("x", seq_len(p)), paste, sep = "_"))
+}
+
+empty_mnlfa_moderation_estimates <- function(p = 4) {
+  cols <- mnlfa_moderation_estimate_names(p = p)
+  tibble::as_tibble(as.list(stats::setNames(rep(NA_real_, length(cols)), cols)))
+}
+
+flatten_mnlfa_moderation_estimates <- function(mnlfa_result, p = 4) {
+  out <- empty_mnlfa_moderation_estimates(p = p)
+  
+  if (inherits(mnlfa_result, "error") ||
+      is.null(mnlfa_result$configural_moderation_estimates)) {
+    return(out)
+  }
+  
+  est <- mnlfa_result$configural_moderation_estimates
+  
+  est_wide <- est %>%
+    tidyr::pivot_wider(
+      names_from = item,
+      values_from = c(
+        mnlfa_est_dnu_am1,
+        mnlfa_est_dnu_am2,
+        mnlfa_est_dnu_am12,
+        mnlfa_est_dlambda_am1,
+        mnlfa_est_dlambda_am2,
+        mnlfa_est_dlambda_am12
+      )
+    )
+  
+  for (nm in intersect(names(out), names(est_wide))) {
+    out[[nm]] <- est_wide[[nm]]
+  }
+  
+  out
+}
+
+
 ##############################################################################
 run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
 
@@ -127,6 +175,13 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   if (inherits(res$semtree, "error")) {
     semtree_error_msg <- conditionMessage(res$semtree)
   }
+  
+  
+  mnlfa_mod_est <- flatten_mnlfa_moderation_estimates(
+    mnlfa_result = res$mnlfa,
+    p = 4
+  )
+  
   # ---------------------------
   
   mnlfa_metric_lrt_chisq <- NA_real_
@@ -417,7 +472,9 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     error_msg = as.character(error_msg),
     mnlfa_error_msg = as.character(mnlfa_error_msg),
     semtree_error_msg = as.character(semtree_error_msg)
-  )
+  ) %>%
+  dplyr::bind_cols(mnlfa_mod_est)
+
   }
 
 
@@ -513,7 +570,8 @@ safe_run_one <- function(row) {
         mnlfa_error_msg = NA_character_,
         semtree_error_msg = NA_character_,
         error_msg = conditionMessage(e)
-      )
+      )%>%
+    dplyr::bind_cols(empty_mnlfa_moderation_estimates(p = 4))
     }
   )
 }
