@@ -79,11 +79,16 @@ extract_tree_test <- function(st, alpha = 0.05) {
 extract_mnlfa_moderation <- function(fit, p) {
   if (is.null(fit) || inherits(fit, "error")) return(NULL)
   
-  est <- OpenMx::omxGetParameters(fit)
+  est_free <- OpenMx::omxGetParameters(fit, free = TRUE)
+  est_all  <- OpenMx::omxGetParameters(fit, free = FALSE)
   
   get_param <- function(prefix, row, col) {
-    nm <- paste0(prefix, "[", row, ",", col, "]")
-    if (nm %in% names(est)) unname(est[nm]) else NA_real_
+    nm <- paste0(prefix, "_", row, "_", col)
+    
+    if (nm %in% names(est_free)) return(unname(est_free[nm]))
+    if (nm %in% names(est_all))  return(unname(est_all[nm]))
+    
+    NA_real_
   }
   
   tibble::tibble(
@@ -117,18 +122,20 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     name = "matT0") #The matrix matT0 is a full matrix containing the baseline intercepts.
   #All baseline intercepts are freely estimated with starting values of one by setting free=TRUE and values=1. 
  
-   matB1 <- mxMatrix(type="Full", 
+  matB1 <- mxMatrix(type="Full", 
                     nrow = 1, 
                     ncol=p,#Matrix matB1 and matB2 are full matrices containing the direct effects of the background variables M1 and M2, respectively, on the intercepts.
                     free=TRUE, 
                     values = 0, 
+                    labels = paste0("matB1_1_", seq_len(p)),
                     name="matB1")
   
   matB2 <- mxMatrix(type="Full", 
                     nrow = 1, 
                     ncol=p,
                     free=TRUE, # shows that effects of m2 in this case are freely estimated
-                    values = 0, 
+                    values = 0,
+                    labels = paste0("matB1_2_", seq_len(p)),
                     name="matB2")
   
   matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
@@ -136,6 +143,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                      ncol = p,
                      free = TRUE,
                      values = 0,
+                     labels = paste0("matB12_1_", seq_len(p)),
                      name = "matB12")
   
   # Loading Matrices
@@ -151,6 +159,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     ncol = nfactors,
                     free= TRUE, 
                     values = 0, # value sets the moderation effect
+                    labels = paste0("matC1_", seq_len(p), "_1"),
                     name="matC1")
   
   matC2 <- mxMatrix(type="Full", 
@@ -158,6 +167,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     ncol = nfactors,
                     free= TRUE, 
                     values = 0,
+                    labels = paste0("matC2_", seq_len(p), "_1"),
                     name="matC2")
   
   matC12 <- mxMatrix(type = "Full",
@@ -165,6 +175,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                      ncol = nfactors,
                      free = TRUE,
                      values = 0,
+                     labels = paste0("matC12_", seq_len(p), "_1"),
                      name = "matC12")
   
   # Residual Variances 
@@ -310,14 +321,16 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       nrow = 1, 
                       ncol=p,#Matrix matB1 and matB2 are full matrices containing the direct effects of the background variables M1 and M2, respectively, on the intercepts.
                       free=TRUE, 
-                      values = 0, 
+                      values = 0,
+                      labels = paste0("matB1_1_", seq_len(p)),
                       name="matB1")
     
     matB2 <- mxMatrix(type="Full", 
                       nrow = 1, 
                       ncol=p,
                       free=TRUE, 
-                      values = 0, 
+                      values = 0,
+                      labels = paste0("matB2_1_", seq_len(p)),
                       name="matB2")
     
     matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
@@ -325,6 +338,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                        ncol = p,
                        free = TRUE,
                        values = 0,
+                       labels = paste0("matB12_1_", seq_len(p)),
                        name = "matB12")
     
     # Loading Matrices
@@ -334,6 +348,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       ncol = nfactors,
                       free= FALSE, 
                       values = 0, # value sets the moderation effect
+                      labels = paste0("matC1_", seq_len(p), "_1"),
                       name="matC1")
     
     matC2 <- mxMatrix(type="Full", 
@@ -341,6 +356,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                       ncol = nfactors,
                       free= FALSE, 
                       values = 0,
+                      labels = paste0("matC2_", seq_len(p), "_1"),
                       name="matC2")
     
     matC12 <- mxMatrix(type = "Full",
@@ -348,6 +364,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                        ncol = nfactors,
                        free = FALSE,
                        values = 0,
+                       labels = paste0("matC12_", seq_len(p), "_1"),
                        name = "matC12")
     
     # -----------------------------------------------------------------------------
@@ -410,6 +427,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         ncol=p,#Matrix matB1 and matB2 are full matrices containing the direct effects of the background variables M1 and M2, respectively, on the intercepts.
                         free=FALSE, 
                         values = 0, 
+                        labels = paste0("matB1_1_", seq_len(p)),
                         name="matB1")
       
       matB2 <- mxMatrix(type="Full", 
@@ -417,6 +435,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         ncol=p,
                         free=FALSE, 
                         values = 0, 
+                        labels = paste0("matB2_1_", seq_len(p)),
                         name="matB2")
       
       matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
@@ -424,6 +443,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                          ncol = p,
                          free = FALSE,
                          values = 0,
+                         labels = paste0("matB12_1_", seq_len(p)),
                          name = "matB12")
       
       # Loading Matrices
@@ -433,6 +453,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         ncol = nfactors,
                         free= FALSE, 
                         values = 0, # value sets the moderation effect
+                        labels = paste0("matC1_", seq_len(p), "_1"),
                         name="matC1")
       
       matC2 <- mxMatrix(type="Full", 
@@ -440,6 +461,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                         ncol = nfactors,
                         free= FALSE, 
                         values = 0,
+                        labels = paste0("matC2_", seq_len(p), "_1"),
                         name="matC2")
       
       matC12 <- mxMatrix(type = "Full",
@@ -447,6 +469,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                          ncol = nfactors,
                          free = FALSE,
                          values = 0,
+                         labels = paste0("matC12_", seq_len(p), "_1"),
                          name = "matC12")
       
       matG1 <- mxMatrix(type="Full", #The matG1 and matG2 matrices contain the direct effects of M1 and M2, respectively, on the common-factor means 

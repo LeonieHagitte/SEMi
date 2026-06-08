@@ -102,7 +102,7 @@ flatten_mnlfa_moderation_estimates <- function(mnlfa_result, p = 4) {
   
   est <- mnlfa_result$configural_moderation_estimates
   
-  est_wide <- est %>%
+  est_wide <- est |>
     tidyr::pivot_wider(
       names_from = item,
       values_from = c(
@@ -112,16 +112,189 @@ flatten_mnlfa_moderation_estimates <- function(mnlfa_result, p = 4) {
         mnlfa_est_dlambda_am1,
         mnlfa_est_dlambda_am2,
         mnlfa_est_dlambda_am12
-      )
+      ),
+      names_glue = "{.value}_{item}"
     )
   
-  for (nm in intersect(names(out), names(est_wide))) {
-    out[[nm]] <- est_wide[[nm]]
-  }
-  
+  out[names(out)] <- est_wide[names(out)]
   out
 }
 
+# ---------------- KL divergence diagnostics for MNLFA -----------------------
+
+kl_mvn <- function(mu_true, Sigma_true, mu_model, Sigma_model) {
+  p <- length(mu_true)
+  
+  mu_true <- as.numeric(mu_true)
+  mu_model <- as.numeric(mu_model)
+  Sigma_true <- as.matrix(Sigma_true)
+  Sigma_model <- as.matrix(Sigma_model)
+  
+  det_true  <- determinant(Sigma_true, logarithm = TRUE)
+  det_model <- determinant(Sigma_model, logarithm = TRUE)
+  if (det_true$sign <= 0 || det_model$sign <= 0) return(NA_real_)
+  
+  inv_model <- solve(Sigma_model)
+  diff <- matrix(mu_model - mu_true, ncol = 1)
+  
+  out <- 0.5 * (
+    sum(diag(inv_model %*% Sigma_true)) +
+      as.numeric(t(diff) %*% inv_model %*% diff) -
+      p +
+      as.numeric(det_model$modulus) -
+      as.numeric(det_true$modulus)
+  )
+  
+  as.numeric(out)
+}
+
+true_dgm_moments <- function(data, params) {
+  p <- length(grep("^x\\d+$", names(data), value = TRUE))
+  
+  lambda0 <- params$lambda
+  nu0     <- params$nu
+  rel     <- params$reliability
+  psi     <- params$psi
+  mu_eta  <- params$mu_eta
+  popmodel <- params$popmodel
+  
+  dlam <- params$delta_lambda
+  dnu  <- params$delta_nu
+  
+  dlam1 <- dlam2 <- dlam12 <- rep(0, p)
+  dnu1  <- dnu2  <- dnu12  <- rep(0, p)
+  
+  if (popmodel == "0" || popmodel == "NULL") {
+    # no moderation
+  } else if (popmodel == "1.1") {
+    dlam1[] <- dlam
+  } else if (popmodel == "1.11") {
+    dnu1[] <- dnu
+  } else if (popmodel == "1.12") {
+    dlam1[] <- dlam
+    dnu1[]  <- dnu
+  } else if (popmodel == "1.2") {
+    dlam1[1:2] <- dlam
+  } else if (popmodel == "1.21") {
+    dnu1[1:2] <- dnu
+  } else if (popmodel == "1.22") {
+    dlam1[1:2] <- dlam
+    dnu1[1:2]  <- dnu
+  } else if (popmodel == "1.3") {
+    dlam1[]  <- dlam
+    dlam2[]  <- dlam
+    dlam12[] <- dlam^2
+  } else if (popmodel == "1.32") {
+    dlam1[] <- dlam
+    dnu2[]  <- dnu
+  } else {
+    stop("Unknown popmodel: ", popmodel)
+  }
+  
+  theta0 <- (lambda0^2 * psi * (1 - rel)) / rel
+  
+  lapply(seq_len(nrow(data)), function(i) {
+    lambda_i <- rep(lambda0, p) +
+      data$hm1[i]  * dlam1 +
+      data$hm2[i]  * dlam2 +
+      data$hm12[i] * dlam12
+    
+    nu_i <- rep(nu0, p) +
+      data$hm1[i]  * dnu1 +
+      data$hm2[i]  * dnu2 +
+      data$hm12[i] * dnu12
+    
+    Sigma_i <- lambda_i %*% t(lambda_i) * psi + diag(theta0, p)
+    mu_i <- nu_i + lambda_i * mu_eta
+    
+    list(mu = as.numeric(mu_i), Sigma = Sigma_i)
+  })
+}
+
+model_mnlfa_moments <- function(fit, data) {
+  p <- length(grep("^x\\d+$", names(data), value = TRUE))
+  pars_free <- OpenMx::omxGetParameters(fit, free = TRUE)
+  pars_all  <- OpenMx::omxGetParameters(fit, free = FALSE)
+  
+  get <- function(name, default = 0) {
+    candidates <- c(name, paste0(fit$name, ".", name))
+    for (nm in candidates) {
+      if (nm %in% names(pars_free)) return(unname(pars_free[nm]))
+      if (nm %in% names(pars_all))  return(unname(pars_all[nm]))
+    }
+    
+    default
+  }
+  
+  get_mat <- function(prefix, nrow, ncol) {
+    matrix(
+      vapply(seq_len(nrow * ncol), function(k) {
+        r <- ((k - 1) %% nrow) + 1
+        c <- ((k - 1) %/% nrow) + 1
+        get(paste0(prefix, "[", r, ",", c, "]"))
+      }, numeric(1)),
+      nrow = nrow,
+      ncol = ncol
+    )
+  }
+  
+  T0  <- get_mat("matT0", 1, p)
+  B1  <- get_mat("matB1", 1, p)
+  B2  <- get_mat("matB2", 1, p)
+  B12 <- get_mat("matB12", 1, p)
+  
+  L0  <- get_mat("matL0", p, 1)
+  C1  <- get_mat("matC1", p, 1)
+  C2  <- get_mat("matC2", p, 1)
+  C12 <- get_mat("matC12", p, 1)
+  
+  E0 <- diag(get_mat("matE0", p, p))
+  D1 <- diag(get_mat("matD1", p, p))
+  D2 <- diag(get_mat("matD2", p, p))
+  
+  G1 <- get("matG1[1,1]", 0)
+  G2 <- get("matG2[1,1]", 0)
+  
+  lapply(seq_len(nrow(data)), function(i) {
+    am1  <- data$am1[i]
+    am2  <- data$am2[i]
+    am12 <- data$am12[i]
+    
+    T_i <- as.numeric(T0 + B1 * am1 + B2 * am2 + B12 * am12)
+    L_i <- as.numeric(L0 + C1 * am1 + C2 * am2 + C12 * am12)
+    
+    A_i <- G1 * am1 + G2 * am2
+    E_i <- diag(E0 * exp(D1 * am1 + D2 * am2), p)
+    
+    list(
+      mu = as.numeric(T_i + as.numeric(A_i) * L_i),
+      Sigma = L_i %*% t(L_i) + E_i
+    )
+  })
+}
+
+average_kl_mnlfa <- function(data, params, fit) {
+  if (is.null(fit) || inherits(fit, "error")) return(NA_real_)
+  if (is.null(fit$output$status$code) || fit$output$status$code != 0) return(NA_real_)
+  
+  true_mom <- true_dgm_moments(data, params)
+  mod_mom  <- model_mnlfa_moments(fit, data)
+  
+  kl_values <- vapply(seq_along(true_mom), function(i) {
+    tryCatch(
+      kl_mvn(
+        mu_true     = true_mom[[i]]$mu,
+        Sigma_true  = true_mom[[i]]$Sigma,
+        mu_model    = mod_mom[[i]]$mu,
+        Sigma_model = mod_mom[[i]]$Sigma
+      ),
+      error = function(e) NA_real_
+    )
+  }, numeric(1))
+  
+  if (all(is.na(kl_values))) return(NA_real_)
+  mean(kl_values, na.rm = TRUE)
+}
 
 ##############################################################################
 run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
@@ -181,6 +354,17 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     mnlfa_result = res$mnlfa,
     p = 4
   )
+  
+  # ---------------------------
+  mnlfa_kl_configural <- NA_real_
+  mnlfa_kl_metric <- NA_real_
+  mnlfa_kl_scalar <- NA_real_
+  
+  if (!inherits(res$mnlfa, "error")) {
+    mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
+    mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
+    mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
+  }
   
   # ---------------------------
   
@@ -439,6 +623,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     mnlfa_omnibus_lrt_p      = as.numeric(mnlfa_omnibus_lrt_p),
     mnlfa_omnibus_lrt_reject = as.logical(mnlfa_omnibus_lrt_reject),
     
+    # KL divergence between true DGM-implied and fitted MNLFA-implied moments
+    mnlfa_kl_configural = as.numeric(mnlfa_kl_configural),
+    mnlfa_kl_metric     = as.numeric(mnlfa_kl_metric),
+    mnlfa_kl_scalar     = as.numeric(mnlfa_kl_scalar),
+    
     # tree statistics (structural tree outcomes, not hypothesis-test decisions)
     tree_metric_split        = as.logical(tree_metric_split), # true if the metric tree produced at least one split
     tree_scalar_split        = as.logical(tree_scalar_split), # true if the scalar tree produced at least one split
@@ -476,8 +665,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   dplyr::bind_cols(mnlfa_mod_est)
 
   }
-
-
+# ---- SAFE RUN ONE --------------------------
 
 safe_run_one <- function(row) {
   tryCatch(
@@ -538,6 +726,10 @@ safe_run_one <- function(row) {
         mnlfa_omnibus_lrt_df = NA_real_,
         mnlfa_omnibus_lrt_p = NA_real_,
         mnlfa_omnibus_lrt_reject = NA,
+        
+        mnlfa_kl_configural = NA_real_,
+        mnlfa_kl_metric = NA_real_,
+        mnlfa_kl_scalar = NA_real_,
         
         tree_metric_split = NA,
         tree_scalar_split = NA,
