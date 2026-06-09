@@ -71,22 +71,21 @@ Classical approaches to measurement invariance testing are fundamentally confirm
 Researchers begin by specifying a measurement model, typically in the form of a confirmatory factor analysis (CFA), that reflects substantive hypotheses about the construct under investigation. 
 A categorical grouping variable is then used to partition the sample into two or more groups, across which measurement parameters are constrained and compared. 
 Consequently, the assessment of measurement invariance depends on two central specifications: the measurement model itself and the grouping variable used to represent potential sources of heterogeneity.
-As a result, measurement noninvariance can only be detected with respect to the grouping variables included in the analysis. 
+As a result, measurement noninvariance (MNI) can only be detected with respect to the grouping variables included in the analysis. 
 
 This framework is highly effective when substantive theory naturally implies discrete group distinctions, such as treatment conditions, demographic categories, or measurement occasions. 
 However, many characteristics that may influence measurement functioning vary continuously across individuals. 
 In such situations, representing heterogeneity through predefined groups may require arbitrary categorization and can obscure important variation in measurement parameters. 
 
-
 <!-- Add an empirical example, for easier understanding, that is used through ot the methods as reference point on how they differ in their understanding and how they deal differently with that example case ( maybe something that also would fit the simulated measurement models) Maybe SHS ? -->
 
 ## Moderated Nonlinear Factor Analysis 
 
-These considerations have motivated the development of approaches that conceptualize measurement noninvariance (MNI) as a continuous process operating at the individual level.
+These considerations have motivated the development of approaches that conceptualize MNI as a continuous process operating at the individual level.
 One prominent example is the Moderated nonlinear factor analysis (MNLFA). 
 MNLFA conceptualizes heterogeneity in data as functions of observed moderator variables.
 Within MNLFA, measurement parameters are allowed to vary systematically as functions of one or more moderator variables. 
-Consequently, measurement noninvariance is conceptualized as moderation of the measurement model itself. 
+Consequently, MNI is conceptualized as moderation of the measurement model itself. 
 If measurement parameters differ as a function of the moderator, the measurement model no longer operates equivalently across individuals and therefore violates measurement invariance.
 
 Whether MI is present depends on which parameters are moderated by the exogenous variable. 
