@@ -76,29 +76,35 @@ As a result, measurement noninvariance can only be detected with respect to the 
 This framework is highly effective when substantive theory naturally implies discrete group distinctions, such as treatment conditions, demographic categories, or measurement occasions. 
 However, many characteristics that may influence measurement functioning vary continuously across individuals. 
 In such situations, representing heterogeneity through predefined groups may require arbitrary categorization and can obscure important variation in measurement parameters. 
-These considerations have motivated the development of approaches that conceptualize measurement noninvariance as a continuous process operating at the individual level.
+
 
 <!-- Add an empirical example, for easier understanding, that is used through ot the methods as reference point on how they differ in their understanding and how they deal differently with that example case ( maybe something that also would fit the simulated measurement models) Maybe SHS ? -->
 
 ## Moderated Nonlinear Factor Analysis 
 
-However, MGCFA testing also has some limitations (e.g.: groups need to be created by categorical variables; the differences of said groups are assumed to be linear in their difference) that were overcome with more contemporary approaches to MI-testing. 
-One example, that is getting more popular, is the Moderated nonlinear factor analysis (MNLFA). 
-By conceptualizing MI differently, it enables the possibility to have the groups being created via continuous and potentially nonlinear variables. 
-In MNLFA testing Measurement non-invariance (MNI) is modeled as the moderation of the measurement model (or parts of it) by a variable, external to that measurement model. 
-That moderator variable is the variable, that was the former "grouping variable" in the MGCFA approach. 
-The understanding is that if  any model parameters are moderated by that external variable, then the measurement model is not measurement invariant, because it performs differently dependent on that variable. 
+These considerations have motivated the development of approaches that conceptualize measurement noninvariance (MNI) as a continuous process operating at the individual level.
+One prominent example is the Moderated nonlinear factor analysis (MNLFA). 
+MNLFA conceptualizes heterogeneity in data as functions of observed moderator variables.
+Within MNLFA, measurement parameters are allowed to vary systematically as functions of one or more moderator variables. 
+Consequently, measurement noninvariance is conceptualized as moderation of the measurement model itself. 
+If measurement parameters differ as a function of the moderator, the measurement model no longer operates equivalently across individuals and therefore violates measurement invariance.
 
+Whether MI is present depends on which parameters are moderated by the exogenous variable. 
 The exogenous variable may influence any subset of the parameters in the measurement model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable. 
-Whether MI is present depends on which parameters are moderated by the exogenous variable. 
 If moderation is limited to the latent-factor parameters—that is, the means, variances, and covariance — the model remains consistent with MI. 
 In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI. 
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
-Because of this conceptualization, the exogenous variable, the moderator, can be categorical as well as continuous, as well as non-linear, or linear. 
+Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches.
 
-Like MGCFA, moderated nonlinear factor analysis (MNLFA) constitutes a fundamentally confirmatory approach to the assessment of measurement invariance. However, by relaxing several assumptions that are fixed in traditional MGCFA models, MNLFA places even greater demands on model specification and therefore requires more explicit modeling decisions by the researcher. 
-In practice, at least three sets of decisions are required. First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. Second, one or more moderator variables must be selected to represent potential sources of heterogeneity in the measurement process. Third, moderation functions must be specified for all parameters that are allowed to vary as a function of the moderator. This includes determining which parameters are moderated as well as specifying the functional form of each moderation effect (e.g., linear, quadratic, or another parametric form). Consequently, the detection of measurement non-invariance depends not only on the choice of moderator variables but also on the assumptions made about how these moderators influence the model parameters.
+However, this increased flexibility comes at the cost of greater specification requirements. 
+Like MGCFA, moderated nonlinear factor analysis (MNLFA) constitutes a fundamentally confirmatory approach to the assessment of MI. 
+In practice, at least three sets of decisions are required. 
+First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. 
+Second, one or more moderator variables must be selected to represent potential sources of heterogeneity in the measurement process. 
+Third, moderation functions must be specified for all parameters that are allowed to vary as a function of the moderator. 
+This includes determining which parameters are moderated as well as specifying the functional form of each moderation effect (e.g., linear, quadratic, or another parametric form). 
+Consequently, the detection of measurement non-invariance depends not only on the choice of moderator variables but also on the assumptions made about how these moderators influence the model parameters.
 
 ## Structural Equation Model Trees
 
