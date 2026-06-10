@@ -55,7 +55,7 @@ split_LH <- FALSE
 ## order the simulation to only round the i-th of j many chunks
 ## with i and j being the first two arguments
 
-if (split_LH) {
+if (!split_LH) {
 
 # get command line arguments
 args <- commandArgs(trailingOnly = TRUE)
