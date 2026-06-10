@@ -20,3 +20,21 @@ Currently the test-grid overwrites the full grid, because we are still in the pr
 Later on this will be streamlined. 
 
 Please, feel free to report bugs if you encounter problems, to hagitte@mpib-berlin.mpg.de
+
+## SLURM
+
+The script is intended to be run on a SLURM-based high performance computing environment.
+To this end, simulation_rt.R can be started with command line arguments to run only slices of
+the simulation. For example
+`Rscript simulation_rt.R 5 100`
+runs the 5-th slice of the simulation when all conditions are sliced into 100 slices.
+To run the all slices in parallel using the SLURM array job function, use the submit_jobs.sh file.
+Here are a few useful commands on a SLURM server:
+
+- Start the simulation with all conditions
+`./submit_jobs.sh`
+
+- Check how many of your jobs are currently running
+`squeue -u "$USER" -t RUNNING -h | wc -l`
+
+-
