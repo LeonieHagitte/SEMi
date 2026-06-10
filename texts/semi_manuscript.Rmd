@@ -91,7 +91,7 @@ If measurement parameters differ as a function of the moderator, the measurement
 Whether MI is present depends on which parameters are moderated by the exogenous variable. 
 The exogenous variable may influence any subset of the parameters in the measurement model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable. 
-If moderation is limited to the latent-factor parameters—that is, the means, variances, and covariance — the model remains consistent with MI. 
+If moderation is limited to the latent-factor parameters, that is, the means, variances, and covariance, the model remains consistent with MI. 
 In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI. 
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
 Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches.
@@ -153,33 +153,40 @@ Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedure
 
 # Method 
 
-Different population SEMs with latent variables and continuous indicators will be simulated in two different simulation studies. 
-The simulation is split into two studies, to separate them on the broad structure of the population SEMs. 
-In study 1 the population model (and its variations) always contains one latent factor, whereas in study two the population model always encompasses two latent factors. 
-Study 1 focuses on functional form misspecifications and data-related conditions. 
-Study 2 builds on Study 1 and introduces additional model misspecifications in the factor structure. 
-
+The simulation study was conducted in two complementary studies that differ in the complexity of the underlying latent-variable model. 
+"Study 1" focuses on MNI within a single-factor framework and investigates how the performance of MNLFA and SEM trees is affected by characteristics of the moderation process, including the number of moderated parameters, the strength and functional form of moderation, sample size, and indicator reliability. 
+Particular emphasis is placed on conditions in which the analytical model may incorrectly represent the true moderation function. 
+"Study 2" extends this framework to a two-factor model. 
+In addition to measurement-level noninvariance, heterogeneity may also occur in relations among latent variables through moderation of the latent covariance. 
+Furthermore, "Study 2" incorporates structural-model misspecifications, allowing the robustness of both methods to be evaluated under more complex latent-variable structures. 
 
 <!-- General Design and Objectives
 why two studies are conducted
 Brief explanation that the population models differ substantially and therefore warrant separate investigations.
 -->
 
-## Core Methodological Framework 
+## Data-Generation Mechanism  
 
-The data will be generated parametrically.
-The simulation design includes several manipulated factors that govern the data-generating mechanism (DGM). 
-These factors are varied across simulation conditions and applied consistently to both studies, unless otherwise noted. 
-The following factors are systematically varied in both studies using a grid search design:
+Across all simulation conditions, MNI was generated through moderation of model parameters by an observed continuous covariate. 
+A raw moderator M was sampled from a uniform distribution on the interval $[−1,1]$ and transformed into an effective moderator $Z=h(M)$. 
+The transformation $h(⋅)$ determined the functional form of heterogeneity and varied across simulation conditions.
+Importantly, nonlinearity was introduced exclusively through the transformation $Z=h(M)$, while moderation effects remained linear in the transformed moderator.
+Model parameters subject to moderation were specified as deterministic functions of $Z$, such that measurement properties changed systematically across individuals.
 
 ### Functional Form of Moderation  
 
-The effective moderator $Z = h(M)$ is evaluated systematically using the following DGM functions:
+The effective moderator $Z = h(M)$ was generated systematically using the following DGM functions:
 
 1. Linear  
 2. Quadratic  
 3. Sigmoid  
 4. Noise/null moderation, $h(M)=0$
+
+These functions were selected to represent qualitatively different forms of heterogeneity. 
+Linear moderation reflects the functional form most commonly assumed in modeling applications,implying a constant change in measurement parameters across the moderator range.  
+In contrast, quadratic moderation captures situations in which measurement differences are strongest at extreme values of a characteristic, such as when respondents at very low and very high levels of a trait interpret items differently than individuals near the center of the distribution. 
+Sigmoid moderation reflects threshold-like processes in which measurement parameters change little across most of the moderator range but shift more rapidly once a critical region is reached, for example when item functioning remains stable until a particular level of symptom severity, cognitive ability, or developmental maturation is exceeded. 
+The null condition $(h(M)=0)$ served as a measurement-invariant baseline and was used to evaluate Type I error rates.
 
 ### Strength of Moderation 
 
