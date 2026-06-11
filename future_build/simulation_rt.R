@@ -18,7 +18,7 @@ MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 DESIGN <- tidyr::expand_grid(
   popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
-  reliability  = c(0.60, 0.70, 0.80, 0.95),
+  reliability  = c(0.60, 0.75, 0.95), # 0.75 instead of 0.7 and 0.8 for computing
   lambda       = 0.70,
   intercepts   = 1,
   # latentmean  = 0,
