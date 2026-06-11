@@ -48,6 +48,39 @@ DESIGN <- DESIGN %>%
 DESIGN <- DESIGN %>%
   slice_sample(prop = 1) # this is a random permutation
 
+split_LH <- FALSE
+
+# Andreas approach
+## ----------- get splitter from command line argument ----------
+## order the simulation to only round the i-th of j many chunks
+## with i and j being the first two arguments
+
+if (!split_LH) {
+
+# get command line arguments
+args <- commandArgs(trailingOnly = TRUE)
+
+if (length(args)>0) {
+
+  if (length(args)==1) args[2]=100
+
+  chunk_id <- as.integer(args[1])
+  n_chunks <- as.integer(args[2]) 
+
+  all_indices <- seq_len(nrow(DESIGN))
+
+  chunks <- split(all_indices, cut(seq_along(all_indices),
+                                  n_chunks, labels = FALSE))
+  my_indices <- chunks[[chunk_id]]
+
+  DESIGN <- DESIGN[my_indices, ]
+
+}
+
+} else {
+
+
+# Leonies approach
 # ---------- Split on rep_id, for similarly long runtimes ------
 chunk_id <- NULL
 n_chunks <- NULL
@@ -74,6 +107,9 @@ if (length(args) > 0) {
   DESIGN <- DESIGN %>%
     dplyr::filter(rep_id %in% reps_this_chunk)
 }
+
+}
+
 # --------------------------------------------------------------
 mnlfa_moderation_estimate_names <- function(p = 4) {
   base_names <- c(
@@ -775,32 +811,6 @@ n_workers <- max(1, parallelly::availableCores() - 1)
 plan(multisession, workers = n_workers)
 
 
-## ----------- get splitter from command line argument ----------
-## order the simulation to only round the i-th of j many chunks
-## with i and j being the first two arguments
-
-# get command line arguments
-#args <- commandArgs(trailingOnly = TRUE)
-
-#if (length(args)>0) {
-  
-#  if (length(args)==1) args[2]=100
-  
-#  chunk_id <- as.integer(args[1])
-#  n_chunks <- as.integer(args[2]) 
-
-#  all_indices <- seq_len(nrow(DESIGN))
-
-#  chunks <- split(all_indices, cut(seq_along(all_indices),
-#                                  n_chunks, labels = FALSE))
-#  my_indices <- chunks[[chunk_id]]
-  
-#  DESIGN <- DESIGN[my_indices, ]
-
-#}
-
-# only for debugging purposes, run only first two rows:
-# DESIGN <- DESIGN[1:4, ]
 
 
 #
