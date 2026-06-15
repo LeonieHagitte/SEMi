@@ -396,11 +396,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   mnlfa_kl_metric <- NA_real_
   mnlfa_kl_scalar <- NA_real_
   
-  if (!inherits(res$mnlfa, "error")) {
-    mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
-    mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
-    mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
-  }
+  #if (!inherits(res$mnlfa, "error")) {                          # commented out for runtime improvement
+  #  mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
+  #  mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
+  #  mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
+  #}
   
   # ---------------------------
   
