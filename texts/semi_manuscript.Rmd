@@ -40,8 +40,8 @@ Although these discussions often focus on issues of statistical inference or the
 Regardless of the sophistication of a statistical model or the strength of a theoretical framework, conclusions remain limited if the underlying measurement instrument does not function as intended. 
 
 A central aspect of measurement quality is measurement invariance (MI), which refers to the assumption that a measurement model operates equivalently across individuals, groups, contexts, or measurement occasions. 
-Under MI, the relationship between a latent construct and its observed indicators remains stable across the conditions being compared. 
-This assumption is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for many correlational, experimental, and longitudinal research designs.  
+Under MI, the relationship between a latent construct and its observed indicators remains stable across the conditions being compared [@Meredith1993]. 
+This assumption is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for many correlational, experimental, and longitudinal research designs [@Putnick2016].  
 Violations of MI imply that the relationship between the latent construct and its observed indicators differs across groups or conditions. 
 In such cases, differences in observed responses may not solely reflect differences in the underlying construct but may also arise from systematic differences in item functioning or measurement precision. 
 Consequently, observed group differences become ambiguous, as they may represent a combination of substantive construct differences and measurement-related distortions. 

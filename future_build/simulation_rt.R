@@ -23,8 +23,8 @@ DESIGN <- tidyr::expand_grid(
   intercepts   = 1,
   # latentmean  = 0,
   # delta_eta   = c(-1, -0.5, 0.5, 1),
-  delta_lambda = c(-0.3, -0.2, 0.2, 0.3),
-  delta_nu     = c(-1, -0.5, 0.5, 1),
+  delta_lambda = c(0.2, 0.3),
+  delta_nu     = c(0.5, 1),
   moderator    = MOD_TYPES,
   analysis_form = c("linear", "quadratic"),
   rep_id = 1:n_rep
