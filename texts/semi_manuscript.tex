@@ -143,9 +143,9 @@ using measurement models. Consequently, the validity of substantive
 conclusions depends fundamentally on the quality of the measurement
 process. If a measure does not adequately represent the construct of
 interest, even highest statistical rigor cannot prevent misleading
-conclusions (Flake and Fried 2020; Flake et al.~2017). However, recent
+conclusions (Flake and Fried 2020; Flake et al. 2017). However, recent
 work still has emphasized the need for stronger statistical methods
-(Flake et al.~2017; Haig 2020; Altoè et al.~2020) as well as more
+(Flake et al. 2017; Haig 2020; Altoè et al. 2020) as well as more
 explicit theoretical foundations in psychology (Eronen and Bringmann
 2021). Although these discussions often focus on issues of statistical
 inference or theory construction, both ultimately depend on the quality
@@ -157,11 +157,12 @@ A central aspect of measurement quality is measurement invariance (MI),
 which refers to the assumption that a measurement model operates
 equivalently across individuals, groups, contexts, or measurement
 occasions. Under MI, the relationship between a latent construct and its
-observed indicators remains stable across the conditions being compared.
-This assumption is essential whenever researchers seek to compare latent
-means, variances, covariances, or structural relations, making MI a
-fundamental prerequisite for many correlational, experimental, and
-longitudinal research designs.\\
+observed indicators remains stable across the conditions being compared
+(Meredith 1993). This assumption is essential whenever researchers seek
+to compare latent means, variances, covariances, or structural
+relations, making MI a fundamental prerequisite for many correlational,
+experimental, and longitudinal research designs (Putnick and Bornstein
+2016).\\
 Violations of MI imply that the relationship between the latent
 construct and its observed indicators differs across groups or
 conditions. In such cases, differences in observed responses may not
@@ -169,11 +170,12 @@ solely reflect differences in the underlying construct but may also
 arise from systematic differences in item functioning or measurement
 precision. Consequently, observed group differences become ambiguous, as
 they may represent a combination of substantive construct differences
-and measurement-related distortions. Without establishing MI, it is
-therefore impossible to determine whether apparent differences reflect
-true variation in the latent construct or artifacts of the measurement
-process. Consequently, MI is not only a methodological requirement but
-also a prerequisite for valid theoretical interpretation.
+and measurement-related distortions (Cheung and Rensvold 2002; Meredith
+1993). Without establishing MI, it is therefore impossible to determine
+whether apparent differences reflect true variation in the latent
+construct or artifacts of the measurement process. Consequently, MI is
+not only a methodological requirement but also a prerequisite for valid
+theoretical interpretation.
 
 \subsection{Classical Measurement Invariance
 Testing}\label{classical-measurement-invariance-testing}
@@ -183,10 +185,18 @@ constructs and their relations to observed indicators. Within SEMs,
 measurement models specify the relationships between latent factors and
 their manifest indicators. By separating construct-related variance from
 measurement error, latent variable models provide a principled basis for
-evaluating measurement quality.
+evaluating measurement quality (Bollen 1989).
 
-The most widely used approach for evaluating measurement invariance is
-multiple-group confirmatory factor analysis (MGCFA).\\
+Classical approaches to measurement invariance testing are fundamentally
+confirmatory in nature. Researchers begin by specifying a measurement
+model, typically in the form of a confirmatory factor analysis (CFA),
+that reflects substantive hypotheses about the construct under
+investigation. A categorical grouping variable is then used to partition
+the sample into two or more groups, across which measurement parameters
+are constrained and compared. This most widely used approach for
+evaluating measurement invariance is usually referred to as
+multiple-group confirmatory factor analysis (MGCFA) (e.g. Cheung and
+Rensvold 2002; Putnick and Bornstein 2016).\\
 In MGCFA, measurement invariance is typically assessed through a
 sequence of nested model comparisons in which equality constraints are
 imposed on increasingly restrictive sets of parameters. Equality of the
@@ -207,29 +217,22 @@ residual variance holds, the items of the scale are measuring the latent
 constructs with the same measurement error. This implies that it can
 indeed be known whether diﬀerences measured by the items of the tested
 scale between the groups are due to group diﬀerences in the proposed
-factors or due to measurement errors. The level of invariance required
-depends on the substantive inference of interest. For example, scalar
-invariance is generally required when comparing latent means across
-groups, whereas less restrictive forms of invariance may be sufficient
-for other research questions.
+factors or due to measurement errors (Cheung and Rensvold 2002; Widaman
+and Reise 1997). The level of invariance required depends on the
+substantive inference of interest. For example, scalar invariance is
+generally required when comparing latent means across groups, whereas
+less restrictive forms of invariance may be sufficient for other
+research questions (Putnick and Bornstein 2016).
 
-Classical approaches to measurement invariance testing are fundamentally
-confirmatory in nature. Researchers begin by specifying a measurement
-model, typically in the form of a confirmatory factor analysis (CFA),
-that reflects substantive hypotheses about the construct under
-investigation. A categorical grouping variable is then used to partition
-the sample into two or more groups, across which measurement parameters
-are constrained and compared. Consequently, the assessment of
-measurement invariance depends on two central specifications: the
-measurement model itself and the grouping variable used to represent
-potential sources of heterogeneity. As a result, measurement
-noninvariance (MNI) can only be detected with respect to the grouping
-variables included in the analysis.
-
-This framework is highly effective when substantive theory naturally
-implies discrete group distinctions, such as treatment conditions,
-demographic categories, or measurement occasions. However, many
-characteristics that may influence measurement functioning vary
+For MGCFA testing, the assessment of measurement invariance depends on
+two central specifications: the measurement model itself and the
+grouping variable used to represent potential sources of heterogeneity.
+As a result, measurement noninvariance (MNI) can only be detected with
+respect to the grouping variables included in the analysis.
+Consequently, this framework is highly effective when substantive theory
+naturally implies discrete group distinctions, such as treatment
+conditions, demographic categories, or measurement occasions. However,
+many characteristics that may influence measurement functioning vary
 continuously across individuals. In such situations, representing
 heterogeneity through predefined groups may require arbitrary
 categorization and can obscure important variation in measurement
@@ -385,30 +388,40 @@ conventional MGCFA-based invariance testing.
 
 \section{Method}\label{method}
 
-Different population SEMs with latent variables and continuous
-indicators will be simulated in two different simulation studies. The
-simulation is split into two studies, to separate them on the broad
-structure of the population SEMs. In study 1 the population model (and
-its variations) always contains one latent factor, whereas in study two
-the population model always encompasses two latent factors. Study 1
-focuses on functional form misspecifications and data-related
-conditions. Study 2 builds on Study 1 and introduces additional model
-misspecifications in the factor structure.
+The simulation study was conducted in two complementary studies that
+differ in the complexity of the underlying latent-variable model.
+``Study 1'' focuses on MNI within a single-factor framework and
+investigates how the performance of MNLFA and SEM trees is affected by
+characteristics of the moderation process, including the number of
+moderated parameters, the strength and functional form of moderation,
+sample size, and indicator reliability. Particular emphasis is placed on
+conditions in which the analytical model may incorrectly represent the
+true moderation function. ``Study 2'' extends this framework to a
+two-factor model. In addition to measurement-level noninvariance,
+heterogeneity may also occur in relations among latent variables through
+moderation of the latent covariance. Furthermore, ``Study 2''
+incorporates structural-model misspecifications, allowing the robustness
+of both methods to be evaluated under more complex latent-variable
+structures.
 
-\subsection{Core Methodological
-Framework}\label{core-methodological-framework}
+\subsection{Data-Generation Mechanism}\label{data-generation-mechanism}
 
-The data will be generated parametrically. The simulation design
-includes several manipulated factors that govern the data-generating
-mechanism (DGM). These factors are varied across simulation conditions
-and applied consistently to both studies, unless otherwise noted. The
-following factors are systematically varied in both studies using a grid
-search design:
+Across all simulation conditions, MNI was generated through moderation
+of model parameters by an observed continuous covariate. A raw moderator
+M was sampled from a uniform distribution on the interval \([-1,1]\) and
+transformed into an effective moderator \(Z=h(M)\). The transformation
+\(h(\cdot)\) determined the functional form of heterogeneity and varied
+across simulation conditions. Importantly, nonlinearity was introduced
+exclusively through the transformation \(Z=h(M)\), while moderation
+effects remained linear in the transformed moderator. Model parameters
+subject to moderation were specified as deterministic functions of
+\(Z\), such that measurement properties changed systematically across
+individuals.
 
 \subsubsection{Functional Form of
 Moderation}\label{functional-form-of-moderation}
 
-The effective moderator \(Z = h(M)\) is evaluated systematically using
+The effective moderator \(Z = h(M)\) was generated systematically using
 the following DGM functions:
 
 \begin{enumerate}
@@ -423,6 +436,23 @@ the following DGM functions:
 \item
   Noise/null moderation, \(h(M)=0\)
 \end{enumerate}
+
+These functions were selected to represent qualitatively different forms
+of heterogeneity. Linear moderation reflects the functional form most
+commonly assumed in modeling applications,implying a constant change in
+measurement parameters across the moderator range.\\
+In contrast, quadratic moderation captures situations in which
+measurement differences are strongest at extreme values of a
+characteristic, such as when respondents at very low and very high
+levels of a trait interpret items differently than individuals near the
+center of the distribution. Sigmoid moderation reflects threshold-like
+processes in which measurement parameters change little across most of
+the moderator range but shift more rapidly once a critical region is
+reached, for example when item functioning remains stable until a
+particular level of symptom severity, cognitive ability, or
+developmental maturation is exceeded. The null condition \((h(M)=0)\)
+served as a measurement-invariant baseline and was used to evaluate Type
+I error rates.
 
 \subsubsection{Strength of Moderation}\label{strength-of-moderation}
 
@@ -600,6 +630,13 @@ the factor structure:
 
 \protect\phantomsection\label{refs}
 \begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-Altoe2020}
+Altoè, Gianmarco, Giulia Bertoldo, Claudio Zandonella Callegher, et al.
+2020. {``Enhancing Statistical Inference in Psychological Research via
+Prospective and Retrospective Design Analysis.''} \emph{Frontiers in
+Psychology}, advance online publication.
+\url{https://doi.org/10.3389/fpsyg.2019.02893}.
+
 \bibitem[\citeproctext]{ref-Arnold2021}
 Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. {``Score-Guided
 Structural Equation Model Trees.''} \emph{Frontiers in Psychology} 11:
@@ -615,14 +652,60 @@ Boker, Steven M., Michael C. Neale, Hermine H. Maes, et al. 2026.
 \emph{OpenMx: Extended Structural Equation Modelling}.
 \url{https://doi.org/10.32614/CRAN.package.OpenMx}.
 
+\bibitem[\citeproctext]{ref-Bollen1989}
+Bollen, K. A. 1989. \emph{Structural Equations with Latent Variables}.
+John Wiley \& Sons. \url{https://doi.org/10.1002/9781118619179}.
+
 \bibitem[\citeproctext]{ref-semtree2026}
 Brandmaier, A. M., John J. Prindle, Manuel Arnold, and Caspar J. Van
 Lissa. 2026. \emph{Semtree: Recursive Partitioning for Structural
 Equation Models}. \url{https://github.com/brandmaier/semtree}.
 
+\bibitem[\citeproctext]{ref-Cheung2002}
+Cheung, Gordon W., and Roger B. Rensvold. 2002. {``Evaluating
+Goodness-of-Fit Indexes for Testing Measurement Invariance.''}
+\emph{Structural Equation Modeling: A Multidisciplinary Journal} 9 (2):
+233--55. \url{https://doi.org/10.1207/S15328007SEM0902/_5}.
+
+\bibitem[\citeproctext]{ref-Eronen2021}
+Eronen, Markus I., and Laura F. Bringmann. 2021. {``The Theory Crisis in
+Psychology: How to Move Forward.''} \emph{Perspectives on Psychological
+Science} 16 (4): 779--88.
+\url{https://doi.org/10.1177/1745691620970586}.
+
+\bibitem[\citeproctext]{ref-Flake2020}
+Flake, Jessica K., and Eiko I. Fried. 2020. {``Measurement
+Schmeasurement: Questionable Measurement Practices and How to Avoid
+Them.''} \emph{Advances in Methods and Practices in Psychological
+Science} 3 (4): 456--65. \url{https://doi.org/10.1177/2515245920952393}.
+
+\bibitem[\citeproctext]{ref-Flake2017}
+Flake, Jessica K., Jolynn Pek, and Eric Hehman. 2017. {``Construct
+Validation in Social and Personality Research: Current Practice and
+Recommendations.''} \emph{Social Psychological and Personality Science}
+8 (4): 370--78. \url{https://doi.org/10.1177/1948550617693063}.
+
+\bibitem[\citeproctext]{ref-Haig2020}
+Haig, Brian D. 2020. {``What Can Psychology's Statistics Reformers Learn
+from the Error-Statistical Perspective?''} \emph{Methods in Psychology}
+2: 100020.
+https://doi.org/\url{https://doi.org/10.1016/j.metip.2020.100020}.
+
+\bibitem[\citeproctext]{ref-Meredith1993}
+Meredith, William. 1993. {``Measurement {Invariance}, {Factor Analysis}
+and {Factorial Invariance}.''} \emph{Psychometrika} 58 (4): 525--43.
+\url{https://doi.org/10.1007/BF02294825}.
+
 \bibitem[\citeproctext]{ref-tibble2026}
 Müller, Kirill, and Hadley Wickham. 2026. \emph{Tibble: Simple Data
 Frames}. \url{https://doi.org/10.32614/CRAN.package.tibble}.
+
+\bibitem[\citeproctext]{ref-Putnick2016}
+Putnick, Diane L., and Marc H. Bornstein. 2016. {``Measurement
+Invariance Conventions and Reporting: The State of the Art and Future
+Directions for Psychological Research.''} \emph{Developmental Review}
+41: 71--90.
+https://doi.org/\url{https://doi.org/10.1016/j.dr.2016.06.004}.
 
 \bibitem[\citeproctext]{ref-Rteam2025}
 R Core Team. 2025. \emph{R: A Language and Environment for Statistical
@@ -652,6 +735,14 @@ Programming Tools}. \url{https://doi.org/10.32614/CRAN.package.purrr}.
 Wickham, Hadley, Davis Vaughan, and Maximilian Girlich. 2025.
 \emph{Tidyr: Tidy Messy Data}.
 \url{https://doi.org/10.32614/CRAN.package.tidyr}.
+
+\bibitem[\citeproctext]{ref-Widaman1997}
+Widaman, Keith F., and Steven P. Reise. 1997. {``Exploring the
+Measurement Invariance of Psychological Instruments: {Applications} in
+the Substance Use Domain.''} In \emph{The Science of Prevention:
+{Methodological} Advances from Alcohol and Substance Abuse Research.}
+American Psychological Association.
+\url{https://doi.org/10.1037/10222-009}.
 
 \end{CSLReferences}
 

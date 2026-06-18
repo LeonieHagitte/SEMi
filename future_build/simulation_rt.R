@@ -18,13 +18,13 @@ MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 DESIGN <- tidyr::expand_grid(
   popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
-  reliability  = c(0.60, 0.70, 0.80, 0.95),
+  reliability  = c(0.60, 0.75, 0.95), # 0.75 instead of 0.7 and 0.8 for computing
   lambda       = 0.70,
   intercepts   = 1,
   # latentmean  = 0,
   # delta_eta   = c(-1, -0.5, 0.5, 1),
-  delta_lambda = c(-0.3, -0.2, 0.2, 0.3),
-  delta_nu     = c(-1, -0.5, 0.5, 1),
+  delta_lambda = c(0.2, 0.3),
+  delta_nu     = c(0.5, 1),
   moderator    = MOD_TYPES,
   analysis_form = c("linear", "quadratic"),
   rep_id = 1:n_rep
@@ -396,11 +396,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   mnlfa_kl_metric <- NA_real_
   mnlfa_kl_scalar <- NA_real_
   
-  if (!inherits(res$mnlfa, "error")) {
-    mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
-    mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
-    mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
-  }
+  #if (!inherits(res$mnlfa, "error")) {                          # commented out for runtime improvement
+  #  mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
+  #  mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
+  #  mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
+  #}
   
   # ---------------------------
   
