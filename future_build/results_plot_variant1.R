@@ -1,4 +1,4 @@
-plotdat <- results %>% filter(popmodel == 1.2) %>%
+plotdat <- results %>% filter(popmodel == 1.21) %>%
   pivot_longer(
     cols = c(mnlfa_scalar_lrt_reject, tree_metric_split),
     names_to = "method",
@@ -12,7 +12,7 @@ plotdat <- results %>% filter(popmodel == 1.2) %>%
   mutate(
     method = recode(
       method,
-      mnlfa_scalar_lrt_reject = "MNLFA scalar LRT",
+      mnlfa_metric_lrt_reject = "MNLFA metric LRT",
       tree_metric_split = "Tree metric split"
     )
   )
