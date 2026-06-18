@@ -41,7 +41,7 @@ Regardless of the sophistication of a statistical model or the strength of a the
 
 A central aspect of measurement quality is measurement invariance (MI), which refers to the assumption that a measurement model operates equivalently across individuals, groups, contexts, or measurement occasions. 
 Under MI, the relationship between a latent construct and its observed indicators remains stable across the conditions being compared [@Meredith1993]. 
-This assumption is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for many correlational, experimental, and longitudinal research designs [@Putnick2016].  
+This assumption is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for many correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
 Violations of MI imply that the relationship between the latent construct and its observed indicators differs across groups or conditions. 
 In such cases, differences in observed responses may not solely reflect differences in the underlying construct but may also arise from systematic differences in item functioning or measurement precision. 
 Consequently, observed group differences become ambiguous, as they may represent a combination of substantive construct differences and measurement-related distortions [@Cheung2002; @Meredith1993]. 
@@ -63,7 +63,7 @@ Equality of the models structure in both groups is called configural invariance,
 Equality of factor loadings former is referred to as metric invariance, if metric invariance is present it indicates that all factor loading parameters are equal across groups. 
 Speciﬁcally, this suggests that the items of a given scale and their underlying constructs relate to each other with the same strengths in both groups. 
 Scalar invariance further constrains item intercepts to equality across groups. 
-Establishing scalar invariance is generally required for meaningful comparisons of latent means because it indicates that the measurement scale has the same unit and origin across groups.
+Establishing scalar invariance is generally required for meaningful comparisons of latent means because it indicates that the measurement scale has the same unit and origin across groups [@Little1997].
 Residual or strict invariance assumes, additionally to the constraints above, that variables residuals are equal across the groups. 
 If the residual variance holds, the items of the scale are measuring the latent constructs with the same measurement error. 
 This implies that it can indeed be known whether diﬀerences measured by the items of the tested scale between the groups are due to group diﬀerences in the proposed factors or due to measurement errors [@Cheung2002; @Widaman1997]. 
@@ -78,17 +78,31 @@ In such situations, representing heterogeneity through predefined groups may req
 
 <!-- Add an empirical example, for easier understanding, that is used through ot the methods as reference point on how they differ in their understanding and how they deal differently with that example case ( maybe something that also would fit the simulated measurement models) Maybe SHS ? -->
 
+Those limitations of group-based approaches to MI reflect a broader issue concerning the representation of individual differences in psychological research. 
+Developmental and lifespan perspectives have long emphasized that psychological processes often vary continuously across individuals rather than occurring in discrete categories. 
+In particular, lifespan theories highlight interindividual differences in intraindividual change and conceptualize heterogeneity as a fundamental characteristic of human development [@Baltes1987; @Baltes2007]. 
+From this perspective, categorizing individuals into predefined groups may obscure important variation in the mechanisms underlying psychological constructs.
+
+@Nesselroade thus argued that understanding psychological processes requires statistical models capable of representing systematic individual differences rather than focusing exclusively on aggregate-level relations [@Nesselroade1991; @Nesselroade2001]. 
+From this perspective, heterogeneity is an important source of substantive information in its own right.
+
+Related arguments have also been advanced within latent-variable modeling. 
+Consistent with lifespan-developmental perspectives emphasizing individual heterogeneity, @Little1997 argued that substantive psychological questions frequently concern individual differences in developmental and psychological processes and therefore require statistical models capable of representing systematic heterogeneity among individuals. 
+Rather than assuming homogeneous relations between latent constructs and observed indicators within broad groups, this perspective encourages the examination of how these relations may vary as a function of individual characteristics [@Little1997]. 
+Viewed from this perspective, MNI can be understood as a manifestation of systematic individual differences in the measurement process itself. 
+<!-- Maybe we could include this conceptual tie somehow, if this is too far away and would broaden this manuscript too much, we could also again kick it -->
+
 ## Moderated Nonlinear Factor Analysis 
 
-These considerations have motivated the development of approaches that conceptualize MNI as a continuous process operating at the individual level.
+Similar considerations have later motivated the development of approaches that conceptualize MNI as a continuous process operating at the individual level.
 One prominent example is the Moderated nonlinear factor analysis (MNLFA). 
 MNLFA conceptualizes heterogeneity in data as functions of observed moderator variables.
-Within MNLFA, measurement parameters are allowed to vary systematically as functions of one or more moderator variables. 
+Within MNLFA, measurement parameters are allowed to vary systematically as functions of one or more moderator variables [@Bauer2009; @Bauer2017]. 
 Consequently, MNI is conceptualized as moderation of the measurement model itself. 
-If measurement parameters differ as a function of the moderator, the measurement model no longer operates equivalently across individuals and therefore violates measurement invariance.
+If measurement parameters differ as a function of the moderator, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Curran2014; @Kolbe2021; @Kolbe2024].
 
 Whether MI is present depends on which parameters are moderated by the exogenous variable. 
-The exogenous variable may influence any subset of the parameters in the measurement model. 
+The exogenous variable may influence any subset of the parameters in the measurement model and structural model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable. 
 If moderation is limited to the latent-factor parameters, that is, the means, variances, and covariance, the model remains consistent with MI. 
 In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI. 
