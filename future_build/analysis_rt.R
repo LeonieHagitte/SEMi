@@ -135,7 +135,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
                     ncol=p,
                     free=TRUE, # shows that effects of m2 in this case are freely estimated
                     values = 0,
-                    labels = paste0("matB1_2_", seq_len(p)),
+                    labels = paste0("matB2_1_", seq_len(p)),
                     name="matB2")
   
   matB12 <- mxMatrix(type = "Full", #Matrix for interaction effects on intercepts
