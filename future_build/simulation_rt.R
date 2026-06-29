@@ -520,6 +520,9 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   tree_metric_p_uncorrected <- NA_real_
   tree_metric_reject <- NA
   
+  tree_scalar_tested_anyway <- FALSE
+  tree_scalar_power_anyway  <- NA
+  tree_sequential_decision <- NA_character_
   tree_scalar_p <- NA_real_
   tree_scalar_p_uncorrected <- NA_real_
   tree_scalar_reject <- NA
@@ -532,6 +535,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_metric_split <- res$semtree$metric_split
     tree_scalar_split <- res$semtree$scalar_split
     
+    
     if (!is.null(res$semtree$metric_test)) {
       tree_metric_p <- res$semtree$metric_test$p_value
       tree_metric_p_uncorrected <- res$semtree$metric_test$p_uncorrected
@@ -543,6 +547,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
       tree_scalar_p_uncorrected <- res$semtree$scalar_test$p_uncorrected
       tree_scalar_reject <- res$semtree$scalar_test$reject_h0
     }
+    
+    tree_sequential_decision <- res$semtree$tree_sequential_decision
+    
+    tree_scalar_tested_anyway <- !is.na(tree_scalar_p)
+    tree_scalar_power_anyway  <- tree_scalar_reject
     
     metric_info <- semtree_detects_moderation(
       res$semtree$metric_tree,
@@ -675,6 +684,10 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_p            = as.numeric(tree_scalar_p),
     tree_scalar_p_uncorrected = as.numeric(tree_scalar_p_uncorrected),
     tree_scalar_reject       = as.logical(tree_scalar_reject),
+    
+    tree_sequential_decision = as.character(tree_sequential_decision),
+    tree_scalar_tested_anyway = as.logical(tree_scalar_tested_anyway),
+    tree_scalar_power_anyway = as.logical(tree_scalar_power_anyway),
     
     # moderators used (these come from 'semtree_detects_moderation()')
     tree_metric_split_on_am1 = as.logical(tree_metric_split_on_am1), # true if any metric-tree split used 'am1'

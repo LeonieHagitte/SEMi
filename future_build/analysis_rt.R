@@ -693,46 +693,38 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
   scalar_test <- NULL
   
   # ---------------- Scalar stage: intercepts ----------------
- if (!isTRUE(metric_split)) {
-    scalar_constraints <- semtree::semtree.constraints(
-      focus.parameters = paste0("nu_", 1:p)
-    )
-    
-    scalar_tree <- tryCatch(
-      semtree::semtree(
-        model = fitbase,
-        data = dat,
-        predictors = predictors,
-        control = control,
-        constraints = scalar_constraints,
-        verbose = verbose
-      ),
-      error = identity
-    )
-    
-    #####
-   # if (!inherits(scalar_tree, "error")) {
-  #    cat("\n--- scalar_tree diagnostics ---\n")
-  #    print(class(scalar_tree))
-  #    
-  #    if (isS4(scalar_tree)) {
-  #      cat("slotNames(scalar_tree):\n")
-  #      print(methods::slotNames(scalar_tree))
-  #    }
-      
-  #   cat("names(scalar_tree):\n")
-  #    print(names(scalar_tree))
-  #    
-  #    str(scalar_tree, max.level = 2)
-  #  }
-    #####
-    
-    if (!inherits(scalar_tree, "error") && methods::is(scalar_tree, "semtree")) {
-      scalar_split <- !is.null(scalar_tree$caption) &&
-        !identical(scalar_tree$caption, "TERMINAL")
-    }
-    scalar_test <- extract_tree_test(scalar_tree, alpha = alpha)
+  scalar_constraints <- semtree::semtree.constraints(
+    focus.parameters = paste0("nu_", 1:p)
+  )
+  
+  scalar_tree <- tryCatch(
+    semtree::semtree(
+      model = fitbase,
+      data = dat,
+      predictors = predictors,
+      control = control,
+      constraints = scalar_constraints,
+      verbose = verbose
+    ),
+    error = identity
+  )
+  
+  scalar_split <- NA
+  if (!inherits(scalar_tree, "error") && methods::is(scalar_tree, "semtree")) {
+    scalar_split <- !is.null(scalar_tree$caption) &&
+      !identical(scalar_tree$caption, "TERMINAL")
   }
+  
+  scalar_test <- extract_tree_test(scalar_tree, alpha = alpha)
+  
+  tree_sequential_decision <- dplyr::case_when(
+    isTRUE(metric_test$reject_h0) ~ "metric_noninvariance_detected",
+    identical(metric_test$reject_h0, FALSE) & isTRUE(scalar_test$reject_h0) ~
+      "scalar_noninvariance_detected",
+    identical(metric_test$reject_h0, FALSE) & identical(scalar_test$reject_h0, FALSE) ~
+      "scalar_invariance_retained",
+    TRUE ~ NA_character_
+  )
   
   return(list(
     baseline_model = modbase,
@@ -740,6 +732,7 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
     metric_tree = metric_tree,
     metric_split = metric_split,
     metric_test = metric_test,
+    tree_sequential_decision = tree_sequential_decision,
     scalar_tree = scalar_tree,
     scalar_split = scalar_split,
     scalar_test = if (exists("scalar_test")) scalar_test else NULL
