@@ -281,28 +281,28 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 </div>
 <aside class="notes">
 <ul>
-<li>Two students have the same latent motivation.</li>
+<li>Two students: low SES vs.&nbsp;high SES.</li>
+<li>Both complete the same academic motivation questionnaire.</li>
+<li>Their responses are summarized as latent motivation scores.</li>
 <li>Click 1:
 <ul>
-<li>Same latent trait → same expected item responses.</li>
-<li>Latent scores are directly comparable.</li>
+<li>We would like to compare these latent scores.</li>
 </ul></li>
 <li>Click 2:
 <ul>
-<li>Now imagine one item functions differently across students.</li>
-<li>Same latent motivation no longer implies the same observed response.</li>
+<li>But this comparison is only meaningful if the questionnaire functions equivalently for both students.</li>
 </ul></li>
 <li>Click 3:
 <ul>
-<li>The latent scores are now confounded with measurement bias.</li>
+<li>Otherwise, observed differences may reflect measurement bias rather than true differences in motivation.</li>
 </ul></li>
 <li>Key message:
 <ul>
-<li>Comparisons of latent scores require measurement invariance.</li>
+<li>Before interpreting latent score differences, measurement invariance must be established.</li>
 </ul></li>
 <li>Transition:
 <ul>
-<li>So what exactly is measurement invariance?</li>
+<li>What does measurement invariance mean in practice?</li>
 </ul></li>
 </ul>
 <style type="text/css">
@@ -328,6 +328,31 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="takeaway">
 <p>Without MI, conclusions about group differences in means, variances, or relations are not statistically justified <span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>Formal motivation for MI.</li>
+<li>Latent comparisons require measurement equivalence.</li>
+<li>Otherwise, differences may reflect measurement artifacts.</li>
+<li>Key message:
+<ul>
+<li>Measurement invariance is a prerequisite, not an optional assumption.</li>
+</ul></li>
+<li>Transition:
+<ul>
+<li>But how often is MI actually evaluated?</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="why-we-test-for-measurement-invariance-1" class="slide level2">
 <h2>Why we test for Measurement Invariance?</h2>
@@ -358,6 +383,37 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="takeaway">
 <p>The validity of many reported group comparisons therefore remains unclear.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>In practice, MI is often overlooked.</li>
+<li>Many psychological studies compare groups without testing MI.</li>
+<li>Even when MI is tested, reporting is frequently incomplete.</li>
+<li>Recent reviews show:
+<ul>
+<li>very few studies report MI,</li>
+<li>scalar invariance is relatively uncommon,</li>
+<li>factor structures often differ across groups.</li>
+</ul></li>
+<li>Key message:
+<ul>
+<li>The problem is not only methodological—it is also empirical.</li>
+</ul></li>
+<li>Transition:
+<ul>
+<li>How is MI traditionally evaluated?</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-classical-measurement-invariance-approach" class="slide level2">
 <h2>The Classical Measurement Invariance Approach</h2>
@@ -381,6 +437,39 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="takeaway">
 <p>MGCFA assumes that individuals can be assigned to a finite set of <strong>known groups</strong>.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>Usually a CFA model is fitted simultaneously across multiple groups.</li>
+<li>Equality constraints are imposed and evaluated sequentially.</li>
+<li>Typical grouping variables are naturally categorical or treated as such:
+<ul>
+<li>treatment vs.&nbsp;control,</li>
+<li>gender,</li>
+<li>countries,</li>
+<li>school types.</li>
+</ul></li>
+<li>Implicit assumption:</li>
+<li>Implicitly, MGCFA approximates continuous parameter variation by a step function.</li>
+<li>Within each group, parameters are assumed to be constant.</li>
+<li>Parameter changes can only occur at the researcher-defined group boundaries.</li>
+<li>This approximation may be reasonable—or may poorly represent the true moderation process.</li>
+<li>This effectively represents parameter variation as discrete group differences.</li>
+<li>Transition:
+<ul>
+<li>The next slides show how these equality constraints are evaluated.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="sequential-testing-of-measurement-invariance" class="slide level2">
 <h2>Sequential testing of measurement invariance</h2>
@@ -416,6 +505,49 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="fragment takeaway" data-fragment-index="5">
 <p>Each step compares the current model to the previous, less constrained model.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>Configural:
+<ul>
+<li>Same construct across groups.</li>
+<li>Basis for all subsequent invariance tests.</li>
+</ul></li>
+<li>Metric:
+<ul>
+<li>Same measurement unit (metric) across groups.</li>
+<li>The latent construct has the same meaning.</li>
+</ul></li>
+<li>Scalar:
+<ul>
+<li>Same origin (zero point) of the latent scale.</li>
+<li>Latent means can be compared.</li>
+</ul></li>
+<li>Strict:
+<ul>
+<li>Same residual variances (measurement precision).</li>
+<li>Observed scores can be compared directly.</li>
+<li>Rarely required in practice.</li>
+</ul></li>
+<li>Key point:
+<ul>
+<li>Each level builds on the previous one.</li>
+</ul></li>
+<li>Transition:
+<ul>
+<li>This framework assumes discrete, predefined groups.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="limitations-of-the-multigroup-framework" class="slide level2">
 <h2>Limitations of the multigroup framework</h2>
@@ -449,8 +581,34 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <p>Continuous moderators are therefore commonly categorized using <strong>median splits, tertiles, quartiles</strong>, or other arbitrary cut-points.</p>
 </div>
 <div class="fragment takeaway">
-<p>Categorization approximates potentially continuous parameter changes by a <strong>step function</strong>, resulting in information loss and conclusions that may depend on the chosen cut-points.</p>
+<p>Categorization approximates continuous parameter variation by a <em>step function</em>, potentially reducing statistical power and making conclusions dependent on arbitrary cut-points <span class="citation" data-cites="Bauer2017 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Bauer 2017</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>MGCFA is well suited for naturally categorical groups.</li>
+<li>Problems arise when the moderator is continuous.</li>
+<li>Or when one has to many groups.</li>
+<li>Researchers often categorize variables such as SES or age.</li>
+<li>This imposes researcher-defined cut-points.</li>
+<li>Continuous parameter variation is represented as a step function.</li>
+<li>Different cut-points may produce different conclusions.</li>
+<li>Categorization also discards information and may reduce statistical power.</li>
+<li>Transition:
+<ul>
+<li>MNLFA avoids this categorization by modeling parameters as functions of continuous moderators.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="mnlfa-moderated-nonlinear-factor-analysis" class="slide level2">
 <h2>MNLFA (Moderated Nonlinear Factor Analysis)</h2>
@@ -458,15 +616,16 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <p>Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by allowing measurement and latent-variable parameters to vary continuously as functions of observed covariates <span class="citation" data-cites="Kolbe2024 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
 </div>
 <div class="highlight-box">
-<p>In this framework, Measurement noninvariance is represented by allowing model parameters to vary as functions of observed covariates.</p>
+<p>MNLFA represents model parameters as functions of observed covariates. Measurement noninvariance arises when measurement parameters vary across the moderator.</p>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Parameters that may vary</strong></p>
 <ul>
-<li>Item parameters: loadings, intercepts</li>
-<li>Factor means</li>
-<li>Factor variances</li>
+<li>Factor loadings</li>
+<li>Item intercepts</li>
+<li>residual variances</li>
+<li>Latent means and variances</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><strong>Moderators</strong></p>
@@ -477,8 +636,28 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 </ul>
 </div></div>
 <div class="takeaway">
-<p>MNLFA therefore models measurement noninvariance directly, rather than evaluating it only through sequential group-based tests <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
+<p>MNLFA models measurement noninvariance directly by allowing model parameters to vary continuously with observed moderators.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>MNLFA extends the CFA framework using definition variables.</li>
+<li>Rather than estimating separate group-specific parameters, parameters are modeled as functions of observed covariates.</li>
+<li>Measurement noninvariance is represented by moderation of e.g. factor loadings and/or item intercepts etc.</li>
+<li>The moderator may be continuous or categorical.</li>
+<li>Each individual therefore has parameter values conditional on their observed moderator value.</li>
+<li>No discretization of continuous moderators is required.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="mnlfa-researcher-decisions" class="slide level2">
 <h2>MNLFA: Researcher Decisions</h2>
@@ -505,6 +684,35 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="takeaway">
 <p>MNLFA models measurement parameters as <strong>parametric functions</strong> of observed moderators. The quality of inference depends on appropriate model specification.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>MNLFA is also a confirmatory approach.</li>
+<li>The researcher needs to specify:
+<ul>
+<li>which parameters are moderated,</li>
+<li>which moderators are included,</li>
+<li>the functional form (e.g., linear or quadratic).</li>
+</ul></li>
+<li>The model estimates the corresponding moderation coefficients.</li>
+<li>Correct specification is important.</li>
+<li>If the assumed functional form is incorrect, inference may be affected.</li>
+<li>This question motivates my first simulation study.</li>
+<li>Transition:
+<ul>
+<li>SEM Trees approach the same problem differently.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="sem-trees" class="slide level2">
 <h2>SEM Trees</h2>
@@ -528,6 +736,27 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <p>Rather than specifying <strong>how</strong> measurement parameters vary, SEM Trees discover subgroup structures directly from the data.</p>
 </div>
 </div></div>
+<aside class="notes">
+<ul>
+<li>SEM Trees combine CFA with recursive partitioning.</li>
+<li>Begin with a single CFA fitted to the entire sample.</li>
+<li>Score-based tests evaluate whether model parameters are stable with respect to each candidate covariate.</li>
+<li>Select the covariate and cut-point showing the strongest evidence of parameter instability.</li>
+<li>Split the sample and re-estimate the CFA within each resulting subgroup.</li>
+<li>Repeat recursively until no further significant parameter instability is detected.</li>
+<li>subgroup structure is discovered from the data.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="sem-trees-researcher-decisions" class="slide level2">
 <h2>SEM Trees: Researcher Decisions</h2>
@@ -560,6 +789,41 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div class="takeaway">
 <p>SEM Trees estimate measurement noninvariance <strong>without requiring the researcher to specify a functional form of moderation</strong>.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>SEM Trees only remain confirmatory with respect to the measurement model.</li>
+<li>generally speaking SEM trees are a data driven method.</li>
+<li>The researcher specifies:
+<ul>
+<li>the measurement model,</li>
+<li>the candidate covariates,</li>
+<li>and tree-complexity controls.</li>
+</ul></li>
+<li>The algorithm then determines:
+<ul>
+<li>whether parameter instability exists,</li>
+<li>which covariate explains it best,</li>
+<li>where the optimal split occurs,</li>
+<li>and the resulting subgroup structure.</li>
+</ul></li>
+<li>Unlike MNLFA, no functional form of moderation is assumed.</li>
+<li>Moderation is inferred from the observed pattern of parameter instability.</li>
+<li>Transition:
+<ul>
+<li>The two methods therefore differ primarily in how they represent moderation.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="from-methods-to-comparison" class="slide level2">
 <h2>From Methods to Comparison</h2>
@@ -612,6 +876,38 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <p>The relative performance of both approaches depends on how well their modeling assumptions match the underlying process generating measurement noninvariance.</p>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>Both methods could address the same scientific question:
+<ul>
+<li>Does measurement noninvariance exist?</li>
+</ul></li>
+<li>MNLFA requires a few more researcher decisions.</li>
+<li>Whereas the decisions a researcher has to make with SEM trees are quite similar to the MGCFA approach</li>
+<li>The key difference is how moderation is represented.</li>
+<li>MNLFA:
+<ul>
+<li>parametric method</li>
+<li>Researcher specifies the functional form.</li>
+</ul></li>
+<li>SEM Trees:
+<ul>
+<li>non-parametric method</li>
+<li>Functional form is not specified.</li>
+<li>The algorithm discovers subgroup structure from the data.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="section-1" class="slide level2">
 <h2></h2>
@@ -654,6 +950,26 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <p><strong>When does each approach provide the greatest advantage?</strong></p>
 <p>The following simulation study addresses this question.</p>
 </div>
+<aside class="notes">
+<ul>
+<li>we argue that the choice of method should depend on the amount of prior knowledge about the moderation process/ theoretical foundation.</li>
+<li>Their performance depends on how well their assumptions match the data-generating process.</li>
+<li>Transition:
+<ul>
+<li>This motivates the simulation study.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="study-1-data-generating-process" class="slide level2">
 <h2>Study 1: Data-Generating Process</h2>
@@ -708,6 +1024,25 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <span id="cb1-14"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
+<aside class="notes">
+<ul>
+<li>Each design cell was replicated <span class="math inline">\(n_{\mathrm{rep}}\)</span> times.</li>
+<li>The simulation comprised 3,456 unique design cells.</li>
+<li>Each design cell was submitted as an independent SLURM job.</li>
+<li>Independent random seeds ensured reproducibility.</li>
+<li>Output files were combined for the final analyses.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="study-1-moderator-functions" class="slide level2">
 <h2>Study 1: Moderator Functions</h2>
@@ -947,6 +1282,16 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 </div>
 </div>
 </section>
+<section id="what-is-done-what-is-to-be-done" class="slide level2">
+<h2>What is Done, What is to be Done?</h2>
+<ul>
+<li>This study was preregistered at Zenodo: https://doi.org/10.5281/zenodo.19891930</li>
+<li>Following the ADEMP preregistration approach <span class="citation" data-cites="Siepe2024">(<a href="#/references" role="doc-biblioref" onclick="">Siepe et al. 2024</a>)</span></li>
+<li>Study 2 is still missing</li>
+<li>parameter estimation for MNLFA is missing</li>
+<li>partial dependence plots as well</li>
+</ul>
+</section>
 <section id="questions-concerns" class="slide level2">
 <h2>Questions &amp; Concerns</h2>
 <p><br>
@@ -970,6 +1315,9 @@ Leonie Hagitte &amp; Andreas M. Brandmaier
 <div id="ref-Arnold2021" class="csl-entry" role="listitem">
 Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. <span>“Score-Guided Structural Equation Model Trees.”</span> <em>Frontiers in Psychology</em> 11: 3913. <a href="https://doi.org/10.3389/fpsyg.2020.564403">https://doi.org/10.3389/fpsyg.2020.564403</a>.
 </div>
+<div id="ref-Bauer2017" class="csl-entry" role="listitem">
+Bauer, D. J. 2017. <span>“A More General Model for Testing Measurement Invariance and Differential Item Functioning.”</span> <em>Psychological Methods</em> 22 (3): 507–26. <a href="https://doi.org/10.1037/met0000077">https://doi.org/10.1037/met0000077</a>.
+</div>
 <div id="ref-Brandmaier2013" class="csl-entry" role="listitem">
 Brandmaier, A. M., T. von Oertzen, J. J. McArdle, and U. Lindenberger. 2013. <span>“Structural Equation Model Trees.”</span> <em>Psychological Methods</em> 18 (1): 71–86. <a href="https://doi.org/10.1037/a0030001">https://doi.org/10.1037/a0030001</a>.
 </div>
@@ -984,9 +1332,6 @@ Cheung, Gordon W., and Roger B. Rensvold. 2002. <span>“Evaluating Goodness-of-
 </div>
 <div id="ref-Curran2014" class="csl-entry" role="listitem">
 Curran, Patrick J., James S. McGinley, Daniel J. Bauer, et al. 2014. <span>“A <span>Moderated</span> <span>Nonlinear</span> <span>Factor</span> <span>Model</span> for the <span>Development</span> of <span>Commensurate</span> <span>Measures</span> in <span>Integrative</span> <span>Data</span> <span>Analysis</span>.”</span> <em>Multivariate Behavioral Research</em> 49 (3): 214–31. <a href="https://doi.org/10.1080/00273171.2014.889594">https://doi.org/10.1080/00273171.2014.889594</a>.
-</div>
-<div id="ref-Kolbe2021" class="csl-entry" role="listitem">
-Kolbe, Laura, Terrence D. Jorgensen, and Dylan Molenaar. 2021. <span>“The <span>Impact</span> of <span>Unmodeled</span> <span>Heteroskedasticity</span> on <span>Assessing</span> <span>Measurement</span> <span>Invariance</span> in <span>Single</span>-Group <span>Models</span>.”</span> <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 28 (1): 82–98. <a href="https://doi.org/10.1080/10705511.2020.1766357">https://doi.org/10.1080/10705511.2020.1766357</a>.
 </div>
 <div id="ref-Kolbe2024" class="csl-entry" role="listitem">
 Kolbe, Laura, Dylan Molenaar, Suzanne Jak, and Terrence D. Jorgensen. 2024. <span>“<span class="nocase">Assessing Measurement Invariance with Moderated Nonlinear Factor Analysis Using the R Package OpenMx</span>.”</span> <em>Psychological Methods</em> 29 (2): 388–406. <a href="https://doi.org/10.1037/met0000501">https://doi.org/10.1037/met0000501</a>.
@@ -1005,6 +1350,9 @@ Putnick, Diane L., and Marc H. Bornstein. 2016. <span>“Measurement Invariance 
 </div>
 <div id="ref-Rohrer2025" class="csl-entry" role="listitem">
 Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement Invariance Causally.”</span> <em>Current Research in Ecological and Social Psychology</em> 9: 100241. <a href="https://doi.org/10.1016/j.cresp.2025.100241">https://doi.org/10.1016/j.cresp.2025.100241</a>.
+</div>
+<div id="ref-Siepe2024" class="csl-entry" role="listitem">
+Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix, Daniel W. Heck, and Samuel Pawel. 2024. <span>“Simulation Studies for Methodological Research in Psychology: A Standardized Structure for Planning, Preregistration, and Reporting.”</span> <em>Psychological Methods</em>, ahead of print. <a href="https://doi.org/10.1037/met0000695">https://doi.org/10.1037/met0000695</a>.
 </div>
 <div id="ref-Vandenberg2000" class="csl-entry" role="listitem">
 Vandenberg, Robert J., and Charles E. Lance. 2000. <span>“A Review and Synthesis of the Measurement Invariance Literature: Suggestions, Practices, and Recommendations for Organizational Research.”</span> <em>Organizational Research Methods</em> 3 (1): 4–70. <a href="https://doi.org/10.1177/109442810031002">https://doi.org/10.1177/109442810031002</a>.
