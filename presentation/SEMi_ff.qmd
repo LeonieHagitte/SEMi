@@ -1034,15 +1034,9 @@ Both methods were primarily compared using **Type I error** and **statistical po
 
 ![](sankey.png){.lightbox fig-align="center" width="100%"}
 
-::: {.fragment}
-
-::: {.takeaway}
-
-- Most datasets follow the expected sequential decision process.
-- Early detection of metric noninvariance precludes scalar-tree estimation.
-- Consequently, scalar-tree results should be interpreted as conditional on metric invariance.
-
-:::
+::: notes
+- refers to heterogeneity/ noninvariance 
+- only for trees.
 
 :::
 
@@ -1056,9 +1050,8 @@ Metric-level statistical power depends strongly on the agreement between the tru
 
 ![](new_fig.png){.lightbox fig-align="center" width="85%"}
 
-::: {.fragment}
 
-::: {.takeaway}
+::: notes
 
 - MNLFA achieves the highest power when the analytical model matches the true moderation function.
 - Misspecification reduces the performance of parametric models.
@@ -1066,7 +1059,6 @@ Metric-level statistical power depends strongly on the agreement between the tru
 
 :::
 
-:::
 ------------------------------------------------------------------------
 
 ## Preliminary Results 
@@ -1077,9 +1069,7 @@ The influence of functional-form specification persists across sample sizes whil
 
 ![](fig3.png){.lightbox fig-align="center" width="92%"}
 
-::: {.fragment}
-
-::: {.takeaway}
+::: notes
 
 - Statistical power increases with sample size for both methods.
 - Type I error remains close to the nominal level across moderator conditions.
@@ -1087,7 +1077,6 @@ The influence of functional-form specification persists across sample sizes whil
 
 :::
 
-:::
 
 ------------------------------------------------------------------------ 
 
@@ -1099,15 +1088,11 @@ The observed performance patterns are consistent across the different population
 
 ![](heatmap.png){.lightbox fig-align="center" width="92%"}
 
-::: {.fragment}
-
-::: {.takeaway}
+::: notes
 
 - The relative ordering of the methods remains largely consistent across population models.
 - Performance differences are driven primarily by the functional form of moderation rather than by the specific location of measurement noninvariance.
 - No single population model dominates the overall findings.
-
-:::
 
 :::
 
