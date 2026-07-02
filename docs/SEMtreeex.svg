@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="123.29723mm"
+   height="116.1256mm"
+   viewBox="0 0 123.29723 116.1256"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="-36.62413"
+       originy="-49.500294"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="123.29723"
+       height="116.1256"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <marker
+       style="overflow:visible"
+       id="marker7"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Dart arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="scale(-0.5)"
+         id="path7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Dart arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="scale(-0.5)"
+         id="path3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DartArrow"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Dart arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         transform="scale(-0.5)"
+         id="path6" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-36.624131,-49.500292)">
+    <rect
+       style="fill:#96c8ec;fill-opacity:1;stroke:#96c8ec;stroke-width:0.173311;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="rect1"
+       width="29.682838"
+       height="42.684818"
+       x="130.15187"
+       y="100.15495" />
+    <rect
+       style="fill:#96c8ec;fill-opacity:1;stroke:#96c8ec;stroke-width:0.136529;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="rect1-2"
+       width="22.216095"
+       height="35.392578"
+       x="38.084301"
+       y="129.62689" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.257243;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker7)"
+       d="m 71.610876,106.70939 -21.73784,22.10647"
+       id="path4"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <ellipse
+       style="display:inline;fill:#96c8ec;fill-opacity:1;stroke-width:0.610983"
+       id="path5-8"
+       cx="71.608246"
+       cy="106.71224"
+       rx="26.047274"
+       ry="6.7092829" />
+    <rect
+       style="fill:#96c8ec;fill-opacity:1;stroke:#96c8ec;stroke-width:0.136529;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       id="rect1-2-6"
+       width="22.216095"
+       height="35.392578"
+       x="80.04274"
+       y="130.16505" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26363px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker3)"
+       d="M 99.978167,60.060239 71.549269,99.312247"
+       id="path2"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.257824px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#DartArrow)"
+       d="m 111.12393,70.023027 32.87614,29.989533"
+       id="path1"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <ellipse
+       style="display:inline;fill:#96c8ec;fill-opacity:1;stroke-width:0.881814"
+       id="path5"
+       cx="99.966339"
+       cy="60.048588"
+       rx="34.510551"
+       ry="10.548296" />
+    <text
+       xml:space="preserve"
+       style="font-size:4.77404px;writing-mode:lr-tb;direction:ltr;fill:#1a1104;stroke:none;stroke-width:0.159493;stroke-opacity:1"
+       x="86.895531"
+       y="61.404057"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-size:4.77404px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.159493;stroke-opacity:1"
+         x="86.895531"
+         y="61.404057">SES, p&lt;.01</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;writing-mode:lr-tb;direction:ltr;fill:#1a1104;stroke:none;stroke-width:0.159493;stroke-opacity:1"
+       x="53.397495"
+       y="107.87115"
+       id="text1-0"><tspan
+         sodipodi:role="line"
+         id="tspan1-8"
+         style="font-size:3.88056px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.159493;stroke-opacity:1"
+         x="53.397495"
+         y="107.87115">Shool track, p&lt;.05</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.2558px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#DartArrow)"
+       d="M 77.094146,113.28588 91.63259,129.36903"
+       id="path8"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282082;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="128.33304"
+       y="84.557487"
+       id="text8"><tspan
+         sodipodi:role="line"
+         id="tspan8"
+         style="font-size:3.88056px;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282083;stroke-opacity:1"
+         x="128.33304"
+         y="84.557487">SES &gt;5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282082;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="63.325371"
+       y="84.240646"
+       id="text8-5"><tspan
+         sodipodi:role="line"
+         id="tspan8-4"
+         style="font-size:3.88056px;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282083;stroke-opacity:1"
+         x="63.325371"
+         y="84.240646">SES &lt;=5</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282082;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="36.511269"
+       y="121.18657"
+       id="text8-5-6"><tspan
+         sodipodi:role="line"
+         id="tspan8-4-7"
+         style="font-size:3.88056px;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282083;stroke-opacity:1"
+         x="36.511269"
+         y="121.18657">ST &lt;=3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.88056px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282082;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="85.944145"
+       y="120.94656"
+       id="text8-5-6-9"><tspan
+         sodipodi:role="line"
+         id="tspan8-4-7-3"
+         style="font-size:3.88056px;fill:#113e5e;fill-opacity:1;stroke:#124164;stroke-width:0.282083;stroke-opacity:1"
+         x="85.944145"
+         y="120.94656">ST &gt;3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:none;stroke-width:0.264999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="132.62044"
+       y="106.79436"
+       id="text9"><tspan
+         sodipodi:role="line"
+         id="tspan9"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="132.62044"
+         y="106.79436">[SEM &amp; </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="132.62044"
+         y="111.20408"
+         id="tspan11">Subgroup </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="132.62044"
+         y="115.61381"
+         id="tspan10">summary]</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:none;stroke-width:0.264999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="82.354851"
+       y="137.8376"
+       id="text9-5"><tspan
+         sodipodi:role="line"
+         id="tspan9-8"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="82.354851"
+         y="137.8376">[SEM &amp; </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="82.354851"
+         y="142.24733"
+         id="tspan11-2">Subgroup </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="82.354851"
+         y="146.65704"
+         id="tspan10-5">summary]</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;writing-mode:lr-tb;direction:ltr;fill:#113e5e;fill-opacity:1;stroke:none;stroke-width:0.264999;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       x="39.627197"
+       y="137.76396"
+       id="text9-1"><tspan
+         sodipodi:role="line"
+         id="tspan9-6"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="39.627197"
+         y="137.76396">[SEM &amp; </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="39.627197"
+         y="142.17369"
+         id="tspan11-3">Subgroup </tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke:none;stroke-width:0.265"
+         x="39.627197"
+         y="146.5834"
+         id="tspan10-3">summary]</tspan></text>
+  </g>
+</svg>

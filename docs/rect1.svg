@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="46.643753mm"
+   height="8.8718748mm"
+   viewBox="0 0 46.643753 8.8718748"
+   version="1.1"
+   id="svg1"
+   inkscape:export-filename="Rastergrafik3.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false">
+    <inkscape:grid
+       id="grid5"
+       units="mm"
+       originx="-15.007053"
+       originy="-76.109917"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="46.643753"
+       height="8.8718748"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-15.007053,-76.109915)">
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect1"
+       width="16.577557"
+       height="8.8122797"
+       x="15.007051"
+       y="-84.981789"
+       transform="scale(1,-1)" />
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect1-8"
+       width="16.577557"
+       height="8.8122797"
+       x="45.07325"
+       y="76.109917" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;writing-mode:lr-tb;direction:ltr;fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+       x="15.792304"
+       y="79.397774"
+       id="text2"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="15.792304"
+         y="79.397774">StudentA</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="15.792304"
+         y="83.366524"
+         id="tspan3">Low SES</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;writing-mode:lr-tb;direction:ltr;fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+       x="45.923286"
+       y="79.293266"
+       id="text2-1"><tspan
+         sodipodi:role="line"
+         id="tspan2-7"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="45.923286"
+         y="79.293266">StudentB</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="45.923286"
+         y="83.262016"
+         id="tspan3-1">High SES</tspan></text>
+  </g>
+</svg>

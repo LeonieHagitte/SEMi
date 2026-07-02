@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="48.299232mm"
+   height="46.791599mm"
+   viewBox="0 0 48.299232 46.791599"
+   version="1.1"
+   id="svg1"
+   inkscape:export-filename="Rastergrafik3.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:export-bgcolor="#ffffff00">
+    <inkscape:grid
+       id="grid5"
+       units="mm"
+       originx="-15.00705"
+       originy="-76.109917"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="48.299232"
+       height="46.791599"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-15.00705,-76.109917)">
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect1"
+       width="16.577557"
+       height="8.8122797"
+       x="15.007051"
+       y="-84.981789"
+       transform="scale(1,-1)"
+       inkscape:export-filename="rect3.svg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect1-8"
+       width="16.577557"
+       height="8.8122797"
+       x="45.07325"
+       y="76.109917" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;writing-mode:lr-tb;direction:ltr;fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+       x="15.792304"
+       y="79.397774"
+       id="text2"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="15.792304"
+         y="79.397774">StudentA</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="15.792304"
+         y="83.366524"
+         id="tspan3">Low SES</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;writing-mode:lr-tb;direction:ltr;fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+       x="45.923286"
+       y="79.293266"
+       id="text2-1"><tspan
+         sodipodi:role="line"
+         id="tspan2-7"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="45.923286"
+         y="79.293266">StudentB</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f8fcfe;fill-opacity:1;stroke-width:0.264583"
+         x="45.923286"
+         y="83.262016"
+         id="tspan3-1">High SES</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene 2"
+     style="display:inline"
+     transform="translate(-15.00705,-76.109917)">
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 22.772327,85.941539 0.08725,7.852526"
+       id="path3"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 53.171355,85.729302 0.08725,7.852526"
+       id="path3-6"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       d="m 21.638073,93.445064 h 2.355759 l -1.134255,1.221505 z"
+       id="path4" />
+    <path
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       d="m 52.08215,93.496496 h 2.355759 l -1.134255,1.221505 z"
+       id="path4-2" />
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect4"
+       width="16.490305"
+       height="6.9800234"
+       x="15.00705"
+       y="95.015572" />
+    <rect
+       style="fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       id="rect4-5"
+       width="16.490305"
+       height="6.9800234"
+       x="44.958229"
+       y="95.013741" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.82222px;writing-mode:lr-tb;direction:ltr;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+       x="45.457405"
+       y="97.633087"
+       id="text4"><tspan
+         sodipodi:role="line"
+         id="tspan4"
+         style="font-size:2.82222px;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+         x="45.457405"
+         y="97.633087">Motivation</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+         x="45.457405"
+         y="101.16087"
+         id="tspan5">Scale</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.82222px;writing-mode:lr-tb;direction:ltr;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+       x="15.43709"
+       y="97.72361"
+       id="text4-9"><tspan
+         sodipodi:role="line"
+         id="tspan4-2"
+         style="font-size:2.82222px;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+         x="15.43709"
+         y="97.72361">Motivation</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:2.82222px;fill:#fcfeff;fill-opacity:1;stroke-width:0.264583"
+         x="15.43709"
+         y="101.25139"
+         id="tspan5-7">Scale</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Ebene 3"
+     style="display:none"
+     transform="translate(-15.00705,-76.109917)">
+    <path
+       style="display:inline;mix-blend-mode:normal;fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       d="m 52.24421,110.62907 h 2.355759 l -1.134255,1.2215 z"
+       id="path4-9" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 23.006254,103.18614 0.08725,7.85252"
+       id="path3-7-6"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="display:inline;fill:#abd3f0;fill-opacity:1;stroke-width:0.264583"
+       d="m 21.872,110.68966 h 2.355759 l -1.134255,1.2215 z"
+       id="path4-9-5" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.258868px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 53.378383,103.1258 0.08741,7.50301"
+       id="path3-7"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <ellipse
+       style="fill:#96c8ec;fill-opacity:1;stroke-width:0.321725"
+       id="path5"
+       cx="22.9032"
+       cy="117.48254"
+       rx="9.030406"
+       ry="5.3658929" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.82223px;writing-mode:lr-tb;direction:ltr;fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+       x="15.879554"
+       y="116.39188"
+       id="text6"><tspan
+         sodipodi:role="line"
+         id="tspan6"
+         style="fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+         x="15.879554"
+         y="116.39188">Latent</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+         x="15.879554"
+         y="119.91966"
+         id="tspan7">Motivation</tspan></text>
+    <ellipse
+       style="fill:#96c8ec;fill-opacity:1;stroke-width:0.321725"
+       id="path5-1"
+       cx="53.141621"
+       cy="117.53562"
+       rx="9.030406"
+       ry="5.3658929" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.82223px;writing-mode:lr-tb;direction:ltr;fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+       x="46.117977"
+       y="116.44496"
+       id="text6-1"><tspan
+         sodipodi:role="line"
+         id="tspan6-3"
+         style="fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+         x="46.117977"
+         y="116.44496">Latent</tspan><tspan
+         sodipodi:role="line"
+         style="fill:#f6fafd;fill-opacity:1;stroke-width:0.264583"
+         x="46.117977"
+         y="119.97275"
+         id="tspan7-8">Motivation</tspan></text>
+  </g>
+</svg>

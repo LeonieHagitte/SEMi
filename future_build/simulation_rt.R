@@ -1,4 +1,4 @@
-library(furrr)
+#library(furrr)
 library(dplyr)
 library(tibble)
 library(future)

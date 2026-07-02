@@ -1,0 +1,412 @@
+---
+title: "My Quarto Shiny Presentation"
+format:
+  revealjs:
+    theme: white
+    css: styles.css
+    scrollable: true
+    slide-number: c/t
+server: shiny
+---
+
+```{r}
+#| label: setup
+#| echo: false
+
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(ggalluvial)
+library(stringr)
+library(scales)
+
+results2 <- readRDS("results2.rds")
+
+to_logical <- function(x) {
+  if (is.logical(x)) return(x)
+  if (is.numeric(x)) return(as.logical(x))
+  x <- as.character(x)
+  case_when(
+    x %in% c("TRUE", "True", "true", "1") ~ TRUE,
+    x %in% c("FALSE", "False", "false", "0") ~ FALSE,
+    TRUE ~ NA
+  )
+}
+
+alpha <- 0.05
+
+tree_flow_dat <- results2 %>%
+  filter(moderator != "noise") %>%
+  mutate(
+    truth = case_when(
+      true_metric_noninvariance == TRUE & true_scalar_noninvariance == TRUE ~ "Metric & Scalar",
+      true_metric_noninvariance == TRUE & true_scalar_noninvariance == FALSE ~ "Metric only",
+      true_metric_noninvariance == FALSE & true_scalar_noninvariance == TRUE ~ "Scalar only",
+      true_metric_noninvariance == FALSE & true_scalar_noninvariance == FALSE ~ "Invariant",
+      TRUE ~ NA_character_
+    ),
+    
+    metric_tree_decision = case_when(
+      tree_metric_reject_bonf == TRUE ~ "Metric tree rejected",
+      tree_metric_reject_bonf == FALSE ~ "Metric tree not rejected",
+      is.na(tree_metric_reject_bonf) ~ "Metric tree missing"
+    ),
+    
+    scalar_tree_decision = case_when(
+      tree_metric_reject_bonf == TRUE ~ "Scalar tree not attempted",
+      tree_metric_reject_bonf == FALSE & tree_scalar_reject_bonf == TRUE ~ "Scalar tree rejected",
+      tree_metric_reject_bonf == FALSE & tree_scalar_reject_bonf == FALSE ~ "Scalar tree not rejected",
+      is.na(tree_scalar_reject_bonf) ~ "Scalar tree missing",
+      TRUE ~ "Other"
+    ),
+    
+    final_tree_outcome = case_when(
+      true_metric_noninvariance == TRUE &
+        tree_metric_reject_bonf == TRUE &
+        tree_metric_correct_split == TRUE ~ "Correct metric detection",
+      
+      true_scalar_noninvariance == TRUE &
+        tree_metric_reject_bonf == FALSE &
+        tree_scalar_reject_bonf == TRUE &
+        tree_scalar_correct_split == TRUE ~ "Correct scalar detection",
+      
+      true_metric_noninvariance == FALSE &
+        tree_metric_reject_bonf == TRUE ~ "Metric false positive",
+      
+      true_scalar_noninvariance == FALSE &
+        tree_metric_reject_bonf == FALSE &
+        tree_scalar_reject_bonf == TRUE ~ "Scalar false positive",
+      
+      true_any_noninvariance == TRUE &
+        (tree_metric_reject_bonf == FALSE | is.na(tree_metric_reject_bonf)) &
+        (tree_scalar_reject_bonf == FALSE | is.na(tree_scalar_reject_bonf)) ~ "Missed noninvariance",
+      
+      true_any_noninvariance == FALSE &
+        tree_metric_reject_bonf == FALSE &
+        tree_scalar_reject_bonf == FALSE ~ "Correct invariance decision",
+      
+      TRUE ~ "Missing"
+    )
+  ) %>%
+  count(truth, metric_tree_decision, scalar_tree_decision, final_tree_outcome, name = "n") %>%
+  mutate(prop = n / sum(n))
+
+
+#------------------------------------------------------------------------------
+truth_cols <- c(
+  "Metric & Scalar" = "#b38711",
+  "Metric only"     = "#af4f2f",
+  "Scalar only"     = "#732f30",
+  "Invariant"       = "#59385c"
+)
+axis_levels <- c(
+  "truth",
+  "metric_tree_decision",
+  "scalar_tree_decision",
+  "final_tree_outcome"
+)
+
+axis_labels <- c(
+  truth = "Truth",
+  metric_tree_decision = "Metric tree",
+  scalar_tree_decision = "Scalar tree",
+  final_tree_outcome = "Final outcome"
+)
+
+truth_order <- c(
+  "Metric & Scalar",
+  "Metric only",
+  "Scalar only",
+  "Invariant"
+)
+```
+
+## 
+:::{.highlight-box}
+Do students with higher socioeconomic status report higher academic motivation?
+:::
+
+::: {.incremental .small}
+- Socioeconomic status is **continuous**.
+- Measurement invariance is typically evaluated using **groups**.
+- Researchers therefore create categories such as **low**, **medium**, and **high** SES.
+- But these categories are **arbitrary**.
+:::
+
+::: {.fragment}
+<div class="takeaway">
+Can we evaluate measurement invariance without categorizing SES?
+</div>
+:::
+
+## Why this is a measurement problem
+
+Latent variables are not observed directly.
+
+They are inferred from item responses.
+
+$$
+x_{ij} = \nu_j + \lambda_j \eta_i + \varepsilon_{ij}
+$$
+
+::: {style="font-size:0.5em;"}
+
+- $\eta_i$ is the latent trait of person $i$.
+- $\lambda_j$ links item $j$ to the latent trait.
+- $\nu_j$ captures the expected item response when $\eta_i = 0$.
+- Meaningful comparisons require that these measurement parameters are stable.
+
+:::
+
+::: {.fragment}
+
+<div class="takeaway">
+Before comparing latent motivation across SES, we must ask whether the items measure motivation equivalently.
+</div>
+
+:::
+
+##
+
+<div class="student-diagram">
+
+<div class="student-row">
+  <div class="person"><strong>Student A</strong><br><span>Low SES</span></div>
+  <div class="person"><strong>Student B</strong><br><span>High SES</span></div>
+</div>
+
+<div class="student-row">
+  <div class="scale">📋 Motivation scale</div>
+  <div class="scale">📋 Motivation scale</div>
+</div>
+
+<div class="student-row fragment">
+  <div class="arrow">↓</div>
+  <div class="arrow">↓</div>
+</div>
+
+<div class="student-row fragment">
+  <div class="latent">Latent motivation</div>
+  <div class="latent">Latent motivation</div>
+</div>
+
+</div>
+
+
+## Shiny slide {.compact-slide}
+
+:::: {.columns}
+::: {.column width="90%"}
+
+```{r}
+
+div(
+  class = "compact-shiny-output",
+  
+  verbatimTextOutput(
+    "step_label",
+    placeholder = FALSE
+  ),
+  
+  div(
+    style = "overflow: hidden;",
+    class = "compact-plot",
+    plotOutput(
+      "tree_flow_plot",
+      width = "100%",
+      height = "650px"
+    )
+  )
+)
+
+```
+
+:::
+::: {.column width="10%"}
+
+```{r}
+div(
+   style = "margin-top: 500px; margin-left: 50px;",
+  actionButton(
+  "next_step",
+  HTML("&#8250;"),
+  class = "subtle-button",
+  style = "
+    color: rgba(120,120,120,0.25);
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 22px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+  "
+)
+)
+```
+
+:::
+::::
+
+```{r}
+#| context: server
+
+step <- reactiveVal(1)
+
+observeEvent(input$next_step, {
+  next_value <- step() + 1
+  
+  if (next_value > length(truth_order)) {
+    next_value <- 1
+  }
+  
+  step(next_value)
+})
+
+output$step_label <- renderText({
+  paste(
+    "Currently shown:",
+    paste(truth_order[seq_len(step())], collapse = ", ")
+  )
+})
+
+output$tree_flow_plot <- renderPlot({
+  plot_dat <- tree_flow_dat %>%
+    filter(truth %in% truth_order[seq_len(step())])
+
+  # your full ggplot code here
+  tree_flow_plot_perc <- plot_dat %>%
+      mutate(
+        alluvium_id = row_number(),
+        flow_truth = truth
+      )
+    
+    tree_lodes <- to_lodes_form(
+      tree_flow_plot_perc,
+      axes = all_of(axis_levels),
+      id = "alluvium_id",
+      key = "axis",
+      value = "stratum"
+    ) %>%
+      mutate(
+        axis = factor(axis, levels = axis_levels, labels = axis_labels)
+      )
+    
+    stratum_props <- tree_lodes %>%
+      group_by(axis, stratum) %>%
+      summarise(n = sum(n), .groups = "drop") %>%
+      group_by(axis) %>%
+      mutate(
+        pct = n / sum(n),
+        pct_label = scales::percent(pct, accuracy = 0.1)
+      ) %>%
+      ungroup()
+    
+    ggplot(
+      tree_lodes,
+      aes(
+        x = axis,
+        stratum = stratum,
+        alluvium = alluvium_id,
+        y = n
+      )
+    ) +
+      geom_alluvium(
+        aes(fill = flow_truth),
+        alpha = 0.60,
+        width = 0.24,
+        knot.pos = 0.45,
+        curve_type = "sigmoid",
+        colour = NA
+      ) +
+      geom_stratum(
+        data = tree_lodes %>% filter(axis != "Truth"),
+        fill = "#dcdcdc",
+        colour = "white",
+        linewidth = 1,
+        width = 0.10,
+        alpha = 1
+      ) +
+      geom_stratum(
+        data = tree_lodes %>% filter(axis == "Truth"),
+        aes(fill = stratum),
+        colour = "white",
+        linewidth = 1,
+        width = 0.24,
+        alpha = 1
+      ) +
+      geom_text(
+        data = stratum_props %>% filter(axis == "Truth"),
+        inherit.aes = FALSE,
+        stat = "stratum",
+        aes(
+          x = axis,
+          stratum = stratum,
+          y = n,
+          label = paste0(
+            str_wrap(stratum, width = 14),
+            "\n",
+            pct_label
+          )
+        ),
+        hjust = 0.5,
+        size = 6.5,
+        fontface = "bold",
+        lineheight = 0.9,
+        colour = "black"
+      ) +
+      geom_text(
+        data = stratum_props %>% filter(axis != "Truth"),
+        inherit.aes = FALSE,
+        stat = "stratum",
+        aes(
+          x = axis,
+          stratum = stratum,
+          y = n,
+          label = pct_label
+        ),
+        size = 6.0,
+        fontface = "bold",
+        colour = "grey25"
+      ) +
+      geom_text(
+        data = stratum_props %>% filter(axis != "Truth"),
+        inherit.aes = FALSE,
+        stat = "stratum",
+        aes(
+          x = axis,
+          stratum = stratum,
+          y = n,
+          label = str_wrap(stratum, width = 20)
+        ),
+        hjust = 0,
+        nudge_x = 0.08,
+        size = 6.0,
+        lineheight = 0.9,
+        colour = "black"
+      ) +
+      scale_x_discrete(
+        expand = expansion(mult = c(0.00, 0.00))
+      ) +
+      scale_fill_manual(
+        values = truth_cols,
+        breaks = truth_order[seq_len(step())]
+      ) +
+      labs(
+        x = NULL,
+        y = NULL,
+        fill = NULL
+      ) +
+      coord_cartesian(clip = "off") +
+      theme_minimal(base_size = 24) +
+      theme(
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.x = element_text(size = 24, face = "bold"),
+        legend.position = "bottom",
+        plot.margin = margin(10, 120, 10, 10)
+      )
+  })
+```

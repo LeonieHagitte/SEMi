@@ -1,4 +1,7 @@
 /* ---------- Global typography ---------- */
+section.title-slide {
+    background-image: url("images/bg.jpg");
+}
 
 :root {
   --r-main-font: "Aptos", "Helvetica Neue", "Arial", sans-serif;

@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="Semi-Complete by Design_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Semi-Complete by Design_files/libs/quarto-html/tabby.min.js"></script>
-<script src="Semi-Complete by Design_files/libs/quarto-html/popper.min.js"></script>
-<script src="Semi-Complete by Design_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="Semi-Complete by Design_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Semi-Complete by Design_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Semi-Complete by Design_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="Semi-Complete by Design_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<script src="SEMi_ff_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SEMi_ff_files/libs/quarto-html/tabby.min.js"></script>
+<script src="SEMi_ff_files/libs/quarto-html/popper.min.js"></script>
+<script src="SEMi_ff_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="SEMi_ff_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SEMi_ff_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="SEMi_ff_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SEMi_ff_files/libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="SEMi_ff_files/libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="SEMi_ff_files/libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
-  <meta name="author" content="Leonie Hagitte">
+  <meta name="author" content="Leonie Hagitte &amp; Andreas M. Brandmaier">
   <title>SEMi-Complete by Design</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="SEMi_ff_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="SEMi_ff_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -31,11 +34,76 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -52,12 +120,12 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="Semi-Complete by Design_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link rel="stylesheet" href="SEMi_ff_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link rel="stylesheet" href="reveal.css">
-  <link href="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link href="SEMi_ff_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="SEMi_ff_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="SEMi_ff_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="SEMi_ff_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -151,21 +219,106 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-background-image="bg.jpg" data-background-position="center" data-background-repeat="no-repeat" data-background-size="cover" class="quarto-title-block center">
   <h1 class="title">SEMi-Complete by Design</h1>
   <p class="subtitle">A Monte Carlo Simulation to Assess Measurement Invariance in Moderated Nonlinear Factor Analysis and SEM Trees</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Leonie Hagitte 
+Leonie Hagitte &amp; Andreas M. Brandmaier 
 </div>
 </div>
 </div>
 
 </section>
-<section id="why-care-about-measurement-invariance" class="slide level2">
-<h2>Why Care About Measurement Invariance?</h2>
+<section id="section" class="slide level2">
+<h2></h2>
+<p><br>
+<br>
+</p>
+<div class="highlight-box">
+<p>Do students with higher socioeconomic status report higher academic motivation?</p>
+</div>
+<div class="small tight">
+<ul>
+<li class="fragment">Socioeconomic status (SES) is <strong>continuous</strong>.</li>
+<li class="fragment">Measurement invariance (MI) is usually evaluated using <strong>groups</strong>.</li>
+<li class="fragment">Researchers therefore create categories such as <strong>low</strong>, <strong>medium</strong>, and <strong>high</strong> SES.</li>
+<li class="fragment">These categories are often <strong>arbitrary</strong>.</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="takeaway">
+<p>Can we evaluate MI without categorizing SES?</p>
+</div>
+</div>
+<aside class="notes">
+<p>Imagine we are interested in whether students with higher socioeconomic status report higher academic motivation. SES is naturally a continuous variable.</p>
+<p>However, classical measurement invariance methods are based on comparing groups. Researchers therefore often create categories such as low, medium, and high SES.</p>
+<p>The problem is that these categories are usually chosen by the researcher rather than implied by theory, and different cut-points can lead to different conclusions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="when-can-we-trust-latent-score-differences" class="slide level2">
+<h2>When can we trust latent score differences?</h2>
+<div style="position:relative; height:650px; margin-top:0.5em; overflow:hidden;">
+<p><img data-src="Rastergrafik1.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="1"></p>
+<p><img data-src="Rastergrafik2.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="2"></p>
+<p><img data-src="Rastergrafik3.svg" class="fragment" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="3"></p>
+</div>
+<div class="fragment takeaway">
+<p>Latent score comparisons are only interpretable if the questionnaire functions equivalently across individuals.</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Two students have the same latent motivation.</li>
+<li>Click 1:
+<ul>
+<li>Same latent trait → same expected item responses.</li>
+<li>Latent scores are directly comparable.</li>
+</ul></li>
+<li>Click 2:
+<ul>
+<li>Now imagine one item functions differently across students.</li>
+<li>Same latent motivation no longer implies the same observed response.</li>
+</ul></li>
+<li>Click 3:
+<ul>
+<li>The latent scores are now confounded with measurement bias.</li>
+</ul></li>
+<li>Key message:
+<ul>
+<li>Comparisons of latent scores require measurement invariance.</li>
+</ul></li>
+<li>Transition:
+<ul>
+<li>So what exactly is measurement invariance?</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-we-test-for-measurement-invariance" class="slide level2">
+<h2>Why we test for Measurement Invariance?</h2>
 <div class="lead">
 <p>Measurement invariance (MI) is a prerequisite for meaningful comparisons of latent constructs across groups <span class="citation" data-cites="Cheung2000 Meredith1964">(<a href="#/references" role="doc-biblioref" onclick="">Cheung and Rensvold 2000</a>; <a href="#/references" role="doc-biblioref" onclick="">Meredith 1964</a>)</span>.</p>
 </div>
@@ -176,8 +329,8 @@ Leonie Hagitte
 <p>Without MI, conclusions about group differences in means, variances, or relations are not statistically justified <span class="citation" data-cites="Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
 </div>
 </section>
-<section id="why-care-about-measurement-invariance-1" class="slide level2">
-<h2>Why Care About Measurement Invariance?</h2>
+<section id="why-we-test-for-measurement-invariance-1" class="slide level2">
+<h2>Why we test for Measurement Invariance?</h2>
 <div class="lead">
 <p>In empirical practice, MI is often assumed rather than systematically evaluated.</p>
 </div>
@@ -206,13 +359,106 @@ Leonie Hagitte
 <p>The validity of many reported group comparisons therefore remains unclear.</p>
 </div>
 </section>
+<section id="the-classical-measurement-invariance-approach" class="slide level2">
+<h2>The Classical Measurement Invariance Approach</h2>
+<div class="lead">
+<p>Measurement invariance is traditionally evaluated by fitting the <strong>same CFA model</strong> simultaneously across predefined groups and testing equality constraints on model parameters <span class="citation" data-cites="Meredith1993 Vandenberg2000 Putnick2016">(<a href="#/references" role="doc-biblioref" onclick="">Meredith 1993</a>; <a href="#/references" role="doc-biblioref" onclick="">Vandenberg and Lance 2000</a>; <a href="#/references" role="doc-biblioref" onclick="">Putnick and Bornstein 2016</a>)</span>.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="mgcfa.svg" style="width:95.0%"></p>
+</div><div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>Typical grouping variables</strong></p>
+<ul>
+<li>Treatment vs.&nbsp;control</li>
+<li>Women vs.&nbsp;men</li>
+<li>Countries</li>
+<li>School types</li>
+</ul>
+</div>
+</div></div>
+<div class="takeaway">
+<p>MGCFA assumes that individuals can be assigned to a finite set of <strong>known groups</strong>.</p>
+</div>
+</section>
+<section id="sequential-testing-of-measurement-invariance" class="slide level2">
+<h2>Sequential testing of measurement invariance</h2>
+<div class="lead">
+<p>Measurement invariance is evaluated by progressively adding equality constraints across groups <span class="citation" data-cites="Meredith1993 Cheung2002">(<a href="#/references" role="doc-biblioref" onclick="">Meredith 1993</a>; <a href="#/references" role="doc-biblioref" onclick="">Cheung and Rensvold 2002</a>)</span>.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:38%;">
+<div class="fragment modelbox" data-fragment-index="1">
+<h4 id="configural">Configural</h4>
+<p>Same factor structure</p>
+</div>
+<div class="fragment modelbox" data-fragment-index="2">
+<h4 id="metric">Metric</h4>
+<p>Equal factor loadings</p>
+</div>
+<div class="fragment modelbox" data-fragment-index="3">
+<h4 id="scalar">Scalar</h4>
+<p>Equal loadings + intercepts</p>
+</div>
+<div class="fragment modelbox" data-fragment-index="4">
+<h4 id="strict">Strict</h4>
+<p>Equal loadings + intercepts + residual variances</p>
+</div>
+</div><div class="column" style="width:62%;">
+<div style="position:relative; height:500px; overflow:hidden;">
+<p><img data-src="mgcfa_config.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="1"></p>
+<p><img data-src="mgcfa_metric.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="2"></p>
+<p><img data-src="mgcfa_scalar.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="3"></p>
+<p><img data-src="mgcfa_residual.svg" class="fragment" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain;" data-fragment-index="4"></p>
+</div>
+</div></div>
+<div class="fragment takeaway" data-fragment-index="5">
+<p>Each step compares the current model to the previous, less constrained model.</p>
+</div>
+</section>
+<section id="limitations-of-the-multigroup-framework" class="slide level2">
+<h2>Limitations of the multigroup framework</h2>
+<div class="lead">
+<p>MGCFA provides a well-established framework for testing measurement invariance, but its application to continuous moderators requires additional assumptions.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment design-card">
+<h3 id="continuous-moderators">Continuous moderators</h3>
+<ul>
+<li>Socioeconomic status</li>
+<li>Age</li>
+<li>Symptom severity</li>
+<li>Personality traits</li>
+</ul>
+<p>are inherently <strong>continuous</strong>.</p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment design-card">
+<h3 id="applying-mgcfa-requires">Applying MGCFA requires</h3>
+<ul>
+<li>defining discrete groups,</li>
+<li>assigning each individual to one group,</li>
+<li>assuming measurement parameters are constant <strong>within</strong> groups,</li>
+<li>estimating parameter differences only <strong>between</strong> groups.</li>
+</ul>
+</div>
+</div></div>
+<div class="fragment highlight-box">
+<p>Continuous moderators are therefore commonly categorized using <strong>median splits, tertiles, quartiles</strong>, or other arbitrary cut-points.</p>
+</div>
+<div class="fragment takeaway">
+<p>Categorization approximates potentially continuous parameter changes by a <strong>step function</strong>, resulting in information loss and conclusions that may depend on the chosen cut-points.</p>
+</div>
+</section>
 <section id="mnlfa-moderated-nonlinear-factor-analysis" class="slide level2">
 <h2>MNLFA (Moderated Nonlinear Factor Analysis)</h2>
 <div class="lead">
 <p>Moderated Nonlinear Factor Analysis (MNLFA) extends traditional factor models by allowing measurement and latent-variable parameters to vary continuously as functions of observed covariates <span class="citation" data-cites="Kolbe2024 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2024</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
 </div>
 <div class="highlight-box">
-<p>In this framework, measurement invariance is conceptualized as the <strong>moderation</strong> of model parameters by an external variable.</p>
+<p>In this framework, Measurement noninvariance is represented by allowing model parameters to vary as functions of observed covariates.</p>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -231,505 +477,474 @@ Leonie Hagitte
 </ul>
 </div></div>
 <div class="takeaway">
-<p>MNLFA therefore models measurement noninvariance directly, rather than evaluating it only through sequential group-based tests <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe, Jorgensen, and Molenaar 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
+<p>MNLFA therefore models measurement noninvariance directly, rather than evaluating it only through sequential group-based tests <span class="citation" data-cites="Kolbe2021 Curran2014">(<a href="#/references" role="doc-biblioref" onclick="">Kolbe et al. 2021</a>; <a href="#/references" role="doc-biblioref" onclick="">Curran et al. 2014</a>)</span>.</p>
 </div>
 </section>
-<section id="advantages-and-limitations-of-mnlfa" class="slide level2">
-<h2>Advantages and Limitations of MNLFA</h2>
+<section id="mnlfa-researcher-decisions" class="slide level2">
+<h2>MNLFA: Researcher Decisions</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="design-card">
-<p><strong>Advantages</strong></p>
+<p><strong>Model specification</strong></p>
 <ul>
-<li>Handles both categorical and continuous moderators</li>
-<li>Avoids arbitrary group discretization</li>
-<li>Provides fine-grained modeling of parameter variation</li>
-<li>Is suited for nonlinear relationships</li>
+<li>Which measurement parameters are moderated?</li>
+<li>Which moderators are included?</li>
+<li>Which functional form is specified (e.g., linear, quadratic)?</li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="design-card">
-<p><strong>Limitations</strong></p>
+<p><strong>Method estimates</strong></p>
 <ul>
-<li>High model complexity</li>
-<li>Strong distributional and functional-form assumptions</li>
-<li>Requires large sample sizes</li>
-<li>Requires careful model specification</li>
+<li>Moderated model parameters</li>
+<li>Continuous parameter functions</li>
+<li>Latent variable parameters</li>
 </ul>
 </div>
 </div></div>
 <div class="takeaway">
-<p>MNLFA is most appropriate when <strong>theory</strong> suggests <strong>systematic moderation</strong> of measurement parameters.</p>
+<p>MNLFA models measurement parameters as <strong>parametric functions</strong> of observed moderators. The quality of inference depends on appropriate model specification.</p>
 </div>
 </section>
 <section id="sem-trees" class="slide level2">
 <h2>SEM Trees</h2>
 <div class="lead">
-<p>Structural Equation Model (SEM) Trees combine confirmatory structural equation modeling with recursive partitioning to detect parameter heterogeneity across subgroups <span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/references" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/references" role="doc-biblioref" onclick="">2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Arnold, Voelkle, and Brandmaier 2021</a>)</span>.</p>
-</div>
-<div class="highlight-box">
-<p>SEM Trees identify subgroups in which model parameters differ by recursively splitting the sample based on covariates.</p>
+<p>Structural Equation Model (SEM) Trees combine confirmatory structural equation modeling with recursive partitioning to detect parameter heterogeneity across subgroups <span class="citation" data-cites="Brandmaier2013 Brandmaier2016 Arnold2021">(<a href="#/references" role="doc-biblioref" onclick="">Brandmaier et al. 2013</a>, <a href="#/references" role="doc-biblioref" onclick="">2016</a>; <a href="#/references" role="doc-biblioref" onclick="">Arnold et al. 2021</a>)</span>.</p>
 </div>
 <div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Core mechanism</strong></p>
+<div class="column" style="width:60%;">
+<p><img data-src="SEMtreeex.svg" height="600"></p>
+</div><div class="column" style="width:40%;">
+<div class="design-card">
+<p><strong>How does it work?</strong></p>
 <ul>
-<li>Score-based tests for parameter instability<br>
-</li>
-<li>Recursive binary partitioning<br>
-</li>
-<li>Tree-structured subgroup identification</li>
+<li>Specify a measurement model.</li>
+<li>Trees test all given candidate covariates for parameter instability.</li>
+<li>Tree splits the sample at the most informative covariate and cut-point.</li>
+<li>Repeated recursively until no further significant splits are found.</li>
 </ul>
-</div><div class="column" style="width:50%;">
-<p><strong>What is detected</strong></p>
-<ul>
-<li>Heterogeneity in measurement parameters</li>
-<li>Heterogeneity in structural parameters<br>
-</li>
-<li>Data-driven detection of noninvariance</li>
-</ul>
-</div></div>
-<div class="takeaway">
-<p>SEM Trees are particularly useful when relevant grouping variables are unknown, continuous, or high-dimensional.</p>
 </div>
+<div class="takeaway">
+<p>Rather than specifying <strong>how</strong> measurement parameters vary, SEM Trees discover subgroup structures directly from the data.</p>
+</div>
+</div></div>
 </section>
-<section id="advantages-and-limitations-of-sem-trees" class="slide level2">
-<h2>Advantages and Limitations of SEM Trees</h2>
+<section id="sem-trees-researcher-decisions" class="slide level2">
+<h2>SEM Trees: Researcher Decisions</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="design-card">
-<p><strong>Advantages</strong></p>
+<p><strong>Researcher specifies</strong></p>
 <ul>
-<li>Flexible, exploratory detection of noninvariance<br>
-</li>
-<li>Can capture complex interaction structures<br>
-</li>
-<li>Transparent and interpretable subgroup definitions<br>
-</li>
-<li>Does not require pre-specified grouping variables</li>
+<li>Measurement model</li>
+<li>Candidate covariates</li>
+<li>Tree complexity
+<ul>
+<li>significance level</li>
+<li>minimum node size</li>
+<li>stopping/pruning criterion</li>
+</ul></li>
 </ul>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="design-card">
-<p><strong>Limitations</strong></p>
+<p><strong>Method estimates</strong></p>
 <ul>
-<li>Risk of overfitting without pruning or cross-validation<br>
-</li>
-<li>Results depend on splitting criteria and stopping rules<br>
-</li>
-<li>Less suitable for strictly confirmatory hypothesis testing<br>
-</li>
-<li>Functional form of moderation is not explicitly parameterized</li>
+<li>Split locations</li>
+<li>Relevant covariates</li>
+<li>Subgroup structure</li>
+<li>Parameter heterogeneity</li>
 </ul>
 </div>
 </div></div>
 <div class="takeaway">
-<p>SEM Trees trade parametric efficiency for flexibility and are most informative in exploratory or misspecified settings.</p>
+<p>SEM Trees estimate measurement noninvariance <strong>without requiring the researcher to specify a functional form of moderation</strong>.</p>
 </div>
 </section>
 <section id="from-methods-to-comparison" class="slide level2">
 <h2>From Methods to Comparison</h2>
 <div class="lead">
-<p>MNLFA and SEM Trees represent fundamentally different approaches to detecting measurement noninvariance.</p>
+<p>Both methods evaluate measurement noninvariance for continuous moderators, but they rely on fundamentally different modeling strategies.</p>
 </div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>MNLFA</strong></p>
-<ul>
-<li>Parametric</li>
-<li>Requires specification of functional form</li>
-<li>Efficient under correct model specification</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>SEM Trees</strong></p>
-<ul>
-<li>Nonparametric</li>
-<li>No functional-form assumptions</li>
-<li>Flexible under misspecification</li>
-</ul>
-</div></div>
-<div class="takeaway">
-<p>The relative performance of both approaches depends on the alignment between the data-generating process and the assumptions of the analysis model.</p>
-</div>
-</section>
-<section id="simulation-framework" class="slide level2">
-<h2>Simulation Framework</h2>
-<div class="lead">
-<p>A Monte Carlo simulation is conducted to compare MNLFA and SEM Trees under varying forms of measurement noninvariance.</p>
-</div>
-<div class="columns">
-<div class="column" style="width:48%;">
-<p><strong>Design features</strong></p>
-<ul>
-<li>Parametric data generation<br>
-</li>
-<li>Multiple population models<br>
-</li>
-<li>Single-factor and two-factor CFA structures</li>
-</ul>
-</div><div class="column" style="width:52%;">
-<p><strong>Indicator structure</strong></p>
-<ul>
-<li>Single-factor model: four manifest indicators<br>
-</li>
-<li>Two-factor model: one factor with four indicators, one factor with three indicators</li>
-</ul>
-</div></div>
-<p><strong>Single-factor model</strong></p>
-<p><span class="math display">\[
-\begin{aligned}
-\mathbf{x} &amp;= \boldsymbol{\nu}(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta + \boldsymbol{\varepsilon}, \\
-\boldsymbol{\varepsilon} &amp;\sim \mathcal{N}(\mathbf{0}, \boldsymbol{\Theta}_\varepsilon)
-\end{aligned}
-\]</span></p>
-<p><strong>Two-factor model</strong></p>
-<p><span class="math display">\[
-\mathbf{x} = \boldsymbol{\nu}_x(Z) + \boldsymbol{\Lambda}_x(Z)\,\eta_1 + \boldsymbol{\varepsilon}(Z)
-\]</span></p>
-<p><span class="math display">\[
-\mathbf{y} = \boldsymbol{\nu}_y(Z) + \boldsymbol{\Lambda}_y(Z)\,\eta_2 + \boldsymbol{\delta}(Z)
-\]</span></p>
-</section>
-<section id="simulation-moderator-functions" class="slide level2">
-<h2>Simulation: Moderator Functions</h2>
-<div class="lead">
-<p>Let <span class="math inline">\(M \sim \mathcal{U}(-1,1)\)</span> denote a bounded continuous covariate.</p>
-</div>
-<p><strong>Moderation is introduced via transformations of <span class="math inline">\(M\)</span>:</strong></p>
-<div class="columns">
-<div class="column" style="width:25%;">
-<p><strong>Linear</strong></p>
-<p><span class="math display">\[
-h_1(M) = M
-\]</span></p>
-</div><div class="column" style="width:35%;">
-<p><strong>Quadratic</strong></p>
-<p><span class="math display">\[
-h_2(M) = 2M^2 - 1
-\]</span></p>
-</div><div class="column" style="width:37%;">
-<p><strong>Sigmoid</strong></p>
-<p><span class="math display">\[
-h_3(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)}
-\]</span></p>
-</div></div>
-<p><strong>Noise</strong></p>
-<p>No systematic relationship with model parameters.</p>
-<div class="takeaway">
-<p>Each transformed variable enters the model as a separate moderator, allowing controlled variation in the functional form of parameter moderation.</p>
-</div>
-</section>
-<section id="simulation" class="slide level2">
-<h2>Simulation</h2>
-<p><strong>Analytical Model Study 1</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="tikz_model1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="tikz_model1.png" class="quarto-figure quarto-figure-center" style="width:75.0%"></a></p>
-</figure>
-</div>
-<div class="takeaway">
-<p>Highlighted components indicate parameters subject to moderation. Analysis is conducted sequentially.</p>
-</div>
-<!--
-## Simulation  
-
-**Analytical Model Study 2**
-
-::: {.columns}
-::: {.column width="50%"}
-![](tikz_model2.0.png){.lightbox}
-*Model 2.0*
-:::
-::: {.column width="50%"}
-![](tikz_model2.1.png){.lightbox}
-*Model 2.1*
-:::
-:::
-
-::: {.columns}
-::: {.column width="50%"}
-![](tikz_model2.2.png){.lightbox}
-*Model 2.2*
-:::
-::: {.column width="50%"}
-![](tikz_model2.3.png){.lightbox}
-*Model 2.3*
-:::
-:::
-
--->
-</section>
-<section id="study-1-design-factors" class="slide level2">
-<h2>Study 1: Design Factors</h2>
-<div class="lead">
-<p>Study 1 examines the impact of functional-form misspecification under controlled data-generating conditions without structural misspecification.</p>
-</div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Data-generating process</strong></p>
-<ul>
-<li><strong>Moderator form:</strong> linear, sigmoid, quadratic, or noise<br>
-</li>
-<li><strong>Population models:</strong> 8 distinct model conditions</li>
-<li><strong>Loading moderation:</strong> <span class="math inline">\(\Delta_\lambda \in \{-0.3, -0.2, 0.2, 0.3\}\)</span><br>
-</li>
-<li><strong>Intercept moderation:</strong> <span class="math inline">\(\Delta_\nu \in \{-1, -0.5, 0.5, 1\}\)</span><br>
-</li>
-<li><strong>Indicator reliability:</strong> <span class="math inline">\(.60, .70, .80, .95\)</span></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Analysis and sampling</strong></p>
-<ul>
-<li><strong>MNLFA:</strong> linear moderation<br>
-</li>
-<li><strong>SEMTREE:</strong> recursive partitioning<br>
-</li>
-<li><strong>Sample size:</strong> <span class="math inline">\(N \in \{300, 500, 700, 1000\}\)</span></li>
-</ul>
-</div></div>
-<div class="takeaway">
-<p>Functional-form misspecification arises when nonlinear data-generating mechanisms are analyzed under linear moderation assumptions in MNLFA, while SEM Trees impose no parametric form.</p>
-</div>
-<!--
-## Study-Specific Factors 
-
-**Study 2: Structural Misspecification**
-
-Extends Study 1 by introducing factor-structure misspecification: 
-
-*Same DGM and moderator variation, sample size and reliability as Study 1*
-
-- **Analysis model:** Linear or quadratic moderator
-- **Structural misspecification (between-subjects):**
-
-  1. **None:** Correct factor structure  
-  2. **Cross-loadings:**  
-     Items $y_5$, $y_6$ load on a second factor
-     $$
-     \lambda^{(CL)}_5,\; \lambda^{(CL)}_6 \in \{0.3, 0.4\}
-     $$
-  3. **Correlated residuals:**  
-     $$
-     \text{Cov}(\varepsilon_1, \varepsilon_5),\;
-     \text{Cov}(\varepsilon_2, \varepsilon_6)
-     \in \{0.2, 0.3\}
-     $$
-  4. **Combined:** Cross-loadings and residual correlations
--->
-</section>
-<section id="trial-run-data-generating-model" class="slide level2">
-<h2>Trial Run: Data-Generating Model</h2>
-<div class="lead">
-<p>The pilot isolates a simple single-factor setting in order to assess initial type I error and power patterns before scaling the full simulation design.</p>
-</div>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Measurement model</strong></p>
-<p>Single-factor CFA with one latent factor <span class="math inline">\(\eta\)</span> and four indicators <span class="math inline">\(y_1\)</span>–<span class="math inline">\(y_4\)</span></p>
-<p><strong>Moderation structure</strong></p>
-<ul>
-<li><span class="math inline">\(M_1\)</span>: primary moderator<br>
-</li>
-<li><span class="math inline">\(M_2\)</span>: secondary moderator<br>
-</li>
-<li><span class="math inline">\(M_0\)</span>: noise covariate</li>
-</ul>
-<p><strong>Functional forms</strong></p>
-<ul>
-<li>Linear: <span class="math inline">\(h(M)=M\)</span><br>
-</li>
-<li>Quadratic: <span class="math inline">\(h(M)=2M^2-1\)</span><br>
-</li>
-<li>Noise: null condition</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Baseline parameters</strong></p>
-<ul>
-<li>Factor loadings: <span class="math inline">\(\lambda = 0.70\)</span><br>
-</li>
-<li>Indicator reliability: <span class="math inline">\(0.60,\;0.95\)</span></li>
-</ul>
-<p><strong>Population conditions</strong></p>
-<ul>
-<li>Null condition</li>
-<li>Noninvariance condition:
-<ul>
-<li>moderated loadings: <span class="math inline">\(x_1, x_2\)</span><br>
-</li>
-<li>moderated intercepts: <span class="math inline">\(x_1, x_2\)</span></li>
-</ul></li>
-</ul>
-<p><strong>Trial-run settings</strong></p>
-<ul>
-<li><span class="math inline">\(\Delta_\lambda \in \{-0.3, 0.3\}\)</span><br>
-</li>
-<li><span class="math inline">\(\Delta_\nu \in \{-1, 1\}\)</span><br>
-</li>
-<li>Sample size: <span class="math inline">\(N \in \{300,\;1000\}\)</span><br>
-</li>
-<li>Replications: pilot run (e.g., 5–15 seeds per condition)</li>
-</ul>
-</div></div>
-</section>
-<section id="trial-run-analytical-models" class="slide level2 scrollable">
-<h2>Trial Run: Analytical Models</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>SEM Trees (nonparametric)</strong></p>
-<p><strong>Model</strong> - Single-factor CFA (RAM specification)</p>
-<p><strong>Predictors</strong></p>
-<ul>
-<li><span class="math inline">\(m_1\)</span>, <span class="math inline">\(m_2\)</span>, <span class="math inline">\(m_0\)</span></li>
-</ul>
-<p><strong>Estimation procedure</strong></p>
-<ul>
-<li>Score-based recursive partitioning<br>
-</li>
-<li>Bonferroni-corrected split tests<br>
-</li>
-<li>Pre-pruning:
-<ul>
-<li><span class="math inline">\(\alpha = .05\)</span></li>
-<li>max depth = 3</li>
-<li>minimum node size = 50</li>
-</ul></li>
-</ul>
-<p><strong>Evaluation</strong></p>
-<ul>
-<li>Global tree test<br>
-</li>
-<li>Root split detection<br>
-</li>
-<li>Type I error (splits under null)<br>
-</li>
-<li>Power (splits under true moderation)</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>MNLFA (parametric)</strong></p>
-<p><strong>Model</strong> - Moderation via definition variables (OpenMx) - Loadings: <span class="math inline">\(\Lambda(Z)\)</span><br>
-- Intercepts: <span class="math inline">\(\nu(Z)\)</span></p>
-<p><strong>Estimation procedure</strong></p>
-<ul>
-<li>Sequential invariance testing:
-<ol type="1">
-<li>Configural model</li>
-<li>Metric model<br>
-</li>
-<li>Scalar model</li>
-</ol></li>
-</ul>
-<p><strong>Evaluation</strong></p>
-<ul>
-<li>Likelihood-ratio tests (LRT)<br>
-</li>
-<li><span class="math inline">\(\Delta\)</span>CFI, <span class="math inline">\(\Delta\)</span>RMSEA</li>
-</ul>
-<p><strong>Key assumption</strong></p>
-<ul>
-<li>Moderation is linear in the analysis model</li>
-</ul>
-</div></div>
-<!--
-## Trial Run: What Is Being Tested? 
-
-This pilot simulation focuses on **functional-form misspecification**:
-
-::: {.incremental}
-- Data-generating process may be **nonlinear** (quadratic)
-- MNLFA assumes **linear moderation**
-- SEM Trees make **no functional-form assumptions**
-:::
-
-**Key comparison**
-
-- **MNLFA**: efficient under correct specification  
-- **SEMTREE**: flexible under misspecification  
-
-
-**Expected pattern**
-
-- Linear moderation → MNLFA advantage  
-- Nonlinear moderation → SEMTREE advantage  
-- Noise → Type I error control
--->
-</section>
-<section id="preliminary-results" class="slide level2">
-<h2>Preliminary Results</h2>
-<p><strong>Overall Results</strong></p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Level</th>
-<th>Method</th>
-<th>Type</th>
-<th>Value</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><strong>MNLFA</strong></th>
+<th style="text-align: left;"><strong>SEM Trees</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Metric</td>
-<td>MNLFA</td>
-<td>Power</td>
-<td>0.619</td>
+<td style="text-align: left;"><strong>Measurement model</strong></td>
+<td style="text-align: left;">User specified</td>
+<td style="text-align: left;">User specified</td>
 </tr>
 <tr class="even">
-<td>Metric</td>
-<td>MNLFA</td>
-<td>Type I</td>
-<td><strong>0.138</strong></td>
+<td style="text-align: left;"><strong>Representation of moderation</strong></td>
+<td style="text-align: left;">Parametric function</td>
+<td style="text-align: left;">Recursive partitioning</td>
 </tr>
 <tr class="odd">
-<td>Metric</td>
-<td>SEMTREE</td>
-<td>Power</td>
-<td>0.611</td>
+<td style="text-align: left;"><strong>Researcher specifies</strong></td>
+<td style="text-align: left;">Functional form (e.g., linear, quadratic)</td>
+<td style="text-align: left;">Tree complexity (e.g., stopping criterion)</td>
 </tr>
 <tr class="even">
-<td>Metric</td>
-<td>SEMTREE</td>
-<td>Type I</td>
-<td><strong>0.075</strong></td>
+<td style="text-align: left;"><strong>Method estimates</strong></td>
+<td style="text-align: left;">Continuous parameter functions</td>
+<td style="text-align: left;">Split locations and subgroup structure</td>
 </tr>
 <tr class="odd">
-<td>Scalar</td>
-<td>MNLFA</td>
-<td>Power</td>
-<td>0.459</td>
-</tr>
-<tr class="even">
-<td>Scalar</td>
-<td>MNLFA</td>
-<td>Type I</td>
-<td><strong>0.150</strong></td>
-</tr>
-<tr class="odd">
-<td>Scalar</td>
-<td>SEMTREE</td>
-<td>Power</td>
-<td><strong>0.683</strong></td>
-</tr>
-<tr class="even">
-<td>Scalar</td>
-<td>SEMTREE</td>
-<td>Type I</td>
-<td><strong>0.050</strong></td>
+<td style="text-align: left;"><strong>Most appropriate when</strong></td>
+<td style="text-align: left;">Functional form is approximately known</td>
+<td style="text-align: left;">Functional form is unknown or complex</td>
 </tr>
 </tbody>
 </table>
-<div class="result-strip">
-<p>MNLFA shows elevated Type I error, whereas SEM Trees provide better error control and stronger scalar-level power under these pilot conditions.</p>
+<div class="fragment">
+<div class="takeaway">
+<p>The relative performance of both approaches depends on how well their modeling assumptions match the underlying process generating measurement noninvariance.</p>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p><br>
+<br>
+<br>
+</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><br><br><br></p>
+<div style="font-size:3em; font-weight:600;">
+<p>Questions?</p>
+</div>
+<p><br></p>
+</div><div class="column" style="width:70%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="meme.png" class="quarto-figure quarto-figure-center" style="width:70.0%"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="choosing-an-approach" class="slide level2">
+<h2>Choosing an Approach</h2>
+<div class="lead">
+<p>The appropriate method depends on how much is already known about the process generating measurement noninvariance.</p>
+</div>
+<div class="modelbox">
+<p><em>Knowledge about the form of measurement noninvariance</em></p>
+<div style="text-align:center;">
+<p><br></p>
+<p><em>Low</em> <svg width="70%" height="18" style="vertical-align:middle;"> <line x1="0" y1="9" x2="100%" y2="9" stroke="#777" stroke-width="2"></line> </svg> <em>High</em></p>
+<p><br></p>
+<p><span style="margin-right:30%;">Exploratory</span> <span style="margin-left:30%;">Confirmatory</span></p>
+<p><br></p>
+<p><span style="margin-right:18%;"><strong>SEM Trees</strong></span> <span style="margin-left:18%;"><strong>MNLFA</strong></span></p>
+</div>
+</div>
+<div class="fragment takeaway">
+<p><strong>When does each approach provide the greatest advantage?</strong></p>
+<p>The following simulation study addresses this question.</p>
+</div>
+</section>
+<section id="study-1-data-generating-process" class="slide level2">
+<h2>Study 1: Data-Generating Process</h2>
+<div class="lead">
+<p>Study 1 investigates how functional-form misspecification affects the detection of measurement noninvariance by MNLFA and SEM Trees.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>Population models</strong></p>
+<ul>
+<li>Single-factor CFA</li>
+<li>Four observed indicators</li>
+<li>One continuous moderator (mostly)</li>
+<li>Moderated loadings and/or intercepts</li>
+</ul>
+</div>
+<div style="position:relative; height:300px; margin-top:0.5em; overflow:hidden;">
+<p><img data-src="1.1.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="1"></p>
+<p><img data-src="1.11.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="2"></p>
+<p><img data-src="1.12.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="3"></p>
+<p><img data-src="1.2.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="4"></p>
+<p><img data-src="1.21.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="5"></p>
+<p><img data-src="1.22.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="6"></p>
+<p><img data-src="1.3.svg" class="fragment current-visible" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="7"></p>
+<p><img data-src="1.31.svg" class="fragment" style="position:absolute; inset:0; width:100%; height:95%; object-fit:contain;" data-fragment-index="8"></p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>Experimental manipulation</strong></p>
+<ul>
+<li>Functional form of moderation</li>
+<li>Magnitude of moderation</li>
+<li>Sample size</li>
+<li>Indicator reliability</li>
+</ul>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" data-code-line-numbers="1|3-13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>MOD_TYPES <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"linear"</span>,<span class="st">"sigmoid"</span>,<span class="st">"quadratic"</span>,<span class="st">"noise"</span>)</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>DESIGN <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">expand_grid</span>(</span>
+<span id="cb1-4"><a href=""></a>  <span class="at">popmodel     =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"1.1"</span>,<span class="st">"1.11"</span>,<span class="st">"1.12"</span>,<span class="st">"1.2"</span>,<span class="st">"1.21"</span>,<span class="st">"1.22"</span>,<span class="st">"1.3"</span>,<span class="st">"1.32"</span>),</span>
+<span id="cb1-5"><a href=""></a>  <span class="at">N            =</span> <span class="fu">c</span>(<span class="dv">300</span>, <span class="dv">500</span>, <span class="dv">700</span>, <span class="dv">1000</span>),</span>
+<span id="cb1-6"><a href=""></a>  <span class="at">reliability  =</span> <span class="fu">c</span>(<span class="fl">0.60</span>, <span class="fl">0.75</span>, <span class="fl">0.95</span>),</span>
+<span id="cb1-7"><a href=""></a>  <span class="at">lambda       =</span> <span class="fl">0.70</span>,</span>
+<span id="cb1-8"><a href=""></a>  <span class="at">intercepts   =</span> <span class="dv">1</span>,</span>
+<span id="cb1-9"><a href=""></a>  <span class="at">delta_lambda =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>),</span>
+<span id="cb1-10"><a href=""></a>  <span class="at">delta_nu     =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>),</span>
+<span id="cb1-11"><a href=""></a>  <span class="at">moderator    =</span> MOD_TYPES,</span>
+<span id="cb1-12"><a href=""></a>  <span class="at">analysis_form =</span> <span class="fu">c</span>(<span class="st">"linear"</span>, <span class="st">"quadratic"</span>),</span>
+<span id="cb1-13"><a href=""></a>  <span class="at">rep_id =</span> <span class="dv">1</span><span class="sc">:</span>n_rep</span>
+<span id="cb1-14"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+</section>
+<section id="study-1-moderator-functions" class="slide level2">
+<h2>Study 1: Moderator Functions</h2>
+<div class="lead">
+<p>Moderation was introduced by transforming a continuous moderator <span class="math inline">\(M \sim \mathcal{U}(-1,1)\)</span> before it entered the data-generating model.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:68%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="SEMi_ff_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:32%;">
+<div class="design-card" style="font-size:0.82em;">
+<p><strong>Functions</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Form</th>
+<th style="text-align: left;"><span class="math inline">\(h(M)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Linear</td>
+<td style="text-align: left;"><span class="math inline">\(M\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Quadratic</td>
+<td style="text-align: left;"><span class="math inline">\(2M^2 - 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: left;"><span class="math inline">\(-1 + \frac{2}{1+\exp(-10M)}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Noise</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<div class="takeaway">
+<p>The data-generating process varied the true functional form of parameter moderation; the analysis model may or may not match this form.</p>
+</div>
+</section>
+<section id="study-1-analytical-models" class="slide level2">
+<h2>Study 1: Analytical Models</h2>
+<div class="lead">
+<p>The analysis models differed in the assumptions they required about the location and form of measurement noninvariance.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>MNLFA</strong></p>
+<p><strong>Specified in the analysis model</strong></p>
+<ul>
+<li>Functional form:
+<ul>
+<li>linear or quadratic</li>
+</ul></li>
+<li>Defined moderators:
+<ul>
+<li><span class="math inline">\(a m_1\)</span>, <span class="math inline">\(a m_2\)</span>, <span class="math inline">\(a m_{12}\)</span></li>
+</ul></li>
+<li>All item-level moderation paths estimated</li>
+</ul>
+<p><strong>Potential mismatch</strong></p>
+<ul>
+<li>True moderation may be linear, quadratic, sigmoid, or absent</li>
+<li>True noninvariance may affect only a subset of indicators</li>
+<li>The analysis model may therefore be under- or over-specified</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>SEM Trees</strong></p>
+<p><strong>Specified in the analysis model</strong></p>
+<ul>
+<li>Measurement model</li>
+<li>Candidate moderators:
+<ul>
+<li><span class="math inline">\(a m_1\)</span>, <span class="math inline">\(a m_2\)</span>, <span class="math inline">\(m_0\)</span></li>
+</ul></li>
+<li>Tree-complexity controls:
+<ul>
+<li><span class="math inline">\(\alpha = .05\)</span></li>
+<li>Bonferroni correction</li>
+<li>minimum node size</li>
+</ul></li>
+</ul>
+<p><strong>Potential trade-off</strong></p>
+<ul>
+<li>No parametric functional form is imposed</li>
+<li>The algorithm must select the relevant moderator</li>
+<li>Power depends on detecting split-based parameter instability</li>
+</ul>
+</div>
+</div></div>
+<div class="takeaway">
+<p>Study 1 therefore compares <strong>parametric specification uncertainty</strong> in MNLFA with <strong>data-driven moderator selection</strong> in SEM Trees.</p>
+</div>
+</section>
+<section id="study-1-evaluation-criteria" class="slide level2">
+<h2>Study 1: Evaluation Criteria</h2>
+<div class="lead">
+<p>Method performance was evaluated with respect to detecting and correctly attributing measurement noninvariance.</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>MNLFA</strong></p>
+<p><strong>Detection accuracy</strong></p>
+<ul>
+<li>Type I error</li>
+<li>Statistical power</li>
+</ul>
+<p><strong>Localization</strong></p>
+<ul>
+<li>Detection at the metric stage</li>
+<li>Detection at the scalar stage</li>
+</ul>
+<p><strong>Estimation</strong></p>
+<ul>
+<li>Successful model estimation</li>
+<li>Moderation-effect estimates</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="design-card">
+<p><strong>SEM Trees</strong></p>
+<p><strong>Detection accuracy</strong></p>
+<ul>
+<li>Type I error</li>
+<li>Statistical power</li>
+</ul>
+<p><strong>Localization</strong></p>
+<ul>
+<li>Selection of correct moderator</li>
+<li>Selection of incorrect moderator</li>
+<li>Splitting on correct focus parameters</li>
+</ul>
+<p><strong>Tree structure</strong></p>
+<ul>
+<li>Number of detected splits</li>
+<li>Successful tree estimation</li>
+</ul>
+</div>
+</div></div>
+<div class="takeaway">
+<p>Both methods were primarily compared using <strong>Type I error</strong> and <strong>statistical power</strong>; secondary criteria evaluated where and how noninvariance was identified.</p>
+</div>
+</section>
+<section id="preliminary-results" class="slide level2">
+<h2>Preliminary Results</h2>
+<div class="lead">
+
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="sankey.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img data-src="sankey.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></a></p>
+</figure>
+</div>
+<div class="fragment">
+<div class="takeaway">
+<ul>
+<li>Most datasets follow the expected sequential decision process.</li>
+<li>Early detection of metric noninvariance precludes scalar-tree estimation.</li>
+<li>Consequently, scalar-tree results should be interpreted as conditional on metric invariance.</li>
+</ul>
+</div>
 </div>
 </section>
 <section id="preliminary-results-1" class="slide level2">
 <h2>Preliminary Results</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><a href="metric.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="metric.png"></a> <em>Metric Level MI Testing</em></p>
-</div><div class="column" style="width:50%;">
-<p><a href="scalar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="scalar.png"></a> <em>Scalar Level MI Testing</em></p>
-</div></div>
+<div class="lead">
+<p>Metric-level statistical power depends strongly on the agreement between the true and assumed form of moderation.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="new_fig.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img data-src="new_fig.png" class="quarto-figure quarto-figure-center" style="width:85.0%"></a></p>
+</figure>
+</div>
+<div class="fragment">
 <div class="takeaway">
-<p>At the metric stage, MNLFA Type I error decreases, reaching 0.050 only when both sample size and reliability are high, whereas SEM Trees remain comparatively stable. At the scalar stage, SEM Trees retain high power under quadratic moderation, while MNLFA power drops markedly.</p>
+<ul>
+<li>MNLFA achieves the highest power when the analytical model matches the true moderation function.</li>
+<li>Misspecification reduces the performance of parametric models.</li>
+<li>SEM Trees provide comparatively stable performance across different moderation functions.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="preliminary-results-2" class="slide level2">
+<h2>Preliminary Results</h2>
+<div class="lead">
+<p>The influence of functional-form specification persists across sample sizes while maintaining acceptable Type I error rates.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="fig3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img data-src="fig3.png" class="quarto-figure quarto-figure-center" style="width:92.0%"></a></p>
+</figure>
+</div>
+<div class="fragment">
+<div class="takeaway">
+<ul>
+<li>Statistical power increases with sample size for both methods.</li>
+<li>Type I error remains close to the nominal level across moderator conditions.</li>
+<li>Functional-form misspecification continues to reduce MNLFA power even as sample size increases.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="preliminary-results-3" class="slide level2">
+<h2>Preliminary Results</h2>
+<div class="lead">
+<p>The observed performance patterns are consistent across the different population-model conditions included in Study 1.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="heatmap.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img data-src="heatmap.png" class="quarto-figure quarto-figure-center" style="width:92.0%"></a></p>
+</figure>
+</div>
+<div class="fragment">
+<div class="takeaway">
+<ul>
+<li>The relative ordering of the methods remains largely consistent across population models.</li>
+<li>Performance differences are driven primarily by the functional form of moderation rather than by the specific location of measurement noninvariance.</li>
+<li>No single population model dominates the overall findings.</li>
+</ul>
+</div>
 </div>
 </section>
 <section id="questions-concerns" class="slide level2">
@@ -739,334 +954,19 @@ This pilot simulation focuses on **functional-form misspecification**:
 <div class="columns">
 <div class="column" style="width:60%;">
 <ul>
-<li>How do I ensure that the comparison is fair, the best?</li>
-<li>What Prepruning to use for enhancing power of the trees?</li>
-<li>When do tree splits count as correct?</li>
-<li>What alternative can i use other than significance testing for model fit evaluation?</li>
+<li>How do I ensure that the comparison is fair?</li>
+<li>Why don’t I see mean changes with sample size or reliability?</li>
+<li>How do you see the sequential results?</li>
 <li>Did I forget something in the simulation set-up?</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<p><img data-src="https://imgs.xkcd.com/comics/modeling_study.png"></p>
+<p><img data-src="meme1.png"></p>
 </div></div>
-</section>
-<section id="preliminary-results-2" class="slide level2">
-<h2>Preliminary Results</h2>
-<p><strong>Type I Error and Power Metric Stage</strong></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 13%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>N</th>
-<th>Reliability</th>
-<th>Moderator</th>
-<th>MNLFA Type I</th>
-<th>MNLFA Power</th>
-<th>SEMTREE Type I</th>
-<th>SEMTREE Power</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>300</td>
-<td>0.60</td>
-<td>linear</td>
-<td>0.200</td>
-<td>1.000</td>
-<td>0.050</td>
-<td>0.988</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.60</td>
-<td>noise</td>
-<td>0.200</td>
-<td>0.200</td>
-<td>0.050</td>
-<td>0.050</td>
-</tr>
-<tr class="odd">
-<td>300</td>
-<td>0.60</td>
-<td>quadratic</td>
-<td>0.200</td>
-<td>0.740</td>
-<td>0.050</td>
-<td>0.575</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.95</td>
-<td>linear</td>
-<td>0.150</td>
-<td>1.000</td>
-<td>0.050</td>
-<td>1.000</td>
-</tr>
-<tr class="odd">
-<td>300</td>
-<td>0.95</td>
-<td>noise</td>
-<td>0.150</td>
-<td>0.150</td>
-<td>0.050</td>
-<td>0.050</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.95</td>
-<td>quadratic</td>
-<td>0.150</td>
-<td>0.755</td>
-<td>0.050</td>
-<td>0.750</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.60</td>
-<td>linear</td>
-<td>0.150</td>
-<td>1.000</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.60</td>
-<td>noise</td>
-<td>0.150</td>
-<td>0.150</td>
-<td>0.100</td>
-<td>0.100</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.60</td>
-<td>quadratic</td>
-<td>0.150</td>
-<td>0.862</td>
-<td>0.100</td>
-<td>0.725</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.95</td>
-<td>linear</td>
-<td>0.050</td>
-<td>1.000</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.95</td>
-<td>noise</td>
-<td>0.050</td>
-<td>0.050</td>
-<td>0.100</td>
-<td>0.100</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.95</td>
-<td>quadratic</td>
-<td>0.050</td>
-<td>0.792</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="preliminary-results-3" class="slide level2">
-<h2>Preliminary Results</h2>
-<p><strong>Type I Error and Power Scalar Stage</strong></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 13%">
-<col style="width: 12%">
-<col style="width: 15%">
-<col style="width: 15%">
-<col style="width: 18%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>N</th>
-<th>Reliability</th>
-<th>Moderator</th>
-<th>MNLFA Type I</th>
-<th>MNLFA Power</th>
-<th>SEMTREE Type I</th>
-<th>SEMTREE Power</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>300</td>
-<td>0.60</td>
-<td>linear</td>
-<td>0.100</td>
-<td>1.000</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.60</td>
-<td>noise</td>
-<td>0.100</td>
-<td>0.100</td>
-<td>0.100</td>
-<td>0.100</td>
-</tr>
-<tr class="odd">
-<td>300</td>
-<td>0.60</td>
-<td>quadratic</td>
-<td>0.100</td>
-<td>0.273</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.95</td>
-<td>linear</td>
-<td>0.100</td>
-<td>1.000</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="odd">
-<td>300</td>
-<td>0.95</td>
-<td>noise</td>
-<td>0.100</td>
-<td>0.100</td>
-<td>0.100</td>
-<td>0.100</td>
-</tr>
-<tr class="even">
-<td>300</td>
-<td>0.95</td>
-<td>quadratic</td>
-<td>0.100</td>
-<td>0.245</td>
-<td>0.100</td>
-<td>1.000</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.60</td>
-<td>linear</td>
-<td>0.200</td>
-<td>1.000</td>
-<td>0.000</td>
-<td>1.000</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.60</td>
-<td>noise</td>
-<td>0.200</td>
-<td>0.200</td>
-<td>0.000</td>
-<td>0.000</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.60</td>
-<td>quadratic</td>
-<td>0.200</td>
-<td>0.175</td>
-<td>0.000</td>
-<td>1.000</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.95</td>
-<td>linear</td>
-<td>0.200</td>
-<td>1.000</td>
-<td>0.000</td>
-<td>1.000</td>
-</tr>
-<tr class="odd">
-<td>1000</td>
-<td>0.95</td>
-<td>noise</td>
-<td>0.200</td>
-<td>0.200</td>
-<td>0.000</td>
-<td>0.000</td>
-</tr>
-<tr class="even">
-<td>1000</td>
-<td>0.95</td>
-<td>quadratic</td>
-<td>0.200</td>
-<td>0.417</td>
-<td>0.000</td>
-<td>1.000</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="preliminary-interpretation" class="slide level2">
-<h2>Preliminary Interpretation</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<h3 id="mnlfa">MNLFA</h3>
-<ul>
-<li>High power for detecting <strong>metric noninvariance</strong><br>
-</li>
-<li><strong>Elevated Type I error</strong> at both levels<br>
-</li>
-<li><strong>Reduced power at the scalar level</strong><br>
-</li>
-<li>Sensitive to <strong>functional-form misspecification</strong>
-<ul>
-<li>Linear analysis vs.&nbsp;nonlinear data-generating processes<br>
-</li>
-</ul></li>
-<li>Sequential testing may <strong>propagate misspecification</strong></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<h3 id="sem-trees-1">SEM Trees</h3>
-<ul>
-<li><strong>More stable Type I error control</strong> across conditions<br>
-</li>
-<li>Competitive power, particularly for <strong>scalar noninvariance</strong><br>
-</li>
-<li>Performance depends on:
-<ul>
-<li>Sample size<br>
-</li>
-<li>Reliability<br>
-</li>
-<li>Pruning / stopping rules<br>
-</li>
-</ul></li>
-<li>May be <strong>conservative in low-signal settings</strong></li>
-</ul>
-</div></div>
-<div class="takeaway">
-<p>MNLFA is efficient under correct specification but sensitive to misspecification, whereas SEM Trees provide more robust error control at the cost of potential conservatism.</p>
-</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-Arnold2021" class="csl-entry" role="listitem">
 Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. <span>“Score-Guided Structural Equation Model Trees.”</span> <em>Frontiers in Psychology</em> 11: 3913. <a href="https://doi.org/10.3389/fpsyg.2020.564403">https://doi.org/10.3389/fpsyg.2020.564403</a>.
 </div>
@@ -1079,8 +979,11 @@ Brandmaier, A. M., J. J. Prindle, J. J. McArdle, and U. Lindenberger. 2016. <spa
 <div id="ref-Cheung2000" class="csl-entry" role="listitem">
 Cheung, Gordon W., and Roger B. Rensvold. 2000. <span>“Assessing <span>Extreme</span> and <span>Acquiescence</span> <span>Response</span> <span>Sets</span> in <span>Cross</span>-<span>Cultural</span> <span>Research</span> <span>Using</span> <span>Structural</span> <span>Equations</span> <span>Modeling</span>.”</span> <em>Journal of Cross-Cultural Psychology</em> 31 (2): 187–212. <a href="https://doi.org/10.1177/0022022100031002003">https://doi.org/10.1177/0022022100031002003</a>.
 </div>
+<div id="ref-Cheung2002" class="csl-entry" role="listitem">
+Cheung, Gordon W., and Roger B. Rensvold. 2002. <span>“Evaluating Goodness-of-Fit Indexes for Testing Measurement Invariance.”</span> <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 9 (2): 233–55. <a href="https://doi.org/10.1207/S15328007SEM0902\_5">https://doi.org/10.1207/S15328007SEM0902\_5</a>.
+</div>
 <div id="ref-Curran2014" class="csl-entry" role="listitem">
-Curran, Patrick J., James S. McGinley, Daniel J. Bauer, Andrea M. Hussong, Alison Burns, Laurie Chassin, Kenneth Sher, and Robert Zucker. 2014. <span>“A <span>Moderated</span> <span>Nonlinear</span> <span>Factor</span> <span>Model</span> for the <span>Development</span> of <span>Commensurate</span> <span>Measures</span> in <span>Integrative</span> <span>Data</span> <span>Analysis</span>.”</span> <em>Multivariate Behavioral Research</em> 49 (3): 214–31. <a href="https://doi.org/10.1080/00273171.2014.889594">https://doi.org/10.1080/00273171.2014.889594</a>.
+Curran, Patrick J., James S. McGinley, Daniel J. Bauer, et al. 2014. <span>“A <span>Moderated</span> <span>Nonlinear</span> <span>Factor</span> <span>Model</span> for the <span>Development</span> of <span>Commensurate</span> <span>Measures</span> in <span>Integrative</span> <span>Data</span> <span>Analysis</span>.”</span> <em>Multivariate Behavioral Research</em> 49 (3): 214–31. <a href="https://doi.org/10.1080/00273171.2014.889594">https://doi.org/10.1080/00273171.2014.889594</a>.
 </div>
 <div id="ref-Kolbe2021" class="csl-entry" role="listitem">
 Kolbe, Laura, Terrence D. Jorgensen, and Dylan Molenaar. 2021. <span>“The <span>Impact</span> of <span>Unmodeled</span> <span>Heteroskedasticity</span> on <span>Assessing</span> <span>Measurement</span> <span>Invariance</span> in <span>Single</span>-Group <span>Models</span>.”</span> <em>Structural Equation Modeling: A Multidisciplinary Journal</em> 28 (1): 82–98. <a href="https://doi.org/10.1080/10705511.2020.1766357">https://doi.org/10.1080/10705511.2020.1766357</a>.
@@ -1094,11 +997,17 @@ Maassen, Esther, E. Damiano D’Urso, Marcel A. L. M. van Assen, Michèle B. Nui
 <div id="ref-Meredith1964" class="csl-entry" role="listitem">
 Meredith, William. 1964. <span>“Notes on <span>Factorial</span> <span>Invariance</span>.”</span> <em>Psychometrika</em> 29 (2): 177–85. <a href="https://doi.org/10.1007/BF02289699">https://doi.org/10.1007/BF02289699</a>.
 </div>
+<div id="ref-Meredith1993" class="csl-entry" role="listitem">
+Meredith, William. 1993. <span>“Measurement <span>Invariance</span>, <span>Factor Analysis</span> and <span>Factorial Invariance</span>.”</span> <em>Psychometrika</em> 58 (4): 525–43. <a href="https://doi.org/10.1007/BF02294825">https://doi.org/10.1007/BF02294825</a>.
+</div>
 <div id="ref-Putnick2016" class="csl-entry" role="listitem">
 Putnick, Diane L., and Marc H. Bornstein. 2016. <span>“Measurement Invariance Conventions and Reporting: The State of the Art and Future Directions for Psychological Research.”</span> <em>Developmental Review</em> 41: 71–90. https://doi.org/<a href="https://doi.org/10.1016/j.dr.2016.06.004">https://doi.org/10.1016/j.dr.2016.06.004</a>.
 </div>
 <div id="ref-Rohrer2025" class="csl-entry" role="listitem">
 Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement Invariance Causally.”</span> <em>Current Research in Ecological and Social Psychology</em> 9: 100241. <a href="https://doi.org/10.1016/j.cresp.2025.100241">https://doi.org/10.1016/j.cresp.2025.100241</a>.
+</div>
+<div id="ref-Vandenberg2000" class="csl-entry" role="listitem">
+Vandenberg, Robert J., and Charles E. Lance. 2000. <span>“A Review and Synthesis of the Measurement Invariance Literature: Suggestions, Practices, and Recommendations for Organizational Research.”</span> <em>Organizational Research Methods</em> 3 (1): 4–70. <a href="https://doi.org/10.1177/109442810031002">https://doi.org/10.1177/109442810031002</a>.
 </div>
 </div>
 </section>
@@ -1110,19 +1019,19 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Semi-Complete by Design_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="SEMi_ff_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1291,7 +1200,7 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
         margin: 4.0e-2,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1317,6 +1226,82 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
@@ -1365,13 +1350,14 @@ Rohrer, Julia M., and Borysław Paulewicz. 2025. <span>“Rethinking Measurement
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
