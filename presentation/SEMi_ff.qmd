@@ -1070,11 +1070,24 @@ The influence of functional-form specification persists across sample sizes whil
 ![](fig3.png){.lightbox fig-align="center" width="92%"}
 
 ::: notes
+Thus, a replication is counted as a success whenever the Bonferroni-adjusted likelihood-ratio test rejects metric invariance, regardless of whether the assumed moderation function (linear or quadratic) matches the true function.
+
+For MNLFA:
+Power=P(Reject MI∣MI violated)
+
+For SEM Trees:
+P(Reject MI AND identify the correct moderator∣MI violated)
 
 - Statistical power increases with sample size for both methods.
 - Type I error remains close to the nominal level across moderator conditions.
 - Functional-form misspecification continues to reduce MNLFA power even as sample size increases.
-
+-Therefore the upper panels show 
+  - P(Reject invariance∣true metric noninvariance)
+-The lower panels show
+  - P(Reject invariance∣metric invariance holds)
+  
+Empirical detection rates for metric measurement noninvariance across moderator functions, effect sizes, and sample sizes. For MNLFA, detection was defined as rejection of the Bonferroni-adjusted likelihood-ratio test for metric invariance. Consequently, successful detection does not require recovery of the true moderation function; linear and quadratic MNLFA models are credited whenever they detect measurement noninvariance, even if the assumed functional form is misspecified. For SEM Trees, successful detection additionally required that the first split occurred on the true moderating variable, reflecting correct identification of the source of parameter instability.
+  
 :::
 
 
