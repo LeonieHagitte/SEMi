@@ -1,4 +1,23 @@
-#library(furrr)
+# ███████╗███████╗███╗   ███╗██╗
+# ██╔════╝██╔════╝████╗ ████║╚═╝
+# ███████╗█████╗  ██╔████╔██║██║
+# ╚════██║██╔══╝  ██║╚██╔╝██║██║
+# ███████║███████╗██║ ╚═╝ ██║██║
+# ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝
+# S E M i
+#
+# by Leonie Hagitte
+#
+#
+# This file orchestrates the Monte Carlo simulation runs.
+#
+# The script builds the crossed design grid, handles optional job chunking
+# for high performance computing clusters,
+# generates one dataset per design row, runs MNLFA and SEM-tree analyses,
+# records truth labels/detection outcomes, and saves chunk-specific results.
+#
+# This is the main entry point for the simulation
+
 library(dplyr)
 library(tibble)
 library(future)
@@ -48,7 +67,7 @@ DESIGN <- DESIGN %>%
 DESIGN <- DESIGN %>%
   slice_sample(prop = 1) # this is a random permutation
 
-split_LH <- FALSE
+split_LH <- FALSE  # split jobs according to Leonies approach?
 
 # Andreas approach
 ## ----------- get splitter from command line argument ----------

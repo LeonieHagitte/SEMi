@@ -1,3 +1,10 @@
+# Fit the competing analysis models used in each simulation replication.
+#
+# The file defines helper routines for OpenMx likelihood-ratio tests, MNLFA
+# moderation extraction, score-based SEM-tree analyses, and tree split summaries.
+#
+# It is sourced by simulation_rt.R after the data-generation helpers are loaded.
+
 library(lavaan)
 library(dplyr)
 library(purrr)
@@ -9,8 +16,8 @@ library(partykit)
 # -----------------------------------------------------------------------------
 
 
-compare_models_lrt <- function(fit_less, fit_more, alpha = 0.05) {
-  cmp <- tryCatch(OpenMx::mxCompare(fit_less, fit_more), error = identity)
+compare_models_lrt <- function(fit_unrestricted, fit_restricted, alpha = 0.05) {
+  cmp <- tryCatch(OpenMx::mxCompare(fit_unrestricted, fit_restricted), error = identity)
   
   if (inherits(cmp, "error")) {
     return(list(

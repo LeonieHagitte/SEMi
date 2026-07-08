@@ -1,4 +1,11 @@
 # dataprep_rt.R
+
+# Generate population parameters and simulated one-factor data.
+#
+# The file maps raw moderators into effective moderator functions, constructs
+# person-specific loading/intercept patterns for each population model, and
+# returns generated indicator data plus moderator columns for downstream analyses.
+
 # Two functions, one population parameter generator and one data generator
 # mxdata1 is used data label in analysis_rt.R
 
@@ -48,7 +55,17 @@ gen_paramsC <- function(popmodel,
        mu_eta = mu_eta)
 }
 
-
+#
+# N = sample size
+#
+# returns four observed variables (x1 to x4)
+# and three predictors of which the first two
+# are informative (m1 and m2) and one is uninformative (m0).
+# Those predictors are transformed according to a function
+# chosen in params and then returned as their transformed
+# counterparts hm0, hm1, hm2
+# Finally, hm12 is the interaction (after the nonlinear transformation)
+# 
 gen_dataC <- function(N, params, return_latent=TRUE){
   
   p <- 4
