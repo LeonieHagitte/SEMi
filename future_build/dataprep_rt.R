@@ -9,6 +9,16 @@
 # Two functions, one population parameter generator and one data generator
 # mxdata1 is used data label in analysis_rt.R
 
+add_noisy_predictors <- function(data,
+                           num_noisy_predictors)
+{
+  for (k in 1:num_noisy_predictors) {
+    data[, paste0("noisy",k)] <- runif(n=nrow(data), min = -1, max=1)
+  }
+  
+  return(data)
+}
+
 mod_h <- function(M, type = c("linear","sigmoid","quadratic","noise"), k = 10.0){ #what k to choose?
 
    if (any(!is.finite(M))) stop("M must be finite.")

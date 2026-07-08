@@ -751,7 +751,7 @@ run_analysis <- function(data,
                          methods = c("MNLFA", "SEMTREE"),
                          nfactors = 1,
                          alpha = 0.05,
-                         predictors = c("am1", "am2", "m0")) {
+                         tree_predictors = c("m1", "m2", "m0")) {
   
   methods <- match.arg(methods, choices = c("MNLFA", "SEMTREE"), several.ok = TRUE)
   dat <- as.data.frame(data)
@@ -767,7 +767,8 @@ run_analysis <- function(data,
   
   if ("SEMTREE" %in% methods) {
     out$semtree <- tryCatch(
-      tree_analysis_ram(data = dat, nfactors = nfactors, alpha = alpha, predictors = predictors),
+      tree_analysis_ram(data = dat, nfactors = nfactors, alpha = alpha, 
+                        predictors = predictors),
       error = identity
     )
   }

@@ -381,6 +381,20 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     analysis_form = row$analysis_form,
     k = params$k
   )
+  
+  # TODO: num_noisy_predictors in die conditions (für die Hauptsimulation
+  # auf 0, für ein paar auf 10 oder so?!)
+  temp_colnames <- colnames(df)
+  df <- add_noisy_predictors(data = df, 
+                             num_noisy_predictors = row$num_noisy_predictors)
+  noisy_predictor_names <- setdiff(colnames(df), temp_colnames)
+  
+  # determine tree predictors
+  tree_predictors <- c("m1", "m2")  # TODO: m1/m2 conditional on population model
+  if (length(noisy_predictor_names) != 0) {
+    tree_predictors <- c(tree_predictors, noisy_predictor_names)
+  }
+  
   # ensure required columns exist for analyses
   if (!"m0" %in% names(df)) df$m0 <- 0
   
@@ -390,7 +404,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     methods = c("MNLFA", "SEMTREE"),
     nfactors = 1,
     alpha = 0.05,
-    predictors = c("am1", "am2", "m0")
+    tree_predictors = tree_predictors
   )
   # ---------------------------
   mnlfa_error_msg <- NA_character_
