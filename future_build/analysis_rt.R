@@ -558,7 +558,7 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
 
 # -----------------------------------------------------#####################################
 tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
-                              predictors = c("am1", "am2","m0"),
+                              predictors = c("am1", "am2","m0"), #####################################################
                               control = NULL, verbose = FALSE){
   
   if (is.null(control)) {
@@ -748,12 +748,12 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
 # ------------------------------------------------------------------------
 
 run_analysis <- function(data,
-                         methods = c("MNLFA", "SEMTREE"),
+                         methods = c("MNLFA", "MNLFAQ", "SEMTREE"),
                          nfactors = 1,
                          alpha = 0.05,
                          tree_predictors = c()) {
   
-  methods <- match.arg(methods, choices = c("MNLFA", "SEMTREE"), several.ok = TRUE)
+  methods <- match.arg(methods, choices = c("MNLFA", "MNLFAQ", "SEMTREE"), several.ok = TRUE)
   dat <- as.data.frame(data)
   
   out <- list(methods = methods)
@@ -766,7 +766,7 @@ run_analysis <- function(data,
   }
   
   if ("MNLFAQ" %in% methods) {
-    out$mnlfa <- tryCatch(
+    out$mnlfaq <- tryCatch(
       mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
       error = identity
     )
@@ -774,8 +774,12 @@ run_analysis <- function(data,
   
   if ("SEMTREE" %in% methods) {
     out$semtree <- tryCatch(
-      tree_analysis_ram(data = dat, nfactors = nfactors, alpha = alpha, 
-                        predictors = predictors),
+      tree_analysis_ram(
+        data = dat,
+        nfactors = nfactors,
+        alpha = alpha,
+        predictors = tree_predictors
+      ),
       error = identity
     )
   }

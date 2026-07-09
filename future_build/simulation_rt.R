@@ -39,16 +39,14 @@ MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 DESIGN <- tidyr::expand_grid(
   popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
-  reliability  = c(0.75), # 0.75 instead of 0.7 and 0.8 for computing
+  reliability  = 0.75, 
   lambda       = 0.70,
   intercepts   = 1,
-  # latentmean  = 0,
-  # delta_eta   = c(-1, -0.5, 0.5, 1),
   delta_lambda = c(0.2, 0.3),
   delta_nu     = c(0.5, 1),
   moderator    = MOD_TYPES,
 #  analysis_form = c("linear", "quadratic"),
-  method       = c("SEMTREE","MLNFA","MLNFAQ"),
+  method       = c("SEMTREE","MNLFA","MNLFAQ"),
   rep_id = 1:n_rep,
   num_noisy_predictors = 0
 )%>%
@@ -66,6 +64,26 @@ DESIGN <- DESIGN %>%
     seed = round(runif(nrow(DESIGN),0,.Machine$integer.max))
     
   )
+# ----------------------------------------------------------
+DESIGN <- DESIGN %>%
+  dplyr::mutate(sensitivity_case = "main")
+
+SENS_TREE_NOISE <- DESIGN %>%
+  dplyr::filter(
+    method == "SEMTREE",
+    popmodel == "1.1",
+    moderator == "linear",
+    N == 500,
+    delta_lambda == 0.2,
+    delta_nu == 0.5
+  ) %>%
+  dplyr::mutate(
+    num_noisy_predictors = 10,
+    sensitivity_case = "tree_10_noisy"
+  )
+
+DESIGN <- dplyr::bind_rows(DESIGN, SENS_TREE_NOISE)
+
 # ---------- randomly permute lines for even distribution of
 #     run times across jobs ----------------
 DESIGN <- DESIGN %>%
@@ -354,7 +372,24 @@ average_kl_mnlfa <- function(data, params, fit) {
   if (all(is.na(kl_values))) return(NA_real_)
   mean(kl_values, na.rm = TRUE)
 }
-
+# ---------------------------------------------------------------------------
+get_tree_predictors <- function(popmodel, noisy_predictor_names = character(0)) {
+  base_predictors <- switch(
+    as.character(popmodel),
+    "0"    = "am1",
+    "1.1"  = "am1",
+    "1.11" = "am1",
+    "1.12" = "am1",
+    "1.2"  = "am1",
+    "1.21" = "am1",
+    "1.22" = "am1",
+    "1.3"  = c("am1", "am2"),
+    "1.32" = c("am1", "am2"),
+    stop("Unknown popmodel: ", popmodel)
+  )
+  
+  unique(c(base_predictors, noisy_predictor_names))
+}
 ##############################################################################
 run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
 
@@ -380,8 +415,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   df <- sim$data
   
-  if (row$method=="MLNFAQ") { analysis_form="quadratic"} else
-    analysis_form="linear"
+  analysis_form <- dplyr::case_when(
+    row$method == "MNLFAQ" ~ "quadratic",
+    row$method %in% c("MNLFA", "SEMTREE") ~ "linear",
+    TRUE ~ stop("Unknown method: ", row$method)
+  )
   
   df <- add_analysis_form(
     data = df,
@@ -389,59 +427,49 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     k = params$k
   )
   
-
   temp_colnames <- colnames(df)
-  df <- add_noisy_predictors(data = df, 
-                             num_noisy_predictors = row$num_noisy_predictors)
+  
+  df <- add_noisy_predictors(
+    data = df,
+    num_noisy_predictors = row$num_noisy_predictors
+  )
+  
   noisy_predictor_names <- setdiff(colnames(df), temp_colnames)
-
+  
+  tree_predictors <- get_tree_predictors(
+    popmodel = row$popmodel,
+    noisy_predictor_names = if (row$method == "SEMTREE") noisy_predictor_names else character(0)
+  )
+  
+  tree_moderators_to_check <- c("am1", "am2", "m0", noisy_predictor_names)
+  
+  res <- run_analysis(
+    data = df,
+    methods = row$method,
+    nfactors = 1,
+    alpha = 0.05,
+    tree_predictors = tree_predictors
+  )
+  
+  mnlfa_result <- if (row$method == "MNLFAQ") {
+    res$mnlfaq
+  } else if (row$method == "MNLFA") {
+    res$mnlfa
+  } else {
+    NULL
+  }
 
   # truth indicators
   # ---------------------------
   has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3", "1.32")
   has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22", "1.32")
   
-  # TODO [LH] Leonie, please check correctness
-  true_metric_moderators_list <- list("1.1"="am1", "1.12"="am1","1.2"="am1","1.22"="am1",
-                              "1.3"=c("am1","am2"),"1.32"=c("am1")
-                              )
-  true_scalar_moderators_list <- list("1.32"="am2",
-                                     "1.11"="am1", "1.12"="am1", "1.21"="am1", "1.22"="am1")
-  
-    
-  # determine tree predictors, m1/m2 conditional on population model
-  tree_predictors <- c()
-  if (has_metric) {
-    tree_predictors <- true_metric_moderators_list[row$popmodel]
-  }
-  if (has_scalar) {
-    tree_predictors <- c(tree_predictors, true_scalar_moderators_list[row$popmodel] )
-  }
-  # remove duplicates (just in case...)
-  tree_predictors <- unique(tree_predictors)
-  
-  # add noisy predictors
-  if (length(noisy_predictor_names) != 0) {
-    tree_predictors <- c(tree_predictors, noisy_predictor_names)
-  }
-  
-  # ensure required columns exist for analyses
-  #if (!"m0" %in% names(df)) df$m0 <- 0
-  
-  # ---------------------------
-  res <- run_analysis(
-    data = df,
-    methods = c("MNLFA", "SEMTREE"),
-    nfactors = 1,
-    alpha = 0.05,
-    tree_predictors = tree_predictors
-  )
   # ---------------------------
   mnlfa_error_msg <- NA_character_
   semtree_error_msg <- NA_character_
   
-  if (inherits(res$mnlfa, "error")) {
-    mnlfa_error_msg <- conditionMessage(res$mnlfa)
+  if (inherits(mnlfa_result, "error")) {
+    mnlfa_error_msg <- conditionMessage(mnlfa_result)
   }
   
   if (inherits(res$semtree, "error")) {
@@ -450,7 +478,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   
   mnlfa_mod_est <- flatten_mnlfa_moderation_estimates(
-    mnlfa_result = res$mnlfa,
+    mnlfa_result = mnlfa_result,
     p = 4
   )
   
@@ -459,10 +487,10 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   mnlfa_kl_metric <- NA_real_
   mnlfa_kl_scalar <- NA_real_
   
-  #if (!inherits(res$mnlfa, "error")) {                          # commented out for runtime improvement
-  #  mnlfa_kl_configural <- average_kl_mnlfa(df, params, res$mnlfa$fitConfig)
-  #  mnlfa_kl_metric     <- average_kl_mnlfa(df, params, res$mnlfa$fitMetric)
-  #  mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, res$mnlfa$fitScalar)
+  #if (!inherits(mnlfa_result, "error")) {                          # commented out for runtime improvement
+  #  mnlfa_kl_configural <- average_kl_mnlfa(df, params, mnlfa_result$fitConfig)
+  #  mnlfa_kl_metric     <- average_kl_mnlfa(df, params, mnlfa_result$fitMetric)
+  #  mnlfa_kl_scalar     <- average_kl_mnlfa(df, params, mnlfa_result$fitScalar)
   #}
   
   # ---------------------------
@@ -482,36 +510,36 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   mnlfa_omnibus_lrt_p <- NA_real_
   mnlfa_omnibus_lrt_reject <- NA
   
-  if (!inherits(res$mnlfa, "error")) {
-    if (!is.null(res$mnlfa$metric_lrt)) {
-      mnlfa_metric_lrt_chisq <- res$mnlfa$metric_lrt$chisq_diff
-      mnlfa_metric_lrt_df <- res$mnlfa$metric_lrt$df_diff
-      mnlfa_metric_lrt_p <- res$mnlfa$metric_lrt$p_value
-      mnlfa_metric_lrt_reject <- res$mnlfa$metric_lrt$reject_h0
+  if (!is.null(mnlfa_result) && !inherits(mnlfa_result, "error")) {
+    if (!is.null(mnlfa_result$metric_lrt)) {
+      mnlfa_metric_lrt_chisq <- mnlfa_result$metric_lrt$chisq_diff
+      mnlfa_metric_lrt_df <- mnlfa_result$metric_lrt$df_diff
+      mnlfa_metric_lrt_p <- mnlfa_result$metric_lrt$p_value
+      mnlfa_metric_lrt_reject <- mnlfa_result$metric_lrt$reject_h0
     }
     
-    if (!is.null(res$mnlfa$scalar_lrt)) {
-      mnlfa_scalar_lrt_chisq <- res$mnlfa$scalar_lrt$chisq_diff
-      mnlfa_scalar_lrt_df <- res$mnlfa$scalar_lrt$df_diff
-      mnlfa_scalar_lrt_p <- res$mnlfa$scalar_lrt$p_value
-      mnlfa_scalar_lrt_reject <- res$mnlfa$scalar_lrt$reject_h0
+    if (!is.null(mnlfa_result$scalar_lrt)) {
+      mnlfa_scalar_lrt_chisq <- mnlfa_result$scalar_lrt$chisq_diff
+      mnlfa_scalar_lrt_df <- mnlfa_result$scalar_lrt$df_diff
+      mnlfa_scalar_lrt_p <- mnlfa_result$scalar_lrt$p_value
+      mnlfa_scalar_lrt_reject <- mnlfa_result$scalar_lrt$reject_h0
     }
     
-    if (!is.null(res$mnlfa$omnibus_lrt)) {
-      mnlfa_omnibus_lrt_chisq <- res$mnlfa$omnibus_lrt$chisq_diff
-      mnlfa_omnibus_lrt_df <- res$mnlfa$omnibus_lrt$df_diff
-      mnlfa_omnibus_lrt_p <- res$mnlfa$omnibus_lrt$p_value
-      mnlfa_omnibus_lrt_reject <- res$mnlfa$omnibus_lrt$reject_h0
+    if (!is.null(mnlfa_result$omnibus_lrt)) {
+      mnlfa_omnibus_lrt_chisq <- mnlfa_result$omnibus_lrt$chisq_diff
+      mnlfa_omnibus_lrt_df <- mnlfa_result$omnibus_lrt$df_diff
+      mnlfa_omnibus_lrt_p <- mnlfa_result$omnibus_lrt$p_value
+      mnlfa_omnibus_lrt_reject <- mnlfa_result$omnibus_lrt$reject_h0
     }
   }
   
   mnlfa_model <- NA_character_
-  if (!inherits(res$mnlfa, "error")) {
-    if (!is.null(res$mnlfa$fitScalar)) {
+  if (!is.null(mnlfa_result) && !inherits(mnlfa_result, "error")) {
+    if (!is.null(mnlfa_result$fitScalar)) {
       mnlfa_model <- "scalar"
-    } else if (!is.null(res$mnlfa$fitMetric)) {
+    } else if (!is.null(mnlfa_result$fitMetric)) {
       mnlfa_model <- "metric"
-    } else if (!is.null(res$mnlfa$fitConfig)) {
+    } else if (!is.null(mnlfa_result$fitConfig)) {
       mnlfa_model <- "configural"
     }
   }
@@ -589,7 +617,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   tree_metric_correct_split <- NA
   tree_scalar_correct_split <- NA
   
-  if (!inherits(res$semtree, "error")) {
+  if (!is.null(res$semtree) && !inherits(res$semtree, "error")) {
     
     tree_metric_split <- res$semtree$metric_split
     tree_scalar_split <- res$semtree$scalar_split
@@ -614,12 +642,12 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     
     metric_info <- semtree_detects_moderation(
       res$semtree$metric_tree,
-      moderators = c("am1", "am2", "m0")
+      moderators = tree_moderators_to_check
     )
     
     scalar_info <- semtree_detects_moderation(
       res$semtree$scalar_tree,
-      moderators = c("am1", "am2", "m0")
+      moderators = tree_moderators_to_check
     )
     
     tree_metric_split_on_m0 <- metric_info$tree_split_on_m0
@@ -698,7 +726,8 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     delta_lambda   = as.numeric(row$delta_lambda), # magnitude of loading moderation
     delta_nu       = as.numeric(row$delta_nu), # magnitude of intercept moderation
     moderator      = as.character(row$moderator), # functional form of moderation in the population
-    analysis_form = as.character(row$analysis_form), # functional form assumed in analaysis
+    analysis_form = as.character(analysis_form), # functional form assumed in analaysis
+    method = as.character(row$method),
     rep_id = as.integer(row$rep_id), # replication number within a design condition
     
     # those show what is true in the dgm
@@ -808,7 +837,12 @@ safe_run_one <- function(row) {
         delta_lambda   = as.numeric(row$delta_lambda),
         delta_nu       = as.numeric(row$delta_nu),
         moderator      = as.character(row$moderator),
-        analysis_form = as.character(row$analysis_form),
+        method = as.character(row$method),
+        analysis_form = dplyr::case_when(
+          row$method == "MNLFAQ" ~ "quadratic",
+          row$method %in% c("MNLFA", "SEMTREE") ~ "linear",
+          TRUE ~ NA_character_
+        ),
         rep_id = as.integer(row$rep_id),
         
         true_any_noninvariance    = as.logical(true_any_noninvariance),
