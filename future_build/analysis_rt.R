@@ -751,7 +751,7 @@ run_analysis <- function(data,
                          methods = c("MNLFA", "SEMTREE"),
                          nfactors = 1,
                          alpha = 0.05,
-                         tree_predictors = c("m1", "m2", "m0")) {
+                         tree_predictors = c()) {
   
   methods <- match.arg(methods, choices = c("MNLFA", "SEMTREE"), several.ok = TRUE)
   dat <- as.data.frame(data)
@@ -759,6 +759,13 @@ run_analysis <- function(data,
   out <- list(methods = methods)
   
   if ("MNLFA" %in% methods) {
+    out$mnlfa <- tryCatch(
+      mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
+      error = identity
+    )
+  }
+  
+  if ("MNLFAQ" %in% methods) {
     out$mnlfa <- tryCatch(
       mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
       error = identity

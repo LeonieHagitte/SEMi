@@ -34,10 +34,12 @@ n_rep <- 100 # needs to be larger, or as large as SLURM_ARRAY
 # ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
+# TODO [LH]: num_noisy_predictors in die conditions (für die Hauptsimulation
+# auf 0, für ein paar auf 10 oder so?!)
 DESIGN <- tidyr::expand_grid(
   popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
-  reliability  = c(0.60, 0.75, 0.95), # 0.75 instead of 0.7 and 0.8 for computing
+  reliability  = c(0.75), # 0.75 instead of 0.7 and 0.8 for computing
   lambda       = 0.70,
   intercepts   = 1,
   # latentmean  = 0,
@@ -45,12 +47,14 @@ DESIGN <- tidyr::expand_grid(
   delta_lambda = c(0.2, 0.3),
   delta_nu     = c(0.5, 1),
   moderator    = MOD_TYPES,
-  analysis_form = c("linear", "quadratic"),
-  rep_id = 1:n_rep
+#  analysis_form = c("linear", "quadratic"),
+  method       = c("SEMTREE","MLNFA","MLNFAQ"),
+  rep_id = 1:n_rep,
+  num_noisy_predictors = 0
 )%>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator,analysis_form, rep_id
+    delta_lambda, delta_nu, moderator,method, rep_id, num_noisy_predictors
   ) %>%
   dplyr::mutate(
     job_id = dplyr::row_number()
@@ -376,27 +380,53 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   df <- sim$data
   
+  if (row$method=="MLNFAQ") { analysis_form="quadratic"} else
+    analysis_form="linear"
+  
   df <- add_analysis_form(
     data = df,
-    analysis_form = row$analysis_form,
+    analysis_form = analysis_form,
     k = params$k
   )
   
-  # TODO: num_noisy_predictors in die conditions (für die Hauptsimulation
-  # auf 0, für ein paar auf 10 oder so?!)
+
   temp_colnames <- colnames(df)
   df <- add_noisy_predictors(data = df, 
                              num_noisy_predictors = row$num_noisy_predictors)
   noisy_predictor_names <- setdiff(colnames(df), temp_colnames)
+
+
+  # truth indicators
+  # ---------------------------
+  has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3", "1.32")
+  has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22", "1.32")
   
-  # determine tree predictors
-  tree_predictors <- c("m1", "m2")  # TODO: m1/m2 conditional on population model
+  # TODO [LH] Leonie, please check correctness
+  true_metric_moderators_list <- list("1.1"="am1", "1.12"="am1","1.2"="am1","1.22"="am1",
+                              "1.3"=c("am1","am2"),"1.32"=c("am1")
+                              )
+  true_scalar_moderators_list <- list("1.32"="am2",
+                                     "1.11"="am1", "1.12"="am1", "1.21"="am1", "1.22"="am1")
+  
+    
+  # determine tree predictors, m1/m2 conditional on population model
+  tree_predictors <- c()
+  if (has_metric) {
+    tree_predictors <- true_metric_moderators_list[row$popmodel]
+  }
+  if (has_scalar) {
+    tree_predictors <- c(tree_predictors, true_scalar_moderators_list[row$popmodel] )
+  }
+  # remove duplicates (just in case...)
+  tree_predictors <- unique(tree_predictors)
+  
+  # add noisy predictors
   if (length(noisy_predictor_names) != 0) {
     tree_predictors <- c(tree_predictors, noisy_predictor_names)
   }
   
   # ensure required columns exist for analyses
-  if (!"m0" %in% names(df)) df$m0 <- 0
+  #if (!"m0" %in% names(df)) df$m0 <- 0
   
   # ---------------------------
   res <- run_analysis(
@@ -509,11 +539,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
               is.na(mnlfa_scalar_lrt_reject))) {
     mnlfa_final_decision <- "scalar_invariance_retained_lrt"
   }
-  # truth indicators
-  # ---------------------------
-  has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3", "1.32")
-  has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22", "1.32")
-  
+
   true_structured_moderator <- row$moderator != "noise"
   
   true_metric_noninvariance <- has_metric &&
@@ -615,6 +641,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     true_metric_moderators <- character(0)
     true_scalar_moderators <- character(0)
     
+
     if (true_structured_moderator) {
       if (row$popmodel %in% c("1.1", "1.12", "1.2", "1.22")) {
         true_metric_moderators <- c(true_metric_moderators, "am1")
