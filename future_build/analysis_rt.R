@@ -12,6 +12,7 @@ library(mxsem)
 library(OpenMx)
 library(semtree)
 library(partykit)
+library(tictoc)
 
 # -----------------------------------------------------------------------------
 
@@ -758,6 +759,8 @@ run_analysis <- function(data,
   
   out <- list(methods = methods)
   
+  tic()
+  
   if ("MNLFA" %in% methods) {
     out$mnlfa <- tryCatch(
       mnlfa_analysis(data = dat, nfactors = nfactors, alpha = alpha),
@@ -779,6 +782,9 @@ run_analysis <- function(data,
       error = identity
     )
   }
+  
+  elapsed <- toc()
+  out$time_elapsed_s = elapsed$toc-elapsed$tic
   
   return(out)
 }
