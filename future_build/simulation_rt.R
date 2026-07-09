@@ -443,12 +443,20 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   tree_moderators_to_check <- c("am1", "am2", "m0", noisy_predictor_names)
   
+  runtime_start <- Sys.time()
+  
   res <- run_analysis(
     data = df,
     methods = row$method,
     nfactors = 1,
     alpha = 0.05,
     tree_predictors = tree_predictors
+  )
+  
+  runtime_end <- Sys.time()
+  
+  runtime_sec <- as.numeric(
+    difftime(runtime_end, runtime_start, units = "secs")
   )
   
   mnlfa_result <- if (row$method == "MNLFAQ") {
@@ -616,6 +624,8 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   tree_metric_correct_split <- NA
   tree_scalar_correct_split <- NA
+  tree_metric_split_on_noisy <- NA
+  tree_scalar_split_on_noisy <- NA
   
   if (!is.null(res$semtree) && !inherits(res$semtree, "error")) {
     
@@ -649,6 +659,18 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
       res$semtree$scalar_tree,
       moderators = tree_moderators_to_check
     )
+    
+    tree_metric_split_on_noisy <- if (length(noisy_predictor_names) == 0) {
+      FALSE
+    } else {
+      any(unlist(metric_info[paste0("tree_split_on_", noisy_predictor_names)]), na.rm = TRUE)
+    }
+    
+    tree_scalar_split_on_noisy <- if (length(noisy_predictor_names) == 0) {
+      FALSE
+    } else {
+      any(unlist(scalar_info[paste0("tree_split_on_", noisy_predictor_names)]), na.rm = TRUE)
+    }
     
     tree_metric_split_on_m0 <- metric_info$tree_split_on_m0
     tree_metric_n_splits_m0 <- metric_info$tree_n_splits_m0
@@ -795,7 +817,10 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     
     tree_metric_correct_split = as.logical(tree_metric_correct_split), # true if the metric tree selected at least one correct moderator 
     tree_scalar_correct_split = as.logical(tree_scalar_correct_split), # true if the scalar tree selected at least one correct moderator 
-
+    tree_metric_split_on_noisy = as.logical(tree_metric_split_on_noisy),
+    tree_scalar_split_on_noisy = as.logical(tree_scalar_split_on_noisy),
+    runtime_sec = as.numeric(runtime_sec),
+    
     error_msg = as.character(error_msg),
     mnlfa_error_msg = as.character(mnlfa_error_msg),
     semtree_error_msg = as.character(semtree_error_msg)
@@ -901,6 +926,8 @@ safe_run_one <- function(row) {
         
         tree_metric_correct_split = NA,
         tree_scalar_correct_split = NA,
+        tree_metric_split_on_noisy = NA,
+        tree_scalar_split_on_noisy = NA,
         
         mnlfa_error_msg = NA_character_,
         semtree_error_msg = NA_character_,
