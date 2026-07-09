@@ -5,7 +5,7 @@
 #'
 
 plotdat <- results %>%
-  filter(popmodel == 1.22) %>%
+  filter(popmodel == 1.32) %>%
   pivot_longer(
     cols = c(mnlfa_metric_lrt_reject, tree_metric_split),
     names_to = "method",

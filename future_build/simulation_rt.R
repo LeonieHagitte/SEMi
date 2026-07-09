@@ -34,10 +34,12 @@ n_rep <- 100 # needs to be larger, or as large as SLURM_ARRAY
 # ----------------------------------
 MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
 
+# TODO [LH]: num_noisy_predictors in die conditions (für die Hauptsimulation
+# auf 0, für ein paar auf 10 oder so?!)
 DESIGN <- tidyr::expand_grid(
   popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
   N            = c(300, 500, 700, 1000),
-  reliability  = c(0.60, 0.75, 0.95), # 0.75 instead of 0.7 and 0.8 for computing
+  reliability  = c(0.75), # 0.75 instead of 0.7 and 0.8 for computing
   lambda       = 0.70,
   intercepts   = 1,
   # latentmean  = 0,
@@ -45,13 +47,14 @@ DESIGN <- tidyr::expand_grid(
   delta_lambda = c(0.2, 0.3),
   delta_nu     = c(0.5, 1),
   moderator    = MOD_TYPES,
-  analysis_form = c("linear", "quadratic"),
+#  analysis_form = c("linear", "quadratic"),
+  method       = c("SEMTREE","MLNFA","MLNFAQ"),
   rep_id = 1:n_rep,
   num_noisy_predictors = 0
 )%>%
   dplyr::arrange(
     popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator,analysis_form, rep_id
+    delta_lambda, delta_nu, moderator,method, rep_id, num_noisy_predictors
   ) %>%
   dplyr::mutate(
     job_id = dplyr::row_number()
@@ -377,14 +380,16 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   df <- sim$data
   
+  if (row$method=="MLNFAQ") { analysis_form="quadratic"} else
+    analysis_form="linear"
+  
   df <- add_analysis_form(
     data = df,
-    analysis_form = row$analysis_form,
+    analysis_form = analysis_form,
     k = params$k
   )
   
-  # TODO: num_noisy_predictors in die conditions (für die Hauptsimulation
-  # auf 0, für ein paar auf 10 oder so?!)
+
   temp_colnames <- colnames(df)
   df <- add_noisy_predictors(data = df, 
                              num_noisy_predictors = row$num_noisy_predictors)
@@ -397,11 +402,11 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22", "1.32")
   
   # TODO [LH] Leonie, please check correctness
-  true_metric_moderators_list <- list("1.1"="m1", "1.12"="m1","1.2"="m1","1.22"="m1",
-                              "1.3"=c("m1","m2"),"1.32"=c("m1")
+  true_metric_moderators_list <- list("1.1"="am1", "1.12"="am1","1.2"="am1","1.22"="am1",
+                              "1.3"=c("am1","am2"),"1.32"=c("am1")
                               )
-  true_scalar_moderators_list <- list("1.32"="m2",
-                                     "1.11"="m1", "1.12"="m1", "1.21"="m1", "1.22"="m1")
+  true_scalar_moderators_list <- list("1.32"="am2",
+                                     "1.11"="am1", "1.12"="am1", "1.21"="am1", "1.22"="am1")
   
     
   # determine tree predictors, m1/m2 conditional on population model
