@@ -252,8 +252,10 @@ Nine population models were investigated.
 
 ## Experimental design
 
-The simulation manipulated
+The simulation crossed data-generating conditions with analysis method. 
+Data-generating conditions manipulated
 
+- population model,
 - functional form of moderation (linear, quadratic, sigmoid, null),
 - loading moderation magnitude
 
@@ -272,18 +274,20 @@ $$
 $$
 N\in\{300,500,700,1000\}.
 $$
-
-The resulting factorial design consisted of XXX unique design cells. <!-- Add exact number -->
+Each generated dataset was subsequently analyzed using three methods: linear MNLFA, quadratic MNLFA, and SEM Trees. 
+The resulting factorial design consisted of 576 unique data-generating design cells, each of which was analyzed using three analysis methods.
 
 ## Analysis models
 
-Each simulated dataset was analyzed using both MNLFA and score-based SEM Trees.
+Each simulated dataset was analyzed using both MNLFA (i.e. either 'linear MNLFA' or 'quadratic MNLFA') and score-based SEM Trees.
 
-For MNLFA, moderation was modeled using either a linear or quadratic parametric function. <!-- add more specific formulation here? -->
-Consequently, the analytical model was correctly specified whenever the assumed moderation function matched the data-generating process and misspecified otherwise.
+Two MNLFA specifications were considered. 
+In the linear MNLFA analysis, moderation was modeled as a linear function of the transformed moderator. 
+In the quadratic MNLFA analysis, moderation was modeled using the quadratically transformed moderator. <!-- add more specific formulation here? -->
+Thus, the analytical model was correctly specified whenever the assumed moderator transformation matched the data-generating process and misspecified otherwise.
 
 For SEM trees, the same basic measurement model was estimated using recursive partitioning. 
-To ensure a fair comparison with MNLFA, SEM trees were supplied only with the true moderator variable. 
+To ensure a fair comparison with MNLFA, SEM trees were supplied only with the true moderator variables. 
 Consequently, differences between both methods reflect differences in how moderation is modeled/handeled rather than differences in the available information.
 
 In an additional robustness analysis, the true moderator was supplemented with ten independent noise predictors. 
@@ -301,7 +305,7 @@ For each population model and simulation condition, the following performance me
 
 - **Rejection rate:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level when that form of MNI was absent in the data-generating model.
 
-In the primary comparison, SEM trees were supplied only with the true moderator variable. 
+In the primary comparison, SEM trees were supplied only with the true moderator variables. 
 Consequently, statistical power and rejection rates reflect the ability to detect MNI independent of moderator selection.
 
 In an additional robustness analysis, the true moderator was supplemented with ten independent noise predictors. 
@@ -317,7 +321,9 @@ This criterion therefore jointly evaluates the ability of SEM trees to detect MN
 
 ## Replications
 
-Each design cell was replicated XXX times, yielding XXX simulated datasets. <!-- Add exact number -->
+Each data-generating design cell was replicated 100 times. 
+Every generated dataset was analyzed using all three analysis methods, resulting in 1,728 method-specific analysis cells. 
+An additional 100 SEM tree analyses were conducted for the noisy-predictor sensitivity condition. <!-- exact number -->
 Simulation conditions were randomly permuted and distributed across independent SLURM array jobs, allowing all design cells to be evaluated in parallel. 
 
 ## Software
@@ -325,7 +331,7 @@ Simulation conditions were randomly permuted and distributed across independent 
 All simulations were conducted in R [@Rteam2025]. 
 MNLFA models were estimated using `OpenMx` [@Boker2026] with raw-data maximum likelihood and definition variables. 
 Score-based SEM trees were estimated using the `semtree` package [@Arnold2021]. 
-Simulation design construction, data handling, aggregation, and visualization will rely on `dplyr`[@dplyr2026], `tidyr` [@tidyr2025], `tibble` [@tibble2026], `purrr` [@purrr2026], `furrr` [@furrr2022], `future` [@future2021], `parallel` [@Rteam2025], and `ggplot2` [@ggplot2016].
+Simulation design construction, data handling, aggregation, and visualization will rely on `dplyr`[@dplyr2026], `tidyr` [@tidyr2025], `tibble` [@tibble2026], `purrr` [@purrr2026], `future` [@future2021], `parallel` [@Rteam2025], and `ggplot2` [@ggplot2016].
 
 # Results 
 
