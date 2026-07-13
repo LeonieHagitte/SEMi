@@ -415,11 +415,13 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   
   df <- sim$data
   
-  analysis_form <- dplyr::case_when(
-    row$method == "MNLFAQ" ~ "quadratic",
-    row$method %in% c("MNLFA", "SEMTREE") ~ "linear",
-    TRUE ~ stop("Unknown method: ", row$method)
-  )
+  analysis_form <- if (row$method == "MNLFAQ") {
+    "quadratic"
+  } else if (row$method %in% c("MNLFA", "SEMTREE")) {
+    "linear"
+  } else {
+    stop("Unknown method: ", row$method)
+  }
   
   df <- add_analysis_form(
     data = df,
@@ -819,6 +821,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     tree_scalar_correct_split = as.logical(tree_scalar_correct_split), # true if the scalar tree selected at least one correct moderator 
     tree_metric_split_on_noisy = as.logical(tree_metric_split_on_noisy),
     tree_scalar_split_on_noisy = as.logical(tree_scalar_split_on_noisy),
+    num_noisy_predictors = as.integer(row$num_noisy_predictors),
     runtime_sec = as.numeric(runtime_sec),
     
     error_msg = as.character(error_msg),
@@ -863,11 +866,13 @@ safe_run_one <- function(row) {
         delta_nu       = as.numeric(row$delta_nu),
         moderator      = as.character(row$moderator),
         method = as.character(row$method),
-        analysis_form = dplyr::case_when(
-          row$method == "MNLFAQ" ~ "quadratic",
-          row$method %in% c("MNLFA", "SEMTREE") ~ "linear",
-          TRUE ~ NA_character_
-        ),
+        analysis_form = if (row$method == "MNLFAQ") {
+          "quadratic"
+        } else if (row$method %in% c("MNLFA", "SEMTREE")) {
+          "linear"
+        } else {
+          NA_character_
+        },
         rep_id = as.integer(row$rep_id),
         
         true_any_noninvariance    = as.logical(true_any_noninvariance),
@@ -940,9 +945,9 @@ safe_run_one <- function(row) {
 
 #############################################
 
-n_workers <- max(1, parallelly::availableCores() - 1)
+#n_workers <- max(1, parallelly::availableCores() - 1)
 
-plan(multisession, workers = n_workers)
+#plan(multisession, workers = n_workers)
 
 
 
@@ -950,25 +955,25 @@ plan(multisession, workers = n_workers)
 #
 # -- Start Simulation --
 
-t1 <- Sys.time()
+#t1 <- Sys.time()
 
 # run across all rows (use future package's parallelization)
-results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
-  safe_run_one(DESIGN[i, , drop = FALSE])
-},simplify = TRUE)
+#results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
+#  safe_run_one(DESIGN[i, , drop = FALSE])
+#},simplify = TRUE)
 
-results <- t(results)
+#results <- t(results)
 
-t2 <- Sys.time()
+#t2 <- Sys.time()
 
-elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
-elapsed_total_min
+#elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
+#elapsed_total_min
 
-if (is.null(chunk_id)) {
-  saveRDS(results, "results_parallel.rds")
-} else {
-  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
-}
+#if (is.null(chunk_id)) {
+#  saveRDS(results, "results_parallel.rds")
+#} else {
+#  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
+#}
 
 # this should be done later in a 
 # collection script

@@ -563,7 +563,7 @@ tree_analysis_ram <- function(data, p = 4, alpha = 0.05, nfactors = 1,
                               control = NULL, verbose = FALSE){
   
   if (is.null(control)) {
-    control <- semtree::semtree.control(
+    control <- semtree::semtree_control(
       method = "score",
       alpha = alpha,
       max.depth = 3,
