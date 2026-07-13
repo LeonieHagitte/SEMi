@@ -945,35 +945,35 @@ safe_run_one <- function(row) {
 
 #############################################
 
-#n_workers <- max(1, parallelly::availableCores() - 1)
+n_workers <- max(1, parallelly::availableCores() - 1)
 
-#plan(multisession, workers = n_workers)
-
-
+plan(multisession, workers = n_workers)
 
 
-#
+
+
+
 # -- Start Simulation --
 
-#t1 <- Sys.time()
+t1 <- Sys.time()
 
 # run across all rows (use future package's parallelization)
-#results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
-#  safe_run_one(DESIGN[i, , drop = FALSE])
-#},simplify = TRUE)
+results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
+  safe_run_one(DESIGN[i, , drop = FALSE])
+},simplify = TRUE)
 
-#results <- t(results)
+results <- t(results)
 
-#t2 <- Sys.time()
+t2 <- Sys.time()
 
-#elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
-#elapsed_total_min
+elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
+elapsed_total_min
 
-#if (is.null(chunk_id)) {
-#  saveRDS(results, "results_parallel.rds")
-#} else {
-#  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
-#}
+if (is.null(chunk_id)) {
+  saveRDS(results, "results_parallel.rds")
+} else {
+  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
+}
 
 # this should be done later in a 
 # collection script
