@@ -83,7 +83,6 @@ Converting such characteristics into predefined groups may require arbitrary cut
 Those limitations of group-based approaches to MI reflect a broader issue concerning the representation of individual differences in psychological research. 
 Developmental and lifespan perspectives have long emphasized that psychological processes often vary continuously across individuals rather than occurring in discrete categories. 
 In particular, lifespan theories highlight interindividual differences in intraindividual change and conceptualize heterogeneity as a fundamental characteristic of human development [@Baltes1987; @Baltes2007]. 
-From this perspective, categorizing individuals into predefined groups may obscure important variation in the mechanisms underlying psychological constructs. [AB->LH: Dieser Satz ist gedoppelt zum vorherigen Absatz]
 
 In line with the argument from @Nesselroade, that understanding psychological processes requires statistical models capable of representing systematic individual differences, heterogeneity is an important source of substantive information in its own right [@Nesselroade1991; @Nesselroade2001].
 
