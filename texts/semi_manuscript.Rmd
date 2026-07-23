@@ -52,7 +52,7 @@ Consequently, MI is not only a methodological requirement but also a prerequisit
 
 ## Classical Measurement Invariance Testing 
 
-Structural equation models (SEMs) are widely used to define latent constructs and their relations to observed indicators [CITATION NEEDED]. 
+Structural equation models (SEMs) are widely used to define latent constructs and their relations to observed indicators [@Kline2023; @Bollen2011; @tarka2018]. 
 Within SEMs, measurement models specify the relationships between latent factors and their manifest indicators. 
 By separating construct-related variance from measurement error, latent variable models provide a principled basis for evaluating measurement quality [@Bollen1989].
 

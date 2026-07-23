@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  17 JUN 2026 14:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  13 JUL 2026 15:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -923,21 +923,61 @@ LaTeX Info: Redefining \microtypesetup on input line 3065.
 p.sty
 Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
 )
-\pandoc@box=\box69
-\cslhangindent=\skip92
-\csllabelwidth=\skip93
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtabl
+e.sty
+Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
+\LTleft=\skip92
+\LTright=\skip93
+\LTpre=\skip94
+\LTpost=\skip95
+\LTchunksize=\count330
+\LTcapwidth=\dimen298
+\LT@head=\box69
+\LT@firsthead=\box70
+\LT@foot=\box71
+\LT@lastfoot=\box72
+\LT@gbox=\box73
+\LT@cols=\count331
+\LT@rows=\count332
+\c@LT@tables=\count333
+\c@LT@chunks=\count334
+\LT@p@ftn=\toks43
+)
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.st
+y
+Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen299
+\ar@mcellbox=\box74
+\extrarowheight=\dimen300
+\NC@list=\toks44
+\extratabsurround=\skip96
+\backup@length=\skip97
+\ar@cellbox=\box75
+)
+\c@none=\count335
+
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/footnotehyper\
+footnotehyper.sty
+Package: footnotehyper 2025/11/15 v1.1f hyperref aware footnote.sty (JFB)
+\FNH@notes=\box76
+\FNH@width=\dimen301
+\FNH@toks=\toks45
+)
+\pandoc@box=\box77
+\cslhangindent=\skip98
+\csllabelwidth=\skip99
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.
 sty
 Package: babel 2024/01/07 v24.1 The Babel package
-\babel@savecnt=\count330
-\U@D=\dimen298
+\babel@savecnt=\count336
+\U@D=\dimen302
 \l@unhyphenated=\language79
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbab
 el.def)
 \bbl@readstream=\read3
-\bbl@dirlevel=\count331
+\bbl@dirlevel=\count337
 *************************************
 * Local config file bblopts.cfg used
 *
@@ -955,18 +995,18 @@ f
 Language: nil 2024/01/07 v24.1 Nil language
 \l@nil=\language80
 ))
-\everypar=\toks43
+\everypar=\toks46
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquo
 tes.sty
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count332
-\csq@gtype=\count333
-\csq@glevel=\count334
-\csq@qlevel=\count335
-\csq@maxlvl=\count336
-\csq@tshold=\count337
-\csq@ltx@everypar=\toks44
+\csq@reset=\count338
+\csq@gtype=\count339
+\csq@glevel=\count340
+\csq@qlevel=\count341
+\csq@maxlvl=\count342
+\csq@tshold=\count343
+\csq@ltx@everypar=\toks47
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/csquotes\csquo
 tes.def
@@ -983,9 +1023,9 @@ File: csquotes.cfg
 tion.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count338
+\c@subfigure=\count344
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count339
+\c@subtable=\count345
 )
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/graphics\rotat
 ing.sty
@@ -995,17 +1035,17 @@ Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
 y
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
-\c@r@tfl@t=\count340
-\rotFPtop=\skip94
-\rotFPbot=\skip95
-\rot@float@box=\box70
-\rot@mess@toks=\toks45
+\c@r@tfl@t=\count346
+\rotFPtop=\skip100
+\rotFPbot=\skip101
+\rot@float@box=\box78
+\rot@mess@toks=\toks48
 )
 
 Class apa7 Warning: Deprecated: see documentation for \authorsaffiliations on i
-nput line 115.
+nput line 126.
 
-\c@NumberOfAffiliations=\count341
+\c@NumberOfAffiliations=\count347
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/placeins\place
 ins.sty
@@ -1019,48 +1059,48 @@ Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
 dftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO
 )
-\BKM@id=\count342
+\BKM@id=\count348
 )) (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/xurl\xurl.s
 ty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
 )
-\c@NumberOfAuthors=\count343
-\c@NumberOfSuperscripts=\count344
+\c@NumberOfAuthors=\count349
+\c@NumberOfSuperscripts=\count350
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 
 Package csquotes Warning: No style for language 'nil'.
-(csquotes)                Using fallback style on input line 135.
+(csquotes)                Using fallback style on input line 146.
 
 Package csquotes Info: Redefining alias 'default' -> 'fallback'.
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3ba
 ckend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count345
-\l__pdf_internal_box=\box71
+\l__color_backend_stack_int=\count351
+\l__pdf_internal_box=\box79
 ) (semi_manuscript.aux)
 \openout1 = `semi_manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 135.
-LaTeX Font Info:    ... okay on input line 135.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 146.
+LaTeX Font Info:    ... okay on input line 146.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1099,17 +1139,17 @@ LaTeX Font Info:    ... okay on input line 135.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\su
 pp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count346
-\scratchdimen=\dimen299
-\scratchbox=\box72
-\nofMPsegments=\count347
-\nofMParguments=\count348
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count349
-\MPscratchDim=\dimen300
-\MPnumerator=\count350
-\makeMPintoPDFobject=\count351
-\everyMPtoPDFconversion=\toks47
+\scratchcounter=\count352
+\scratchdimen=\dimen303
+\scratchbox=\box80
+\nofMPsegments=\count353
+\nofMParguments=\count354
+\everyMPshowfont=\toks49
+\MPscratchCnt=\count355
+\MPscratchDim=\dimen304
+\MPnumerator=\count356
+\makeMPintoPDFobject=\count357
+\everyMPtoPDFconversion=\toks50
 )
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\e
 pstopdf-base.sty
@@ -1121,20 +1161,26 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 pdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 135.
+Package hyperref Info: Link coloring OFF on input line 146.
 Class apa7 Info: Language definition file config/APA7nil.txt not found on input
- line 135.
+ line 146.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
+Package caption Info: longtable package is loaded.
+
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/caption\ltcapt
+ion.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 135.
-Package microtype Info: Applying patch `item' on input line 135.
-Package microtype Info: Applying patch `toc' on input line 135.
-Package microtype Info: Applying patch `eqnum' on input line 135.
-Package microtype Info: Applying patch `footnote' on input line 135.
-Package microtype Info: Applying patch `verbatim' on input line 135.
-LaTeX Info: Redefining \microtypesetup on input line 135.
+LaTeX Info: Redefining \microtypecontext on input line 146.
+Package microtype Info: Applying patch `item' on input line 146.
+Package microtype Info: Applying patch `toc' on input line 146.
+Package microtype Info: Applying patch `eqnum' on input line 146.
+Package microtype Info: Applying patch `footnote' on input line 146.
+Package microtype Info: Applying patch `verbatim' on input line 146.
+LaTeX Info: Redefining \microtypesetup on input line 146.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using protrusion set `basicmath'.
@@ -1154,34 +1200,34 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 
 Class apa7 Warning: Abstract not defined.
 
-Class apa7 Info: Keywords not defined on input line 136.
+Class apa7 Info: Keywords not defined on input line 147.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-36.
+47.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-36.
+47.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-136.
+147.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-136.
+147.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 136.
+(Font)              <12> on input line 147.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 136.
+(Font)              <8> on input line 147.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 136.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 136
+(Font)              <6> on input line 147.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 147
 .
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.
@@ -1192,7 +1238,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 sa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 136
+LaTeX Font Info:    Trying to load font information for U+msb on input line 147
 .
 
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.
@@ -1208,48 +1254,54 @@ enc}
 
 {C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9{C:/Users/Leonie.Hagitte/AppData/
-Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [10] [11]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
-52.
-(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [12]
+lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9] [10{C:/Users/Leonie.Hagitte/App
+Data/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [11{C:/Users/Leon
+ie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 5
-78.
+69.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [13{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-ts1.enc}] [14] [15] [16] AED endfloat: Processing end Figures and Tables [17
-] (semi_manuscript.aux)
+) [12{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
+lm-ts1.enc}] [13] [14]
+Overfull \hbox (30.18494pt too wide) detected at line 664
+\OML/lmm/m/it/12 P\OT1/lmr/m/n/12 ([]  \OMS/lmsy/m/n/12 \  [] j []\OT1/lmr/m/n/
+12 )\OML/lmm/m/it/12 ;
+ []
+
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
+86.
+(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [15] [16] [17] [18] AED endfloat: Processing end Figures and Tables [19] (sem
+i_manuscript.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28311 strings out of 474486
- 529110 string characters out of 5739507
- 1938542 words of memory out of 5000000
- 49934 multiletter control sequences out of 15000+600000
- 607388 words of font info for 120 fonts, out of 8000000 for 9000
+ 28631 strings out of 474486
+ 534999 string characters out of 5739507
+ 1939542 words of memory out of 5000000
+ 50239 multiletter control sequences out of 15000+600000
+ 607539 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,11n,107p,1014b,644s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,107p,1014b,628s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmbx12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/lm/lmbxi10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/lm/lmmi12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/M
-iKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Leonie.Hagitte/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Leonie.Hagitte/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Leonie.H
-agitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users
-/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb>
-<C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lm
-tt12.pfb>
-Output written on semi_manuscript.pdf (17 pages, 238666 bytes).
+ts/type1/public/lm/lmex10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Leonie.Hagitte/AppData
+/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Leonie.Hagitte
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Leonie.
+Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/User
+s/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb
+><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
+mtt12.pfb>
+Output written on semi_manuscript.pdf (19 pages, 236627 bytes).
 PDF statistics:
- 301 PDF objects out of 1000 (max. 8388607)
- 69 named destinations out of 1000 (max. 500000)
- 26829 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 293 PDF objects out of 1000 (max. 8388607)
+ 70 named destinations out of 1000 (max. 500000)
+ 26773 words of extra memory for PDF output out of 29859 (max. 10000000)
 
