@@ -37,6 +37,17 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \newsavebox\pandoc@box
@@ -162,7 +173,7 @@ observed indicators remains stable across the conditions being compared
 to compare latent means, variances, covariances, or structural
 relations, making MI a fundamental prerequisite for many correlational,
 experimental, and longitudinal research designs (Putnick and Bornstein
-2016).\\
+2016; Little 1997).\\
 Violations of MI imply that the relationship between the latent
 construct and its observed indicators differs across groups or
 conditions. In such cases, differences in observed responses may not
@@ -210,19 +221,19 @@ their underlying constructs relate to each other with the same strengths
 in both groups. Scalar invariance further constrains item intercepts to
 equality across groups. Establishing scalar invariance is generally
 required for meaningful comparisons of latent means because it indicates
-that the measurement scale has the same unit and origin across groups.
-Residual or strict invariance assumes, additionally to the constraints
-above, that variables residuals are equal across the groups. If the
-residual variance holds, the items of the scale are measuring the latent
-constructs with the same measurement error. This implies that it can
-indeed be known whether diﬀerences measured by the items of the tested
-scale between the groups are due to group diﬀerences in the proposed
-factors or due to measurement errors (Cheung and Rensvold 2002; Widaman
-and Reise 1997). The level of invariance required depends on the
-substantive inference of interest. For example, scalar invariance is
-generally required when comparing latent means across groups, whereas
-less restrictive forms of invariance may be sufficient for other
-research questions (Putnick and Bornstein 2016).
+that the measurement scale has the same unit and origin across groups
+(Little 1997). Residual or strict invariance assumes, additionally to
+the constraints above, that variables residuals are equal across the
+groups. If the residual variance holds, the items of the scale are
+measuring the latent constructs with the same measurement error. This
+implies that it can indeed be known whether diﬀerences measured by the
+items of the tested scale between the groups are due to group diﬀerences
+in the proposed factors or due to measurement errors (Cheung and
+Rensvold 2002; Widaman and Reise 1997). The level of invariance required
+depends on the substantive inference of interest. For example, scalar
+invariance is generally required when comparing latent means across
+groups, whereas less restrictive forms of invariance may be sufficient
+for other research questions (Putnick and Bornstein 2016).
 
 For MGCFA testing, the assessment of measurement invariance depends on
 two central specifications: the measurement model itself and the
@@ -238,53 +249,88 @@ heterogeneity through predefined groups may require arbitrary
 categorization and can obscure important variation in measurement
 parameters.
 
+Those limitations of group-based approaches to MI reflect a broader
+issue concerning the representation of individual differences in
+psychological research. Developmental and lifespan perspectives have
+long emphasized that psychological processes often vary continuously
+across individuals rather than occurring in discrete categories. In
+particular, lifespan theories highlight interindividual differences in
+intraindividual change and conceptualize heterogeneity as a fundamental
+characteristic of human development (\textbf{Baltes1987?}; Baltes et al.
+2007). From this perspective, categorizing individuals into predefined
+groups may obscure important variation in the mechanisms underlying
+psychological constructs.
+
+In line with the argument from (\textbf{Nesselroade?}), that
+understanding psychological processes requires statistical models
+capable of representing systematic individual differences, heterogeneity
+is an important source of substantive information in its own right
+(Nesselroade 1991, 2001).
+
+Related arguments have also been advanced within latent-variable
+modeling. Consistent with lifespan-developmental perspectives
+emphasizing individual heterogeneity, Little (1997) argued that
+substantive psychological questions frequently concern individual
+differences in developmental and psychological processes and therefore
+require statistical models capable of representing systematic
+heterogeneity among individuals. Rather than assuming homogeneous
+relations between latent constructs and observed indicators within broad
+groups, this perspective encourages the examination of how these
+relations may vary as a function of individual characteristics (Little
+1997). Viewed from this perspective, MNI can be understood as a
+manifestation of systematic individual differences in the measurement
+process itself.
+
 \subsection{Moderated Nonlinear Factor
 Analysis}\label{moderated-nonlinear-factor-analysis}
 
-These considerations have motivated the development of approaches that
-conceptualize MNI as a continuous process operating at the individual
-level. One prominent example is the Moderated nonlinear factor analysis
-(MNLFA). MNLFA conceptualizes heterogeneity in data as functions of
-observed moderator variables. Within MNLFA, measurement parameters are
-allowed to vary systematically as functions of one or more moderator
-variables. Consequently, MNI is conceptualized as moderation of the
-measurement model itself. If measurement parameters differ as a function
-of the moderator, the measurement model no longer operates equivalently
-across individuals and therefore violates measurement invariance.
+Similar considerations have later motivated the development of
+approaches that conceptualize MNI as a continuous process operating at
+the individual level. One prominent example is the Moderated nonlinear
+factor analysis (MNLFA). MNLFA conceptualizes heterogeneity in data as
+functions of observed moderator variables. Within MNLFA, measurement
+parameters are allowed to vary systematically as functions of one or
+more moderator variables (Bauer and Hussong 2009; Bauer 2017).
+Consequently, MNI is conceptualized as moderation of the measurement
+model itself. If measurement parameters differ as a function of the
+moderator, the measurement model no longer operates equivalently across
+individuals and therefore violates MI (Bauer 2017; Kolbe et al. 2024).
 
 Whether MI is present depends on which parameters are moderated by the
 exogenous variable. The exogenous variable may influence any subset of
-the parameters in the measurement model. Specifically, the means,
-variances, and covariance of latent factors, as well as the item
-intercepts, factor loadings, and residual variances of any manifest
-indicator, may vary systematically across individuals as deterministic
-functions of the exogenous variable. If moderation is limited to the
-latent-factor parameters, that is, the means, variances, and covariance,
-the model remains consistent with MI. In contrast, moderation of
-item-level parameters, including intercepts, loadings, or residual
-variances, constitutes MNI. Accordingly, a moderation function must be
-specified for each parameter that is allowed to vary as a function of
-the exogenous variable. Because of this conceptualization,this method
-allows researchers to model gradual, nonlinear, and individual-specific
-forms of MNI that are difficult to represent within traditional
-multiple-group approaches.
+the parameters in the measurement model and structural model.
+Specifically, the means, variances, and covariance of latent factors, as
+well as the item intercepts, factor loadings, and residual variances of
+any manifest indicator, may vary systematically across individuals as
+deterministic functions of the exogenous variable (Bauer and Hussong
+2009; Bauer 2017). If moderation is limited to the latent-factor
+parameters, that is, the means, variances, and covariance, the model
+remains consistent with MI. In contrast, moderation of item-level
+parameters, including intercepts, loadings, or residual variances,
+constitutes MNI (Bauer 2017; Kolbe et al. 2024). Accordingly, a
+moderation function must be specified for each parameter that is allowed
+to vary as a function of the exogenous variable. Because of this
+conceptualization,this method allows researchers to model gradual,
+nonlinear, and individual-specific forms of MNI that are difficult to
+represent within traditional multiple-group approaches (Bauer and
+Hussong 2009; Kolbe et al. 2024).
 
 However, this increased flexibility comes at the cost of greater
-specification requirements. Like MGCFA, moderated nonlinear factor
-analysis (MNLFA) constitutes a fundamentally confirmatory approach to
-the assessment of MI. In practice, at least three sets of decisions are
-required. First, the measurement model must be specified, including the
-latent structure and the relationships between latent and observed
-variables. Second, one or more moderator variables must be selected to
-represent potential sources of heterogeneity in the measurement process.
-Third, moderation functions must be specified for all parameters that
-are allowed to vary as a function of the moderator. This includes
+specification requirements. Like MGCFA, MNLFA constitutes a
+fundamentally confirmatory approach to the assessment of MI (Bauer
+2017). In practice, at least three sets of decisions are required.
+First, the measurement model must be specified, including the latent
+structure and the relationships between latent and observed variables.
+Second, one or more moderator variables must be selected to represent
+potential sources of heterogeneity in the measurement process. Third,
+moderation functions must be specified for all parameters that are
+allowed to vary as a function of the moderator. This includes
 determining which parameters are moderated as well as specifying the
 functional form of each moderation effect (e.g., linear, quadratic, or
-another parametric form). Consequently, the detection of measurement
-non-invariance depends not only on the choice of moderator variables but
-also on the assumptions made about how these moderators influence the
-model parameters.
+another parametric form). Consequently, the detection of MNI depends not
+only on the choice of moderator variables but also on the assumptions
+made about how these moderators influence the model parameters (Bauer
+and Hussong 2009; Bauer 2017).
 
 \subsection{Structural Equation Model
 Trees}\label{structural-equation-model-trees}
@@ -388,238 +434,266 @@ conventional MGCFA-based invariance testing.
 
 \section{Method}\label{method}
 
-The simulation study was conducted in two complementary studies that
-differ in the complexity of the underlying latent-variable model.
-``Study 1'' focuses on MNI within a single-factor framework and
-investigates how the performance of MNLFA and SEM trees is affected by
-characteristics of the moderation process, including the number of
-moderated parameters, the strength and functional form of moderation,
-sample size, and indicator reliability. Particular emphasis is placed on
-conditions in which the analytical model may incorrectly represent the
-true moderation function. ``Study 2'' extends this framework to a
-two-factor model. In addition to measurement-level noninvariance,
-heterogeneity may also occur in relations among latent variables through
-moderation of the latent covariance. Furthermore, ``Study 2''
-incorporates structural-model misspecifications, allowing the robustness
-of both methods to be evaluated under more complex latent-variable
-structures.
+\subsection{Data-generating mechanism}\label{data-generating-mechanism}
 
-\subsection{Data-Generation Mechanism}\label{data-generation-mechanism}
+MNI was generated by allowing selected measurement parameters to vary
+continuously as deterministic functions of an observed moderator
+variable. For each simulated individual, a moderator
 
-Across all simulation conditions, MNI was generated through moderation
-of model parameters by an observed continuous covariate. A raw moderator
-M was sampled from a uniform distribution on the interval \([-1,1]\) and
-transformed into an effective moderator \(Z=h(M)\). The transformation
-\(h(\cdot)\) determined the functional form of heterogeneity and varied
-across simulation conditions. Importantly, nonlinearity was introduced
-exclusively through the transformation \(Z=h(M)\), while moderation
-effects remained linear in the transformed moderator. Model parameters
-subject to moderation were specified as deterministic functions of
-\(Z\), such that measurement properties changed systematically across
-individuals.
+\[
+M \sim \mathcal U(-1,1)
+\]
 
-\subsubsection{Functional Form of
-Moderation}\label{functional-form-of-moderation}
+was sampled from a continuous uniform distribution and transformed into
+an effective moderator
 
-The effective moderator \(Z = h(M)\) was generated systematically using
-the following DGM functions:
+\[
+Z = h(M),
+\]
+
+where the transformation \(h(\cdot)\) determined the functional form of
+moderation. Measurement parameters were subsequently modeled as linear
+functions of the transformed moderator. Consequently, any nonlinearity
+in parameter variation arose exclusively through the transformation
+\(h(\cdot)\).
+
+\subsubsection{Functional forms of
+moderation}\label{functional-forms-of-moderation}
+
+Four moderator functions were considered:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Linear\\
+  \textbf{Linear:} \[
+  h(M) = M
+  \]
+\end{enumerate}
+
+In this case, the effective moderator is bounded to the interval
+\((-1,1)\) and rotation symmetric around zero.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
 \item
-  Quadratic\\
+  \textbf{Sigmoid:} \[
+  h(M) = a + \frac{b-a}{1 + \exp\!\bigl(-k(M-c)\bigr)},
+  \qquad a=-1,\; b=1,\; c=0,\; k>0.
+  \] This transformation maps the input to the open interval \((-1, 1)\)
+  and yields a bounded moderator, rotation symmetric around zero,
+  exhibiting diminishing sensitivity at extreme values.
 \item
-  Sigmoid\\
+  \textbf{Quadratic:} \[
+  h(M) = 2M^2 - 1
+  \] This transformation captures symmetric nonlinear moderation as a
+  function of distance from the center while remaining bounded in
+  \((-1,1)\).
 \item
-  Noise/null moderation, \(h(M)=0\)
+  \textbf{Noise:} \[
+  h(M) = 0
+  \]
 \end{enumerate}
 
 These functions were selected to represent qualitatively different forms
-of heterogeneity. Linear moderation reflects the functional form most
-commonly assumed in modeling applications,implying a constant change in
-measurement parameters across the moderator range.\\
-In contrast, quadratic moderation captures situations in which
-measurement differences are strongest at extreme values of a
-characteristic, such as when respondents at very low and very high
-levels of a trait interpret items differently than individuals near the
-center of the distribution. Sigmoid moderation reflects threshold-like
-processes in which measurement parameters change little across most of
-the moderator range but shift more rapidly once a critical region is
-reached, for example when item functioning remains stable until a
-particular level of symptom severity, cognitive ability, or
-developmental maturation is exceeded. The null condition \((h(M)=0)\)
-served as a measurement-invariant baseline and was used to evaluate Type
-I error rates.
+of heterogeneity. The first three functions represented structured forms
+of moderation, whereas the noise condition represented the absence of
+systematic moderation. All moderator transformations were bounded to the
+interval \((-1,1)\), implying identical maximum parameter deviations for
+a given moderation coefficient, but not necessarily the same variance.
+Consequently, identical values of the moderation coefficient imply
+identical maximum parameter deviations but not necessarily identical
+average parameter variation.
 
-\subsubsection{Strength of Moderation}\label{strength-of-moderation}
+\subsection{Population model}\label{population-model}
 
-In each case where parameters are subjected to moderation, the strength
-of the moderation \(\delta\) is varied:
-
-\(\delta_{\lambda}\) is evaluated at the following discrete levels:
+Data were generated from a single-factor CFA model consisting of four
+continuous indicators. Baseline factor loadings were fixed to
 
 \[
-\delta_{\lambda} \in \{-0.3,\,-0.2,\,0.2,\,0.3\}.
+\lambda = 0.70,
 \]
+
+baseline intercepts were fixed to one, and the latent factor variance
+was fixed to one. Residual variances were chosen such that all
+indicators had a reliability of
 
 \[
-\delta_{\nu} \in \{-1.0,\,-0.5,\,0.5,\,1.0\} \quad \text{for } i \in \{1,2\},
-    \qquad
-    \delta_{\nu} = 0 \quad \text{for } i \in \{3,4\},
+\rho = .75.
 \]
 
-\subsubsection{Model Misspecification of Moderator
-Form}\label{model-misspecification-of-moderator-form}
+MNI was introduced by allowing selected factor loadings and/or item
+intercepts to depend on the moderator.
 
-The DGM always defines the effective moderator through \(Z=h(M)\). In
-MNLFA, the analytical model is fitted using prespecified parametric
-forms, namely linear and quadratic moderation. Consequently, MNLFA is
-correctly specified when the fitted analytical form corresponds to the
-DGM transformation and misspecified otherwise. SEM trees do not impose a
-parametric functional form, but they must identify the correct moderator
-variable(s) from the candidate set. The simulation assumes that the
-moderators are always perfectly measured. So this really reflects an
-ideal scenario and should be kept in mind, when interpreting the
-results. We expect that one should see a similar picture, but with
-less-than-perfect reliabilities and lower power in general, should one
-add variation to the reliability of the moderators.
+Nine population models were investigated.
 
-\subsubsection{Performance Criteria}\label{performance-criteria}
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4082}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4490}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Model
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Loading moderation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Intercept moderation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & none & none \\
+1.1 & all items & none \\
+1.11 & none & all items \\
+1.12 & all items & all items \\
+1.2 & items 1--2 & none \\
+1.21 & none & items 1--2 \\
+1.22 & items 1--2 & items 1--2 \\
+1.3 & all items; interaction term & none \\
+1.32 & loading moderation by one moderator; intercept moderation by a
+second moderator & \\
+\end{longtable}
+}
 
-The primary estimands in this simulation study pertain to the detection
-and accurate estimation of MNI due to moderation effects on measurement
-parameters. Specifically, we assess whether the estimation methods
-compared can correctly identify the presence or absence of moderation in
-factor loadings, intercepts, and residual variances, reflecting the true
-data-generating structure. Consequently, key simulation outcomes include
-Type I error rates and statistical power associated with detecting such
-moderation effects, as well as bias and variability in the recovered
-parameter estimates. Secondary estimands include model-level indicators
-of fit (e.g., Kullback--Leibler divergence, AIC), which serve as
-auxiliary diagnostics for methods that yield such metrics (i.e., MNLFA).
-These are not to the same extent applicable to tree-based approaches and
-are thus interpreted as method-specific targets rather than general
-evaluative criteria.
+\subsection{Experimental design}\label{experimental-design}
 
-For the parametric MNLFA, we will extract estimated moderated parameters
-(e.g., factor loadings, intercepts), their associated standard errors,
-and two-sided p-values for testing the null hypothesis of no moderation
-effect. Additionally, model fit indices such as Kullback--Leibler
-divergence, AIC and the LRT-statistics will be recorded. For the
-parameter estimates and fit indices, we will summarize their
-distributions across simulation replications by reporting key quantiles
-(2.5th, 50th, and 97.5th percentiles). The null hypothesis will be
-rejected if the associated p-value is less than the conventional
-significance level of 0.05. In contrast, non-parametric tree-based
-approaches do not yield direct parameter estimates with standard errors.
-We use score-based SEM-trees (Arnold et al. 2021). Their detection of
-MI/ non-invariance is operationalized via the presence of at least one
-split in the correct condition at the correct respective level of focus
-parameters. Those splits, introducing a subgroup, will be evaluated at
-the significance level: 0.05. Additionally, a Bonferroni correction to
-account for multiple comparisons at each node. The trees will be allowed
-to split on the focus parameters relevant for the invariance testing
-(the means of the intercepts, factor loadings and the latent covariance
-in study 2). Candidate subgroup structures are assessed by testing
-whether they produce statistically significant differences in the
-specified model parameters across groups. Differences in factor
-variances between subgroups are permitted in the model, but they are not
-used as criteria for selecting or evaluating covariates. Furthermore,
-pre-pruning will be applied, limiting the maximum depth of the tree to 3
-and min.\textbf{N} is set to 50. Because the MNLFA also directly
-considers the form of the moderation, which the SEM trees do not, we
-further want to use SEM forests for generating partial dependence plots
-to get an approximation of the functional form of the moderating
-variables.
+The simulation crossed data-generating conditions with analysis method.
+Data-generating conditions manipulated
 
-\subsubsection{Replications}\label{replications}
+\begin{itemize}
+\tightlist
+\item
+  population model,
+\item
+  functional form of moderation (linear, quadratic, sigmoid, null),
+\item
+  loading moderation magnitude
+\end{itemize}
 
-We employ a full grid search, in which parameter values are sampled from
-pre-specified discrete values. To ensure computational feasibility
-however, we followed an iterative approach whereby a initial pilot
-simulations \(n=100\) was conducted to amongst others, estimate the
-needed simulation time. These estimates then informed the total number
-of XX replications.
+\[
+\delta_\lambda \in \{0.20,0.30\},
+\]
 
-\subsubsection{Software and
-Implementation}\label{software-and-implementation}
+\begin{itemize}
+\tightlist
+\item
+  intercept moderation magnitude
+\end{itemize}
 
-All simulations and analyses will be conducted in R (R Core Team 2025).
-The MNLFA-style models will be implemented directly in
-\texttt{OpenMx}(Boker et al. 2026), using raw-data maximum likelihood
-estimation and definition-variable-style moderation through OpenMx
-algebra objects. SEM tree analyses will be performed with the
-\texttt{semtree} (Brandmaier et al. 2026) package using OpenMx RAM
-models. Simulation design construction, data handling, aggregation, and
+\[
+\delta_\nu \in \{0.50,1.00\},
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  sample size
+\end{itemize}
+
+\[
+N\in\{300,500,700,1000\}.
+\] Each generated dataset was subsequently analyzed using three methods:
+linear MNLFA, quadratic MNLFA, and SEM Trees. The resulting factorial
+design consisted of 576 unique data-generating design cells, each of
+which was analyzed using three analysis methods.
+
+\subsection{Analysis models}\label{analysis-models}
+
+Each simulated dataset was analyzed using both MNLFA (i.e.~either
+`linear MNLFA' or `quadratic MNLFA') and score-based SEM Trees.
+
+Two MNLFA specifications were considered. In the linear MNLFA analysis,
+moderation was modeled as a linear function of the transformed
+moderator. In the quadratic MNLFA analysis, moderation was modeled using
+the quadratically transformed moderator. Thus, the analytical model was
+correctly specified whenever the assumed moderator transformation
+matched the data-generating process and misspecified otherwise.
+
+For SEM trees, the same basic measurement model was estimated using
+recursive partitioning. To ensure a fair comparison with MNLFA, SEM
+trees were supplied only with the true moderator variables.
+Consequently, differences between both methods reflect differences in
+how moderation is modeled/handeled rather than differences in the
+available information.
+
+In an additional robustness analysis, the true moderator was
+supplemented with ten independent noise predictors. This condition was
+included to investigate the ability of SEM Trees to distinguish
+informative moderators from irrelevant covariates when multiple
+candidate splitting variables are available.
+
+\subsection{Evaluation criteria}\label{evaluation-criteria}
+
+Performance was evaluated separately for metric and scalar MNI. For
+MNLFA, metric and scalar MNI were assessed using sequential
+likelihood-ratio tests comparing nested moderation models. For SEM
+trees, MNI was assessed using score-based global parameter-instability
+tests on the respective focus parameters (factor loadings or intercepts)
+with Bonferroni-adjusted significance tests.
+
+For each population model and simulation condition, the following
+performance measures were computed:
+
+\begin{itemize}
+\item
+  \textbf{Statistical power:} The proportion of simulation replications
+  in which the method rejected the null hypothesis of MI at the
+  corresponding level when the respective form of MNI was present in the
+  data-generating model.
+\item
+  \textbf{Rejection rate:} The proportion of simulation replications in
+  which the method rejected the null hypothesis of MI at the
+  corresponding level when that form of MNI was absent in the
+  data-generating model.
+\end{itemize}
+
+In the primary comparison, SEM trees were supplied only with the true
+moderator variables. Consequently, statistical power and rejection rates
+reflect the ability to detect MNI independent of moderator selection.
+
+In an additional robustness analysis, the true moderator was
+supplemented with ten independent noise predictors. For this condition,
+statistical power was defined as
+
+\[
+P(\text{reject parameter stability} \;\cap\; \text{select true moderator}
+\mid \text{the corresponding form of MNI is present}),
+\]
+
+such that a simulation replication counted as successful only if the
+tree both rejected the null hypothesis of parameter stability and
+selected the true moderator as a splitting variable. This criterion
+therefore jointly evaluates the ability of SEM trees to detect MNI and
+to distinguish informative moderators from irrelevant candidate
+predictors.
+
+\subsection{Replications}\label{replications}
+
+Each data-generating design cell was replicated 100 times. Every
+generated dataset was analyzed using all three analysis methods,
+resulting in 1,728 method-specific analysis cells. An additional 100 SEM
+tree analyses were conducted for the noisy-predictor sensitivity
+condition. Simulation conditions were randomly permuted and distributed
+across independent SLURM array jobs, allowing all design cells to be
+evaluated in parallel.
+
+\subsection{Software}\label{software}
+
+All simulations were conducted in R (R Core Team 2025). MNLFA models
+were estimated using \texttt{OpenMx} (Boker et al. 2026) with raw-data
+maximum likelihood and definition variables. Score-based SEM trees were
+estimated using the \texttt{semtree} package (Arnold et al. 2021).
+Simulation design construction, data handling, aggregation, and
 visualization will rely on \texttt{dplyr}(Wickham et al. 2026),
 \texttt{tidyr} (Wickham et al. 2025), \texttt{tibble} (Müller and
-Wickham 2026), \texttt{purrr} (Wickham and Henry 2026), \texttt{furrr}
-(Vaughan and Dancho 2022), \texttt{future} (Bengtsson 2021),
-\texttt{parallel} (R Core Team 2025), and \texttt{ggplot2} (Wickham
-2016). The simulation study will be conducted in R (R Core Team 2025).
+Wickham 2026), \texttt{purrr} (Wickham and Henry 2026), \texttt{future}
+(Bengtsson 2021), \texttt{parallel} (R Core Team 2025), and
+\texttt{ggplot2} (Wickham 2016).
 
-\subsubsection{General Analysis
-Procedures}\label{general-analysis-procedures}
-
-\subsection{Study 1}\label{study-1}
-
-\subsubsection{Population Models}\label{population-models}
-
-\subsubsection{Simulation Conditions}\label{simulation-conditions}
-
-Focuses on functional form misspecification and data-related conditions:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Sample sizes:} \(N \in \{300, 500, 700, 1,000\}\)
-\item
-  \textbf{Intercepts:} Intercept baselines are set to 1 across
-  simulation conditions.\\
-\item
-  \textbf{Indicator reliabilities:} \emph{Low} (.6), \emph{moderate}
-  (.7), \emph{moderate to high} (.8), or \emph{high} (.95).
-\end{itemize}
-
-\subsubsection{Results: Study 1}\label{results-study-1}
-
-\subsection{Study 2}\label{study-2}
-
-\subsubsection{Population Models}\label{population-models-1}
-
-\subsubsection{Simulation Conditions}\label{simulation-conditions-1}
-
-Builds on Study 1 and introduces additional model misspecification in
-the factor structure:
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{Structural model misspecifications:} (between-subjects factor)
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \textbf{1. No misspecification:} Factor structure matches the
-    analysis model.
-  \item
-    \textbf{2. Cross-loadings:} Items \(y_5\), \(y_6\) additionally load
-    on a second latent factor (See Figure 3).\\
-  \end{itemize}
-\item
-  \textbf{Latent Covariance:} The latent covariance is moderated by
-  \(Z\). The baseline variance is set to 1 and moderation strength is
-  selected from:
-\end{itemize}
-
-\[
-\delta_{\sigma_\eta} \in \{-0.3,\,-0.2,\,0.2,\,0.3\}.
-\]
-
-\subsubsection{Results: Study 2}\label{results-study-2}
+\section{Results}\label{results}
 
 \section{Discussion}\label{discussion}
 
@@ -642,6 +716,24 @@ Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. {``Score-Guided
 Structural Equation Model Trees.''} \emph{Frontiers in Psychology} 11:
 3913. \url{https://doi.org/10.3389/fpsyg.2020.564403}.
 
+\bibitem[\citeproctext]{ref-Baltes2007}
+Baltes, Paul B., Ulman Lindenberger, and Ursula M. Staudinger. 2007.
+{``Life {Span Theory} in {Developmental Psychology}.''} In
+\emph{Handbook of {Child Psychology}}, 1st ed., edited by William Damon
+and Richard M. Lerner. Wiley.
+\url{https://doi.org/10.1002/9780470147658.chpsy0111}.
+
+\bibitem[\citeproctext]{ref-Bauer2017}
+Bauer, D. J. 2017. {``A More General Model for Testing Measurement
+Invariance and Differential Item Functioning.''} \emph{Psychological
+Methods} 22 (3): 507--26. \url{https://doi.org/10.1037/met0000077}.
+
+\bibitem[\citeproctext]{ref-Bauer2009}
+Bauer, D. J., and A. M. Hussong. 2009. {``Psychometric Approaches for
+Developing Commensurate Measures Across Independent Studies: Traditional
+and New Models.''} \emph{Psychological Methods} 14 (2): 101--25.
+\url{https://doi.org/10.1037/a0015583}.
+
 \bibitem[\citeproctext]{ref-future2021}
 Bengtsson, Henrik. 2021. {``A Unifying Framework for Parallel and
 Distributed Processing in r Using Futures.''} \emph{The R Journal} 13
@@ -655,11 +747,6 @@ Boker, Steven M., Michael C. Neale, Hermine H. Maes, et al. 2026.
 \bibitem[\citeproctext]{ref-Bollen1989}
 Bollen, K. A. 1989. \emph{Structural Equations with Latent Variables}.
 John Wiley \& Sons. \url{https://doi.org/10.1002/9781118619179}.
-
-\bibitem[\citeproctext]{ref-semtree2026}
-Brandmaier, A. M., John J. Prindle, Manuel Arnold, and Caspar J. Van
-Lissa. 2026. \emph{Semtree: Recursive Partitioning for Structural
-Equation Models}. \url{https://github.com/brandmaier/semtree}.
 
 \bibitem[\citeproctext]{ref-Cheung2002}
 Cheung, Gordon W., and Roger B. Rensvold. 2002. {``Evaluating
@@ -691,6 +778,18 @@ from the Error-Statistical Perspective?''} \emph{Methods in Psychology}
 2: 100020.
 https://doi.org/\url{https://doi.org/10.1016/j.metip.2020.100020}.
 
+\bibitem[\citeproctext]{ref-Kolbe2024}
+Kolbe, Laura, Dylan Molenaar, Suzanne Jak, and Terrence D. Jorgensen.
+2024. {``{Assessing Measurement Invariance with Moderated Nonlinear
+Factor Analysis Using the R Package OpenMx}.''} \emph{Psychological
+Methods} 29 (2): 388--406. \url{https://doi.org/10.1037/met0000501}.
+
+\bibitem[\citeproctext]{ref-Little1997}
+Little, Todd D. 1997. {``Mean and {Covariance Structures} ({MACS})
+{Analyses} of {Cross-Cultural Data}: {Practical} and {Theoretical
+Issues}.''} \emph{Multivariate Behavioral Research} 32 (1): 53--76.
+\url{https://doi.org/10.1207/s15327906mbr3201_3}.
+
 \bibitem[\citeproctext]{ref-Meredith1993}
 Meredith, William. 1993. {``Measurement {Invariance}, {Factor Analysis}
 and {Factorial Invariance}.''} \emph{Psychometrika} 58 (4): 525--43.
@@ -699,6 +798,17 @@ and {Factorial Invariance}.''} \emph{Psychometrika} 58 (4): 525--43.
 \bibitem[\citeproctext]{ref-tibble2026}
 Müller, Kirill, and Hadley Wickham. 2026. \emph{Tibble: Simple Data
 Frames}. \url{https://doi.org/10.32614/CRAN.package.tibble}.
+
+\bibitem[\citeproctext]{ref-Nesselroade1991}
+Nesselroade, J. R. 1991. {``{The Warp and the Woof of the Developmental
+Fabric}.''} In \emph{Visions of Aesthetics, the Environment, \&
+Development: The Legacy of Joachim f. Wohlwill}, edited by R. Downs, L.
+Liben, and D. S. Palermo. Lawrence Erlbaum Associates.
+
+\bibitem[\citeproctext]{ref-Nesselroade2001}
+Nesselroade, J. R. 2001. {``{Intraindividual Variability in Development
+Within and Between Individuals}.''} \emph{European Psychologist} 6 (3):
+187--93. \url{https://doi.org/10.1027/1016-9040.6.3.187}.
 
 \bibitem[\citeproctext]{ref-Putnick2016}
 Putnick, Diane L., and Marc H. Bornstein. 2016. {``Measurement
@@ -711,11 +821,6 @@ https://doi.org/\url{https://doi.org/10.1016/j.dr.2016.06.004}.
 R Core Team. 2025. \emph{R: A Language and Environment for Statistical
 Computing}. R Foundation for Statistical Computing.
 \url{https://www.R-project.org/}.
-
-\bibitem[\citeproctext]{ref-furrr2022}
-Vaughan, Davis, and Matt Dancho. 2022. \emph{Furrr: Apply Mapping
-Functions in Parallel Using Futures}.
-\url{https://doi.org/10.32614/CRAN.package.furrr}.
 
 \bibitem[\citeproctext]{ref-ggplot2016}
 Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data

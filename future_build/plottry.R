@@ -2,7 +2,7 @@ library(tidyverse)
 library(scales)
 library(viridisLite)
 
-# ---------- robust type conversion ----------
+# -------------------
 
 to_logical <- function(x) {
   if (is.logical(x)) return(x)
@@ -14,6 +14,8 @@ to_logical <- function(x) {
     TRUE ~ NA
   )
 }
+
+alpha <- 0.05
 
 results2 <- results %>%
   mutate(
@@ -49,6 +51,27 @@ results2 <- results %>%
     )
   ) %>%
   mutate(
+    mnlfa_metric_lrt_reject_bonf = case_when(
+      is.na(mnlfa_metric_lrt_p) ~ NA,
+      mnlfa_metric_lrt_p <= alpha / 2 ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    mnlfa_scalar_lrt_reject_bonf = case_when(
+      is.na(mnlfa_scalar_lrt_p) ~ NA,
+      mnlfa_scalar_lrt_p <= alpha / 2 ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    tree_metric_reject_bonf = case_when(
+      is.na(tree_metric_p) ~ NA,
+      tree_metric_p <= alpha ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    tree_scalar_reject_bonf = case_when(
+      is.na(tree_scalar_p) ~ NA,
+      tree_scalar_p <= alpha ~ TRUE,
+      TRUE ~ FALSE
+    ),
+    
     tree_metric_correct_split = case_when(
       popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.32") ~ tree_metric_split_on_am1,
       popmodel == "1.3" ~ tree_metric_split_on_am1 | tree_metric_split_on_am2,
@@ -61,11 +84,11 @@ results2 <- results %>%
       TRUE ~ FALSE
     ),
     
-    semtree_metric_power_decision =
-      tree_metric_reject == TRUE & tree_metric_correct_split == TRUE,
+    semtree_metric_power_decision_bonf =
+      tree_metric_reject_bonf == TRUE & tree_metric_correct_split == TRUE,
     
-    semtree_scalar_power_decision =
-      tree_scalar_reject == TRUE & tree_scalar_correct_split == TRUE
+    semtree_scalar_power_decision_bonf =
+      tree_scalar_reject_bonf == TRUE & tree_scalar_correct_split == TRUE
   )
 # --------------------
 theme_pub <- function(base_size = 11) {
@@ -107,7 +130,7 @@ fig1_dat <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_metric_lrt_reject
+      detected = mnlfa_metric_lrt_reject_bonf
     ) %>%
     filter(!is.na(method)),
   
@@ -115,7 +138,7 @@ fig1_dat <- bind_rows(
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
-      detected = semtree_metric_power_decision
+      detected = semtree_metric_power_decision_bonf
     )
 ) %>%
   filter(popmodel == "1.22") %>%
@@ -186,7 +209,7 @@ fig2_dat <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_scalar_lrt_reject
+      detected = mnlfa_scalar_lrt_reject_bonf
     ) %>%
     filter(!is.na(method)),
   
@@ -194,7 +217,7 @@ fig2_dat <- bind_rows(
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
-      detected = semtree_scalar_power_decision
+      detected = semtree_scalar_power_decision_bonf
     )
 ) %>%
   filter(popmodel == "1.22") %>%
@@ -274,7 +297,7 @@ metric_perf <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_metric_lrt_reject
+      detected = mnlfa_metric_lrt_reject_bonf
     ),
   
   results2 %>%
@@ -285,7 +308,7 @@ metric_perf <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_metric_lrt_reject
+      detected = mnlfa_metric_lrt_reject_bonf
     )
   
 ) %>%
@@ -364,7 +387,7 @@ scalar_perf <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_scalar_lrt_reject
+      detected = mnlfa_scalar_lrt_reject_bonf
     ),
   
   results2 %>% filter(popmodel=="1.11") %>%
@@ -375,7 +398,7 @@ scalar_perf <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_scalar_lrt_reject
+      detected = mnlfa_scalar_lrt_reject_bonf
     )
   
 ) %>%
@@ -448,17 +471,17 @@ fig3b
 fig4_dat <- bind_rows(
   results2 %>%
     filter(true_metric_noninvariance == FALSE) %>%
-    mutate(method = "MNLFA linear", detected = mnlfa_metric_lrt_reject) %>%
+    mutate(method = "MNLFA linear", detected = mnlfa_metric_lrt_reject_bonf) %>%
     filter(analysis_form == "linear"),
   
   results2 %>%
     filter(true_metric_noninvariance == FALSE) %>%
-    mutate(method = "MNLFA quadratic", detected = mnlfa_metric_lrt_reject) %>%
+    mutate(method = "MNLFA quadratic", detected = mnlfa_metric_lrt_reject_bonf) %>%
     filter(analysis_form == "quadratic"),
   
   results2 %>%
     filter(true_metric_noninvariance == FALSE) %>%
-    mutate(method = "SEM Tree", detected = tree_metric_reject)
+    mutate(method = "SEM Tree", detected = tree_metric_reject_bonf)
 ) %>%
   filter(moderator != "noise") %>%
   group_by(N, reliability, moderator, method) %>%
@@ -525,17 +548,17 @@ fig4
 fig4b_dat <- bind_rows(
   results2 %>%
     filter(true_scalar_noninvariance == FALSE) %>%
-    mutate(method = "MNLFA linear", detected = mnlfa_scalar_lrt_reject) %>%
+    mutate(method = "MNLFA linear", detected = mnlfa_scalar_lrt_reject_bonf) %>%
     filter(analysis_form == "linear"),
   
   results2 %>%
     filter(true_scalar_noninvariance == FALSE) %>%
-    mutate(method = "MNLFA quadratic", detected = mnlfa_scalar_lrt_reject) %>%
+    mutate(method = "MNLFA quadratic", detected = mnlfa_scalar_lrt_reject_bonf) %>%
     filter(analysis_form == "quadratic"),
   
   results2 %>%
     filter(true_scalar_noninvariance == FALSE) %>%
-    mutate(method = "SEM Tree", detected = tree_scalar_reject)
+    mutate(method = "SEM Tree", detected = tree_scalar_reject_bonf)
 ) %>%
   filter(moderator != "noise") %>%
   group_by(N, reliability, moderator, method) %>%
@@ -608,7 +631,7 @@ metric_summary_dat <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_metric_lrt_reject
+      detected = mnlfa_metric_lrt_reject_bonf
     ) %>%
     filter(!is.na(method)),
   
@@ -616,7 +639,7 @@ metric_summary_dat <- bind_rows(
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
-      detected = semtree_metric_power_decision
+      detected = semtree_metric_power_decision_bonf
     )
 ) %>%
   group_by(popmodel, moderator, method) %>%
@@ -644,7 +667,7 @@ scalar_summary_dat <- bind_rows(
         analysis_form == "linear" ~ "MNLFA linear",
         analysis_form == "quadratic" ~ "MNLFA quadratic"
       ),
-      detected = mnlfa_scalar_lrt_reject
+      detected = mnlfa_scalar_lrt_reject_bonf
     ) %>%
     filter(!is.na(method)),
   
@@ -652,7 +675,7 @@ scalar_summary_dat <- bind_rows(
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
-      detected = semtree_scalar_power_decision
+      detected = semtree_scalar_power_decision_bonf
     )
 ) %>%
   group_by(popmodel, moderator, method) %>%
@@ -865,3 +888,208 @@ fig_power_heat_popmodel <- ggplot(
   )
 
 fig_power_heat_popmodel
+# -------------------------------
+
+results %>%
+  group_by(N, reliability, popmodel, moderator, analysis_form) %>%
+  summarise(
+    n = n(),
+    mnlfa_metric_power = mean(mnlfa_metric_lrt_reject, na.rm = TRUE),
+    mnlfa_scalar_power = mean(mnlfa_scalar_lrt_reject, na.rm = TRUE),
+    tree_metric_power  = mean(tree_metric_reject, na.rm = TRUE),
+    tree_scalar_power  = mean(tree_scalar_reject, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+results %>%
+  group_by(N, true_any_noninvariance) %>%
+  summarise(
+    mnlfa_power = mean(mnlfa_det, na.rm = TRUE),
+    tree_metric_power = mean(tree_metric_reject, na.rm = TRUE),
+    tree_scalar_power = mean(tree_scalar_reject, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+
+
+metric_power_N <- results2 %>%
+  filter(true_metric_noninvariance == TRUE) %>%
+  mutate(
+    method = case_when(
+      analysis_form == "linear" ~ "MNLFA linear",
+      analysis_form == "quadratic" ~ "MNLFA quadratic"
+    ),
+    detected = mnlfa_metric_lrt_reject_bonf
+  ) %>%
+  filter(!is.na(method), !is.na(detected)) %>%
+  group_by(
+    N, reliability, moderator,
+    popmodel, delta_lambda, delta_nu,
+    method
+  ) %>%
+  summarise(
+    power = mean(detected),
+    n = n(),
+    .groups = "drop"
+  )
+
+metric_power_N_avg <- metric_power_N %>%
+  group_by(N, reliability, moderator, method) %>%
+  summarise(
+    power = mean(power, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot(metric_power_N_avg,
+       aes(N, power, colour = method, shape = method, group = method)) +
+  geom_line() +
+  geom_point(size = 2) +
+  facet_grid(moderator ~ reliability) +
+  scale_y_continuous(labels = scales::percent_format(), limits = c(0, 1)) +
+  labs(x = "Sample size", y = "Average metric power") +
+  theme_pub()
+# -------------------------------
+
+metric_power_form <- bind_rows(
+  results2 %>%
+    filter(true_metric_noninvariance == TRUE) %>%
+    mutate(
+      method = case_when(
+        analysis_form == "linear" ~ "MNLFA linear",
+        analysis_form == "quadratic" ~ "MNLFA quadratic"
+      ),
+      detected = mnlfa_metric_lrt_reject_bonf
+    ) %>%
+    filter(!is.na(method)),
+  
+  results2 %>%
+    filter(true_metric_noninvariance == TRUE) %>%
+    mutate(
+      method = "SEM Tree",
+      detected = semtree_metric_power_decision_bonf
+    )
+) %>%
+  filter(moderator != "noise") %>%
+  group_by(moderator, method) %>%
+  summarise(
+    power = mean(detected, na.rm = TRUE),
+    n = sum(!is.na(detected)),
+    se = sqrt(power * (1 - power) / n),
+    lo = pmax(0, power - 1.96 * se),
+    hi = pmin(1, power + 1.96 * se),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    moderator = factor(
+      moderator,
+      levels = c("linear", "quadratic", "sigmoid"),
+      labels = c("Linear DGM", "Quadratic DGM", "Sigmoid DGM")
+    ),
+    method = factor(
+      method,
+      levels = c("MNLFA linear", "MNLFA quadratic", "SEM Tree")
+    )
+  )
+
+ggplot(
+  metric_power_form,
+  aes(x = moderator, y = power, colour = method, shape = method, group = method)
+) +
+  geom_point(size = 3, position = position_dodge(width = .35)) +
+  geom_errorbar(
+    aes(ymin = lo, ymax = hi),
+    width = .10,
+    linewidth = .6,
+    position = position_dodge(width = .35)
+  ) +
+  scale_colour_manual(values = cols) +
+  scale_shape_manual(values = shapes) +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 1),
+    limits = c(0, 1),
+    breaks = seq(0, 1, .25)
+  ) +
+  labs(
+    x = NULL,
+    y = "Metric-level power",
+    colour = NULL,
+    shape = NULL
+  ) +
+  theme_pub(base_size = 13) +
+  theme(
+    axis.text.x = element_text(angle = 0),
+    legend.position = "bottom"
+  )
+
+# -------------------
+
+
+metric_power_mis <- bind_rows(
+  results2 %>%
+    filter(true_metric_noninvariance == TRUE) %>%
+    mutate(
+      method = case_when(
+        analysis_form == "linear" ~ "MNLFA linear",
+        analysis_form == "quadratic" ~ "MNLFA quadratic"
+      ),
+      detected = mnlfa_metric_lrt_reject_bonf
+    ) %>%
+    filter(!is.na(method)),
+  
+  results2 %>%
+    filter(true_metric_noninvariance == TRUE) %>%
+    mutate(
+      method = "SEM Tree",
+      detected = semtree_metric_power_decision_bonf
+    )
+) %>%
+  filter(moderator != "noise") %>%
+  group_by(moderator, method) %>%
+  summarise(
+    power = mean(detected, na.rm = TRUE),
+    n = sum(!is.na(detected)),
+    se = sqrt(power * (1 - power) / n),
+    lo = pmax(0, power - 1.96 * se),
+    hi = pmin(1, power + 1.96 * se),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    moderator = factor(
+      moderator,
+      levels = c("linear", "quadratic", "sigmoid"),
+      labels = c("Linear DGM", "Quadratic DGM", "Sigmoid DGM")
+    ),
+    method = factor(
+      method,
+      levels = c("MNLFA linear", "MNLFA quadratic", "SEM Tree")
+    )
+  )
+
+ggplot(
+  metric_power_mis,
+  aes(x = method, y = power, fill = method)
+) +
+  geom_col(width = .65) +
+  geom_errorbar(
+    aes(ymin = lo, ymax = hi),
+    width = .15,
+    linewidth = .55
+  ) +
+  facet_wrap(~ moderator, nrow = 1) +
+  scale_fill_manual(values = cols) +
+  scale_y_continuous(
+    labels = percent_format(accuracy = 1),
+    limits = c(0, 1),
+    breaks = seq(0, 1, .25)
+  ) +
+  labs(
+    x = NULL,
+    y = "Metric-level power",
+    fill = NULL
+  ) +
+  theme_pub(base_size = 13) +
+  theme(
+    legend.position = "bottom",
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )

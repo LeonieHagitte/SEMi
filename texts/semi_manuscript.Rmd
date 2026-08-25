@@ -160,12 +160,36 @@ To enhance the study's relevance for empirical practice, the simulation is groun
 Specifically, we consider researchers whose experience with MI testing is rooted in the traditional MGCFA framework and who seek to adopt more flexible approaches for detecting heterogeneity. 
 Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives for researchers moving beyond conventional MGCFA-based invariance testing.  
 
+## Application Example 
+
+We want to show the different approaches performance on an illustrative empirical example. 
+For that we chose to explore the MI of the CASP-12 scale regarding age, gender and cultural background as well as additional covariates from the ninth wave of the Survey of Health, Ageing and Retirement in Europe study (SHARE) [@SHAREwave9]. 
+The CASP scale was originally designed to evaluate older peoples quality of life. 
+The CASP-12 is a shorter version of the original 19 item version of the casp scale. 
+Additionally the shorter CASP-12 version, suggested by @wiggins2008 is also slightly different from the version used in the SHARE assessment [@BorratBesson2015; @wiggins2008].
+<!-- Exact study for SHARE version here -->
+
+@BonnevilleRoussy2024 investigated the MI of the CASP-12 scale and its four-factor structure (i.e. Control, Autonomy, Self-Realization, Pleasure), used in the SHARE data with respect to longitudinal invariance, culture, age and gender.
+
+### Age 
+@BonnevilleRoussy2024 looked at the CASP-12’s age invariance over time across four age groups: under 60, 60–69, 70–79, 80 and older. 
+
+### Gender 
+Gender is assessed by SHARE at the first time of measurement with a coding of 0 for males and 1 for females.
+
+### Culture 
+Cultural invariance was tested between "Western", "Northern", "Southern" and "Eastern Europe".
+
+This highlights the implicit need for categorization, when using MGCFA to test for MI. 
+We want to use this as a possible example case to use these methods for MI testing, that allow for the variables to be included as continuous variables, possibly avoiding arbitrary categorization. 
+@BonnevilleRoussy2024 investigated the longitudinal as well as the cross-sectional MI. 
+For this empirical example we will investigate only the cross-sectional MI of the CASP-12 scale in the ninth wave, with age, gender and culture as covariates. 
+
 # Method
 
-## Data-generating mechanism
+## Simulation 
 
-
-## Population model
+## Data-generating mechanism 
 
 Data were generated from a single-factor CFA model measured by four continuous indicators. 
 Baseline factor loadings were fixed to
@@ -249,7 +273,49 @@ The first three functions represented structured forms of moderation, whereas th
 All moderator transformations were bounded to the interval $(-1,1)$, implying identical maximum parameter deviations for a given moderation coefficient, but not necessarily the same variance.
 Consequently, identical values of the moderation coefficient imply identical maximum parameter deviations but not necessarily identical average parameter variation.
 
-[TODO: AB->LH: Bild der Moderatoreffekte einfügen]
+<!-- [TODO: AB->LH: Bild der Moderatoreffekte einfügen] -->
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-align: center
+#| out-width: "100%"
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+M <- seq(-1, 1, length.out = 500)
+k <- 10
+
+df_h <- tibble(
+  M = M,
+  Linear = M,
+  Quadratic = 2 * M^2 - 1,
+  Sigmoid = -1 + 2 / (1 + exp(-k * M)),
+  Noise = 0
+) |>
+  pivot_longer(
+    cols = -M,
+    names_to = "Function",
+    values_to = "hM"
+  )
+
+ggplot(df_h, aes(x = M, y = hM, color = Function, linetype = Function)) +
+  geom_line(linewidth = 1) +
+  labs(
+    x = "Moderator M",
+    y = "h(M)",
+    color = "Function",
+    linetype = NULL
+  ) +
+  theme_minimal(base_size = 16) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  )
+```
 
 ## Experimental design
 
@@ -326,6 +392,16 @@ Each data-generating design cell was replicated 100 times.
 Every generated dataset was analyzed using all three analysis methods, resulting in 1,728 method-specific analysis cells. 
 An additional 100 SEM tree analyses were conducted for the noisy-predictor sensitivity condition. <!-- exact number -->
 
+## Empirical Example 
+
+The CASP-12 scale [@] comprises 12 items and assesses four domains of quality of life: Control, Autonomy, Self-Realization and Pleasure. 
+Each factor is assessed using three items. 
+Responses are rated on a four-point rating scale ranging from 1 (Often) to 4 (Never), with some items requiring inverse scoring before calculation of the total score. 
+Higher CASP-12 scores indicate better quality of life. 
+Age as covariate is included continuously, gender is included as dichotomous variable and culture is <!-- complete depending on how its assessed in SHARE - countries? -->
+All covariates are included simultaneously in the analytical model. 
+
+
 
 ## Software
 
@@ -336,6 +412,11 @@ Simulation design construction, data handling, aggregation, and visualization wi
 
 # Results 
 
+## Simulation 
+
+
+## Empirical Example 
+
 # Discussion 
 
 <!-- General Discussion 
@@ -344,6 +425,22 @@ What generalized across population models.
 Where results diverged.
 Practical recommendations.
 -->
+
+- Possible explanation for the high scalar power of SEM Trees relative to MNLFA:
+
+- The SEM Tree directly tests instability in the item intercept parameters (nu_1, ..., nu_4).
+- In the MNLFA scalar model, direct moderator effects on the item intercepts are constrained, but moderator effects on the latent factor mean remain freely estimated.
+-> Latent-mean moderation may absorb true intercept moderation in MNLFA.
+- In several population models (1.11, 1.12, 1.32), the same intercept moderation effect is applied to all four indicators.
+- Such a common shift in observed item means can potentially be represented by a moderator-dependent latent factor mean.
+- This is particularly relevant because the baseline loadings are equal (λ = .70), making a common latent-mean shift capable of producing similar mean shifts across all indicators.
+- Consequently, constraining direct intercept moderation to zero may produce relatively little model deterioration, reducing the power of the MNLFA scalar LRT.
+- This problem should be weaker for partial intercept noninvariance.
+- A single latent-mean moderation effect affects all indicators through their loadings and therefore cannot reproduce this selective pattern as easily.
+
+- SEM Trees approximate moderator effects through partitions and therefore do not require the true effect to follow a prespecified continuous functional form.
+- MNLFA linear and quadratic models impose specific functional forms, potentially reducing power under functional-form misspecification.
+- The higher scalar power of SEM Trees should therefore not immediately be interpreted as generally superior sensitivity. At least part of the difference may arise because the MNLFA scalar model can represent common indicator-mean shifts through latent-mean moderation, whereas the SEM Tree directly targets intercept instability.
 
 ## Practical Recommendations 
 
