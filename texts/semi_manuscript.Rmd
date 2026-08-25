@@ -273,14 +273,12 @@ The first three functions represented structured forms of moderation, whereas th
 All moderator transformations were bounded to the interval $(-1,1)$, implying identical maximum parameter deviations for a given moderation coefficient, but not necessarily the same variance.
 Consequently, identical values of the moderation coefficient imply identical maximum parameter deviations but not necessarily identical average parameter variation.
 
-<!-- [TODO: AB->LH: Bild der Moderatoreffekte einfügen] -->
-
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
 #| fig-align: center
-#| out-width: "100%"
+#| out-width: "75%"
 
 library(ggplot2)
 library(dplyr)
@@ -433,7 +431,7 @@ Practical recommendations.
 -> Latent-mean moderation may absorb true intercept moderation in MNLFA.
 - In several population models (1.11, 1.12, 1.32), the same intercept moderation effect is applied to all four indicators.
 - Such a common shift in observed item means can potentially be represented by a moderator-dependent latent factor mean.
-- This is particularly relevant because the baseline loadings are equal (λ = .70), making a common latent-mean shift capable of producing similar mean shifts across all indicators.
+- This is particularly relevant because the baseline loadings are equal (lambda = .70), making a common latent-mean shift capable of producing similar mean shifts across all indicators.
 - Consequently, constraining direct intercept moderation to zero may produce relatively little model deterioration, reducing the power of the MNLFA scalar LRT.
 - This problem should be weaker for partial intercept noninvariance.
 - A single latent-mean moderation effect affects all indicators through their loadings and therefore cannot reproduce this selective pattern as easily.
