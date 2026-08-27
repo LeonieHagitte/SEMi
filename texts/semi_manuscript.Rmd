@@ -150,7 +150,7 @@ MNLFA further assumes that researchers can identify relevant moderators and spec
 SEM trees, in contrast, place fewer assumptions on the structure of heterogeneity and instead emphasize data-driven identification of parameter differences. 
 Consequently, the relative performance of these approaches is likely to depend on the extent to which researchers possess accurate prior knowledge about the sources and functional forms of MNI.
 
-The present simulation study compares the performance of MNLFA and SEM trees in detecting MNI across a range of conditions that vary in sample size, reliability, effect magnitude, and the location and functional form of moderation. 
+The present simulation study compares the performance of MNLFA and SEM trees in detecting MNI across a range of conditions that vary in sample size, effect magnitude, and the location and functional form of moderation.
 To reflect both the methodological capabilities of the investigated approaches and plausible empirical scenarios, the simulation incorporates different functional forms of MNI, including linear, quadratic, and sigmoid moderation processes. 
 We expect SEM trees to perform particularly well in conditions characterized by nonlinear moderation, especially sigmoid relationships, whereas their relative advantage should diminish in purely linear settings. 
 In contrast, MNLFA is expected to perform best when the functional form of moderation is correctly specified, particularly in linear conditions, but to be more sensitive to misspecification of the underlying moderation function. 
@@ -159,6 +159,21 @@ For both methods, stronger moderation effects are expected to increase the detec
 To enhance the study's relevance for empirical practice, the simulation is grounded in a realistic applied-research perspective. 
 Specifically, we consider researchers whose experience with MI testing is rooted in the traditional MGCFA framework and who seek to adopt more flexible approaches for detecting heterogeneity. 
 Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives for researchers moving beyond conventional MGCFA-based invariance testing.  
+That is, there are several alternative methods that share some of the advantages highlighted above, a few of which we also want to mention. 
+
+Related tree-based approaches have recently been developed, building directly on the SEM-tree framework, specifically for investigating MNI across multiple covariates. 
+@Sterner2023 introduced exploratory factor analysis (EFA) trees as an extension of SEM trees, and @Goretzko2026 subsequently extended this approach to CFA trees. 
+Like SEM trees, EFA and CFA trees use model-based recursive partitioning and score-based structural-change tests to identify parameter instability across candidate covariates. 
+Their principal extension concerns the measurement model to which recursive partitioning is applied: EFA trees integrate an exploratory factor model, facilitating the investigation of MNI during early stages of measurement development, whereas CFA trees incorporate a constrained factor model and thereby allow MNI to be investigated when a hypothesized measurement structure is already available (@Sterner2023; @Goretzko2026). 
+Thus, SEM trees constitute the more general framework from which these approaches developed and can be applied to parameter heterogeneity in structural equation models beyond factor-analytic models and MI (@Brandmaier2013; @Arnold2021). 
+In the present study, we apply this general SEM-tree framework specifically to MI by focusing score-based instability tests on factor loadings and item intercepts, corresponding to metric and scalar MNI, respectively. 
+Thus, rather than proposing a dedicated tree-based MI procedure, we investigate the performance of the general SEM-tree framework for detecting MNI and compare it with the parametric moderation approach of MNLFA.
+
+It is to be noted that regularization provides an additional extension to several of these approaches and may be particularly useful when complex measurement models or large numbers of potential sources of MNI are considered. 
+Within EFA, regularization can be used to obtain sparse and interpretable loading structures without relying on conventional factor rotation (@Goretzko2025), whereas within MNLFA, regularization has been applied to moderation parameters to identify measurement bias across multiple categorical and continuous background characteristics (@Bauer2020; @Belzak2024). 
+Although such extensions can reduce the need to prespecify individual sources of measurement heterogeneity, they also introduce additional methodological choices concerning penalization and model selection. 
+The present study therefore focuses on MNLFA and SEM trees without regularization. 
+This choice reflects our aim to compare approaches that constitute relatively direct extensions of conventional MGCFA for applied researchers with an established measurement model, while differing in the assumptions they require about potential moderators and the functional form of MNI.
 
 ## Application Example 
 
@@ -199,12 +214,9 @@ $$
 $$
 
 baseline intercepts were fixed to one, and the latent factor variance was fixed to one. 
-Residual variances were chosen such that all indicators had a reliability of
 
-$$
-\rho = .75.
-$$
-
+Residual variances were fixed such that indicator reliability equaled $\rho = .75.$ at the baseline factor loading of $\lambda=.70$. 
+Because residual variances were held constant while loadings varied under loading moderation, conditional indicator reliability varied accordingly in conditions with metric noninvariance. 
 MNI was introduced by allowing selected factor loadings and/or item intercepts to depend on the moderator.
 
 Nine population models were investigated.
@@ -315,7 +327,7 @@ ggplot(df_h, aes(x = M, y = hM, color = Function, linetype = Function)) +
   )
 ```
 
-## Experimental design
+## Simulation design
 
 The simulation crossed data-generating conditions with analysis method. 
 Data-generating conditions manipulated
@@ -340,7 +352,7 @@ $$
 N\in\{300,500,700,1000\}.
 $$
 Each generated dataset was subsequently analyzed using three methods: linear MNLFA, quadratic MNLFA, and SEM Trees. 
-The resulting factorial design consisted of 576 unique data-generating design cells, each of which was analyzed using three analysis methods.
+The resulting factorial design consisted of 576 factorial design cells, each of which was analyzed using three analysis methods.
 
 ## Analysis models
 
@@ -400,7 +412,6 @@ Age as covariate is included continuously, gender is included as dichotomous var
 All covariates are included simultaneously in the analytical model. 
 
 
-
 ## Software
 
 All simulations were conducted in R [@Rteam2025]. 
@@ -439,6 +450,10 @@ Practical recommendations.
 - SEM Trees approximate moderator effects through partitions and therefore do not require the true effect to follow a prespecified continuous functional form.
 - MNLFA linear and quadratic models impose specific functional forms, potentially reducing power under functional-form misspecification.
 - The higher scalar power of SEM Trees should therefore not immediately be interpreted as generally superior sensitivity. At least part of the difference may arise because the MNLFA scalar model can represent common indicator-mean shifts through latent-mean moderation, whereas the SEM Tree directly targets intercept instability.
+
+
+
+- Distinction to CFA trees and EFA trees!
 
 ## Practical Recommendations 
 

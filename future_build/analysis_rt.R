@@ -483,14 +483,14 @@ mnlfa_analysis <- function(data, p = 4, nfactors = 1, alpha = 0.05) {
       matG1 <- mxMatrix(type="Full", #The matG1 and matG2 matrices contain the direct effects of M1 and M2, respectively, on the common-factor means 
                         nrow = 1, 
                         ncol = 1,
-                        free=TRUE, 
+                        free=FALSE, 
                         values = 0, 
                         name="matG1")
       
       matG2 <- mxMatrix(type="Full", 
                         nrow = 1, 
                         ncol = 1,
-                        free=TRUE, 
+                        free=FALSE, 
                         values = 0, 
                         name="matG2")
       

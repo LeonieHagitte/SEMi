@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  25 AUG 2026 18:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  27 AUG 2026 10:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1255,31 +1255,31 @@ enc}
 {C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
 lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12{C:/Users/Leonie.H
-agitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
-<semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf, id=79, 469.755pt x 3
+agitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [13{C:/
+Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex
+.enc}]
+<semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf, id=89, 469.755pt x 3
 25.215pt>
 File: semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (ty
 pe pdf)
 <use semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: semi_manuscript_files/figure-latex/unnamed-chunk-1-1.p
-df  used on input line 611.
+df  used on input line 617.
 (pdftex.def)             Requested size: 352.31625pt x 243.91064pt.
-[13{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm
--mathex.enc}]
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 6
-21.
+27.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [14{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
 lm-ts1.enc} <./semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf>] [15]
-Overfull \hbox (30.18494pt too wide) detected at line 718
+Overfull \hbox (30.18494pt too wide) detected at line 724
 \OML/lmm/m/it/12 P\OT1/lmr/m/n/12 ([]  \OMS/lmsy/m/n/12 \  [] j []\OT1/lmr/m/n/
 12 )\OML/lmm/m/it/12 ;
  []
 
 [16]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
-50.
+56.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [17] [18] [19] [20] [21] [22] [23] AED endfloat: Processing end Figures and T
@@ -1290,13 +1290,13 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28687 strings out of 474486
- 536178 string characters out of 5739507
- 1939542 words of memory out of 5000000
- 50270 multiletter control sequences out of 15000+600000
- 607888 words of font info for 124 fonts, out of 8000000 for 9000
+ 28693 strings out of 474486
+ 536276 string characters out of 5739507
+ 1937542 words of memory out of 5000000
+ 50272 multiletter control sequences out of 15000+600000
+ 608017 words of font info for 125 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,12n,107p,1014b,660s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,107p,1014b,651s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmbx12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/lm/lmbxi10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fon
@@ -1309,9 +1309,9 @@ Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/User
 s/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb
 ><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
 mtt12.pfb>
-Output written on semi_manuscript.pdf (24 pages, 269233 bytes).
+Output written on semi_manuscript.pdf (24 pages, 270761 bytes).
 PDF statistics:
- 363 PDF objects out of 1000 (max. 8388607)
- 89 named destinations out of 1000 (max. 500000)
+ 368 PDF objects out of 1000 (max. 8388607)
+ 91 named destinations out of 1000 (max. 500000)
  26834 words of extra memory for PDF output out of 29859 (max. 10000000)
 
