@@ -544,6 +544,7 @@ fig4 <- ggplot(
   theme_pub()
 
 fig4
+
 #----------------
 fig4b_dat <- bind_rows(
   results2 %>%
