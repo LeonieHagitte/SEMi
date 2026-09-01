@@ -125,6 +125,7 @@
 \shorttitle{SEMI-COMPLETE BY DESIGN}
 \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
 \usepackage{placeins}
+\usepackage{float}
 \setlength{\textfloatsep}{6pt}
 \setlength{\floatsep}{6pt}
 \setlength{\intextsep}{6pt}
@@ -440,9 +441,49 @@ MGCFA-based invariance testing.\\
 That is, there are several alternative methods that share some of the
 advantages highlighted above, a few of which we also want to mention.
 
-Sterner and Goretzko (2023) efa trees Goretzko et al. (2026) cfa trees
-regularization in combination with tree methods, or the MNLFA {[}Sterner
-and Goretzko (2023); @; @{]}
+Related tree-based approaches have recently been developed, building
+directly on the SEM-tree framework, specifically for investigating MNI
+across multiple covariates. Sterner and Goretzko (2023) introduced
+exploratory factor analysis (EFA) trees as an extension of SEM trees,
+and Goretzko et al. (2026) subsequently extended this approach to CFA
+trees. Like SEM trees, EFA and CFA trees use model-based recursive
+partitioning and score-based structural-change tests to identify
+parameter instability across candidate covariates. Their principal
+extension concerns the measurement model to which recursive partitioning
+is applied: EFA trees integrate an exploratory factor model,
+facilitating the investigation of MNI during early stages of measurement
+development, whereas CFA trees incorporate a constrained factor model
+and thereby allow MNI to be investigated when a hypothesized measurement
+structure is already available (Sterner and Goretzko (2023); Goretzko et
+al. (2026)). Thus, SEM trees constitute the more general framework from
+which these approaches developed and can be applied to parameter
+heterogeneity in structural equation models beyond factor-analytic
+models and MI (Brandmaier et al. (2013); Arnold et al. (2021)). In the
+present study, we apply this general SEM-tree framework specifically to
+MI by focusing score-based instability tests on factor loadings and item
+intercepts, corresponding to metric and scalar MNI, respectively. Thus,
+rather than proposing a dedicated tree-based MI procedure, we
+investigate the performance of the general SEM-tree framework for
+detecting MNI and compare it with the parametric moderation approach of
+MNLFA.
+
+It is to be noted that regularization provides an additional extension
+to several of these approaches and may be particularly useful when
+complex measurement models or large numbers of potential sources of MNI
+are considered. Within EFA, regularization can be used to obtain sparse
+and interpretable loading structures without relying on conventional
+factor rotation (Goretzko (2025)), whereas within MNLFA, regularization
+has been applied to moderation parameters to identify measurement bias
+across multiple categorical and continuous background characteristics
+(Bauer et al. (2020); Belzak and Bauer (2024)). Although such extensions
+can reduce the need to prespecify individual sources of measurement
+heterogeneity, they also introduce additional methodological choices
+concerning penalization and model selection. The present study therefore
+focuses on MNLFA and SEM trees without regularization. This choice
+reflects our aim to compare approaches that constitute relatively direct
+extensions of conventional MGCFA for applied researchers with an
+established measurement model, while differing in the assumptions they
+require about potential moderators and the functional form of MNI.
 
 \subsection{Application Example}\label{application-example}
 
@@ -502,15 +543,15 @@ continuous indicators. Baseline factor loadings were fixed to
 \]
 
 baseline intercepts were fixed to one, and the latent factor variance
-was fixed to one. Residual variances were chosen such that all
-indicators had a reliability of
+was fixed to one.
 
-\[
-\rho = .75.
-\]
-
-MNI was introduced by allowing selected factor loadings and/or item
-intercepts to depend on the moderator.
+Residual variances were fixed such that indicator reliability equaled
+\(\rho = .75.\) at the baseline factor loading of \(\lambda=.70\).
+Because residual variances were held constant while loadings varied
+under loading moderation, conditional indicator reliability varied
+accordingly in conditions with metric noninvariance. MNI was introduced
+by allowing selected factor loadings and/or item intercepts to depend on
+the moderator.
 
 Nine population models were investigated.
 
@@ -655,8 +696,8 @@ Data-generating conditions manipulated
 N\in\{300,500,700,1000\}.
 \] Each generated dataset was subsequently analyzed using three methods:
 linear MNLFA, quadratic MNLFA, and SEM Trees. The resulting factorial
-design consisted of 576 unique data-generating design cells, each of
-which was analyzed using three analysis methods.
+design consisted of 576 factorial design cells, each of which was
+analyzed using three analysis methods.
 
 \subsection{Analysis models}\label{analysis-models}
 
@@ -766,6 +807,111 @@ Wickham 2026), \texttt{purrr} (Wickham and Henry 2026), \texttt{future}
 
 \section{Results}\label{results}
 
+All conditions comprised 100 attempted replications. SEM-tree tests were
+available for all replications, whereas a small number of MNLFA/MNLFAQ
+replications did not yield evaluable likelihood-ratio tests. Power and
+rejection rates were therefore calculated among evaluable replications,
+with estimation failures reported separately.
+
+\begin{verbatim}
+## Warning: Paket 'knitr' wurde unter R Version 4.5.2 erstellt
+\end{verbatim}
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{lllcc}
+\toprule
+Population\_Model & Truth & Method & Metric & Scalar\\
+\midrule
+0 & No MNI & MNLFA & 0.063 (0.003) & 0.052 (0.003)\\
+0 & No MNI & MNLFAQ & 0.067 (0.004) & 0.053 (0.003)\\
+0 & No MNI & SEMTREE & 0.050 (0.003) & 0.044 (0.003)\\
+1.1 & Metric only & MNLFA & 0.678 (0.003) & 0.068 (0.004)\\
+1.1 & Metric only & MNLFAQ & 0.393 (0.004) & 0.067 (0.004)\\
+\addlinespace
+1.1 & Metric only & SEMTREE & 0.930 (0.003) & 0.053 (0.003)\\
+1.11 & Scalar only & MNLFA & 0.067 (0.004) & 0.690 (0.002)\\
+1.11 & Scalar only & MNLFAQ & 0.285 (0.005) & 0.372 (0.003)\\
+1.11 & Scalar only & SEMTREE & 0.247 (0.005) & 0.993 (0.001)\\
+1.12 & Metric + scalar & MNLFA & 0.678 (0.003) & 0.693 (0.002)\\
+\addlinespace
+1.12 & Metric + scalar & MNLFAQ & 0.639 (0.005) & 0.373 (0.003)\\
+1.12 & Metric + scalar & SEMTREE & 0.916 (0.003) & 0.997 (0.001)\\
+1.2 & Metric only & MNLFA & 0.698 (0.003) & 0.063 (0.003)\\
+1.2 & Metric only & MNLFAQ & 0.418 (0.004) & 0.058 (0.003)\\
+1.2 & Metric only & SEMTREE & 0.976 (0.002) & 0.059 (0.003)\\
+\addlinespace
+1.21 & Scalar only & MNLFA & 0.204 (0.004) & 0.701 (0.002)\\
+1.21 & Scalar only & MNLFAQ & 0.427 (0.005) & 0.375 (0.003)\\
+1.21 & Scalar only & SEMTREE & 0.477 (0.005) & 1.000 (0.000)\\
+1.22 & Metric + scalar & MNLFA & 0.810 (0.004) & 0.702 (0.003)\\
+1.22 & Metric + scalar & MNLFAQ & 0.798 (0.004) & 0.375 (0.003)\\
+\addlinespace
+1.22 & Metric + scalar & SEMTREE & 0.968 (0.002) & 1.000 (0.000)\\
+1.3 & Metric only & MNLFA & 0.721 (0.003) & 0.080 (0.004)\\
+1.3 & Metric only & MNLFAQ & 0.441 (0.004) & 0.072 (0.004)\\
+1.3 & Metric only & SEMTREE & 0.972 (0.002) & 0.054 (0.003)\\
+1.32 & Metric + scalar & MNLFA & 0.681 (0.003) & 0.696 (0.002)\\
+\addlinespace
+1.32 & Metric + scalar & MNLFAQ & 0.596 (0.005) & 0.374 (0.003)\\
+1.32 & Metric + scalar & SEMTREE & 0.769 (0.005) & 0.996 (0.001)\\
+\bottomrule
+\end{tabular}\caption{Rejection rates for metric and scalar measurement invariance across population models. Monte Carlo standard errors are given in parentheses.}
+\end{table}
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{lllccc}
+\toprule
+level & estimand & moderator & MNLFA & MNLFAQ & SEMTREE\\
+\midrule
+Metric & Power & linear & 0.970 (0.002) & 0.407 (0.003) & 0.934 (0.002)\\
+Metric & Power & quadratic & 0.166 (0.003) & 0.978 (0.001) & 0.903 (0.003)\\
+Metric & Power & sigmoid & 0.997 (0.001) & 0.258 (0.004) & 0.928 (0.002)\\
+Metric & Rejection u. invariance & linear & 0.058 (0.003) & 0.453 (0.004) & 0.350 (0.004)\\
+Metric & Rejection u. invariance & quadratic & 0.215 (0.004) & 0.059 (0.003) & 0.293 (0.004)\\
+\addlinespace
+Metric & Rejection u. invariance & sigmoid & 0.062 (0.003) & 0.267 (0.005) & 0.131 (0.004)\\
+Scalar & Power & linear & 1.000 (0.000) & 0.066 (0.003) & 1.000 (0.000)\\
+Scalar & Power & quadratic & 0.089 (0.003) & 1.000 (0.000) & 0.992 (0.001)\\
+Scalar & Power & sigmoid & 1.000 (0.000) & 0.054 (0.003) & 1.000 (0.000)\\
+Scalar & Rejection u. invariance & linear & 0.055 (0.003) & 0.057 (0.003) & 0.051 (0.003)\\
+\addlinespace
+Scalar & Rejection u. invariance & quadratic & 0.080 (0.003) & 0.077 (0.003) & 0.050 (0.003)\\
+Scalar & Rejection u. invariance & sigmoid & 0.062 (0.003) & 0.053 (0.003) & 0.056 (0.003)\\
+\bottomrule
+\end{tabular}\caption{Power and rejection rates under invariance by moderator functional form. Monte Carlo standard errors are given in parentheses.}
+\end{table}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+
+\begin{tabular}{llrrrrr}
+\toprule
+Truth & Method & Metric decision & Scalar stage reached & Scalar decision & Invariance retained & Correct classification\\
+\midrule
+No MNI & MNLFA & 0.063 & 0.937 & 0.048 & 0.889 & 0.889\\
+No MNI & MNLFAQ & 0.067 & 0.933 & 0.050 & 0.882 & 0.882\\
+No MNI & SEMTREE & 0.050 & 0.950 & 0.041 & 0.909 & 0.909\\
+Metric only & MNLFA & 0.699 & 0.301 & 0.026 & 0.274 & 0.699\\
+Metric only & MNLFAQ & 0.418 & 0.583 & 0.033 & 0.550 & 0.418\\
+\addlinespace
+Metric only & SEMTREE & 0.959 & 0.041 & 0.002 & 0.039 & 0.959\\
+Scalar only & MNLFA & 0.136 & 0.864 & 0.645 & 0.219 & 0.645\\
+Scalar only & MNLFAQ & 0.356 & 0.644 & 0.332 & 0.313 & 0.332\\
+Scalar only & SEMTREE & 0.362 & 0.638 & 0.635 & 0.003 & 0.635\\
+Metric + scalar & MNLFA & 0.723 & 0.277 & 0.035 & 0.242 & 0.723\\
+\addlinespace
+Metric + scalar & MNLFAQ & 0.678 & 0.322 & 0.024 & 0.298 & 0.678\\
+Metric + scalar & SEMTREE & 0.884 & 0.116 & 0.115 & 0.001 & 0.884\\
+\bottomrule
+\end{tabular}}
+\caption{Sequential classification outcomes by true measurement-invariance condition and method.}
+\end{table}
+
 \subsection{Simulation}\label{simulation-1}
 
 \subsection{Empirical Example}\label{empirical-example-1}
@@ -852,11 +998,26 @@ Bauer, D. J. 2017. {``A More General Model for Testing Measurement
 Invariance and Differential Item Functioning.''} \emph{Psychological
 Methods} 22 (3): 507--26. \url{https://doi.org/10.1037/met0000077}.
 
+\bibitem[\citeproctext]{ref-Bauer2020}
+Bauer, D. J., W. C. M. Belzak, and V. T. Cole. 2020. {``Simplifying the
+Assessment of Measurement Invariance over Multiple Background Variables:
+Using Regularized Moderated Nonlinear Factor Analysis to Detect
+Differential Item Functioning.''} \emph{Structural Equation Modeling: A
+Multidisciplinary Journal} 27 (1): 43--55.
+\url{https://doi.org/10.1080/10705511.2019.1642754}.
+
 \bibitem[\citeproctext]{ref-Bauer2009}
 Bauer, D. J., and A. M. Hussong. 2009. {``Psychometric Approaches for
 Developing Commensurate Measures Across Independent Studies: Traditional
 and New Models.''} \emph{Psychological Methods} 14 (2): 101--25.
 \url{https://doi.org/10.1037/a0015583}.
+
+\bibitem[\citeproctext]{ref-Belzak2024}
+Belzak, William, and Daniel Bauer. 2024. {``Using Regularization to
+Identify Measurement Bias Across Multiple Background Characteristics: A
+Penalized Expectation--Maximization Algorithm.''} \emph{Journal of
+Educational and Behavioral Statistics} 49 (February): 976--1012.
+\url{https://doi.org/10.3102/10769986231226439}.
 
 \bibitem[\citeproctext]{ref-future2021}
 Bengtsson, Henrik. 2021. {``A Unifying Framework for Parallel and
@@ -891,6 +1052,11 @@ Borrat-Besson, Carmen, Valerie-Anne Ryser, and Judite Goncalves. 2015.
 and Retirement in Europe (SHARE) to Measure Quality of Life Among People
 Aged 50+}}. FORS Working Paper Series Nos. 2015-4. FORS.
 
+\bibitem[\citeproctext]{ref-Brandmaier2013}
+Brandmaier, A. M., T. von Oertzen, J. J. McArdle, and U. Lindenberger.
+2013. {``Structural Equation Model Trees.''} \emph{Psychological
+Methods} 18 (1): 71--86. \url{https://doi.org/10.1037/a0030001}.
+
 \bibitem[\citeproctext]{ref-Cheung2002}
 Cheung, Gordon W., and Roger B. Rensvold. 2002. {``Evaluating
 Goodness-of-Fit Indexes for Testing Measurement Invariance.''}
@@ -914,6 +1080,12 @@ Flake, Jessica K., Jolynn Pek, and Eric Hehman. 2017. {``Construct
 Validation in Social and Personality Research: Current Practice and
 Recommendations.''} \emph{Social Psychological and Personality Science}
 8 (4): 370--78. \url{https://doi.org/10.1177/1948550617693063}.
+
+\bibitem[\citeproctext]{ref-Goretzko2025}
+Goretzko, David. 2025. \emph{Regularized Exploratory Factor Analysis as
+an Alternative to Factor RotationRegularized Exploratory Factor Analysis
+as an Alternative to Factor Rotation}. No. 4. Hogrefe Publishing.
+\url{https://doi.org/10.1027/1015-5759/a000792}.
 
 \bibitem[\citeproctext]{ref-Goretzko2026}
 Goretzko, David, Matt C. Howard, and Philipp Sterner. 2026.
