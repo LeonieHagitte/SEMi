@@ -409,8 +409,14 @@ The CASP-12 scale [@] comprises 12 items and assesses four domains of quality of
 Each factor is assessed using three items. 
 Responses are rated on a four-point rating scale ranging from 1 (Often) to 4 (Never), with some items requiring inverse scoring before calculation of the total score. 
 Higher CASP-12 scores indicate better quality of life. 
-Age as covariate is included continuously, gender is included as dichotomous variable and culture is <!-- complete depending on how its assessed in SHARE - countries? -->
+Age as covariate is included continuously, gender is included as dichotomous variable and countries are clustered in four categories.  
 All covariates are included simultaneously in the analytical model. 
+
+CASP responses outside the valid range of 1–4 were coded as missing, and positively worded items were reverse-scored so that all items had a common direction. 
+Gender was coded as 0 = male and 1 = female. Countries were grouped into Nordic, Western, Southern, and Eastern European cultural clusters,following @BonnevilleRoussy2024, with Western Europe serving as the reference group for MNLFA. 
+Invalid negative age values were coded as missing. Participants with missing age, gender, or cultural-cluster information and participants with no observed CASP-12 items were excluded. 
+Age was subsequently standardized within the resulting analysis sample. 
+For analyses requiring complete CASP data, a complete-case sample containing respondents with observations on all 12 items was additionally constructed.
 
 
 ## Software
@@ -547,7 +553,7 @@ Nordic membership was most strongly associated with intercept differences for th
 In contrast, gender-related intercept-moderation coefficients were again comparatively small.
 
 ### SEM trees 
-<!-- LH TODO: Rerun tree analysis because exclusion of two ages with value -1 -->
+
 The baseline four-factor model used for the SEM tree analyses converged successfully ($N=65{,}215$, 42 free parameters, $-2LL=1{,}801{,}399, AIC =1{,}801{,}483, BIC =1{,}801{,}864$)$. 
 The score-guided SEM tree analyses also indicated parameter instability at both the metric and scalar levels ($p<.001$ for both tests).
 
@@ -593,7 +599,23 @@ Practical recommendations.
 - Distinction to CFA trees and EFA trees!
 
 -->
+An important qualification to the comparatively robust power of SEM trees concerns their ability to distinguish between different levels of MNI. 
+Under complete MI, rejection rates were generally close to the nominal level, suggesting adequate calibration when neither loadings nor intercepts were moderated. 
+However, metric rejection increased in several conditions in which loadings were invariant but intercepts were noninvariant. 
+This pattern suggests that the metric SEM-tree procedure may be sensitive to parameter instability originating elsewhere in the measurement model, even when the focal loading parameters are invariant. 
+The increase in metric rejection with sample size in some of these conditions further suggests that this behavior cannot simply be attributed to sampling variability at smaller sample sizes. 
+Instead, greater statistical information may increase the ability of the score-based procedure to detect model instability that is not perfectly localized to the focal parameter set.
 
+This distinction between detection and localization is important for interpreting the comparative performance of the methods. 
+The high power of SEM trees indicates that they were effective at identifying heterogeneity in the measurement model across the conditions considered here, but a detected split should not necessarily be interpreted as uniquely identifying the parameter class responsible for that heterogeneity. 
+This became particularly apparent for scalar-only MNI. Although the scalar SEM-tree analysis showed very high sensitivity to intercept instability, frequent metric rejection reduced the accuracy with which scalar-only MNI was identified under the sequential decision rule. 
+Thus, the advantages of SEM trees for detecting previously unspecified forms of heterogeneity need to be considered separately from their ability to classify that heterogeneity as specifically metric or scalar.
+
+Differences in scalar performance between MNLFA and SEM trees should be interpreted cautiously because, although the same sequential decision rule was applied to both approaches, their underlying scalar tests were constructed differently. 
+For both methods, metric and scalar tests were estimated in each replication, and scalar MNI was classified sequentially only when the metric test did not reject. 
+However, the SEM-tree scalar test was estimated as a separate intercept-focused analysis and was therefore not conditional on the metric-tree partition. 
+In MNLFA, by contrast, the scalar LRT compared the metric and scalar models, such that intercept moderation was tested under the restriction that loading moderation was absent. 
+Consequently, differences in level-specific scalar power between the methods may partly reflect differences in the construction of the underlying scalar tests rather than differences in sensitivity alone.
 
 
 ## Practical Recommendations 
