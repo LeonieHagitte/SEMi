@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  1 SEP 2026 14:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  10 SEP 2026 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1254,62 +1254,58 @@ enc}
 
 {C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12] [13{C:/Users/Leo
-nie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [1
-4{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-m
-athex.enc}]
-<semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf, id=93, 469.755pt x 3
+lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12{C:/Users/Leonie.H
+agitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}] [13{C:/
+Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex
+.enc}]
+<semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf, id=85, 469.755pt x 3
 25.215pt>
 File: semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (ty
 pe pdf)
 <use semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: semi_manuscript_files/figure-latex/unnamed-chunk-1-1.p
-df  used on input line 658.
+df  used on input line 606.
 (pdftex.def)             Requested size: 352.31625pt x 243.91064pt.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 6
-68.
-(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [15{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
-lm-ts1.enc} <./semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf>] [16]
-Overfull \hbox (30.18494pt too wide) detected at line 765
-\OML/lmm/m/it/12 P\OT1/lmr/m/n/12 ([]  \OMS/lmsy/m/n/12 \  [] j []\OT1/lmr/m/n/
-12 )\OML/lmm/m/it/12 ;
- []
-
-[17]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
-97.
+[14 <./semi_manuscript_files/figure-latex/unnamed-chunk-1-1.pdf>]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
+78.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [18]
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-818.
-(C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
-File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [19]
+) [15] [16] [17] [18] [19] [20] [21] [22]
 Overfull \vbox (138.58977pt too high) has occurred while \output is active []
 
-[20]
-Overfull \hbox (7.44922pt too wide) in paragraph at lines 866--885
+[23]
+Overfull \hbox (7.44922pt too wide) in paragraph at lines 1001--1020
  [][] 
  []
 
-[21] [22] [23] [24] [25] [26] [27] [28] AED endfloat: Processing end Figures an
-d Tables [29] (semi_manuscript.aux)
+[24] [25]
+<Rplot2.png, id=156, 573.47583pt x 327.2225pt>
+File: Rplot2.png Graphic file (type png)
+<use Rplot2.png>
+Package pdftex.def Info: Rplot2.png  used on input line 1067.
+(pdftex.def)             Requested size: 375.80544pt x 214.43466pt.
+[26 <./Rplot2.png>] [27]
+Overfull \hbox (50.3451pt too wide) in paragraph at lines 1156--1161
+$\OML/lmm/m/it/12 guidedSEMtreeanalysesalsoindicatedparameterinstabilityatbotht
+hemetricandscalarlevels\OT1/lmr/m/n/12 (-20) ($\T1/lmr/m/n/12 (-20) p<.001$ 
+ []
+
+[28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43]
+[44] AED endfloat: Processing end Figures and Tables [45] (semi_manuscript.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28762 strings out of 474486
- 537541 string characters out of 5739507
+ 28706 strings out of 474486
+ 535922 string characters out of 5739507
  1941542 words of memory out of 5000000
- 50325 multiletter control sequences out of 15000+600000
- 608323 words of font info for 126 fonts, out of 8000000 for 9000
+ 50267 multiletter control sequences out of 15000+600000
+ 604522 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 99i,12n,107p,1014b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,12n,107p,1014b,660s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/
 lmbx12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/lm/lmbxi10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fon
@@ -1322,9 +1318,9 @@ Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/User
 s/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb
 ><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
 mtt12.pfb>
-Output written on semi_manuscript.pdf (29 pages, 286124 bytes).
+Output written on semi_manuscript.pdf (45 pages, 347570 bytes).
 PDF statistics:
- 405 PDF objects out of 1000 (max. 8388607)
- 103 named destinations out of 1000 (max. 500000)
- 26834 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 481 PDF objects out of 1000 (max. 8388607)
+ 119 named destinations out of 1000 (max. 500000)
+ 22767 words of extra memory for PDF output out of 24883 (max. 10000000)
 
