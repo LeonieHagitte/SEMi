@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  10 SEP 2026 12:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  10 SEP 2026 14:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1292,15 +1292,16 @@ hemetricandscalarlevels\OT1/lmr/m/n/12 (-20) ($\T1/lmr/m/n/12 (-20) p<.001$
  []
 
 [28] [29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [43]
-[44] AED endfloat: Processing end Figures and Tables [45] (semi_manuscript.aux)
+[44] [45] AED endfloat: Processing end Figures and Tables [46] (semi_manuscript
+.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 28706 strings out of 474486
- 535922 string characters out of 5739507
+ 28707 strings out of 474486
+ 535929 string characters out of 5739507
  1941542 words of memory out of 5000000
  50267 multiletter control sequences out of 15000+600000
  604522 words of font info for 121 fonts, out of 8000000 for 9000
@@ -1318,9 +1319,9 @@ Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/User
 s/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb
 ><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
 mtt12.pfb>
-Output written on semi_manuscript.pdf (45 pages, 347570 bytes).
+Output written on semi_manuscript.pdf (46 pages, 349781 bytes).
 PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 119 named destinations out of 1000 (max. 500000)
+ 485 PDF objects out of 1000 (max. 8388607)
+ 120 named destinations out of 1000 (max. 500000)
  22767 words of extra memory for PDF output out of 24883 (max. 10000000)
 
