@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  10 SEP 2026 14:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  11 SEP 2026 13:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1275,7 +1275,7 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 Overfull \vbox (138.58977pt too high) has occurred while \output is active []
 
 [23]
-Overfull \hbox (7.44922pt too wide) in paragraph at lines 1001--1020
+Overfull \hbox (7.44922pt too wide) in paragraph at lines 1013--1032
  [][] 
  []
 
@@ -1283,10 +1283,10 @@ Overfull \hbox (7.44922pt too wide) in paragraph at lines 1001--1020
 <Rplot2.png, id=156, 573.47583pt x 327.2225pt>
 File: Rplot2.png Graphic file (type png)
 <use Rplot2.png>
-Package pdftex.def Info: Rplot2.png  used on input line 1067.
+Package pdftex.def Info: Rplot2.png  used on input line 1079.
 (pdftex.def)             Requested size: 375.80544pt x 214.43466pt.
 [26 <./Rplot2.png>] [27]
-Overfull \hbox (50.3451pt too wide) in paragraph at lines 1156--1161
+Overfull \hbox (50.3451pt too wide) in paragraph at lines 1168--1173
 $\OML/lmm/m/it/12 guidedSEMtreeanalysesalsoindicatedparameterinstabilityatbotht
 hemetricandscalarlevels\OT1/lmr/m/n/12 (-20) ($\T1/lmr/m/n/12 (-20) p<.001$ 
  []
@@ -1319,7 +1319,7 @@ Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/User
 s/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb
 ><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/l
 mtt12.pfb>
-Output written on semi_manuscript.pdf (46 pages, 349781 bytes).
+Output written on semi_manuscript.pdf (46 pages, 350443 bytes).
 PDF statistics:
  485 PDF objects out of 1000 (max. 8388607)
  120 named destinations out of 1000 (max. 500000)

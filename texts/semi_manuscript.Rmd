@@ -174,7 +174,7 @@ The present simulation study examines the consequences of these different repres
 Specifically, we compare MNLFA and SEM trees performance in detecting MNI, when the true parameter–covariate relationship is linear, quadratic, or sigmoid, while additionally varying the magnitude of parameter heterogeneity and sample size. 
 Rather than assuming that one representation is generally superior, we examine how their performance depends on characteristics of the underlying heterogeneity and the information available to each method.
 
-The comparison addresses four aspects of performance. 
+The comparison addresses three aspects of performance. 
 First, we examine whether each method detects the presence of MNI. 
 Second, we evaluate how detection depends on the functional form of $\theta(z)$, thereby assessing the consequences of representing parameter heterogeneity parametrically or through recursive partitions. 
 Third, because the simulation separately introduces heterogeneity in factor loadings and item intercepts, we examine whether the methods correctly identify the level at which MNI occurs, corresponding to metric and scalar MNI for continuous indicators. 
@@ -575,6 +575,12 @@ Positively worded items were reverse-scored so that all items had a common direc
 In the present analyses, the four-category CASP-12 items were treated as continuous indicators. 
 Accordingly, scalar measurement parameters refer to item intercepts. 
 
+The empirical MNLFA followed the same general testing strategy the simulation. 
+Item loadings, intercepts, and residual variances were allowed to vary with these covariates in the unrestricted model. 
+Importantly, latent means were allowed to vary with all covariates and remained freely moderated across the metric and scalar models, thereby allowing covariate-related differences in latent factor means to be estimated separately from item-intercept moderation. T
+he latent covariance matrix was freely estimated but held constant across covariate values. 
+The model was identified using one anchor item per factor, with its loading fixed to 1 and its intercept and corresponding moderation effects fixed. 
+
 CASP-12 responses outside the valid range of 1--4 were coded as missing, as were invalid negative age values. 
 Participants were excluded if they had missing information on age, gender, or cultural region or had no observed CASP-12 items. 
 Age was standardized within the resulting analysis sample. 
@@ -774,9 +780,9 @@ The SEM tree results show an informative comparison with their group-based age a
 Several of the age cutoffs identified from the data closely corresponded to the boundaries used by @BonnevilleRoussy2024. 
 In the metric tree, age partitions occurred at approximately 65, 69, and 79 years, whereas the scalar tree identified cutoffs at approximately 69, 79, and 87–88 years. 
 Thus, the repeatedly identified cutoffs around 69 and 79 years closely aligned with the boundaries separating the 60–69, 70–79, and 80-and-older groups in the analysis from @BonnevilleRoussy2024. 
-This correspondence provides some empirical support for age-related distinctions similar to those imposed a priori in the earlier study. 
+Two repeatedly selected cutoffs (69, 79) occurred close to boundaries used in the previous group-based analysis. 
 The additional cutoffs identified by the SEM trees illustrate the potential consequences of defining age groups in advance. 
-The metric split around 65 years suggests measurement heterogeneity within the predefined 60–69-year group, whereas the scalar splits around 87–88 years indicate further heterogeneity within the broad group of participants aged 80 years and older. 
+The metric split around 65 years suggests MNI within the predefined 60–69-year group, whereas the scalar splits around 87–88 years indicate further heterogeneity within the broad group of participants aged 80 years and older. 
 Conversely, the SEM trees did not reproduce every predefined boundary, most notably the distinction at 60 years. 
 The MNLFA results complement this pattern by showing that age-related heterogeneity can also be represented without introducing discrete age categories. 
 Age significantly moderated both loadings and intercepts, with comparatively pronounced coefficients for A2 and A3. <!-- TO DO: insert specific item wordings in parentheses for clarity -->
@@ -806,8 +812,8 @@ They provide complementary ways of characterizing MNI, and their usefulness depe
 This distinction between detection and localization is important for interpreting the comparative performance of the methods. 
 The high power of SEM trees indicates that they were effective at identifying heterogeneity in the measurement model across the conditions considered here, but a detected instability should not necessarily be interpreted as uniquely identifying the parameter class responsible for that heterogeneity. 
 Most notably, when only intercepts were noninvariant, the SEM-tree metric test frequently rejected invariance even though the loadings themselves were invariant. 
-Under linear moderation, for example, the metric rejection rate reached .350 for SEM trees, compared with .058 for linear MNLFA, despite the absence of loading MNI. 
-The corresponding pattern in the opposite direction was much weaker: when loadings were noninvariant but intercepts were invariant, scalar rejection generally remained close to the nominal level. 
+Under linear moderation, for example, the metric rejection rate reached .350 for SEM trees, compared with .058 for linear MNLFA and .453 for quadratic MNLFA, despite the absence of loading MNI. 
+The corresponding pattern in the opposite direction was much weaker: when loadings were noninvariant but intercepts were invariant, scalar rejection generally remained close to the nominal level.
 Thus, the cross-level sensitivity observed for SEM trees was asymmetric. 
 Intercept instability could produce evidence against metric invariance, whereas loading instability did not produce a comparable tendency to reject scalar invariance. 
 Moreover, metric rejection in these scalar-only conditions increased rather than decreased with sample size in some conditions, particularly for SEM trees. 
