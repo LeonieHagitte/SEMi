@@ -1,157 +1,219 @@
-# ███████╗███████╗███╗   ███╗██╗
-# ██╔════╝██╔════╝████╗ ████║╚═╝
-# ███████╗█████╗  ██╔████╔██║██║
-# ╚════██║██╔══╝  ██║╚██╔╝██║██║
-# ███████║███████╗██║ ╚═╝ ██║██║
-# ╚══════╝╚══════╝╚═╝     ╚═╝╚═╝
-# S E M i
-#
-# by Leonie Hagitte
-#
-#
-# This file orchestrates the Monte Carlo simulation runs.
-#
-# The script builds the crossed design grid, handles optional job chunking
-# for high performance computing clusters,
-# generates one dataset per design row, runs MNLFA and SEM-tree analyses,
-# records truth labels/detection outcomes, and saves chunk-specific results.
-#
-# This is the main entry point for the simulation
+# ============================================================
+# Sensitivity analysis:
+# lower effect sizes + SD-matched moderator transformations
+# ============================================================
 
 library(dplyr)
-library(tibble)
+library(tidyr)
 library(future)
-
+library(future.apply)
+library(parallelly)
 
 source("dataprep_rt.R")
 source("analysis_rt.R")
 
-# -----------------------------------
-set.seed(42)
-# ---------------------------------
-n_rep <- 100 # needs to be larger, or as large as SLURM_ARRAY
+set.seed(123)
 
-# ----------------------------------
-MOD_TYPES <- c("linear","sigmoid","quadratic","noise")
+# ------------------------------------------------------------
+# Calibrated moderator transformation
+# ------------------------------------------------------------
 
-# TODO [LH]: num_noisy_predictors in die conditions (für die Hauptsimulation
-# auf 0, für ein paar auf 10 oder so?!)
-DESIGN <- tidyr::expand_grid(
-  popmodel     = c("0","1.1", "1.11", "1.12","1.2","1.21","1.22","1.3","1.32"),
-  N            = c(300, 500, 700, 1000),
-  reliability  = 0.75, 
-  lambda       = 0.70,
-  intercepts   = 1,
-  delta_lambda = c(0.2, 0.3),
-  delta_nu     = c(0.5, 1),
-  moderator    = MOD_TYPES,
-#  analysis_form = c("linear", "quadratic"),
-  method       = c("SEMTREE","MNLFA","MNLFAQ"),
-  rep_id = 1:n_rep,
-  num_noisy_predictors = 0
-)%>%
-  dplyr::arrange(
-    popmodel, N, reliability, lambda, intercepts,
-    delta_lambda, delta_nu, moderator,method, rep_id, num_noisy_predictors
-  ) %>%
-  dplyr::mutate(
-    job_id = dplyr::row_number()
-  ) 
+target_sd <- 1 / sqrt(3)
 
-DESIGN <- DESIGN %>%
-  dplyr::mutate(
-    # randomly draw one seed per each row
-    seed = round(runif(nrow(DESIGN),0,.Machine$integer.max))
+mod_h_cal <- function(M,
+                      type = c("linear", "sigmoid", "quadratic", "noise"),
+                      k = 10) {
+  
+  type <- match.arg(type)
+  
+  switch(
+    type,
     
+    linear = M,
+    
+    quadratic = {
+      raw <- 2 * M^2 - 1
+      
+      mean_raw <- -1 / 3
+      sd_raw   <- sqrt(16 / 45)
+      
+      (raw - mean_raw) / sd_raw * target_sd
+    },
+    
+    sigmoid = {
+      raw <- -1 + 2 / (1 + exp(-k * M))
+      
+      mean_raw <- 0
+      sd_raw <- sqrt(1 - tanh(k / 2) / (k / 2))
+      
+      (raw - mean_raw) / sd_raw * target_sd
+    },
+    
+    noise = rep(0, length(M))
   )
-# ----------------------------------------------------------
-DESIGN <- DESIGN %>%
-  dplyr::mutate(sensitivity_case = "main")
-
-SENS_TREE_NOISE <- DESIGN %>%
-  dplyr::filter(
-    method == "SEMTREE",
-    popmodel == "1.1",
-    moderator == "linear",
-    N == 500,
-    delta_lambda == 0.2,
-    delta_nu == 0.5
-  ) %>%
-  dplyr::mutate(
-    num_noisy_predictors = 10,
-    sensitivity_case = "tree_10_noisy"
-  )
-
-DESIGN <- dplyr::bind_rows(DESIGN, SENS_TREE_NOISE)
-
-# ---------- randomly permute lines for even distribution of
-#     run times across jobs ----------------
-DESIGN <- DESIGN %>%
-  slice_sample(prop = 1) # this is a random permutation
-
-split_LH <- FALSE  # split jobs according to Leonies approach?
-
-# Andreas approach
-## ----------- get splitter from command line argument ----------
-## order the simulation to only round the i-th of j many chunks
-## with i and j being the first two arguments
-
-if (!split_LH) {
-
-# get command line arguments
-args <- commandArgs(trailingOnly = TRUE)
-
-if (length(args)>0) {
-
-  if (length(args)==1) args[2]=100
-
-  chunk_id <- as.integer(args[1])
-  n_chunks <- as.integer(args[2]) 
-
-  all_indices <- seq_len(nrow(DESIGN))
-
-  chunks <- split(all_indices, cut(seq_along(all_indices),
-                                  n_chunks, labels = FALSE))
-  my_indices <- chunks[[chunk_id]]
-
-  DESIGN <- DESIGN[my_indices, ]
-
 }
-
-} else {
-
-
-# Leonies approach
-# ---------- Split on rep_id, for similarly long runtimes ------
-chunk_id <- NULL
-n_chunks <- NULL
-
-args <- commandArgs(trailingOnly = TRUE)
-
-if (length(args) > 0) {
-  chunk_id <- as.integer(args[1])
-  n_chunks <- as.integer(args[2])
+#------------------------------------------------------------------------------
+gen_dataC_sensitivity <- function(N, params, return_latent = TRUE) {
   
-  rep_ids <- sort(unique(DESIGN$rep_id))
+  p <- 4
   
-  if (n_chunks > length(rep_ids)) {
-    stop("n_chunks cannot be larger than number of replications.")
+  lambda0   <- params$lambda
+  nu0       <- params$nu
+  rel       <- params$reliability
+  moderator <- params$moderator
+  k         <- params$k
+  dlam      <- params$delta_lambda
+  dnu       <- params$delta_nu
+  deta      <- params$delta_eta
+  psi       <- params$psi
+  mu0       <- params$mu_eta
+  popmodel  <- params$popmodel
+  
+  # person-level moderators
+  eps <- .Machine$double.eps
+  
+  m1 <- runif(N, -1 + eps, 1 - eps)
+  m2 <- runif(N, -1 + eps, 1 - eps)
+  m0 <- runif(N, -1 + eps, 1 - eps)
+  
+  # IMPORTANT CHANGE:
+  # use calibrated population transformations
+  hm1  <- mod_h_cal(m1, type = moderator, k = k)
+  hm2  <- mod_h_cal(m2, type = moderator, k = k)
+  hm12 <- hm1 * hm2
+  hm0  <- rep(0, N)
+  
+  # item moderation pattern
+  dlam1_vec  <- rep(0, p)
+  dnu1_vec   <- rep(0, p)
+  dlam2_vec  <- rep(0, p)
+  dnu2_vec   <- rep(0, p)
+  dlam12_vec <- rep(0, p)
+  dnu12_vec  <- rep(0, p)
+  
+  if (popmodel == "0" || popmodel == "NULL") {
+    
+    # no moderation
+    
+  } else if (popmodel == "1.1") {
+    
+    dlam1_vec[] <- dlam
+    
+  } else if (popmodel == "1.11") {
+    
+    dnu1_vec[] <- dnu
+    
+  } else if (popmodel == "1.12") {
+    
+    dlam1_vec[] <- dlam
+    dnu1_vec[]  <- dnu
+    
+  } else if (popmodel == "1.2") {
+    
+    dlam1_vec[1:2] <- dlam
+    
+  } else if (popmodel == "1.21") {
+    
+    dnu1_vec[1:2] <- dnu
+    
+  } else if (popmodel == "1.22") {
+    
+    dlam1_vec[1:2] <- dlam
+    dnu1_vec[1:2]  <- dnu
+    
+  } else if (popmodel == "1.3") {
+    
+    dlam1_vec[]  <- dlam
+    dlam2_vec[]  <- dlam
+    dlam12_vec[] <- dlam^2
+    
+  } else if (popmodel == "1.32") {
+    
+    dlam1_vec[] <- dlam
+    dnu2_vec[]  <- dnu
+    
+  } else {
+    
+    stop("Unknown popmodel: ", popmodel)
   }
   
-  rep_chunks <- split(
-    rep_ids,
-    cut(seq_along(rep_ids), n_chunks, labels = FALSE)
+  # person-specific loadings/intercepts
+  Lambda_Np <- matrix(lambda0, N, p) +
+    hm1  %o% dlam1_vec +
+    hm2  %o% dlam2_vec +
+    hm12 %o% dlam12_vec
+  
+  Nu_Np <- matrix(nu0, N, p) +
+    hm1  %o% dnu1_vec +
+    hm2  %o% dnu2_vec +
+    hm12 %o% dnu12_vec
+  
+  # latent variable
+  MU_eta_i <- rep(mu0, N)
+  eta <- rnorm(N, mean = MU_eta_i, sd = sqrt(psi))
+  
+  # residual variance
+  theta0 <- (lambda0^2 * psi * (1 - rel)) / rel
+  
+  ThetaVar_Np <- matrix(
+    theta0,
+    nrow = N,
+    ncol = p,
+    byrow = TRUE
   )
   
-  reps_this_chunk <- rep_chunks[[chunk_id]]
+  E <- matrix(rnorm(N * p), N, p) * sqrt(ThetaVar_Np)
   
-  DESIGN <- DESIGN %>%
-    dplyr::filter(rep_id %in% reps_this_chunk)
+  X <- Nu_Np + Lambda_Np * eta + E
+  
+  colnames(X) <- paste0("x", 1:p)
+  
+  data <- as.data.frame(X)
+  
+  data$m1   <- m1
+  data$hm1  <- hm1
+  data$m2   <- m2
+  data$hm2  <- hm2
+  data$hm12 <- hm12
+  data$m0   <- m0
+  data$hm0  <- hm0
+  
+  out <- list(
+    data = data,
+    params = params
+  )
+  
+  if (return_latent) {
+    out$eta <- eta
+  }
+  
+  out
 }
+#-------------------------------------------------------------------------------
 
-}
+n_rep <- 1000
 
-# --------------------------------------------------------------
+SENSITIVITY_DESIGN <- tidyr::expand_grid(
+  popmodel     = c("1.1", "1.11", "1.12"),
+  N            = c(500, 1000),
+  reliability  = 0.75,
+  lambda       = 0.70,
+  intercepts   = 1,
+  delta_lambda = 0.10,
+  delta_nu     = 0.25,
+  moderator    = c("linear", "quadratic", "sigmoid"),
+  method       = c("SEMTREE", "MNLFA", "MNLFAQ"),
+  rep_id       = seq_len(n_rep),
+  num_noisy_predictors = 0
+) %>%
+  mutate(
+    sensitivity_case = "low_effect_sd_matched",
+    job_id = row_number(),
+    seed = sample.int(.Machine$integer.max, n(), replace = TRUE)
+  )
+
+
+#-------------------------------------------------------------------------------
 mnlfa_moderation_estimate_names <- function(p = 4) {
   base_names <- c(
     "mnlfa_est_dnu_am1",
@@ -161,15 +223,30 @@ mnlfa_moderation_estimate_names <- function(p = 4) {
     "mnlfa_est_dlambda_am2",
     "mnlfa_est_dlambda_am12"
   )
-  as.vector(outer(base_names, paste0("x", seq_len(p)), paste, sep = "_"))
+  
+  as.vector(
+    outer(base_names, paste0("x", seq_len(p)), paste, sep = "_")
+  )
 }
+
 
 empty_mnlfa_moderation_estimates <- function(p = 4) {
+  
   cols <- mnlfa_moderation_estimate_names(p = p)
-  tibble::as_tibble(as.list(stats::setNames(rep(NA_real_, length(cols)), cols)))
+  
+  tibble::as_tibble(
+    as.list(
+      stats::setNames(
+        rep(NA_real_, length(cols)),
+        cols
+      )
+    )
+  )
 }
 
+
 flatten_mnlfa_moderation_estimates <- function(mnlfa_result, p = 4) {
+  
   out <- empty_mnlfa_moderation_estimates(p = p)
   
   if (inherits(mnlfa_result, "error") ||
@@ -194,188 +271,18 @@ flatten_mnlfa_moderation_estimates <- function(mnlfa_result, p = 4) {
     )
   
   out[names(out)] <- est_wide[names(out)]
+  
   out
 }
 
-# ---------------- KL divergence diagnostics for MNLFA -----------------------
 
-kl_mvn <- function(mu_true, Sigma_true, mu_model, Sigma_model) {
-  p <- length(mu_true)
+get_tree_predictors <- function(
+    popmodel,
+    noisy_predictor_names = character(0)) {
   
-  mu_true <- as.numeric(mu_true)
-  mu_model <- as.numeric(mu_model)
-  Sigma_true <- as.matrix(Sigma_true)
-  Sigma_model <- as.matrix(Sigma_model)
-  
-  det_true  <- determinant(Sigma_true, logarithm = TRUE)
-  det_model <- determinant(Sigma_model, logarithm = TRUE)
-  if (det_true$sign <= 0 || det_model$sign <= 0) return(NA_real_)
-  
-  inv_model <- solve(Sigma_model)
-  diff <- matrix(mu_model - mu_true, ncol = 1)
-  
-  out <- 0.5 * (
-    sum(diag(inv_model %*% Sigma_true)) +
-      as.numeric(t(diff) %*% inv_model %*% diff) -
-      p +
-      as.numeric(det_model$modulus) -
-      as.numeric(det_true$modulus)
-  )
-  
-  as.numeric(out)
-}
-
-true_dgm_moments <- function(data, params) {
-  p <- length(grep("^x\\d+$", names(data), value = TRUE))
-  
-  lambda0 <- params$lambda
-  nu0     <- params$nu
-  rel     <- params$reliability
-  psi     <- params$psi
-  mu_eta  <- params$mu_eta
-  popmodel <- params$popmodel
-  
-  dlam <- params$delta_lambda
-  dnu  <- params$delta_nu
-  
-  dlam1 <- dlam2 <- dlam12 <- rep(0, p)
-  dnu1  <- dnu2  <- dnu12  <- rep(0, p)
-  
-  if (popmodel == "0" || popmodel == "NULL") {
-    # no moderation
-  } else if (popmodel == "1.1") {
-    dlam1[] <- dlam
-  } else if (popmodel == "1.11") {
-    dnu1[] <- dnu
-  } else if (popmodel == "1.12") {
-    dlam1[] <- dlam
-    dnu1[]  <- dnu
-  } else if (popmodel == "1.2") {
-    dlam1[1:2] <- dlam
-  } else if (popmodel == "1.21") {
-    dnu1[1:2] <- dnu
-  } else if (popmodel == "1.22") {
-    dlam1[1:2] <- dlam
-    dnu1[1:2]  <- dnu
-  } else if (popmodel == "1.3") {
-    dlam1[]  <- dlam
-    dlam2[]  <- dlam
-    dlam12[] <- dlam^2
-  } else if (popmodel == "1.32") {
-    dlam1[] <- dlam
-    dnu2[]  <- dnu
-  } else {
-    stop("Unknown popmodel: ", popmodel)
-  }
-  
-  theta0 <- (lambda0^2 * psi * (1 - rel)) / rel
-  
-  lapply(seq_len(nrow(data)), function(i) {
-    lambda_i <- rep(lambda0, p) +
-      data$hm1[i]  * dlam1 +
-      data$hm2[i]  * dlam2 +
-      data$hm12[i] * dlam12
-    
-    nu_i <- rep(nu0, p) +
-      data$hm1[i]  * dnu1 +
-      data$hm2[i]  * dnu2 +
-      data$hm12[i] * dnu12
-    
-    Sigma_i <- lambda_i %*% t(lambda_i) * psi + diag(theta0, p)
-    mu_i <- nu_i + lambda_i * mu_eta
-    
-    list(mu = as.numeric(mu_i), Sigma = Sigma_i)
-  })
-}
-
-model_mnlfa_moments <- function(fit, data) {
-  p <- length(grep("^x\\d+$", names(data), value = TRUE))
-  pars_free <- OpenMx::omxGetParameters(fit, free = TRUE)
-  pars_all  <- OpenMx::omxGetParameters(fit, free = FALSE)
-  
-  get <- function(name, default = 0) {
-    candidates <- c(name, paste0(fit$name, ".", name))
-    for (nm in candidates) {
-      if (nm %in% names(pars_free)) return(unname(pars_free[nm]))
-      if (nm %in% names(pars_all))  return(unname(pars_all[nm]))
-    }
-    
-    default
-  }
-  
-  get_mat <- function(prefix, nrow, ncol) {
-    matrix(
-      vapply(seq_len(nrow * ncol), function(k) {
-        r <- ((k - 1) %% nrow) + 1
-        c <- ((k - 1) %/% nrow) + 1
-        get(paste0(prefix, "[", r, ",", c, "]"))
-      }, numeric(1)),
-      nrow = nrow,
-      ncol = ncol
-    )
-  }
-  
-  T0  <- get_mat("matT0", 1, p)
-  B1  <- get_mat("matB1", 1, p)
-  B2  <- get_mat("matB2", 1, p)
-  B12 <- get_mat("matB12", 1, p)
-  
-  L0  <- get_mat("matL0", p, 1)
-  C1  <- get_mat("matC1", p, 1)
-  C2  <- get_mat("matC2", p, 1)
-  C12 <- get_mat("matC12", p, 1)
-  
-  E0 <- diag(get_mat("matE0", p, p))
-  D1 <- diag(get_mat("matD1", p, p))
-  D2 <- diag(get_mat("matD2", p, p))
-  
-  G1 <- get("matG1[1,1]", 0)
-  G2 <- get("matG2[1,1]", 0)
-  
-  lapply(seq_len(nrow(data)), function(i) {
-    am1  <- data$am1[i]
-    am2  <- data$am2[i]
-    am12 <- data$am12[i]
-    
-    T_i <- as.numeric(T0 + B1 * am1 + B2 * am2 + B12 * am12)
-    L_i <- as.numeric(L0 + C1 * am1 + C2 * am2 + C12 * am12)
-    
-    A_i <- G1 * am1 + G2 * am2
-    E_i <- diag(E0 * exp(D1 * am1 + D2 * am2), p)
-    
-    list(
-      mu = as.numeric(T_i + as.numeric(A_i) * L_i),
-      Sigma = L_i %*% t(L_i) + E_i
-    )
-  })
-}
-
-average_kl_mnlfa <- function(data, params, fit) {
-  if (is.null(fit) || inherits(fit, "error")) return(NA_real_)
-  if (is.null(fit$output$status$code) || fit$output$status$code != 0) return(NA_real_)
-  
-  true_mom <- true_dgm_moments(data, params)
-  mod_mom  <- model_mnlfa_moments(fit, data)
-  
-  kl_values <- vapply(seq_along(true_mom), function(i) {
-    tryCatch(
-      kl_mvn(
-        mu_true     = true_mom[[i]]$mu,
-        Sigma_true  = true_mom[[i]]$Sigma,
-        mu_model    = mod_mom[[i]]$mu,
-        Sigma_model = mod_mom[[i]]$Sigma
-      ),
-      error = function(e) NA_real_
-    )
-  }, numeric(1))
-  
-  if (all(is.na(kl_values))) return(NA_real_)
-  mean(kl_values, na.rm = TRUE)
-}
-# ---------------------------------------------------------------------------
-get_tree_predictors <- function(popmodel, noisy_predictor_names = character(0)) {
   base_predictors <- switch(
     as.character(popmodel),
+    
     "0"    = "am1",
     "1.1"  = "am1",
     "1.11" = "am1",
@@ -385,16 +292,20 @@ get_tree_predictors <- function(popmodel, noisy_predictor_names = character(0)) 
     "1.22" = "am1",
     "1.3"  = c("am1", "am2"),
     "1.32" = c("am1", "am2"),
+    
     stop("Unknown popmodel: ", popmodel)
   )
   
-  unique(c(base_predictors, noisy_predictor_names))
+  unique(c(
+    base_predictors,
+    noisy_predictor_names
+  ))
 }
-##############################################################################
-run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator) 
-
+#-------------------------------------------------------------------------------
+run_one_sens <- function(row) { #run_one_sens <- function(seed, N, popmodel, moderator) 
+  
   set.seed(row$seed)
-
+  
   popmodel_use <- row$popmodel
   
   # ---------------------------
@@ -408,7 +319,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     delta_nu      = row$delta_nu
   )
   
-  sim <- gen_dataC(
+  sim <- gen_dataC_sensitivity(
     N = row$N,
     params = params
   )
@@ -468,7 +379,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
   } else {
     NULL
   }
-
+  
   # truth indicators
   # ---------------------------
   has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3", "1.32")
@@ -577,7 +488,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
               is.na(mnlfa_scalar_lrt_reject))) {
     mnlfa_final_decision <- "scalar_invariance_retained_lrt"
   }
-
+  
   true_structured_moderator <- row$moderator != "noise"
   
   true_metric_noninvariance <- has_metric &&
@@ -693,7 +604,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     true_metric_moderators <- character(0)
     true_scalar_moderators <- character(0)
     
-
+    
     if (true_structured_moderator) {
       if (row$popmodel %in% c("1.1", "1.12", "1.2", "1.22")) {
         true_metric_moderators <- c(true_metric_moderators, "am1")
@@ -737,7 +648,7 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
       any(tree_scalar_selected %in% true_scalar_moderators)
     }
   }
-
+  
   
   # ---------------------------
   tibble(
@@ -828,154 +739,108 @@ run_one <- function(row) { #run_one <- function(seed, N, popmodel, moderator)
     mnlfa_error_msg = as.character(mnlfa_error_msg),
     semtree_error_msg = as.character(semtree_error_msg)
   ) %>%
-  dplyr::bind_cols(mnlfa_mod_est)
-
-  }
-# ---- SAFE RUN ONE --------------------------
-
-safe_run_one <- function(row) {
-  tryCatch(
-    run_one(row),
-    error = function(e) {
-      message("Error in job ", row$job_id, ": ", e$message)
-      
-      has_metric <- row$popmodel %in% c("1.1", "1.12", "1.2", "1.22", "1.3","1.32")
-      has_scalar <- row$popmodel %in% c("1.11", "1.12", "1.21", "1.22","1.32")
-      
-      true_structured_moderator <- row$moderator != "noise"
-      
-      true_metric_noninvariance <- has_metric &&
-        row$delta_lambda != 0 &&
-        true_structured_moderator
-      
-      true_scalar_noninvariance <- has_scalar &&
-        row$delta_nu != 0 &&
-        true_structured_moderator
-      
-      true_any_noninvariance <- true_metric_noninvariance ||
-        true_scalar_noninvariance
-      
-      tibble(
-        job_id         = as.integer(row$job_id),
-        popmodel       = as.character(row$popmodel),
-        N              = as.integer(row$N),
-        reliability    = as.numeric(row$reliability),
-        lambda         = as.numeric(row$lambda),
-        intercepts     = as.numeric(row$intercepts),
-        delta_lambda   = as.numeric(row$delta_lambda),
-        delta_nu       = as.numeric(row$delta_nu),
-        moderator      = as.character(row$moderator),
-        method = as.character(row$method),
-        analysis_form = if (row$method == "MNLFAQ") {
-          "quadratic"
-        } else if (row$method %in% c("MNLFA", "SEMTREE")) {
-          "linear"
-        } else {
-          NA_character_
-        },
-        rep_id = as.integer(row$rep_id),
-        
-        true_any_noninvariance    = as.logical(true_any_noninvariance),
-        true_metric_noninvariance = as.logical(true_metric_noninvariance),
-        true_scalar_noninvariance = as.logical(true_scalar_noninvariance),
-        true_structured_moderator = as.logical(true_structured_moderator),
-        
-        mnlfa_model = NA_character_,
-        mnlfa_det = NA,
-        
-        mnlfa_final_decision = NA_character_,
-        
-        mnlfa_metric_lrt_chisq = NA_real_,
-        mnlfa_metric_lrt_df = NA_real_,
-        mnlfa_metric_lrt_p = NA_real_,
-        mnlfa_metric_lrt_reject = NA,
-        
-        mnlfa_scalar_lrt_chisq = NA_real_,
-        mnlfa_scalar_lrt_df = NA_real_,
-        mnlfa_scalar_lrt_p = NA_real_,
-        mnlfa_scalar_lrt_reject = NA,
-        
-        mnlfa_omnibus_lrt_chisq = NA_real_,
-        mnlfa_omnibus_lrt_df = NA_real_,
-        mnlfa_omnibus_lrt_p = NA_real_,
-        mnlfa_omnibus_lrt_reject = NA,
-        
-        mnlfa_kl_configural = NA_real_,
-        mnlfa_kl_metric = NA_real_,
-        mnlfa_kl_scalar = NA_real_,
-        
-        tree_metric_split = NA,
-        tree_scalar_split = NA,
-        
-        tree_metric_p = NA_real_,
-        tree_metric_p_uncorrected = NA_real_,
-        tree_metric_reject = NA,
-        
-        tree_scalar_p = NA_real_,
-        tree_scalar_p_uncorrected = NA_real_,
-        tree_scalar_reject = NA,
-        
-        tree_metric_split_on_am1 = NA,
-        tree_metric_split_on_am2 = NA,
-        tree_metric_split_on_m0 = NA,
-        tree_metric_n_splits_am1 = NA_integer_,
-        tree_metric_n_splits_am2 = NA_integer_,
-        tree_metric_n_splits_m0 = NA_integer_,
-        
-        tree_scalar_split_on_am1 = NA,
-        tree_scalar_split_on_am2 = NA,
-        tree_scalar_split_on_m0 = NA,
-        tree_scalar_n_splits_am1 = NA_integer_,
-        tree_scalar_n_splits_am2 = NA_integer_,
-        tree_scalar_n_splits_m0 = NA_integer_,
-        
-        tree_metric_correct_split = NA,
-        tree_scalar_correct_split = NA,
-        tree_metric_split_on_noisy = NA,
-        tree_scalar_split_on_noisy = NA,
-        
-        mnlfa_error_msg = NA_character_,
-        semtree_error_msg = NA_character_,
-        error_msg = conditionMessage(e)
-      )%>%
-    dplyr::bind_cols(empty_mnlfa_moderation_estimates(p = 4))
-    }
-  )
+    dplyr::bind_cols(mnlfa_mod_est)
+  
 }
 
-#############################################
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#TEST_DESIGN <- SENSITIVITY_DESIGN %>%
+#  filter(
+#    popmodel == "1.1",
+#    N == 500,
+#    moderator == "linear"
+#  ) %>%
+#  slice_head(n = 3)
+#
+#test_results <- lapply(
+#  seq_len(nrow(TEST_DESIGN)),
+#  function(i) {
+#    run_one_sens(TEST_DESIGN[i, ])
+#  }
+#) %>%
+#  bind_rows()
+
+#test_results %>%
+#  select(
+#    popmodel,
+#    N,
+#    moderator,
+#    method,
+#    mnlfa_metric_lrt_reject,
+#    tree_metric_reject,
+#    error_msg,
+#    mnlfa_error_msg,
+#    semtree_error_msg
+#  )
+#----------------------------------------
+#TEST_DESIGN1 <- SENSITIVITY_DESIGN %>%
+#  filter(
+#    popmodel == "1.1",
+#    N == 500,
+#    moderator == "linear",
+#    rep_id == 1
+#  )
+
+#test_results <- lapply(
+#  seq_len(nrow(TEST_DESIGN1)),
+#  function(i) {
+#    run_one_sens(TEST_DESIGN1[i, ])
+#  }
+#) %>%
+#  bind_rows()
+
+#test_results %>%
+#  select(
+#    popmodel,
+#    N,
+#    moderator,
+#    method,
+#    analysis_form,
+#    mnlfa_metric_lrt_reject,
+#    mnlfa_scalar_lrt_reject,
+#    tree_metric_reject,
+#    tree_scalar_reject,
+#    error_msg,
+#    mnlfa_error_msg,
+#    semtree_error_msg
+#  )
+#----------------------------------------------------
+#TEST_DESIGN <- SENSITIVITY_DESIGN %>%
+#  filter(
+#    popmodel == "1.1",
+#    N == 500,
+#    rep_id == 1
+#  )
+#-------------------------------------------------------------------------------
 
 n_workers <- max(1, parallelly::availableCores() - 1)
 
 plan(multisession, workers = n_workers)
 
-
-
-
-
-# -- Start Simulation --
+# -- Start Sensitivity Simulation --
 
 t1 <- Sys.time()
 
-# run across all rows (use future package's parallelization)
-results <- future.apply::future_sapply(seq_len(nrow(DESIGN)), function(i) {
-  run_one(DESIGN[i, , drop = FALSE])
-},simplify = TRUE)
+results_sensitivity <- future.apply::future_sapply(
+  seq_len(nrow(SENSITIVITY_DESIGN)),
+  function(i) {
+    run_one_sens(SENSITIVITY_DESIGN[i, , drop = FALSE])
+  },
+  simplify = TRUE
+)
 
-results <- t(results)
+results_sensitivity <- t(results_sensitivity)
 
 t2 <- Sys.time()
 
-elapsed_total_min <- as.numeric(difftime(t2, t1, units = "mins"))
+elapsed_total_min <- as.numeric(
+  difftime(t2, t1, units = "mins")
+)
+
 elapsed_total_min
 
-if (is.null(chunk_id)) {
-  saveRDS(results, "results_parallel.rds")
-} else {
-  saveRDS(results, paste0("results_parallel_",chunk_id,"_of_",n_chunks,".rds"))
-}
-
-# this should be done later in a 
-# collection script
-#append_results(results, results_path)
-########################################
+saveRDS(
+  results_sensitivity,
+  "results_sensitivity_parallel.rds"
+)
