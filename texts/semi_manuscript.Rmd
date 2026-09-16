@@ -84,8 +84,9 @@ Establishing scalar invariance is required for meaningful comparisons of latent 
 _Residual_ or _strict invariance_ assumes, additionally to the constraints above, that variables residuals are equal across the groups. 
 If residual variance holds, the items of the scale are measuring the latent constructs with the same measurement error. 
 This implies that it can indeed be known whether differences measured by the items of the tested scale between the groups are due to group differences in the proposed factors or due to measurement errors [@Cheung2002; @Widaman1997]. 
+
 The appropriate level of invariance required depends on the substantive inference of interest. 
-For example, scalar invariance is generally required when comparing latent means across groups, whereas less restrictive forms of invariance may be sufficient for research questions about correlations [@Putnick2016]. 
+For example, metric invariance is generally required when comparing latent means across groups, whereas less restrictive forms of invariance may be sufficient for research questions about correlations [@Putnick2016]. 
 
 In MGCFA, MI testing depends on the specified measurement model and grouping variable.
 Accordingly, measurement noninvariance (MNI) can only be detected with respect to the grouping variables included in the analysis. 
@@ -93,75 +94,62 @@ This framework is well suited to settings in which theory implies meaningful dis
 However, many characteristics that may affect measurement functioning vary continuously across individuals. 
 Converting such characteristics into predefined groups may require arbitrary cutoffs and obscure relevant variation in measurement parameters.
 
-<!-- Add an empirical example, for easier understanding, that is used through ot the methods as reference point on how they differ in their understanding and how they deal differently with that example case ( maybe something that also would fit the simulated measurement models) Maybe SHS ? -->
-
 Additionally, categorization may obscure how measurement parameters vary along the underlying continuous characteristic. 
-Methods for representing heterogeneity in measurement parameters across continuous covariates are therefore needed when neither discrete groups nor the functional form of parameter variation can be specified a priori.
-<!--
-Those limitations of group-based approaches to MI reflect a broader issue concerning the representation of individual differences in psychological research. 
-Developmental and lifespan perspectives have long emphasized that psychological processes often vary continuously across individuals rather than occurring in discrete categories. 
-In particular, lifespan theories highlight interindividual differences in intraindividual change and conceptualize heterogeneity as a fundamental characteristic of human development [@Baltes1987; @Baltes2007]. 
+Methods for representing heterogeneity in measurement parameters across continuous covariates are therefore needed when neither discrete groups nor the functional form of parameter variation can be specified a priori. 
 
-In line with the argument from @Nesselroade, that understanding psychological processes requires statistical models capable of representing systematic individual differences, heterogeneity is an important source of substantive information in its own right [@Nesselroade1991; @Nesselroade2001].
--->
 ## Moderated Nonlinear Factor Analysis 
-<!-- 
-Related arguments have also been made within latent-variable modeling frameworks.  
-Consistent with lifespan-developmental perspectives emphasizing individual heterogeneity, @Little1997 argued that substantive psychological questions frequently concern individual differences in developmental and psychological processes and therefore require statistical models capable of representing systematic heterogeneity among individuals. 
-Rather than assuming homogeneous relations between latent constructs and observed indicators within broad groups, this perspective encourages the examination of how these relations may vary as a function of individual characteristics [@Little1997]. 
-Viewed from this perspective, MNI can be understood as a manifestation of systematic individual differences in the measurement process itself. 
-Maybe we could include this conceptual tie somehow, if this is too far away and would broaden this manuscript too much, we could also again kick it -->
+
 Moderated nonlinear factor analysis (MNLFA) meets this requirement by modeling factor loadings, intercepts, and other measurement parameters as functions of observed covariates, including continuous characteristics [@Bauer2009; @Bauer2017]. 
 In this way, MNLFA extends conventional group-based invariance testing by representing measurement heterogeneity without imposing arbitrary group boundaries.
-Then, MNI is conceptualized as moderation of the measurement model itself. 
-If measurement parameters differ as a function of the moderator, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
+MNI is conceptualized as moderation of the measurement model itself by variables exogenous to the model. 
+If measurement parameters differ as a function of these moderator variables, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
 
-Whether MI is present depends on which parameters are moderated by exogenous variables. 
+Hence, whether MI is present depends on which parameters are moderated by the exogenous variables. 
 The exogenous variables may moderate any subset of the parameters in the measurement model and structural model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable [@Bauer2009; @Bauer2017]. 
 If moderation is limited to the latent-factor parameters, that is, the means, variances, and covariance, the model remains consistent with MI. 
 In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI [@Bauer2017; @Kolbe2024]. 
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
-Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches [@Bauer2009; @Kolbe2024].
+Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches [@Bauer2009; @Kolbe2024]. 
 
 This increased flexibility comes at the cost of greater specification requirements. 
-Like MGCFA, MNLFA constitutes a fundamentally confirmatory approach to the assessment of MI [@Bauer2017]. 
+Like MGCFA, MNLFA constitutes a confirmatory approach to the assessment of MI [@Bauer2017]. 
 In practice, at least three sets of decisions are required. 
 First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. 
 Second, one or more moderator variables must be selected to represent potential sources of heterogeneity in the measurement process. 
 Third, moderation functions must be specified for all parameters that are allowed to vary as a function of the moderator. 
 This includes determining which parameters are moderated as well as specifying the functional form of each moderation effect (e.g., linear, quadratic, or another parametric form). 
 Consequently, the detection of MNI depends not only on the choice of moderator variables but also on the assumptions made about how these moderators influence the model parameters [@Bauer2009; @Bauer2017].
-Taken together, MLNFA is a parametric framework for investigating continuous moderators of the measurement model. 
+  
 This specification becomes challenging when there is limited prior knowledge about which candidate covariates are associated with measurement parameters, which parameters exhibit heterogeneity, or what functional forms characterize these relationships. 
 Such settings motivate methods that can explore parameter heterogeneity without requiring these moderation relationships to be fully specified a priori. 
 
-## Structural Equation Model Trees
+## Structural Equation Model Trees 
 
 Structural Equation Model trees (SEM trees) were originally introduced by Brandmaier et al. (2013) as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g., by identifying moderators of model parameters in a SEM. 
 Subsequent developments further refined the methodology and expanded its applicability (Arnold et al., 2021; Brandmaier et al., 2016). 
 Notably, although MI was used as an illustrative application by Arnold et al. (2021), SEM Trees were not originally developed as a dedicated method for testing MI and have received relatively little attention as tools for detecting MNI. 
 Because violations of MI manifest as systematic heterogeneity in measurement parameters, SEM trees appear conceptually well suited for detecting such effects.
 
-SEM trees merge two paradigms: SEMs and on decision trees. 
+SEM trees merge two paradigms: SEMs and decision trees. 
 Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
 SEM Trees combine the hierarchical structure of decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
 Unlike many other tree-based methods, SEM Trees can be applied to models that include latent variables. 
 
-In contrast to MGCFA and MNLFA, SEM trees represent a more exploratory approach to the assessment of MI. 
+In contrast to MGCFA and MNLFA, SEM trees represent a rather exploratory approach to the assessment of MI. 
 Similar to these methods, SEM trees require the researcher to specify a measurement model a priori.
 Beyond this, however, the researcher only needs to provide a set of candidate variables that may account for heterogeneity in the data. 
 These variables may be numerous and can be either categorical or continuous.   
 Similar to MGCFA, researchers first specify a measurement model and identify variables that may account for heterogeneity. 
 The crucial difference is that MGCFA requires the researcher to select a specific categorical grouping variable, whereas SEM trees can evaluate a large set of candidate variables simultaneously and determine which, if any, are associated with violations of MI. 
-Moreover, SEM trees can accommodate heterogeneity generated by nonlinear forms of moderation without requiring the dunctional form to be specified parametrically, by representing such heterogeneity through recursive partitioning.
+Moreover, SEM trees can accommodate heterogeneity generated by nonlinear forms of moderation without requiring the functional form to be specified parametrically, by representing such heterogeneity through recursive partitioning.
 
 Hence, SEM trees combine a theory-driven measurement model with a data-driven search for heterogeneity. 
 This makes them especially valuable when researchers have a well-established measurement model but little prior knowledge about where MNI may arise or what form it may take. 
-At the same time, the approach remains closely aligned with familiar MGCFA practice, making SEM trees a comparatively accessible extension of conventional MI analysis.
+The researcher decision structure of this approach remains closely aligned with familiar MGCFA practice, making SEM trees a comparatively accessible extension of conventional MI analysis.
 
-At the same time, SEM trees offer substantially greater flexibility by accommodating multiple candidate moderators, continuous and categorical partitioning variables, and potentially nonlinear forms of heterogeneity, given the sample size is large enough to detect such effects. 
-Although explicit specification of moderators and moderation functions remains advantageous when strong theoretical expectations are available, SEM trees provide a complementary strategy for situations in which the sources or functional forms of heterogeneity are uncertain. 
+This highlights, that SEM trees can offer substantially greater flexibility by accommodating multiple candidate moderators, continuous and categorical partitioning variables, and potentially nonlinear forms of heterogeneity, given the sample size is large enough to detect such effects. 
+Although explicit specification of moderators and moderation functions remains advantageous when strong theoretical expectations are available, SEM trees could provide a complementary strategy for situations in which the sources or functional forms of heterogeneity are uncertain. 
 
 ## Present Study 
 
