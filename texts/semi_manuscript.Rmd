@@ -25,7 +25,7 @@ classoption:
 header-includes:
   - \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
   - |
-    \abstract{Your abstract text goes here.}
+    \abstract{Abstract text goes here.}
   - |
   - \keywords{Measurement invariance, moderated nonlinear factor analysis, structural equation model trees, continuous moderators, Monte Carlo simulation}
   - \usepackage{placeins}
@@ -44,15 +44,11 @@ lang: american
 ---
 
 Meaningful comparisons between individuals or groups of individuals depend on the assumption that psychological constructs are measured in the same way across various contexts. 
-Unlike weight or height of a person, constructs such as intelligence, attitudes, or personality traits are not directly observable. Instead, researchers infer them from patterns of responses to observed indicators using measurement models. 
-Ensuring that these measurements operate equivalently is therefore a prerequisite for valid scientific conclusions.
+Unlike weight or height of a person, latent constructs such as intelligence, attitudes, or personality traits are not directly observable. Instead, researchers infer them from responses to observed indicators using measurement models. 
+Ensuring that these measurements operate equivalently is therefore a prerequisite for valid scientific conclusions. 
 
-Recent methodological discussion have highlighted the need for better statistical methods [@Flake2017; @Haig2020; @Altoe2020] as well as more explicit theoretical foundations in psychology [@Eronen2021]. 
-Although these discussions often focus on issues of statistical inference or theory construction, both ultimately depend on the quality of measurement. 
-
-As a consequence, neither statistical sophistication nor a strong theoretical framework can compensate for inadequate measurement. 
 When a measure fails to represent the intended construct or functions differently across individuals, groups, or contexts, even highly rigorous analyses may produce misleading conclusions [@Flake2020; @Flake2017]. 
-Thus, a pivotal aspect of measurement quality is _measurement invariance_ (MI), which refers to the assumption that a measurement model operates equivalently across individuals, groups, contexts, or measurement occasions. 
+Thus, a central aspect of measurement quality is _measurement invariance_ (MI), which refers to the assumption that a measurement model operates equivalently across individuals, groups, contexts, or measurement occasions. 
 
 When MI holds, the relationship between a latent construct and its observed indicators remains stable across the conditions being compared [@Meredith1993]. 
 Thus, assuming MI is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
@@ -61,7 +57,8 @@ In such cases, differences in observed responses may not solely reflect differen
 Consequently, observed group differences become ambiguous, as they may represent a combination of substantive construct differences and measurement-related distortions [@Cheung2002; @Meredith1993].-->
 Conversely, violations of MI indicate that observed differences may reflect not only substantive differences in the underlying construct but also systematic differences in item functioning or measurement precision [@Cheung2002; @Meredith1993]. 
 Without establishing MI, it is therefore impossible to determine whether observed differences reflect true differences in the latent construct or artifacts of the measurement process.
-Consequently, MI is not only a methodological requirement but also a prerequisite for valid theoretical interpretation.
+Consequently, MI is not only a methodological requirement but also a prerequisite for valid theoretical interpretation. 
+
 <!-- foreshadowing - drinnen lassen?-->
 Conventional approaches to MI typically represent heterogeneity in measurement parameters through predefined groups or discrete conditions. 
 This representation becomes restrictive when candidate sources of measurement heterogeneity are continuous, such as age or other individual characteristics, particularly when the functional relationships between these covariates and measurement parameters are unknown. 
@@ -613,12 +610,30 @@ For the MNLFA and SEM-tree analyses, the sample was further restricted to partic
 Age was standardized within the resulting analysis sample. 
 The final analysis sample comprised $N=65{,}214$ participants.
 
-## Software
+## Transparency and Openness 
+<!-- 
+- availability of data 
+- availability of code 
+- availability of materials 
+- citation to secondary data/code/materials (including citations of statistical software and packages) 
+- reporting standards 
+- preregistration of study designs 
+- preregistration of analysis plans. 
+-->
+<!--
+We report how we determined our sample size, all data exclusions, all manipulations, and all measures in the study, and we follow JARS (Kazak, 2018). 
+-->
+All data generating code, analysis code, and research materials are available at [https://github.com/LeonieHagitte/SEMi]. 
+This study's design and its analysis were pre-registered, following the ADEMP preregistration template (@Siepe2024), at Zenodo (10.5281/zenodo.19891929).
+For the empirical example we used the ninth wave data of SHARE, which is not openly available, but can be requested. 
 
-All simulations were conducted in R [@Rteam2025]. 
+### Software 
+
+All simulations and data analyses were conducted in R [@Rteam2025]. 
 MNLFA models were estimated using `OpenMx` [@Boker2026] with raw-data maximum likelihood and definition variables. 
-Score-based SEM trees were estimated using the `semtree` package [@Arnold2021]. <!--[TODO: AB->LH: Es gibt eine eigene Package citation!]-->
+Score-based SEM trees were estimated using the `semtree` package [@semtree2026].
 Simulation design construction, data handling, aggregation, and visualization did rely on `dplyr`[@dplyr2026], `tidyr` [@tidyr2025], `tibble` [@tibble2026], `purrr` [@purrr2026], `future` [@future2021], `parallel` [@Rteam2025], and `ggplot2` [@ggplot2016].
+
 
 # Results 
 

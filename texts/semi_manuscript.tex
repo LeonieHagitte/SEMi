@@ -124,7 +124,7 @@
 
 \shorttitle{SEMI-COMPLETE BY DESIGN}
 \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
-\abstract{Your abstract text goes here.}
+\abstract{Abstract text goes here.}
 
 \keywords{Measurement invariance, moderated nonlinear factor analysis, structural equation model trees, continuous moderators, Monte Carlo simulation}
 \usepackage{placeins}
@@ -158,25 +158,16 @@ Model Trees}
 Meaningful comparisons between individuals or groups of individuals
 depend on the assumption that psychological constructs are measured in
 the same way across various contexts. Unlike weight or height of a
-person, constructs such as intelligence, attitudes, or personality
-traits are not directly observable. Instead, researchers infer them from
-patterns of responses to observed indicators using measurement models.
-Ensuring that these measurements operate equivalently is therefore a
-prerequisite for valid scientific conclusions.
+person, latent constructs such as intelligence, attitudes, or
+personality traits are not directly observable. Instead, researchers
+infer them from responses to observed indicators using measurement
+models. Ensuring that these measurements operate equivalently is
+therefore a prerequisite for valid scientific conclusions.
 
-Recent methodological discussion have highlighted the need for better
-statistical methods (Flake et al. 2017; Haig 2020; Altoè et al. 2020) as
-well as more explicit theoretical foundations in psychology (Eronen and
-Bringmann 2021). Although these discussions often focus on issues of
-statistical inference or theory construction, both ultimately depend on
-the quality of measurement.
-
-As a consequence, neither statistical sophistication nor a strong
-theoretical framework can compensate for inadequate measurement. When a
-measure fails to represent the intended construct or functions
+When a measure fails to represent the intended construct or functions
 differently across individuals, groups, or contexts, even highly
 rigorous analyses may produce misleading conclusions (Flake and Fried
-2020; Flake et al. 2017). Thus, a pivotal aspect of measurement quality
+2020; Flake et al. 2017). Thus, a central aspect of measurement quality
 is \emph{measurement invariance} (MI), which refers to the assumption
 that a measurement model operates equivalently across individuals,
 groups, contexts, or measurement occasions.
@@ -196,19 +187,21 @@ is therefore impossible to determine whether observed differences
 reflect true differences in the latent construct or artifacts of the
 measurement process. Consequently, MI is not only a methodological
 requirement but also a prerequisite for valid theoretical
-interpretation. Conventional approaches to MI typically represent
-heterogeneity in measurement parameters through predefined groups or
-discrete conditions. This representation becomes restrictive when
-candidate sources of measurement heterogeneity are continuous, such as
-age or other individual characteristics, particularly when the
-functional relationships between these covariates and measurement
-parameters are unknown. In these settings, discretizing continuous
-covariates may obscure the form and location of measurement
-non-invariance, whereas imposing a prespecified functional relationship
-risks misspecifying the underlying heterogeneity. Thus, a central
-methodological problem is how to represent and detect heterogeneity in
-measurement parameters across continuous covariates without requiring
-either predefined groups or a known functional form.
+interpretation.
+
+Conventional approaches to MI typically represent heterogeneity in
+measurement parameters through predefined groups or discrete conditions.
+This representation becomes restrictive when candidate sources of
+measurement heterogeneity are continuous, such as age or other
+individual characteristics, particularly when the functional
+relationships between these covariates and measurement parameters are
+unknown. In these settings, discretizing continuous covariates may
+obscure the form and location of measurement non-invariance, whereas
+imposing a prespecified functional relationship risks misspecifying the
+underlying heterogeneity. Thus, a central methodological problem is how
+to represent and detect heterogeneity in measurement parameters across
+continuous covariates without requiring either predefined groups or a
+known functional form.
 
 \subsection{Classical Measurement Invariance
 Testing}\label{classical-measurement-invariance-testing}
@@ -965,15 +958,24 @@ participants with complete responses on all 12 CASP-12 items. Age was
 standardized within the resulting analysis sample. The final analysis
 sample comprised \(N=65{,}214\) participants.
 
-\subsection{Software}\label{software}
+\subsection{Transparency and Openness}\label{transparency-and-openness}
 
-All simulations were conducted in R (R Core Team 2025). MNLFA models
-were estimated using \texttt{OpenMx} (Boker et al. 2026) with raw-data
-maximum likelihood and definition variables. Score-based SEM trees were
-estimated using the \texttt{semtree} package (Arnold et al. 2021).
-Simulation design construction, data handling, aggregation, and
-visualization did rely on \texttt{dplyr}(Wickham et al. 2026),
-\texttt{tidyr} (Wickham et al. 2025), \texttt{tibble} (Müller and
+All data generating code, analysis code, and research materials are
+available at {[}\url{https://github.com/LeonieHagitte/SEMi}{]}. This
+study's design and its analysis were pre-registered, following the ADEMP
+preregistration template (Siepe et al. (2024)), at Zenodo
+(10.5281/zenodo.19891929). For the empirical example we used the ninth
+wave data of SHARE, which is not openly available, but can be requested.
+
+\subsubsection{Software}\label{software}
+
+All simulations and data analyses were conducted in R (R Core Team
+2025). MNLFA models were estimated using \texttt{OpenMx} (Boker et al.
+2026) with raw-data maximum likelihood and definition variables.
+Score-based SEM trees were estimated using the \texttt{semtree} package
+(Brandmaier et al. 2026). Simulation design construction, data handling,
+aggregation, and visualization did rely on \texttt{dplyr}(Wickham et al.
+2026), \texttt{tidyr} (Wickham et al. 2025), \texttt{tibble} (Müller and
 Wickham 2026), \texttt{purrr} (Wickham and Henry 2026), \texttt{future}
 (Bengtsson 2021), \texttt{parallel} (R Core Team 2025), and
 \texttt{ggplot2} (Wickham 2016).
@@ -1637,18 +1639,6 @@ explanations for when and why measurement properties differ.
 
 \protect\phantomsection\label{refs}
 \begin{CSLReferences}{1}{1}
-\bibitem[\citeproctext]{ref-Altoe2020}
-Altoè, Gianmarco, Giulia Bertoldo, Claudio Zandonella Callegher, et al.
-2020. {``Enhancing Statistical Inference in Psychological Research via
-Prospective and Retrospective Design Analysis.''} \emph{Frontiers in
-Psychology}, advance online publication.
-\url{https://doi.org/10.3389/fpsyg.2019.02893}.
-
-\bibitem[\citeproctext]{ref-Arnold2021}
-Arnold, M., M. C. Voelkle, and A. M. Brandmaier. 2021. {``Score-Guided
-Structural Equation Model Trees.''} \emph{Frontiers in Psychology} 11:
-3913. \url{https://doi.org/10.3389/fpsyg.2020.564403}.
-
 \bibitem[\citeproctext]{ref-Bauer2017}
 Bauer, D. J. 2017. {``A More General Model for Testing Measurement
 Invariance and Differential Item Functioning.''} \emph{Psychological
@@ -1708,17 +1698,16 @@ Borrat-Besson, Carmen, Valerie-Anne Ryser, and Judite Goncalves. 2015.
 and Retirement in Europe (SHARE) to Measure Quality of Life Among People
 Aged 50+}}. FORS Working Paper Series Nos. 2015-4. FORS.
 
+\bibitem[\citeproctext]{ref-semtree2026}
+Brandmaier, A. M., John J. Prindle, Manuel Arnold, and Caspar J. Van
+Lissa. 2026. \emph{Semtree: Recursive Partitioning for Structural
+Equation Models}. \url{https://github.com/brandmaier/semtree}.
+
 \bibitem[\citeproctext]{ref-Cheung2002}
 Cheung, Gordon W., and Roger B. Rensvold. 2002. {``Evaluating
 Goodness-of-Fit Indexes for Testing Measurement Invariance.''}
 \emph{Structural Equation Modeling: A Multidisciplinary Journal} 9 (2):
 233--55. \url{https://doi.org/10.1207/S15328007SEM0902/_5}.
-
-\bibitem[\citeproctext]{ref-Eronen2021}
-Eronen, Markus I., and Laura F. Bringmann. 2021. {``The Theory Crisis in
-Psychology: How to Move Forward.''} \emph{Perspectives on Psychological
-Science} 16 (4): 779--88.
-\url{https://doi.org/10.1177/1745691620970586}.
 
 \bibitem[\citeproctext]{ref-Flake2020}
 Flake, Jessica K., and Eiko I. Fried. 2020. {``Measurement
@@ -1744,12 +1733,6 @@ Goretzko, David, Matt C. Howard, and Philipp Sterner. 2026.
 Organizational Research Using Exploratory Factor Analysis and
 Confirmatory Factor Analysis Trees.''} \emph{Journal of Applied
 Psychology} 111 (8): 1037--53. \url{https://doi.org/10.1037/apl0001368}.
-
-\bibitem[\citeproctext]{ref-Haig2020}
-Haig, Brian D. 2020. {``What Can Psychology's Statistics Reformers Learn
-from the Error-Statistical Perspective?''} \emph{Methods in Psychology}
-2: 100020.
-https://doi.org/\url{https://doi.org/10.1016/j.metip.2020.100020}.
 
 \bibitem[\citeproctext]{ref-Kline2023}
 Kline, Rex B. 2023. {``Structural Equation Modeling.''} In \emph{The
@@ -1795,6 +1778,14 @@ Computing}. R Foundation for Statistical Computing.
 SHARE-ERIC. 2024. {``{Survey of Health, Ageing and Retirement in Europe
 (SHARE) Wave 9}.''} Version 9.0.0. SHARE-ERIC.
 \url{https://doi.org/10.6103/SHARE.w9.900}.
+
+\bibitem[\citeproctext]{ref-Siepe2024}
+Siepe, Björn S., František Bartoš, Tim P. Morris, Anne-Laure Boulesteix,
+Daniel W. Heck, and Samuel Pawel. 2024. {``Simulation Studies for
+Methodological Research in Psychology: A Standardized Structure for
+Planning, Preregistration, and Reporting.''} \emph{Psychological
+Methods}, advance online publication.
+\url{https://doi.org/10.1037/met0000695}.
 
 \bibitem[\citeproctext]{ref-Sterner2023}
 Sterner, P., and D. Goretzko. 2023. {``{Exploratory Factor Analysis
