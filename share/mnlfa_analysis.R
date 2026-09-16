@@ -707,6 +707,62 @@ casp_mnlfa$fitScalar$output$status$code
 casp_mnlfa$metric_lrt
 casp_mnlfa$scalar_lrt
 #----------------------------------------
+
+# ------------------------------------------------------------
+# MNLFA model-fit information
+# ------------------------------------------------------------
+
+get_mnlfa_fit <- function(fit, model_name) {
+  
+  npar <- length(
+    OpenMx::omxGetParameters(
+      fit,
+      free = TRUE
+    )
+  )
+  
+  minus2LL <- fit$output$fit
+  
+  tibble::tibble(
+    Model = model_name,
+    npar = npar,
+    minus2LL = minus2LL,
+    AIC = minus2LL + 2 * npar,
+    BIC = minus2LL + log(nrow(mnlfa_data)) * npar
+  )
+}
+
+mnlfa_fit_summary <- dplyr::bind_rows(
+  get_mnlfa_fit(
+    casp_mnlfa$fitConfig,
+    "Unrestricted"
+  ),
+  get_mnlfa_fit(
+    casp_mnlfa$fitMetric,
+    "Metric"
+  ),
+  get_mnlfa_fit(
+    casp_mnlfa$fitScalar,
+    "Scalar"
+  )
+)
+
+mnlfa_fit_summary
+#------------------------------------------------------------------------------
+mnlfa_fit_table <- mnlfa_fit_summary %>%
+  mutate(
+    minus2LL = round(minus2LL, 2),
+    AIC = round(AIC, 2),
+    BIC = round(BIC, 2)
+  )
+
+mnlfa_fit_table
+
+knitr::kable(
+  mnlfa_fit_table,
+  caption = "Fit statistics for the empirical MNLFA models."
+)
+#------------------------------------------------------------------------------
 mnlfa_pars <- OpenMx::omxGetParameters(
   casp_mnlfa$fitConfig,
   free = TRUE

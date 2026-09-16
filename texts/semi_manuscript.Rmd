@@ -1,7 +1,14 @@
 ---
-title: "SEMi-Manuscript"
+title: "Testing Measurement Invariance with Continuous Covariates: Comparing Moderated Nonlinear Factor Analysis and Structural Equation Model Trees"
 author: 'Leonie Hagitte$^{1,2,3}$, Andreas M. Brandmaier$^{2,3,4}$'
-date: "2025-12-10"
+date: "2026-09-16"
+
+keywords:
+  - Measurement invariance
+  - Moderated nonlinear factor analysis
+  - Structural equation model trees
+  - Continuous moderators
+  - Monte Carlo simulation
 
 output:
   pdf_document:
@@ -17,6 +24,10 @@ classoption:
 
 header-includes:
   - \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
+  - |
+    \abstract{Your abstract text goes here.}
+  - |
+  - \keywords{Measurement invariance, moderated nonlinear factor analysis, structural equation model trees, continuous moderators, Monte Carlo simulation}
   - \usepackage{placeins}
   - \usepackage{float}
   - \setlength{\textfloatsep}{6pt}
@@ -378,13 +389,17 @@ knitr::kable(
 )
 ```
 
-The combination of the nine population models, four functional forms, two loading-moderation magnitudes, two intercept-moderation magnitudes, and four sample sizes resulted in 576 data-generating design cells. 
-Each population condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees, yielding 1,728 method-specific design cells.
+### Primary and exploratory simulation conditions
 
-The simulation distinguished a primary method comparison from a separate candidate-selection robustness analysis. 
-In the primary comparison, the relevant data-generating moderator or moderators were supplied to the SEM trees as candidate partitioning variables. 
-Thus, the primary comparison did not require SEM trees to identify the relevant moderator from a larger set of irrelevant covariates. 
-Instead, it was designed to compare how the methods represent moderator-related parameter heterogeneity: MNLFA through prespecified parametric moderator functions and SEM trees through recursive partitioning of the moderator space.
+The combination of the nine population models, four functional forms, two loading-moderation magnitudes, two intercept-moderation magnitudes, and four sample sizes resulted in 576 primary data-generating design cells. 
+Each condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees across 100 replications, yielding 172,800 primary analyses.
+
+Inspection of the primary results indicated that several conditions yielded near-ceiling detection rates, limiting differentiation between methods at the preregistered effect sizes. 
+Exploratory sensitivity analyses therefore additionally examined smaller moderation effects $(\delta_\lambda=.10, \delta_\nu=.25)$; these conditions were analyzed separately from the primary conditions.
+
+In the primary method comparison, the relevant data-generating moderator or moderators were supplied to the SEM trees as candidate partitioning variables. 
+Thus, the comparison focused on how the methods represent moderator-related parameter heterogeneity. 
+Candidate-variable selection was examined separately in a robustness analysis.
 
 <!--
 - population model,
@@ -557,9 +572,10 @@ This criterion therefore jointly evaluated the ability of SEM trees to detect MN
 
 ## Replications
 
-Each data-generating design cell was replicated 100 times.
-The three analysis methods were evaluated in separate method-specific simulation runs, resulting in 1,728 method-specific analysis cells.
-An additional 100 SEM-tree analyses were conducted for the noisy-predictor sensitivity condition.
+Each data-generating design cell was replicated 100 times. 
+The three analysis methods were evaluated in separate method-specific simulation runs. 
+Method-specific replications used independently seeded datasets, and performance was therefore compared at the simulation-condition level rather than through paired replication-level contrasts. 
+An additional 100 SEM-tree analyses were conducted for the noisy-predictor robustness condition.
 
 ## Empirical Example 
 
@@ -575,18 +591,27 @@ Positively worded items were reverse-scored so that all items had a common direc
 In the present analyses, the four-category CASP-12 items were treated as continuous indicators. 
 Accordingly, scalar measurement parameters refer to item intercepts. 
 
-The empirical MNLFA followed the same general testing strategy the simulation. 
-Item loadings, intercepts, and residual variances were allowed to vary with these covariates in the unrestricted model. 
-Importantly, latent means were allowed to vary with all covariates and remained freely moderated across the metric and scalar models, thereby allowing covariate-related differences in latent factor means to be estimated separately from item-intercept moderation. T
-he latent covariance matrix was freely estimated but held constant across covariate values. 
-The model was identified using one anchor item per factor, with its loading fixed to 1 and its intercept and corresponding moderation effects fixed. 
+The empirical MNLFA followed the same general testing strategy as the simulation. 
+The model was identified using the first item of each factor (C1, A1, P1, and S1) as an anchor item, with its loading fixed to 1 and its intercept and corresponding moderation effects fixed to zero. 
+Thus, loading and intercept moderation was tested for the remaining eight non-anchor items, conditional on invariance of the four anchor items. 
+In the unrestricted model, the loadings and intercepts of these eight items, as well as residual variances, were allowed to vary with the covariates. 
+Latent means were allowed to vary with all covariates and remained freely moderated across the metric and scalar models, thereby allowing covariate-related differences in latent factor means to be estimated separately from item-intercept moderation. 
+The latent covariance matrix was freely estimated but held constant across covariate values.
+
+The empirical SEM-tree analyses used the same four anchor items for identification. 
+Separate loading- and intercept-focused trees were estimated. 
+The metric tree tested parameter instability in the loadings of the eight non-anchor items, whereas the scalar tree tested instability in their eight intercepts. 
+The anchor-item loadings and intercepts were not included among the focal parameters. 
+Age, gender, and cultural region were supplied simultaneously as candidate partitioning variables.
+As in the simulation, score-based parameter-instability tests used $\alpha=.05$, Bonferroni adjustment, and a maximum tree depth of three; for the empirical analyses, the minimum node size was set to 100. 
+As an exploratory extension, a SEM forest was additionally estimated to examine the functional form of moderator-related parameter variation. 
+Partial-dependence analyses were used to obtain a flexible, tree-based approximation of how measurement parameters varied across values of the moderators. 
 
 CASP-12 responses outside the valid range of 1--4 were coded as missing, as were invalid negative age values. 
-Participants were excluded if they had missing information on age, gender, or cultural region or had no observed CASP-12 items. 
+Participants were excluded if they had missing information on age, gender, or cultural region. 
+For the MNLFA and SEM-tree analyses, the sample was further restricted to participants with complete responses on all 12 CASP-12 items. 
 Age was standardized within the resulting analysis sample. 
-The final analysis sample comprised $N=65{,}215$ participants. 
-<!--
-For analyses requiring complete CASP-12 data, a complete-case sample containing only respondents with observed responses to all 12 items was additionally constructed [$N=$ INSERT COMPLETE-CASE SAMPLE SIZE].-->
+The final analysis sample comprised $N=65{,}214$ participants.
 
 ## Software
 
@@ -737,6 +762,8 @@ Cultural cluster was subsequently selected in both age-defined branches, consist
 Further partitions were again based on age, with additional cutoffs around 69 years among younger participants and around 87–88 years among older participants. 
 Gender was not selected as a partitioning variable.
 The scalar tree therefore indicated a combination of age- and culture-related intercept instability, with Southern Europe emerging repeatedly as a distinct subgroup. 
+
+<!-- PDP section here-->
 
 # Discussion 
 

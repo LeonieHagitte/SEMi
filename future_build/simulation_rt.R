@@ -43,7 +43,7 @@ DESIGN <- tidyr::expand_grid(
   lambda       = 0.70,
   intercepts   = 1,
   delta_lambda = c(0.1, 0.2, 0.3),
-  delta_nu     = c(0.25, 0.5, 1),
+  delta_nu     = c(0.25,0.5, 1),
   moderator    = MOD_TYPES,
 #  analysis_form = c("linear", "quadratic"),
   method       = c("SEMTREE","MNLFA","MNLFAQ"),

@@ -440,4 +440,153 @@ tree_baseline_summary <- tibble::tibble(
 
 tree_baseline_summary
 #-----------------------------------------------------------------------------
+tree_data <- df_complete %>%
+  dplyr::select(
+    dplyr::all_of(casp_items),
+    age_z,
+    female,
+    cultural_cluster
+  ) %>%
+  as.data.frame()
 
+# Checks
+dim(tree_data)
+anyNA(tree_data)
+colSums(is.na(tree_data))
+#---------------------------------
+metric_items <- c(
+  "C2", "C3",
+  "A2", "A3",
+  "P2", "P3",
+  "S2", "S3"
+)
+
+metric_constraints <- semtree::semtree.constraints(
+  focus.parameters = paste0("lambda_", metric_items)
+)
+
+forest_control_test <- semtree::semforest_control(
+  num.trees = 5 # TO DO: increase number
+)
+
+set.seed(20260915)
+
+metric_forest_test <- semtree::semforest(
+  model = fit_casp_openmx2$baseline_fit,
+  data = tree_data,
+  predictors = c(
+    "age_z",
+    "female",
+    "cultural_cluster"
+  ),
+  control = forest_control_test,
+  constraints = metric_constraints,
+  seeds = TRUE
+)
+
+#---------------------------------------------
+metric_forest_test
+summary(metric_forest_test)
+
+metric_forest_test$param.names
+#-----------------------------------------------------------------------------
+
+metric_pars_test <- predict(
+  metric_forest_test,
+  data = tree_data[1:10, , drop = FALSE],
+  type = "pars"
+)
+
+class(metric_pars_test)
+dim(metric_pars_test)
+str(metric_pars_test)
+metric_pars_test
+
+pd_metric_test <- semtree::partialDependence(
+  metric_forest_test,
+  data = tree_data,
+  reference.var = "age_z",
+  support = 20
+)
+
+class(pd_metric_test)
+dim(pd_metric_test)
+str(pd_metric_test)
+pd_metric_test
+#------------------------------------------------------------------------------
+metric_pars <- c(
+  "lambda_C2", "lambda_C3",
+  "lambda_A2", "lambda_A3",
+  "lambda_P2", "lambda_P3",
+  "lambda_S2", "lambda_S3"
+)
+
+pd <- as.data.frame(pd_metric_test$samples)
+
+par(mfrow = c(2, 4))
+
+for (p in metric_pars) {
+  plot(
+    pd$age_z,
+    pd[[p]],
+    type = "b",
+    xlab = "Age (z)",
+    ylab = "Loading",
+    main = p
+  )
+}
+
+par(mfrow = c(1, 1))
+#------------------------------------------------------------------------------
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+metric_pars <- c(
+  "lambda_C2", "lambda_C3",
+  "lambda_A2", "lambda_A3",
+  "lambda_P2", "lambda_P3",
+  "lambda_S2", "lambda_S3"
+)
+age_mean <- 69.12062
+age_sd   <- 9.737268
+
+# Convert PDP x-axis to age in years
+pd_long <- pd_long %>%
+  mutate(age = age_mean + age_z * age_sd)
+
+# Get empirical 2.5% and 97.5% limits from age_z,
+# then convert those limits to years
+age_z_limits <- quantile(
+  tree_data$age_z,
+  probs = c(.025, .975),
+  na.rm = TRUE
+)
+
+age_limits <- age_mean + age_z_limits * age_sd
+
+age_limits
+
+pd_long %>%
+  filter(
+    age >= age_limits[1],
+    age <= age_limits[2]
+  ) %>%
+  count(parameter)
+
+ggplot(
+  pd_long %>%
+    filter(
+      age >= age_limits[1],
+      age <= age_limits[2]
+    ),
+  aes(x = age, y = loading)
+) +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 1.5) +
+  facet_wrap(~ parameter, scales = "free_y", ncol = 4) +
+  labs(
+    x = "Age (years)",
+    y = "Forest-predicted loading"
+  ) +
+  theme_minimal()

@@ -328,8 +328,10 @@ df_complete <- df_analysis %>%
   filter(n_casp_observed == 12)
 
 nrow(df_complete)
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
+# -------------------------------------------------------------------------
+# PRELIMINARY DIAGNOSTIC CFA CHECKS
+# Not part of the reported MNLFA / SEM-tree analyses
+# -------------------------------------------------------------------------
 casp_model <- '
   Control =~ C1 + C2 + C3
   Autonomy =~ A1 + A2 + A3
