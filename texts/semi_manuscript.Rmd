@@ -154,21 +154,13 @@ Although explicit specification of moderators and moderation functions remains a
 ## Present Study 
 
 MGCFA, MNLFA, and SEM trees differ in how they represent heterogeneity in measurement parameters. 
-MGCFA represents heterogeneity through differences between predefined groups. 
-When heterogeneity is associated with a continuous covariate $z$, however, the methodological problem can instead be expressed as determining how a measurement parameter $\theta$ varies as a function of that covariate, $\theta(z)$. 
-MNLFA and SEM trees provide fundamentally different representations of this relationship. MNLFA represents $\theta(z)$ through parametrically specified moderation functions. 
-SEM trees, in contrast, represent variation in $\theta(z)$ through data-driven recursive partitions of the covariate space. 
-Thus, the methods differ not simply in flexibility, but in how they represent the relationship between covariates and measurement parameters. 
-<!-- 
-More generally, MGCFA, MNLFA, and SEM trees can be understood as reflecting different assumptions regarding prior knowledge about measurement heterogeneity. 
-MGCFA assumes that relevant sources of heterogeneity can be represented through predefined groups. 
-MNLFA further assumes that researchers can identify relevant moderators and specify how these moderators influence model parameters. 
-SEM trees, in contrast, place fewer assumptions on the structure of heterogeneity and instead emphasize data-driven identification of parameter differences. 
-Consequently, the relative performance of these approaches is likely to depend on the extent to which researchers possess accurate prior knowledge about the sources and functional forms of MNI.
--->
+MGCFA captures heterogeneity as differences between predefined groups. 
+When heterogeneity is associated with a continuous covariate $(z)$, the problem can instead be framed as modeling a measurement parameter $(\theta)$ as a function of that covariate, $(\theta(z))$, as in MNLFA.
+MNLFA represents this relationship using parametrically specified moderation functions, whereas SEM trees use data-driven recursive partitions of the covariate space. 
+The methods therefore differ in how they represent the relationship between covariates and measurement parameters. 
+
 The present simulation study examines the consequences of these different representations for detecting MNI. 
 Specifically, we compare MNLFA and SEM trees performance in detecting MNI, when the true parameter–covariate relationship is linear, quadratic, or sigmoid, while additionally varying the magnitude of parameter heterogeneity and sample size. 
-Rather than assuming that one representation is generally superior, we examine how their performance depends on characteristics of the underlying heterogeneity and the information available to each method.
 
 The comparison addresses three aspects of performance. 
 First, we examine whether each method detects the presence of MNI. 
@@ -178,12 +170,6 @@ Third, because the simulation separately introduces heterogeneity in factor load
 We expect SEM trees to perform particularly well in conditions characterized by nonlinear moderation, especially sigmoid relationships, whereas their relative advantage should diminish in purely linear settings. 
 In contrast, MNLFA is expected to perform best when the functional form of moderation is correctly specified, particularly in linear conditions, but to be more sensitive to misspecification of the underlying moderation function. 
 For both methods, stronger moderation effects are expected to increase the detectability of measurement non-invariance. 
-<!--
-To enhance the study's relevance for empirical practice, the simulation is grounded in a realistic applied-research perspective. 
-Specifically, we consider researchers whose experience with MI testing is rooted in the traditional MGCFA framework and who seek to adopt more flexible approaches for detecting heterogeneity. 
-Accordingly, MNLFA and SEM trees are evaluated not only as statistical procedures but also as methodological alternatives for researchers moving beyond conventional MGCFA-based invariance testing.  
-That is, there are several alternative methods that share some of the advantages highlighted above, a few of which we also want to mention. 
--->
 
 Related tree-based approaches have recently been developed specifically for investigating MNI across multiple covariates within the broader SEM-tree framework. 
 @Sterner2023 introduced exploratory factor analysis (EFA) trees, and @Goretzko2026 subsequently extended this work to CFA trees. 
@@ -196,32 +182,21 @@ This parameter-focused implementation differs in its constraint strategy from th
 Rather than proposing a distinct tree-based MI method, the present study therefore evaluates the performance of a particular parameter-focused specification of SEM trees and compares it with the parametric moderation approach of MNLFA. 
 
 It is to be noted that regularization provides an additional extension to several of these approaches and may be particularly useful when complex measurement models or large numbers of potential sources of MNI are considered. 
-Within EFA, regularization can be used to obtain sparse and interpretable loading structures without relying on conventional factor rotation (@Goretzko2025), whereas within MNLFA, regularization has been applied to moderation parameters to identify measurement bias across multiple categorical and continuous background characteristics (@Bauer2020; @Belzak2024). 
+Within EFA, regularization can be used to obtain sparse and interpretable loading structures without relying on conventional factor rotation [@Goretzko2025], whereas within MNLFA, regularization has been applied to moderation parameters to identify measurement bias across multiple categorical and continuous background characteristics [@Bauer2020; @Belzak2024]. 
 Although such extensions can reduce the need to prespecify individual sources of measurement heterogeneity, they also introduce additional methodological choices concerning penalization and model selection. 
 The present study therefore focuses on MNLFA and SEM trees without regularization. 
+<!-- sounds like rebuttal ?
 This choice reflects our aim to compare approaches that constitute relatively direct extensions of conventional MGCFA for applied researchers with an established measurement model, while differing in the assumptions they require about potential moderators and the functional form of MNI.
+-->
 
 ## Application Example 
 
-In addition to the simulation study, we illustrate the approaches using the CASP-12 measure of quality of life from the ninth wave of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9].  
-The CASP-12 is a shorter version of the original 19 item version of the CASP scale. 
-Additionally the shorter CASP-12 version, suggested by @wiggins2008 is also slightly different from the version used in the SHARE assessment [@BorratBesson2015; @wiggins2008].
-This application is motivated by @BonnevilleRoussy2024, who investigated MI of the CASP-12 across age, gender, and cultural regions using group-based comparisons. 
-The application provides an empirical setting in which potential sources of measurement heterogeneity include both categorical characteristics and age as a continuous characteristic, allowing us to examine how approaches that do not require age to be categorized represent heterogeneity in the CASP-12 measurement model. 
-<!--
-### Age 
-@BonnevilleRoussy2024 looked at the CASP-12’s age invariance over time across four age groups: under 60, 60–69, 70–79, 80 and older. 
+In addition to the simulation study, we illustrate the approaches using the CASP-12 measure of quality of life from the ninth wave of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9]. 
+The CASP-12 is a shortened version of the original 19-item CASP scale; the version used in SHARE also differs slightly from the CASP-12 proposed by @wiggins2008 [@BorratBesson2015; @wiggins2008].
 
-### Gender 
-Gender is assessed by SHARE at the first time of measurement with a coding of 0 for males and 1 for females.
-
-### Culture 
-Cultural invariance was tested between "Western", "Northern", "Southern" and "Eastern Europe".
--->
-This highlights the implicit need for categorization, when using MGCFA to test for MI. 
-We want to use this as a possible example case to use these methods for MI testing, that allow for the variables to be included as continuous variables, possibly avoiding arbitrary categorization. 
-@BonnevilleRoussy2024 investigated the longitudinal as well as the cross-sectional MI. 
-For this empirical example we will investigate only the cross-sectional MI of the CASP-12 scale in the ninth wave, with age, gender and culture as covariates. 
+The application is motivated by @BonnevilleRoussy2024, who investigated longitudinal and cross-sectional MI of the CASP-12 across age, gender, and cultural regions using group-based comparisons. 
+Here, we focus on cross-sectional MI in wave 9, using age, gender, and culture as covariates. 
+In particular, age provides a useful case for comparing conventional MGCFA, which requires discretization into age groups, with approaches that can incorporate age as a continuous covariate and thereby avoid potentially arbitrary categorization.
 
 # Method
 
