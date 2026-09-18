@@ -128,8 +128,11 @@ Such settings motivate methods that can explore parameter heterogeneity without 
 
 Structural Equation Model trees (SEM trees) were originally introduced by Brandmaier et al. (2013) as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g., by identifying moderators of model parameters in a SEM. 
 Subsequent developments further refined the methodology and expanded its applicability (Arnold et al., 2021; Brandmaier et al., 2016). 
-Notably, although MI was used as an illustrative application by Arnold et al. (2021), SEM Trees were not originally developed as a dedicated method for testing MI and have received relatively little attention as tools for detecting MNI. 
-Because violations of MI manifest as systematic heterogeneity in measurement parameters, SEM trees appear conceptually well suited for detecting such effects.
+finch2017structural
+Notably, SEM Trees were not developed as a dedicated methods to investigate measurement invariance but as a generic strategy for explaining heterogeneity.
+Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
+Even though SEM Trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate measurement invariance [@finch2017structural, @sajobi2026tree].
+
 
 SEM trees merge two paradigms: SEMs and decision trees. 
 Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
