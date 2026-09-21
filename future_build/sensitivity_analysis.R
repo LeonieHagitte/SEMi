@@ -1,3 +1,4 @@
+#sensitivity_analysis.R
 # ============================================================
 # Sensitivity analysis:
 # lower effect sizes + SD-matched moderator transformations
@@ -199,8 +200,8 @@ SENSITIVITY_DESIGN <- tidyr::expand_grid(
   reliability  = 0.75,
   lambda       = 0.70,
   intercepts   = 1,
-  delta_lambda = 0.10,
-  delta_nu     = 0.25,
+  delta_lambda = c(0.10,0.20),
+  delta_nu     = c(0.25,0.5),
   moderator    = c("linear", "quadratic", "sigmoid"),
   method       = c("SEMTREE", "MNLFA", "MNLFAQ"),
   rep_id       = seq_len(n_rep),
@@ -212,6 +213,36 @@ SENSITIVITY_DESIGN <- tidyr::expand_grid(
     seed = sample.int(.Machine$integer.max, n(), replace = TRUE)
   )
 
+# Randomly permute rows, as in the main simulation
+SENSITIVITY_DESIGN <- SENSITIVITY_DESIGN %>%
+  slice_sample(prop = 1)
+
+# Read SLURM chunk information
+args <- commandArgs(trailingOnly = TRUE)
+
+chunk_id <- NULL
+n_chunks <- NULL
+
+if (length(args) > 0) {
+  
+  if (length(args) == 1) args[2] <- 1000
+  
+  chunk_id <- as.integer(args[1])
+  n_chunks <- as.integer(args[2])
+  
+  all_indices <- seq_len(nrow(SENSITIVITY_DESIGN))
+  
+  chunks <- split(
+    all_indices,
+    cut(seq_along(all_indices),
+        n_chunks,
+        labels = FALSE)
+  )
+  
+  my_indices <- chunks[[chunk_id]]
+  
+  SENSITIVITY_DESIGN <- SENSITIVITY_DESIGN[my_indices, ]
+}
 
 #-------------------------------------------------------------------------------
 mnlfa_moderation_estimate_names <- function(p = 4) {
@@ -743,94 +774,17 @@ run_one_sens <- function(row) { #run_one_sens <- function(seed, N, popmodel, mod
   
 }
 
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#TEST_DESIGN <- SENSITIVITY_DESIGN %>%
-#  filter(
-#    popmodel == "1.1",
-#    N == 500,
-#    moderator == "linear"
-#  ) %>%
-#  slice_head(n = 3)
-#
-#test_results <- lapply(
-#  seq_len(nrow(TEST_DESIGN)),
-#  function(i) {
-#    run_one_sens(TEST_DESIGN[i, ])
-#  }
-#) %>%
-#  bind_rows()
-
-#test_results %>%
-#  select(
-#    popmodel,
-#    N,
-#    moderator,
-#    method,
-#    mnlfa_metric_lrt_reject,
-#    tree_metric_reject,
-#    error_msg,
-#    mnlfa_error_msg,
-#    semtree_error_msg
-#  )
-#----------------------------------------
-#TEST_DESIGN1 <- SENSITIVITY_DESIGN %>%
-#  filter(
-#    popmodel == "1.1",
-#    N == 500,
-#    moderator == "linear",
-#    rep_id == 1
-#  )
-
-#test_results <- lapply(
-#  seq_len(nrow(TEST_DESIGN1)),
-#  function(i) {
-#    run_one_sens(TEST_DESIGN1[i, ])
-#  }
-#) %>%
-#  bind_rows()
-
-#test_results %>%
-#  select(
-#    popmodel,
-#    N,
-#    moderator,
-#    method,
-#    analysis_form,
-#    mnlfa_metric_lrt_reject,
-#    mnlfa_scalar_lrt_reject,
-#    tree_metric_reject,
-#    tree_scalar_reject,
-#    error_msg,
-#    mnlfa_error_msg,
-#    semtree_error_msg
-#  )
-#----------------------------------------------------
-#TEST_DESIGN <- SENSITIVITY_DESIGN %>%
-#  filter(
-#    popmodel == "1.1",
-#    N == 500,
-#    rep_id == 1
-#  )
-#-------------------------------------------------------------------------------
-
-n_workers <- max(1, parallelly::availableCores() - 1)
-
-plan(multisession, workers = n_workers)
-
 # -- Start Sensitivity Simulation --
 
 t1 <- Sys.time()
 
-results_sensitivity <- future.apply::future_sapply(
+results_sensitivity <- lapply(
   seq_len(nrow(SENSITIVITY_DESIGN)),
   function(i) {
     run_one_sens(SENSITIVITY_DESIGN[i, , drop = FALSE])
-  },
-  simplify = TRUE
-)
-
-results_sensitivity <- t(results_sensitivity)
+  }
+) %>%
+  bind_rows()
 
 t2 <- Sys.time()
 
@@ -840,7 +794,18 @@ elapsed_total_min <- as.numeric(
 
 elapsed_total_min
 
+dir.create("rds_sensitivity", showWarnings = FALSE)
+
 saveRDS(
   results_sensitivity,
-  "results_sensitivity_parallel.rds"
+  file.path(
+    "rds_sensitivity",
+    paste0(
+      "sensitivity_",
+      chunk_id,
+      "_of_",
+      n_chunks,
+      ".rds"
+    )
+  )
 )

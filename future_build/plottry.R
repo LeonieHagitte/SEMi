@@ -90,6 +90,21 @@ results2 <- results %>%
     semtree_scalar_power_decision_bonf =
       tree_scalar_reject_bonf == TRUE & tree_scalar_correct_split == TRUE
   )
+#-------------------------------------------------------------------------------
+results2_confirmatory <- results2 %>%
+  filter(
+    num_noisy_predictors == 0,
+    delta_lambda %in% c(0.2, 0.3),
+    delta_nu %in% c(0.5, 1)
+  )
+
+results2_exploratory <- results2 %>%
+  filter(
+    num_noisy_predictors == 0,
+    !(delta_lambda %in% c(0.2, 0.3) &
+        delta_nu %in% c(0.5, 1))
+  )
+
 # --------------------
 theme_pub <- function(base_size = 11) {
   theme_minimal(base_size = base_size) +
@@ -123,7 +138,7 @@ shapes <- c(
 
 # -------------------------
 fig1_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -134,7 +149,7 @@ fig1_dat <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
@@ -202,7 +217,7 @@ fig1 <- ggplot(
 fig1
 # ----------------------------------------------
 fig2_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -213,7 +228,7 @@ fig2_dat <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
@@ -289,7 +304,7 @@ fig2
 # -------------------------------------------------------------------
 metric_perf <- bind_rows(
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       estimand = "Power",
@@ -300,7 +315,7 @@ metric_perf <- bind_rows(
       detected = mnlfa_metric_lrt_reject_bonf
     ),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == FALSE) %>%
     mutate(
       estimand = "Type I error",
@@ -379,7 +394,7 @@ fig3
 # -------------------------------------------------
 scalar_perf <- bind_rows(
   
-  results2 %>% filter(popmodel=="1.11") %>%
+  results2_confirmatory %>% filter(popmodel=="1.11") %>%
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       estimand = "Power",
@@ -390,7 +405,7 @@ scalar_perf <- bind_rows(
       detected = mnlfa_scalar_lrt_reject_bonf
     ),
   
-  results2 %>% filter(popmodel=="1.11") %>%
+  results2_confirmatory %>% filter(popmodel=="1.11") %>%
     filter(true_scalar_noninvariance == FALSE) %>%
     mutate(
       estimand = "Type I error",
@@ -469,17 +484,17 @@ fig3b <- ggplot(
 fig3b
 # --------------------
 fig4_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == FALSE) %>%
     mutate(method = "MNLFA linear", detected = mnlfa_metric_lrt_reject_bonf) %>%
     filter(analysis_form == "linear"),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == FALSE) %>%
     mutate(method = "MNLFA quadratic", detected = mnlfa_metric_lrt_reject_bonf) %>%
     filter(analysis_form == "quadratic"),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == FALSE) %>%
     mutate(method = "SEM Tree", detected = tree_metric_reject_bonf)
 ) %>%
@@ -547,17 +562,17 @@ fig4
 
 #----------------
 fig4b_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == FALSE) %>%
     mutate(method = "MNLFA linear", detected = mnlfa_scalar_lrt_reject_bonf) %>%
     filter(analysis_form == "linear"),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == FALSE) %>%
     mutate(method = "MNLFA quadratic", detected = mnlfa_scalar_lrt_reject_bonf) %>%
     filter(analysis_form == "quadratic"),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == FALSE) %>%
     mutate(method = "SEM Tree", detected = tree_scalar_reject_bonf)
 ) %>%
@@ -625,7 +640,7 @@ fig4b
 # -------------------------------
 
 metric_summary_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -636,7 +651,7 @@ metric_summary_dat <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
@@ -661,7 +676,7 @@ metric_summary_dat <- bind_rows(
   )
 
 scalar_summary_dat <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -672,7 +687,7 @@ scalar_summary_dat <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_scalar_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
@@ -913,7 +928,7 @@ results %>%
 
 
 
-metric_power_N <- results2 %>%
+metric_power_N <- results2_confirmatory %>%
   filter(true_metric_noninvariance == TRUE) %>%
   mutate(
     method = case_when(
@@ -952,7 +967,7 @@ ggplot(metric_power_N_avg,
 # -------------------------------
 
 metric_power_form <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -963,7 +978,7 @@ metric_power_form <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",
@@ -1026,7 +1041,7 @@ ggplot(
 
 
 metric_power_mis <- bind_rows(
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = case_when(
@@ -1037,7 +1052,7 @@ metric_power_mis <- bind_rows(
     ) %>%
     filter(!is.na(method)),
   
-  results2 %>%
+  results2_confirmatory %>%
     filter(true_metric_noninvariance == TRUE) %>%
     mutate(
       method = "SEM Tree",

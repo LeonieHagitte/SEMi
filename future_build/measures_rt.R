@@ -57,13 +57,31 @@ eval_main <- eval_main %>%
     )
   )
 
+# ============================================================
+# Separate confirmatory and exploratory simulation conditions
+# ============================================================
+
+confirmatory_delta_lambda <- c(0.2, 0.3)
+confirmatory_delta_nu     <- c(0.5, 1)
+
+eval_confirmatory <- eval_main %>%
+  filter(
+    delta_lambda %in% confirmatory_delta_lambda,
+    delta_nu %in% confirmatory_delta_nu
+  )
+
+eval_exploratory <- eval_main %>%
+  filter(
+    !(delta_lambda %in% confirmatory_delta_lambda &
+        delta_nu %in% confirmatory_delta_nu)
+  )
 
 # ============================================================
 # 4. Separate metric and scalar testing
 #    PRIMARY = nominal design cells
 # ============================================================
 
-performance_long <- eval_main %>%
+performance_long <- eval_confirmatory %>%
   select(
     method,
     popmodel,
@@ -182,7 +200,7 @@ perf_cell
 # 6. Counterfactual sequential testing
 # ============================================================
 
-eval_main <- eval_main %>%
+eval_confirmatory <- eval_confirmatory %>%
   mutate(
     
     # Would the scalar stage have been reached?
@@ -255,7 +273,7 @@ eval_main <- eval_main %>%
 # 7. Cell-specific sequential performance
 # ============================================================
 
-perf_sequential_cell <- eval_main %>%
+perf_sequential_cell <- eval_confirmatory %>%
   group_by(
     method,
     popmodel,
@@ -430,7 +448,7 @@ perf_sequential_cell
 # 8. Technical performance
 # ============================================================
 
-technical_cell <- eval_main %>%
+technical_cell <- eval_confirmatory %>%
   group_by(
     method,
     popmodel,
@@ -474,7 +492,7 @@ technical_cell <- eval_main %>%
   )
 #-----------------------
 eval_dat
-eval_main
+eval_confirmatory
 eval_noise_sensitivity
 
 performance_long
@@ -493,7 +511,7 @@ method_failure_summary
 #3 SEMTREE          57600           0           57600     0                 0     
 
 
-overall_failure_summary <- eval_main %>%
+overall_failure_summary <- eval_confirmatory %>%
   summarise(
     attempted_runs = n(),
     
@@ -515,3 +533,353 @@ overall_failure_summary
 #1         172800          42 0.0002430556      0.02430556
 #----------------------------
 
+# ============================================================
+# 9. EXPLORATORY ANALYSIS
+#    Low-effect conditions added after initial inspection
+# ============================================================
+
+performance_long_exploratory <- eval_exploratory %>%
+  select(
+    method,
+    popmodel,
+    N,
+    moderator,
+    delta_lambda,
+    delta_nu,
+    metric_magnitude,
+    scalar_magnitude,
+    true_metric_noninvariance,
+    true_scalar_noninvariance,
+    metric_reject,
+    scalar_reject
+  ) %>%
+  pivot_longer(
+    cols = c(
+      metric_reject,
+      scalar_reject
+    ),
+    names_to = "level",
+    values_to = "reject"
+  ) %>%
+  mutate(
+    level = recode(
+      level,
+      metric_reject = "Metric",
+      scalar_reject = "Scalar"
+    ),
+    
+    true_noninvariance = case_when(
+      level == "Metric" ~ true_metric_noninvariance,
+      level == "Scalar" ~ true_scalar_noninvariance,
+      TRUE ~ NA
+    ),
+    
+    estimand = case_when(
+      true_noninvariance == TRUE ~ "Power",
+      true_noninvariance == FALSE ~ "Rejection u. invariance",
+      TRUE ~ NA_character_
+    )
+  )
+
+
+# ============================================================
+# 10. Exploratory cell-specific power / rejection rate
+# ============================================================
+
+perf_cell_exploratory <- performance_long_exploratory %>%
+  group_by(
+    method,
+    popmodel,
+    N,
+    moderator,
+    delta_lambda,
+    delta_nu,
+    level,
+    true_noninvariance,
+    estimand
+  ) %>%
+  summarise(
+    n_total = n(),
+    
+    n_eval = sum(!is.na(reject)),
+    
+    n_reject = sum(
+      reject == TRUE,
+      na.rm = TRUE
+    ),
+    
+    rate = if_else(
+      n_eval > 0,
+      n_reject / n_eval,
+      NA_real_
+    ),
+    
+    .groups = "drop"
+  ) %>%
+  mutate(
+    mcse = if_else(
+      n_eval > 0,
+      sqrt(rate * (1 - rate) / n_eval),
+      NA_real_
+    ),
+    
+    mc_lower = pmax(
+      0,
+      rate - 1.96 * mcse
+    ),
+    
+    mc_upper = pmin(
+      1,
+      rate + 1.96 * mcse
+    ),
+    
+    missing_rate = if_else(
+      n_total > 0,
+      1 - n_eval / n_total,
+      NA_real_
+    )
+  )
+
+# ============================================================
+# 11. Exploratory sequential testing
+# ============================================================
+
+eval_exploratory <- eval_exploratory %>%
+  mutate(
+    
+    seq_scalar_reached = case_when(
+      is.na(metric_reject) ~ NA,
+      metric_reject == TRUE ~ FALSE,
+      metric_reject == FALSE ~ TRUE
+    ),
+    
+    seq_decision = case_when(
+      metric_reject == TRUE ~
+        "Metric noninvariance",
+      
+      metric_reject == FALSE &
+        scalar_reject == TRUE ~
+        "Scalar noninvariance",
+      
+      metric_reject == FALSE &
+        scalar_reject == FALSE ~
+        "Invariance retained",
+      
+      TRUE ~ NA_character_
+    ),
+    
+    true_seq_decision = case_when(
+      true_metric_noninvariance == TRUE ~
+        "Metric noninvariance",
+      
+      true_metric_noninvariance == FALSE &
+        true_scalar_noninvariance == TRUE ~
+        "Scalar noninvariance",
+      
+      true_metric_noninvariance == FALSE &
+        true_scalar_noninvariance == FALSE ~
+        "Invariance retained",
+      
+      TRUE ~ NA_character_
+    ),
+    
+    truth_class = case_when(
+      !true_metric_noninvariance &
+        !true_scalar_noninvariance ~
+        "No MNI",
+      
+      true_metric_noninvariance &
+        !true_scalar_noninvariance ~
+        "Metric only",
+      
+      !true_metric_noninvariance &
+        true_scalar_noninvariance ~
+        "Scalar only",
+      
+      true_metric_noninvariance &
+        true_scalar_noninvariance ~
+        "Metric + scalar",
+      
+      TRUE ~ NA_character_
+    ),
+    
+    seq_correct =
+      seq_decision == true_seq_decision
+  )
+
+# ============================================================
+# 12. Cell-specific sequential performance - exploratory
+# ============================================================
+
+perf_sequential_cell_exploratory <- eval_exploratory %>%
+  group_by(
+    method,
+    popmodel,
+    N,
+    moderator,
+    delta_lambda,
+    delta_nu,
+    truth_class
+  ) %>%
+  summarise(
+    
+    n_total = n(),
+    
+    # --------------------------------------------------------
+    # Metric stage
+    # --------------------------------------------------------
+    
+    n_metric_eval =
+      sum(!is.na(metric_reject)),
+    
+    metric_rejection_rate =
+      if_else(
+        n_metric_eval > 0,
+        sum(metric_reject == TRUE,
+            na.rm = TRUE) /
+          n_metric_eval,
+        NA_real_
+      ),
+    
+    # --------------------------------------------------------
+    # Scalar stage
+    # --------------------------------------------------------
+    
+    n_scalar_reached =
+      sum(
+        seq_scalar_reached == TRUE,
+        na.rm = TRUE
+      ),
+    
+    scalar_stage_reached =
+      if_else(
+        n_metric_eval > 0,
+        n_scalar_reached /
+          n_metric_eval,
+        NA_real_
+      ),
+    
+    # Rejection conditional on actually reaching scalar stage
+    scalar_conditional_rejection =
+      if_else(
+        n_scalar_reached > 0,
+        mean(
+          scalar_reject[
+            seq_scalar_reached == TRUE
+          ],
+          na.rm = TRUE
+        ),
+        NA_real_
+      ),
+    
+    # Probability from the start that final decision is scalar MNI
+    scalar_sequential_detection =
+      mean(
+        seq_decision ==
+          "Scalar noninvariance",
+        na.rm = TRUE
+      ),
+    
+    # --------------------------------------------------------
+    # Final sequential decisions
+    # --------------------------------------------------------
+    
+    p_metric_decision =
+      mean(
+        seq_decision ==
+          "Metric noninvariance",
+        na.rm = TRUE
+      ),
+    
+    p_scalar_decision =
+      mean(
+        seq_decision ==
+          "Scalar noninvariance",
+        na.rm = TRUE
+      ),
+    
+    p_invariance_retained =
+      mean(
+        seq_decision ==
+          "Invariance retained",
+        na.rm = TRUE
+      ),
+    
+    n_seq_eval =
+      sum(!is.na(seq_correct)),
+    
+    sequential_accuracy =
+      if_else(
+        n_seq_eval > 0,
+        mean(
+          seq_correct,
+          na.rm = TRUE
+        ),
+        NA_real_
+      ),
+    
+    .groups = "drop"
+  )
+#------------------------------------
+perf_sequential_cell_exploratory <- perf_sequential_cell_exploratory %>%
+  mutate(
+    
+    mcse_metric =
+      if_else(
+        n_metric_eval > 0,
+        sqrt(
+          metric_rejection_rate *
+            (1 - metric_rejection_rate) /
+            n_metric_eval
+        ),
+        NA_real_
+      ),
+    
+    mcse_scalar_stage =
+      if_else(
+        n_metric_eval > 0,
+        sqrt(
+          scalar_stage_reached *
+            (1 - scalar_stage_reached) /
+            n_metric_eval
+        ),
+        NA_real_
+      ),
+    
+    mcse_scalar_conditional =
+      if_else(
+        n_scalar_reached > 0,
+        sqrt(
+          scalar_conditional_rejection *
+            (1 - scalar_conditional_rejection) /
+            n_scalar_reached
+        ),
+        NA_real_
+      ),
+    
+    mcse_scalar_sequential =
+      if_else(
+        n_seq_eval > 0,
+        sqrt(
+          scalar_sequential_detection *
+            (1 - scalar_sequential_detection) /
+            n_seq_eval
+        ),
+        NA_real_
+      ),
+    
+    mcse_sequential_accuracy =
+      if_else(
+        n_seq_eval > 0,
+        sqrt(
+          sequential_accuracy *
+            (1 - sequential_accuracy) /
+            n_seq_eval
+        ),
+        NA_real_
+      )
+  )
+
+performance_long_exploratory
+perf_cell_exploratory
+perf_sequential_cell_exploratory
