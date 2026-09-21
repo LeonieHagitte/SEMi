@@ -7,7 +7,4 @@
 #SBATCH --output=logs_sensitivity/slurm_%A_%a.out
 #SBATCH --error=logs_sensitivity/slurm_%A_%a.err
 
-mkdir -p logs_sensitivity
-mkdir -p rds_sensitivity
-
 Rscript sensitivity_analysis.R ${SLURM_ARRAY_TASK_ID} 1000
