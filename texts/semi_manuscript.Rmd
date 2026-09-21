@@ -682,8 +682,8 @@ cat("\\end{table}\n")
 ```
 
 Under complete MI (Model 0), rejection rates were generally close to the nominal \(\alpha=.05\) level. 
-For metric invariance, average rejection rates were .063 for linear MNLFA, .067 for quadratic MNLFA, and .050 for SEM trees. 
-Corresponding scalar rejection rates were .052, .053, and .044, respectively (see table 2). 
+For metric invariance, average rejection rates were .056 for linear MNLFA, .064 for quadratic MNLFA, and .049 for SEM trees. 
+Corresponding scalar rejection rates were .052, .057, and .047, respectively (see table 2). 
 Rejection rates were relatively stable across sample sizes and functional forms.
 
 ```{r table3, eval=TRUE, warning=FALSE, message=FALSE, echo=FALSE, results='asis'}
@@ -705,22 +705,22 @@ cat("\\end{table}\n")
 ```
 
 As shown in Table 3, statistical power depended strongly on the correspondence between the functional form of MNI and the moderator specification used in MNLFA.
-For metric MNI, linear MNLFA achieved high power under linear (.970) and sigmoid (.997) moderation and substantially lower power under quadratic moderation (.166). 
-The complementary pattern occurred for quadratic MNLFA, which showed high power under quadratic moderation (.978) but considerably lower power under linear (.407) and sigmoid (.258) moderation. 
-SEM tree power was comparatively stable across functional forms, ranging from .903 to .934. 
-The same pattern was more pronounced for scalar MNI: linear MNLFA showed essentially complete power under linear and sigmoid moderation but low power under quadratic moderation (.089), whereas quadratic MNLFA achieved complete power under quadratic moderation but little power under linear (.066) or sigmoid (.054) moderation. 
-SEM tree scalar power remained at or above .992 across all three functional forms.
+For metric MNI, linear MNLFA achieved high power under linear (.973) and sigmoid (.997) moderation and substantially lower power under quadratic moderation (.164). 
+The complementary pattern occurred for quadratic MNLFA, which showed high power under quadratic moderation (.980) but considerably lower power under linear (.401) and sigmoid (.249) moderation. 
+SEM tree power was comparatively stable across functional forms, ranging from .901 to .937. 
+The same pattern was more pronounced for scalar MNI: linear MNLFA showed essentially complete power under linear and sigmoid moderation but low power under quadratic moderation (.083), whereas quadratic MNLFA achieved complete power under quadratic moderation but little power under linear (.064) or sigmoid (.055) moderation. 
+SEM tree scalar power remained at or above .991 across all three functional forms.
 
 Power generally increased with sample size, particularly for SEM trees, which often approached ceiling performance by $N=700$ or $N=1000$. 
 In contrast, increasing sample size did not compensate for functional-form mismatch in MNLFA. 
 The linear specification remained weak under quadratic MNI even at larger sample sizes, whereas the quadratic specification remained weak under linear and sigmoid MNI. 
 Beyond functional form and sample size, power also varied across MNI configurations. 
-SEM tree metric power was consistently high across most population models but was comparatively lower for Model 1.32 (.769), in which loading and intercept noninvariance were induced by different moderators. 
+SEM tree metric power was consistently high across most population models but was comparatively lower for Model 1.32 (.765), in which loading and intercept noninvariance were induced by different moderators. 
 Thus, although SEM trees were generally robust across functional forms, their performance also depended on the specific configuration of MNI. 
 
 When loadings were invariant but intercept MNI was present, metric rejection rates were sometimes substantially above .05, indicating cross-level sensitivity rather than complete-null Type I error. 
 This was particularly evident for SEM trees and for the functionally mismatched MNLFA specification. 
-For example, under linear moderation, metric rejection under loading invariance averaged .058 for linear MNLFA, compared with .453 for quadratic MNLFA and .350 for SEM trees. 
+For example, under linear moderation, metric rejection under loading invariance averaged .062 for linear MNLFA, compared with .452 for quadratic MNLFA and .349 for SEM trees. 
 Thus, high sensitivity of the SEM tree metric test was accompanied by reduced specificity for the level of noninvariance when scalar MNI was present. 
 In contrast, scalar rejection rates when intercepts were invariant remained generally close to the nominal level across methods and functional forms, indicating considerably less cross-level rejection of scalar tests in the presence of loading MNI.
 
@@ -728,7 +728,7 @@ In contrast, scalar rejection rates when intercepts were invariant remained gene
 knitr::include_graphics("Rplot2.png")
 ```
 
-The elevated metric rejection rates in the presence of scalar MNI also varied with sample size (Figure X). In several conditions, particularly for SEM trees, metric rejection increased as sample size increased, indicating that cross-level sensitivity became more pronounced with increasing statistical information.
+The elevated metric rejection rates in the presence of scalar MNI also varied with sample size (Figure X). In several conditions, particularly for SEM trees, metric rejection increased as sample size increased, indicating that cross-level sensitivity became more pronounced with increasing statistical information. <!-- TO DO add respective figure number-->
 
 ```{r table4, eval=TRUE, warning=FALSE, message=FALSE, echo=FALSE, results='asis'}
 cat("\\begin{table}[H]\n")
@@ -751,10 +751,10 @@ cat("\\end{table}\n")
 ```
 
 Sequential testing altered the interpretation of the level-specific results. 
-SEM trees showed the highest correct classification for metric-only MNI (.959) and combined metric and scalar MNI (.884), compared with .699 and .723 for linear MNLFA and .418 and .678 for quadratic MNLFA, respectively. 
+SEM trees showed the highest correct classification for metric-only MNI (.960) and combined metric and scalar MNI (.885), compared with .702 and .721 for linear MNLFA and .415 and .672 for quadratic MNLFA, respectively. 
 However, performance differed for scalar-only MNI (see table 4). 
-Although the separate SEM tree scalar test showed near-perfect power, the sequential procedure correctly classified scalar-only MNI in only .635 of replications because the metric test rejected first in .362 of replications. 
-Linear MNLFA showed similar sequential accuracy for scalar-only MNI (.645), whereas quadratic MNLFA showed lower accuracy (.332). 
+Although the separate SEM tree scalar test showed near-perfect power, the sequential procedure correctly classified scalar-only MNI in only .636 of replications because the metric test rejected first in .360 of replications. 
+Linear MNLFA showed similar sequential accuracy for scalar-only MNI (.645), whereas quadratic MNLFA showed lower accuracy (.331). 
 Consequently, high power of a level-specific scalar test did not necessarily translate into equally high accuracy when metric and scalar invariance were evaluated sequentially (see table 4).
 
 ## Empirical Example 
