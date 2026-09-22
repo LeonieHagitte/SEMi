@@ -338,7 +338,12 @@ print(n=27,table2_print)
 table3
 table4_print
 #------------------------------------------------------------------------------
-
+save(
+  table2_print,
+  table3,
+  table4_print,
+  file = "manuscript_tables.RData"
+)
 
 #===============================================================================
 # Exploratory results
@@ -657,3 +662,10 @@ table4_print_exploratory
 print(n=27,table2_print_exploratory)
 table3_exploratory
 table4_print_exploratory
+
+save(
+  table2_print_exploratory,
+  table3_exploratory,
+  table4_print_exploratory,
+  file = "manuscript_tables_exploratory.RData"
+)

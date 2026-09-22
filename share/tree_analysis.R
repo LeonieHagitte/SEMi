@@ -590,3 +590,240 @@ ggplot(
     y = "Forest-predicted loading"
   ) +
   theme_minimal()
+#-------------------------------------------------------------------------------
+forest_tree_control_test <- semtree::semtree_control(
+  method = "naive",
+  alpha = 1,
+  bonferroni = FALSE,
+  max.depth = 4,
+  min.N = 500,
+  exclude.heywood = FALSE
+)
+
+forest_control_fast_test <- semtree::semforest_control(
+  num.trees = 1,
+  sampling = "subsample",
+  control = forest_tree_control_test,
+  mtry = 2
+)
+
+forest_control_fast_test
+#########################################
+# One-tree PDP
+#set.seed(20260916)
+
+#t_fast <- system.time({
+  
+#  metric_forest_fast1 <- semtree::semforest(
+#    model = fit_casp_openmx2$baseline_fit,
+#    data = tree_data,
+#    predictors = c(
+#      "age_z",
+#      "female",
+#      "cultural_cluster"
+#    ),
+#    control = forest_control_fast_test,
+#    constraints = metric_constraints,
+#    seeds = TRUE
+#  )
+#  
+#})
+#
+#t_fast
+#
+#metric_forest_fast1
+#summary(metric_forest_fast1)
+#
+#plot(metric_forest_fast1$forest[[1]])
+#
+#
+#pd_metric_fast1 <- semtree::partialDependence(
+#  metric_forest_fast1,
+#  data = tree_data,
+#  reference.var = "age_z",
+#  support = 20
+#)
+#
+#pd_fast <- as.data.frame(pd_metric_fast1$samples)
+#----------------------------------------------------------------------------
+
+pd_long_fast <- pd_fast %>%
+  select(age_z, all_of(metric_pars)) %>%
+  pivot_longer(
+    cols = all_of(metric_pars),
+    names_to = "parameter",
+    values_to = "loading"
+  )
+
+age_z_limits <- quantile(
+  tree_data$age_z,
+  probs = c(.025, .975),
+  na.rm = TRUE
+)
+
+age_limits <- age_mean + age_z_limits * age_sd
+
+ggplot(
+  pd_long_fast %>%
+    filter(
+      age >= age_limits[1],
+      age <= age_limits[2]
+    ),
+  aes(x = age, y = loading)
+) +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 1.5) +
+  facet_wrap(
+    ~ parameter,
+    scales = "free_y",
+    ncol = 4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Forest-predicted loading"
+  ) +
+  theme_minimal()
+
+############################################################# 22/09
+# Constrained metric SEM forest:
+# depth 3, 10 trees
+#########################################
+
+# Keep individual trees shallow
+forest_tree_control <- semtree::semtree_control(
+  method = "naive",
+  alpha = 1,
+  bonferroni = FALSE,
+  max.depth = 3,
+  min.N = 500,
+  exclude.heywood = FALSE
+)
+
+# Increase number of trees for greater
+# ensemble averaging / PDP stability
+forest_control_10 <- semtree::semforest_control(
+  num.trees = 10,
+  sampling = "subsample",
+  control = forest_tree_control,
+  mtry = 2
+)
+
+forest_control_10
+
+
+#########################################
+# Fit metric forest
+#########################################
+
+set.seed(20260916)
+
+t_metric_10 <- system.time({
+  
+  metric_forest_10 <- semtree::semforest(
+    model = fit_casp_openmx2$baseline_fit,
+    data = tree_data,
+    predictors = c(
+      "age_z",
+      "female",
+      "cultural_cluster"
+    ),
+    control = forest_control_50,
+    constraints = metric_constraints,
+    seeds = TRUE
+  )
+  
+})
+
+t_metric_10
+
+metric_forest_10
+summary(metric_forest_10)
+
+# Save immediately
+saveRDS(
+  metric_forest_10,
+  "metric_forest_depth3_min500_10trees.rds"
+)
+
+
+#########################################
+# Partial dependence for age
+#########################################
+
+pd_metric_50 <- semtree::partialDependence(
+  metric_forest_50,
+  data = tree_data,
+  reference.var = "age_z",
+  support = 20
+)
+
+saveRDS(
+  pd_metric_50,
+  "pd_metric_depth3_min500_50trees.rds"
+)
+
+
+#########################################
+# Prepare PDP for plotting
+#########################################
+
+metric_pars <- c(
+  "lambda_C2", "lambda_C3",
+  "lambda_A2", "lambda_A3",
+  "lambda_P2", "lambda_P3",
+  "lambda_S2", "lambda_S3"
+)
+
+pd_50 <- as.data.frame(pd_metric_50$samples)
+
+names(pd_50)
+
+pd_long_50 <- pd_50 %>%
+  select(age_z, all_of(metric_pars)) %>%
+  pivot_longer(
+    cols = all_of(metric_pars),
+    names_to = "parameter",
+    values_to = "loading"
+  ) %>%
+  mutate(
+    age = age_mean + age_z * age_sd
+  )
+
+
+#########################################
+# Restrict displayed age range
+#########################################
+
+age_z_limits <- quantile(
+  tree_data$age_z,
+  probs = c(.025, .975),
+  na.rm = TRUE
+)
+
+age_limits <- age_mean + age_z_limits * age_sd
+
+
+#########################################
+# Plot
+#########################################
+
+ggplot(
+  pd_long_50 %>%
+    filter(
+      age >= age_limits[1],
+      age <= age_limits[2]
+    ),
+  aes(x = age, y = loading)
+) +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 1.5) +
+  facet_wrap(
+    ~ parameter,
+    scales = "free_y",
+    ncol = 4
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Forest-predicted loading"
+  ) +
+  theme_minimal()

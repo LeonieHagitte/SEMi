@@ -533,6 +533,21 @@ overall_failure_summary
 #1         172800          42 0.0002430556      0.02430556
 #----------------------------
 
+method_failure_summary <- eval_confirmatory %>%
+  group_by(method) %>%
+  summarise(
+    attempted_runs = n(),
+    failed_runs = sum(
+      is.na(metric_reject) |
+        is.na(scalar_reject)
+    ),
+    failure_rate = failed_runs / attempted_runs,
+    failure_percent = 100 * failure_rate,
+    .groups = "drop"
+  )
+
+method_failure_summary
+
 # ============================================================
 # 9. EXPLORATORY ANALYSIS
 #    Low-effect conditions added after initial inspection

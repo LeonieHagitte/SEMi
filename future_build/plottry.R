@@ -453,16 +453,9 @@ fig3b <- ggplot(
     group = method
   )
 ) +
-  geom_hline(
-    data = data.frame(estimand = "Type I error"),
-    aes(yintercept = .05),
-    inherit.aes = FALSE,
-    linetype = "dashed",
-    colour = "grey60"
-  ) +
   geom_line(linewidth = .65, alpha = .75) +
   geom_point(size = 2.2) +
-  facet_grid(estimand ~ moderator) +
+  facet_grid(. ~ moderator) +
   scale_colour_manual(values = cols) +
   scale_shape_manual(values = shapes) +
   scale_y_continuous(
@@ -472,7 +465,7 @@ fig3b <- ggplot(
   ) +
   labs(
     x = "Sample size",
-    y = "",
+    y = "Statistical power",
     colour = NULL,
     shape = NULL
   ) +

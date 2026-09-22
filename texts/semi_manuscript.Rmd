@@ -752,13 +752,34 @@ Although the separate SEM tree scalar test showed near-perfect power, the sequen
 Linear MNLFA showed similar sequential accuracy for scalar-only MNI (.645), whereas quadratic MNLFA showed lower accuracy (.331). 
 Consequently, high power of a level-specific scalar test did not necessarily translate into equally high accuracy when metric and scalar invariance were evaluated sequentially (see table 4).
 
+## Exploratory Analysis 
+
+After seeing the simulation results, recognizing that we obtained effects from a rather uninformative, or homogeneously informative space, we appended runs with smaller effect sizes for $\delta_{lambda}$ (.10) and $\delta_{nu}$ (.25). 
+The respective results can be seen in the indicated column in table <!-- Include Table numbers here!-->. 
+
+
 ## Empirical Example 
 
+<<<<<<< Updated upstream
 ### MNLFA
 The MNLFA provided evidence against both metric and scalar MI of the CASP-12. 
 Constraining loading-moderation effects to zero resulted in a significant decrease in model fit relative to the unrestricted model $(\Delta\chi^2(40)=2524.64; p<.001)$. 
 Subsequently constraining intercept-moderation effects to zero resulted in a statistically significant deterioration in fit, $(\Delta\chi^2(40)=13541.93; p<.001)$ (Table X). <!-- unsure if table here AB->LH no table here--> 
 Thus, the MNLFA indicated significant moderation of both factor loadings and item intercepts.
+=======
+As a first sanity check we performed a CFA, using WLSMV as estimator, to see how that model fitted in general. 
+The simpel CFA model for CASP-12 ($X^2$ = 21508.260; *df* = 48) showed acceptable fit indices with CFI = .94; TLI = .92; RMSEA = .08 [.082-.084] and a SRMR of .05. 
+The loadings onto the items were generally high only the factor *Autonomy* showed lower loadings onto its items ($\lambda_{A1}$=.58; $\lambda_{A2}$=.25; $\lambda_{A3}$=.45). 
+The results can be seen in the Appendix table <!-- X-->. 
+
+### MNLFA 
+
+The unrestricted model provided the best relative fit ($−2LL = 1,756,979, AIC = 1,757,383, BIC = 1,759,218$). 
+Constraining loading-moderation effects to zero resulted in a significant deterioration in model fit relative to the unrestricted model $(\Delta\chi^2(40)=2524.64; p<.001)$, accompanied by increases in $AIC (1,759,828)$ and $BIC (1,761,300)$. 
+Thus, metric invariance was not supported. 
+Subsequently constraining intercept-moderation effects to zero resulted in a statistically significant deterioration in fit, $(\Delta\chi^2(40)=13541.93; p<.001)$, with $AIC = 1,773,298 and BIC = 1,774,406$ (see Table X), <!-- unsure if table here --> providing evidence against scalar invariance. 
+Overall, the model comparisons indicated that both factor loadings and item intercepts varied as a function of the included moderators.
+>>>>>>> Stashed changes
 
 The estimated moderation coefficients suggested that MNI was primarily associated with age and cultural cluster, whereas gender-related differences were comparatively small (Tables X and X). <!-- unsure if tables here LH: Yes, table here or a graph visualizing the loading differences?--> 
 Relative to the Western European reference group, the largest loading-moderation coefficients for Southern Europe were observed for A3 $(\hat\beta=.423)$ and C3 $(\hat\beta=.358)$, while the corresponding coefficients for Eastern Europe were largest for A3 $(\hat\beta=.345)$ and A2 $(\hat\beta=.297)$. <!--AB->LH: Can you translate this to an interpretable scale? Say explicitly that this means that Western Europe has the lowest loading strength or something..)
@@ -788,7 +809,15 @@ Further partitions were again based on age, with additional cutoffs around 69 ye
 Gender was not selected as a partitioning variable.
 The scalar tree therefore indicated a combination of age- and culture-related intercept instability, with Southern Europe emerging repeatedly as a distinct subgroup. 
 
+<<<<<<< Updated upstream
 <!-- PDP section here  AB->LH, yes please!-->
+=======
+### Partial Dependence Plots 
+
+We used population model LAI0 as an example case for retrieving the functional forms of the moderation of the loadings. <!-- rather model L2I0?-->
+The partial dependence plots were generated based on <!--X--> trees with a depth of <!--X-->. 
+
+>>>>>>> Stashed changes
 
 # Discussion 
 
@@ -837,7 +866,7 @@ The additional cutoffs identified by the SEM trees illustrate the potential cons
 The metric split around 65 years suggests MNI within the predefined 60–69-year group, whereas the scalar splits around 87–88 years indicate further heterogeneity within the broad group of participants aged 80 years and older. 
 Conversely, the SEM trees did not reproduce every predefined boundary, most notably the distinction at 60 years. 
 The MNLFA results complement this pattern by showing that age-related heterogeneity can also be represented without introducing discrete age categories. 
-Age significantly moderated both loadings and intercepts, with comparatively pronounced coefficients for A2 and A3. <!-- TO DO: insert specific item wordings in parentheses for clarity -->
+Age significantly moderated both loadings and intercepts, with comparatively pronounced coefficients for A2 ("Wie oft haben Sie das Gefühl, keinen Einfluss darauf zu haben, was mit Ihnen geschieht?") and A3 (""). <!-- TO DO: insert specific item wordings in parentheses for clarity -->
 
 Together, these findings help reconcile the present results with the largely age-invariant findings reported by @BonnevilleRoussy2024. 
 The difference need not imply contradictory conclusions about the CASP-12. 
@@ -948,6 +977,9 @@ Fourth, the primary simulation supplied SEM trees with the relevant moderator va
 
 Finally, the empirical application was intended as an illustration rather than as evidence for definitive age or cultural thresholds in the CASP-12. The age cutoffs identified by the SEM trees should therefore be interpreted as sample-specific until their stability is established in independent data. Replication across SHARE waves would provide a particularly relevant test of whether similar age partitions and parameter differences are recovered.
 
+<!--
+PDPs assume that the features included in the PDP are independent from other features.
+-->
 
 <!--AB->LH: this is absolutely a discussion point and not for the introduction, thus I moved it here-->
 Regularization offers a further extension to the presented approaches and can be particularly useful for complex measurement models or when many potential sources of MNI are under consideration.
