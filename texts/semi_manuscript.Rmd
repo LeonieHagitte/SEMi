@@ -774,7 +774,7 @@ The results can be seen in the Appendix table <!-- X-->.
 
 ### MNLFA 
 
-The unrestricted model provided the best relative fit ($−2LL = 1,756,979, AIC = 1,757,383, BIC = 1,759,218$). 
+The unrestricted model provided the best relative fit ($-2LL = 1,756,979, AIC = 1,757,383, BIC = 1,759,218$). 
 Constraining loading-moderation effects to zero resulted in a significant deterioration in model fit relative to the unrestricted model $(\Delta\chi^2(40)=2524.64; p<.001)$, accompanied by increases in $AIC (1,759,828)$ and $BIC (1,761,300)$. 
 Thus, metric invariance was not supported. 
 Subsequently constraining intercept-moderation effects to zero resulted in a statistically significant deterioration in fit, $(\Delta\chi^2(40)=13541.93; p<.001)$, with $AIC = 1,773,298 and BIC = 1,774,406$ (see Table X), <!-- unsure if table here --> providing evidence against scalar invariance. 
