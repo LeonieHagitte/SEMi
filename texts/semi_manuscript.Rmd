@@ -440,12 +440,14 @@ The MNLFA analyses evaluated metric and scalar MNI through nested likelihood-rat
 ### MNLFA
 
 MNLFA models were estimated in `OpenMx` using raw-data maximum likelihood. 
-The latent-factor mean and variance were fixed to 0 and 1, respectively, for identification. 
+To identify the model, the latent-factor mean and variance were fixed to 0 and 1, respectively.
+
 Baseline item intercepts, factor loadings, and residual variances were freely estimated.
 
 Let $M_1$ and $M_2$ denote the raw moderator variables. 
+<!--AB->LH what is an "effective" moderator? Can't we just remove "effectice"?-->
 In the data-generating model, the effective moderators were defined as $Z_k^{(d)}=h(M_k)$, where $h(\cdot)$ denotes the data-generating transformation. 
-For the fitted MNLFA, we analogously define the analysis-scale effective moderators as$Z_k^{(a)}=g(M_k)$, where $g(\cdot)$ denotes the transformation assumed in the analytical model. 
+For the fitted MNLFA, we analogously define the analysis-scale effective moderators as $Z_k^{(a)}=g(M_k)$, where $g(\cdot)$ denotes the transformation assumed in the analytical model. 
 For conditions involving two moderators, the interaction term was defined as $Z_{12}^{(a)}=Z_1^{(a)}Z_2^{(a)}$.
 In the unrestricted MNLFA, the intercept of item $i$ was specified as
 
@@ -492,10 +494,10 @@ Residual-variance moderation was included as a nuisance component of the fitted 
 No interaction term was included for residual-variance moderation. 
 The latent mean was fixed at zero and was not moderated, and the latent variance was fixed at one.
 
-Metric MNI was evaluated by comparing the unrestricted model with a metric-invariance model in which all moderator effects on the factor loadings were constrained to zero. 
+Metric MNI was evaluated by comparing the unrestricted model with a metric-invariant model in which all moderator effects on the factor loadings were constrained to zero. 
 Moderator effects on item intercepts and residual variances remained freely estimated. 
-The resulting likelihood-ratio test therefore evaluated the joint null hypothesis that the factor loadings did not vary as a function of the modeled moderators. 
-Scalar MNI was evaluated by comparing the metric-invariance model with a scalar-invariance model in which moderator effects on item intercepts were additionally constrained to zero.
+The resulting likelihood-ratio test^[The degrees-of-freedom of the test correspond to the number of items in the model.] therefore evaluated the joint null hypothesis that no factor loading varied as a function of the modeled moderators. 
+Scalar MNI was evaluated by comparing the metric-invariance model with a scalar-invariant model in which moderator effects on item intercepts were additionally constrained to zero.
 Residual-variance moderation remained freely estimated. 
 The scalar likelihood-ratio test therefore evaluated the joint null hypothesis of no moderator-related intercept variation conditional on loading moderation having been constrained to zero. 
 An additional omnibus comparison between the unrestricted and scalar-invariance models tested the joint removal of loading and intercept moderation. 
@@ -506,8 +508,8 @@ In the *linear MNLFA*,$g(M)=M$, such that$Z_1^{(a)}=M_1,\qquad Z_2^{(a)}=M_2,\qq
 
 In the *quadratic MNLFA*, $g(M)=2M^2-1$, such that $Z_1^{(a)}=2M_1^2-1, \qquad Z_2^{(a)}=2M_2^2-1$, and $ Z_{12}^{(a)} = Z_1^{(a)}Z_2^{(a)}$.
 
-Thus, the quadratic MNLFA did not represent a conventional polynomial model containing both a linear and a squared moderator term. 
-Rather, it used the quadratically transformed effective moderator in otherwise identical moderation equations. 
+Thus, the quadratic MNLFA did not represent a conventional polynomial model containing both a linear and a squared moderator term but assumed that the non-linear functional form was correctly hypothesized a priori. 
+<!--AB->LH: I still don't get this. I think this is the same as giving the untransformed moderator and then pretend the user squared them to estimate the squared effect in a linear model, right? I don't think readers understand this-->
 Both MNLFA specifications were linear in the supplied effective moderator $Z^{(a)}$.
 <!--
 This notation also distinguishes functional-form specification in the analytical model from the data-generating mechanism. The DGM used
@@ -530,14 +532,14 @@ No sigmoid MNLFA specification was fitted; consequently, both MNLFA specificatio
 
 For the SEM-tree analyses, a single-factor CFA was specified with all four factor loadings $\lambda_1,\ldots,\lambda_4$, all four item intercepts $\nu_1,\ldots,\nu_4$, and all four residual variances freely estimated. 
 The latent-factor mean and variance were fixed at 0 and 1, respectively. 
-This CFA served as the base model for recursive partitioning.
+This CFA served as the base model for growing the SEM tree to detect parameter heterogeneity (also known as parameter instability in the score-based testing literature) in the measurement model. <!--AB->LH: we need to use a consistent term, I guess; parameter instability still seems particular to only that score-based literature not everybody may know-->
 
 Separate SEM trees were estimated for loading-related and intercept-related parameter instability. 
-In the *metric tree*, the four factor-loading parameters $\lambda_1,\ldots,\lambda_4$ were specified as `focus.parameters` in the score-based instability tests. 
-Candidate splits were therefore evaluated with respect to instability in the loading parameters. 
-In the *scalar tree*, the four item-intercept parameters $\nu_1,\ldots,\nu_4$ were instead specified as `focus.parameters`, such that the instability test targeted heterogeneity in the intercept parameters.
+In the *metric tree*, the four factor-loading parameters $\lambda_1,\ldots,\lambda_4$ were specified as focus parameters in the score-based instability tests. 
+Candidate splits were therefore evaluated with respect to instability in the loading parameters only. 
+In the *scalar tree*, the four item-intercept parameters $\nu_1,\ldots,\nu_4$ were instead specified as focus parameters, such that the instability test targeted heterogeneity in the intercept parameters.
 
-Importantly, `focus.parameters` determined which parameter scores entered the instability test; non-focused free parameters were not globally fixed. 
+Importantly, focus parameters determined which parameter scores entered the instability test; non-focused free parameters were allowed to vary between groups but did not contribute to the split evaluation.
 Thus, item intercepts and residual variances remained free parameters of the CFA underlying the loading-focused tree, whereas factor loadings and residual variances remained free parameters of the CFA underlying the intercept-focused tree. 
 The metric and scalar SEM trees therefore constituted separate parameter-focused instability analyses rather than a sequence of CFA models in which increasingly restrictive equality constraints were imposed on the complete measurement model. 
 This implementation detail is particularly relevant for interpreting cross-level rejection, because instability detected by a loading-focused or intercept-focused test need not imply that heterogeneity is confined exclusively to the corresponding parameter class.
@@ -774,6 +776,9 @@ The results can be seen in the Appendix table <!-- X-->.
 
 ### MNLFA 
 
+<!--AB: I would rather write an R script that runs these models, saves the results
+to a file, e.g., an RDS file or a text file and then load this file here and insert
+the values dynamically - this is currently a very error-prone way to report these values-->
 The unrestricted model provided the best relative fit ($-2LL = 1,756,979, AIC = 1,757,383, BIC = 1,759,218$). 
 Constraining loading-moderation effects to zero resulted in a significant deterioration in model fit relative to the unrestricted model $(\Delta\chi^2(40)=2524.64; p<.001)$, accompanied by increases in $AIC (1,759,828)$ and $BIC (1,761,300)$. 
 Thus, metric invariance was not supported. 
