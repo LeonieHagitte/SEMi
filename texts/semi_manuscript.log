@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  24 SEP 2026 10:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2026.2.17)  24 SEP 2026 10:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1252,11 +1252,11 @@ enc}
 .enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/
 lm-mathit.enc}] [2] [3] [4] [5] [6] [7] [8] [9] [10]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 484.
+(Font)              <10> on input line 486.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 484.
+(Font)              <7> on input line 486.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 484.
+(Font)              <5> on input line 486.
 [11] [12{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/
 lm/lm-mathsy.enc}{C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/e
 nc/dvips/lm/lm-mathex.enc}]
@@ -1266,18 +1266,18 @@ File: semi_manuscript_files/figure-latex/my-figure-1.pdf Graphic file (type pdf
 )
 <use semi_manuscript_files/figure-latex/my-figure-1.pdf>
 Package pdftex.def Info: semi_manuscript_files/figure-latex/my-figure-1.pdf  us
-ed on input line 552.
+ed on input line 554.
 (pdftex.def)             Requested size: 352.31625pt x 234.89014pt.
 [13 <./semi_manuscript_files/figure-latex/my-figure-1.pdf>] [14]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
-37.
+39.
 (C:\Users\Leonie.Hagitte\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [15] [16] [17] [18] [19] [20] [21]
 Overfull \vbox (138.58977pt too high) has occurred while \output is active []
 
 [22]
-Overfull \hbox (7.44922pt too wide) in paragraph at lines 939--958
+Overfull \hbox (7.44922pt too wide) in paragraph at lines 941--960
  [][] 
  []
 
@@ -1285,10 +1285,10 @@ Overfull \hbox (7.44922pt too wide) in paragraph at lines 939--958
 <Rplot2.png, id=156, 573.47583pt x 327.2225pt>
 File: Rplot2.png Graphic file (type png)
 <use Rplot2.png>
-Package pdftex.def Info: Rplot2.png  used on input line 1005.
+Package pdftex.def Info: Rplot2.png  used on input line 1007.
 (pdftex.def)             Requested size: 375.80544pt x 214.43466pt.
 [25 <./Rplot2.png>] [26] [27] [28] [29]
-Overfull \hbox (50.3451pt too wide) in paragraph at lines 1193--1198
+Overfull \hbox (50.3451pt too wide) in paragraph at lines 1195--1200
 $\OML/lmm/m/it/12 guidedSEMtreeanalysesalsoindicatedparameterinstabilityatbotht
 hemetricandscalarlevels\OT1/lmr/m/n/12 (-20) ($\T1/lmr/m/n/12 (-20) p<.001$ 
  []
@@ -1297,7 +1297,7 @@ hemetricandscalarlevels\OT1/lmr/m/n/12 (-20) ($\T1/lmr/m/n/12 (-20) p<.001$
 <PDP_plot.png, id=189, 885.72768pt x 563.03372pt>
 File: PDP_plot.png Graphic file (type png)
 <use PDP_plot.png>
-Package pdftex.def Info: PDP_plot.png  used on input line 1227.
+Package pdftex.def Info: PDP_plot.png  used on input line 1229.
 (pdftex.def)             Requested size: 375.80544pt x 238.88667pt.
 [31 <./PDP_plot.png>] [32] [33] [34] [35] [36] [37] [38] [39] [40] [41] [42] [4
 3] [44] [45] [46] [47] [48] AED endfloat: Processing end Figures and Tables [49
@@ -1329,7 +1329,7 @@ rograms/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Leonie.Hagitte/AppData
 ri12.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/type1/pub
 lic/lm/lmsy10.pfb><C:/Users/Leonie.Hagitte/AppData/Local/Programs/MiKTeX/fonts/
 type1/public/lm/lmtt12.pfb>
-Output written on semi_manuscript.pdf (49 pages, 411194 bytes).
+Output written on semi_manuscript.pdf (49 pages, 411219 bytes).
 PDF statistics:
  524 PDF objects out of 1000 (max. 8388607)
  129 named destinations out of 1000 (max. 500000)

@@ -185,7 +185,9 @@ models <- data.frame(
     "LAIA",
     "L2I0",
     "L0I2",
-    "L2I2"
+    "L2I2",
+    "1.3",
+    "32"
   ),
   `Loading moderation` = c(
     "none",
@@ -194,7 +196,9 @@ models <- data.frame(
     "all items",
     "items 1--2",
     "none",
-    "items 1--2"
+    "items 1--2",
+    "all items",
+    "all by M1"
   ),
   `Intercept moderation` = c(
     "none",
@@ -203,7 +207,9 @@ models <- data.frame(
     "all items",
     "none",
     "items 1--2",
-    "items 1--2"
+    "items 1--2",
+    "none",
+    "all by M2"
   ),
   check.names = FALSE
 )
