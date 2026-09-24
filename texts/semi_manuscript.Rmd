@@ -61,35 +61,19 @@ Two recent approaches, moderated nonlinear factor analysis and SEM trees, offer 
 
 ## Classical Measurement Invariance Testing 
 
-Structural equation models (SEMs) are widely used to define latent constructs and their relations to observed indicators [@Kline2023; @Bollen2011; @tarka2018]. 
-Within SEMs, measurement models specify the relationships between latent factors and their manifest indicators. 
-By separating construct-related variance from measurement error, latent variable models provide a principled basis for evaluating measurement quality [@Bollen1989].
+Structural equation models (SEMs) are a principled framework for defining latent constructs and their relations to observed indicators [@Kline2023; @Bollen2011; @tarka2018]. 
+Within a SEM, the measurement model specifies how latent factors relate to their manifest indicators, separating construct-related variance from measurement error and thereby providing a basis for evaluating measurement quality [@Bollen1989].
 
-Classical approaches to MI testing are fundamentally confirmatory in nature.
-Researchers begin by specifying a measurement model, typically in the form of a confirmatory factor analysis (CFA), that reflects substantive hypotheses about the construct under investigation. 
-A categorical grouping variable is then used to partition the sample into two or more groups, across which measurement parameters are constrained and compared. 
-This most widely used approach for evaluating MI is usually referred to as multiple-group confirmatory factor analysis (MGCFA) [e.g. @Cheung2002; @Putnick2016].  
-In MGCFA, MI is typically assessed through a sequence of nested model comparisons in which increasingly restrictive equality constraints are imposed on the model parameters. 
-Equality of the models structure in both groups is called _configural invariance_, and can be understood as both groups sharing the same factor structure (i.e., same number of latent factors and same pattern of loadings between factors and items). 
-Equality of factor loadings former is referred to as _metric invariance_, if metric invariance is present it indicates that all factor loading parameters are equal across groups. 
-Speciﬁcally, this suggests that the items of a given scale and their underlying constructs relate to each other with the same strengths in both groups. 
-_Scalar invariance_ further constrains item intercepts to equality across groups. 
-Establishing scalar invariance is required for meaningful comparisons of latent means because it indicates that the measurement scale has the same unit and origin across groups [@Little1997].
-_Residual_ or _strict invariance_ assumes, additionally to the constraints above, that variables residuals are equal across the groups. 
-If residual variance holds, the items of the scale are measuring the latent constructs with the same measurement error. 
-This implies that it can indeed be known whether differences measured by the items of the tested scale between the groups are due to group differences in the proposed factors or due to measurement errors [@Cheung2002; @Widaman1997]. 
+Classical MI testing builds on this framework in a confirmatory way. 
+Researchers specify a measurement model -- typically a CFA -- reflecting substantive hypotheses about the construct, then partition the sample by a categorical grouping variable and test increasingly restrictive equality constraints across groups. 
+This approach, multiple-group CFA (MGCFA), is the most widely used method for evaluating MI [e.g., @Cheung2002; @Putnick2016]. 
+It proceeds through a hierarchy of invariance levels with increasingly stronger assumptions: _configural invariance_ (the same structural pattern holds in all groups), metric invariance (factor loadings are additionally equal, indicating that items relate to the construct with the same strength across groups), _scalar invariance_ (item intercepts are additionally equal, establishing a common scale unit and origin needed for comparing latent means [@Little1997]), and _residual_ or _strict invariance_ (residual variances are additionally equal, so that any remaining group differences reflect the construct rather than differential measurement error [@Cheung2002; @Widaman1997]). 
+Which level is required depends on the inference being drawn — for example, metric invariance is generally necessary for comparing latent means, whereas weaker forms may suffice for comparing correlations [@Putnick2016].
 
-The appropriate level of invariance required depends on the substantive inference of interest. 
-For example, metric invariance is generally required when comparing latent means across groups, whereas less restrictive forms of invariance may be sufficient for research questions about correlations [@Putnick2016]. 
-
-In MGCFA, MI testing depends on the specified measurement model and grouping variable.
-Accordingly, measurement noninvariance (MNI) can only be detected with respect to the grouping variables included in the analysis. 
-This framework is well suited to settings in which theory implies meaningful discrete distinctions, such as treatment conditions, demographic categories, or measurement occasions.
-However, many characteristics that may affect measurement functioning vary continuously across individuals. 
-Converting such characteristics into predefined groups may require arbitrary cutoffs and obscure relevant variation in measurement parameters.
-
-Additionally, categorization may obscure how measurement parameters vary along the underlying continuous characteristic. 
-Methods for representing heterogeneity in measurement parameters across continuous covariates are therefore needed when neither discrete groups nor the functional form of parameter variation can be specified a priori. 
+Because MGCFA tests invariance only with respect to a pre-specified grouping variable, it is well suited to settings with theoretically meaningful discrete distinctions, e.g. a set of treatment conditions, demographic categories, or discrete measurement occasions.
+It is less well suited to characteristics that vary continuously, such as age. 
+Forcing these into predefined groups requires arbitrary cutoffs that are hard to justify and can obscure both _where_ non-invariance occurs and _how_ measurement parameters actually vary along the underlying continuum. 
+Methods that can represent such heterogeneity without requiring either discrete groups or a prespecified functional form are therefore much needed.
 
 ## Moderated Nonlinear Factor Analysis 
 
@@ -120,9 +104,9 @@ Such settings motivate methods that can explore parameter heterogeneity without 
 
 ## Structural Equation Model Trees 
 
-Structural Equation Model trees (SEM trees) were originally introduced by Brandmaier et al. (2013) as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g., by identifying moderators of model parameters in a SEM. 
+Structural Equation Model trees (SEM trees) were originally introduced by @brandmaier2013 as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g., by identifying moderators of model parameters in a SEM. 
 Subsequent developments further refined the methodology and expanded its applicability (Arnold et al., 2021; Brandmaier et al., 2016). 
-finch2017structural
+
 Notably, SEM Trees were not developed as a dedicated methods to investigate measurement invariance but as a generic strategy for explaining heterogeneity.
 Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
 Even though SEM Trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate measurement invariance [@finch2017structural, @sajobi2026tree].
@@ -147,32 +131,19 @@ Because the decision structure closely resembles familiar MGCFA practice, SEM tr
 
 ## Present Study 
 
-MGCFA, MNLFA, and SEM trees differ in how they represent heterogeneity in measurement parameters. 
-MGCFA captures heterogeneity as differences between predefined groups. 
-When heterogeneity is associated with a continuous covariate $(z)$, the problem can instead be framed as modeling a measurement parameter $(\theta)$ as a function of that covariate, $(\theta(z))$, as in MNLFA.
-MNLFA represents this relationship using parametrically specified moderation functions, whereas SEM trees use data-driven recursive partitions of the covariate space. 
-The methods therefore differ in how they represent the relationship between covariates and measurement parameters. 
+MGCFA, MNLFA, and SEM trees represent measurement heterogeneity differently. 
+MGCFA captures it as differences between predefined groups. 
+When heterogeneity instead depends on a continuous covariate $z$, the problem becomes modeling a measurement parameter $\theta$ as a function $\theta(z)$: MNLFA specifies this function parametrically, whereas SEM trees approximate it through a data-driven, piecewise linear approximation.
 
-The present simulation study examines the consequences of these different representations for detecting MNI. 
-Specifically, we compare MNLFA and SEM trees performance in detecting MNI, when the true parameter–covariate relationship is linear, quadratic, or sigmoidal, while additionally varying the magnitude of parameter heterogeneity and sample size. 
+The present simulation examines the consequences of this difference for detecting MNI, comparing MNLFA and SEM trees when the true $\theta(z)$ relationship is linear, quadratic, or sigmoidal, and varying the magnitude of heterogeneity and sample size. Three aspects of performance are addressed: whether each method detects MNI at all; how detection depends on the functional form of $\theta(z)$; and, since loading and intercept heterogeneity are introduced separately, whether each method correctly localizes MNI to the metric or scalar level.
 
-The comparison addresses three aspects of performance. 
-First, we examine whether each method detects the presence of MNI. 
-Second, we evaluate how detection depends on the functional form of $\theta(z)$, thereby assessing the consequences of representing parameter heterogeneity parametrically or through recursive partitions. 
-Third, because the simulation separately introduces heterogeneity in factor loadings and item intercepts, we examine whether the methods correctly identify the level at which MNI occurs, corresponding to metric and scalar MNI for continuous indicators. 
+We expect SEM trees to hold an advantage under nonlinear, especially sigmoidal, moderation, with this advantage shrinking under purely linear moderation, which is typically more difficult to represent well in the recursive partitioning paradigm. 
+MNLFA, conversely, should perform best when its specified functional form is correct — particularly under linear moderation — but be more sensitive to misspecification. 
+For both methods, stronger moderation effects and larger sample sizes should improve detectability.
 
-We expect SEM trees to perform particularly well in conditions characterized by nonlinear moderation, especially sigmoidal relationships, whereas their relative advantage should diminish in purely linear settings. 
-In contrast, MNLFA is expected to perform best when the functional form of moderation is correctly specified, particularly in linear conditions, but to be more sensitive to misspecification of the underlying moderation function. 
-For both methods, stronger moderation effects are expected to increase the detectability of measurement non-invariance. 
+We complement the simulation with an empirical illustration using CASP-12 quality-of-life data from Wave 9 of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9; @BorratBesson2015; @wiggins2008], motivated by @BonnevilleRoussy2024's group-based analysis of CASP-12 invariance across age, gender, and cultural region. Age offers a natural comparison case: MGCFA requires discretizing it into groups, whereas MNLFA and SEM trees can treat it as continuous, avoiding arbitrary categorization.
 
-<!-- Placeholder, where the section was before: again, this is sounds like a discussion point; it distracts from the current study and opens up a comparison to a different method; I suggest to move this down-->
-
-In addition to the simulation study, we compare the results of both approaches for assessing measurement invariance with metric predictors data using empirical data from the ninth wave of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9]. 
-As primary outcome, we model quality of life assessed by the CASP-12 [@BorratBesson2015; @wiggins2008]. 
-The illustration is motivated by the study from @BonnevilleRoussy2024, who examined longitudinal and cross-sectional MI of the CASP-12 across age, gender, and cultural regions using group-based comparisons. 
-Age is a particularly useful case for comparison: conventional MGCFA, which requires discretizing continous age into age groups, whereas the approaches considered here can incorporate age as a continuous covariate, avoiding potentially arbitrary categorization.
-
-We close with an integrative discussion of the simulation and empirical results and give some practical recommendations to researcher as to when each approach, that is a conventional MGCFA, MLNFA, or SEM Trees may be best suitable to examine measurement invariance in latent variable models.
+We close with an integrative discussion of the simulation and empirical findings and practical recommendations for when MGCFA, MNLFA, or SEM trees are best suited to testing measurement invariance.
 
 # Simulation 
 
