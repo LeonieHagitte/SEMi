@@ -929,28 +929,18 @@ This choice reflects our aim to compare approaches that constitute relatively di
 
 ## Practical Recommendations 
 
-<!-- Use MNLFA when... ; Use SEM trees when ... -->
-The choice between MNLFA and tree-based approaches should primarily depend on the purpose and prior knowledge of the analysis. 
-Tree-based procedures are particularly useful at an exploratory stage, when relevant sources of MNI, interactions among covariates, or functional forms and cutoffs are not known in advance. 
-This role is consistent with the framework proposed by @Somaraju2022 and extended by @Goretzko2026, in which exploratory analyses of potential sources of MNI complement rather than replace formal tests of measurement invariance. 
-Tree methods can thereby generate hypotheses about which covariates and regions of the covariate space warrant more targeted investigation. @Goretzko2026 similarly emphasize their ability to investigate continuous covariates and interactions that would be difficult to anticipate within conventional group-based analyses. 
+The choice between MNLFA and tree-based approaches should depend primarily on the purpose and prior knowledge guiding the analysis. 
+Tree-based methods are most useful at an exploratory stage, when the relevant sources of MNI, covariate interactions, or functional forms and cutoffs are not known in advance; they can generate hypotheses about which covariates and regions of the covariate space warrant closer investigation, including continuous covariates and interactions difficult to anticipate under conventional group-based analyses [@Somaraju2022; @Goretzko2026].
 
-MNLFA is preferable when researchers have theoretically motivated hypotheses about specific moderators and their functional relationships with measurement parameters. 
-The present results particularly emphasize the importance of this qualification: when the functional form was correctly specified, MNLFA provided highly sensitive tests of MNI, whereas misspecification could substantially reduce detection. 
-MNLFA also provides directly interpretable parameter-level estimates of moderator effects, making it useful when their magnitude and direction are themselves of substantive interest. 
+MNLFA is preferable when researchers have theoretically motivated hypotheses about specific moderators and their functional form. 
+Our results underscore why this qualification matters: MNLFA was highly sensitive to MNI when the functional form was correctly specified, but substantially less so under misspecification. 
+MNLFA also yields directly interpretable parameter-level estimates of moderator effects, useful when their magnitude and direction are themselves of substantive interest.
 
-These approaches can therefore be viewed as complementary stages along an exploratory–confirmatory continuum. 
-A tree-based analysis may first identify candidate sources, interactions, or cutoffs associated with MNI; these findings can then inform a more explicitly parameterized model or the definition of groups for subsequent confirmatory MI analyses. 
-Consistent with @Goretzko2026, formal conclusions about invariance should not rest on data-driven tree partitions alone but should be evaluated using confirmatory methods. 
-Ideally, hypotheses generated through exploratory analyses should subsequently be evaluated in independent data. 
-Such a workflow shifts the goal from merely detecting MNI toward generating, testing, and ultimately replicating explanations for when and why measurement properties differ. 
+Rather than competing methods, MNLFA and tree-based approaches can therefore be viewed as complementary stages along an exploratory--confirmatory continuum. 
+A tree-based analysis can first identify candidate sources, interactions, or cutoffs, which then inform a more explicitly parameterized model or group definitions for confirmatory testing in future assessments.
+Consistent with @Goretzko2026, formal invariance conclusions should not rest on data-driven partitions alone, and hypotheses generated exploratively must be confirmed in independent data to avoid post-selection inference bias. 
+Such a workflow reframes the goal from merely detecting MNI to generating, testing, and ultimately replicating explanations of when and why measurement properties differ.
 
-
-<!-- Unsure where to put or delete
-AB->LH sound like a discussion/summary point
-This highlights, that SEM trees can offer substantially greater flexibility by accommodating multiple candidate moderators, continuous and categorical partitioning variables, and potentially nonlinear functional forms to explain heterogeneity, given the sample size is large enough to detect such effects. 
-Although explicit specification of moderators and moderation functions remains advantageous when strong theoretical expectations are available, SEM trees could provide a complementary strategy for situations in which the sources or functional forms of heterogeneity are uncertain. 
--->
 
 
 # References
