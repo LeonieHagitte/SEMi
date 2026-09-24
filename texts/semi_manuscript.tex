@@ -336,13 +336,16 @@ by Brandmaier et al.~(2013) as a method for identifying important
 covariates and their interactions within SEMs to explain heterogeneity,
 e.g., by identifying moderators of model parameters in a SEM. Subsequent
 developments further refined the methodology and expanded its
-applicability (Arnold et al., 2021; Brandmaier et al., 2016). Notably,
-although MI was used as an illustrative application by Arnold et
-al.~(2021), SEM Trees were not originally developed as a dedicated
-method for testing MI and have received relatively little attention as
-tools for detecting MNI. Because violations of MI manifest as systematic
-heterogeneity in measurement parameters, SEM trees appear conceptually
-well suited for detecting such effects.
+applicability (Arnold et al., 2021; Brandmaier et al., 2016).
+finch2017structural Notably, SEM Trees were not developed as a dedicated
+methods to investigate measurement invariance but as a generic strategy
+for explaining heterogeneity. Because violations of MI manifest as
+systematic heterogeneity in parameters of the measurement model, SEM
+trees are by design well suited for detecting such effects. Even though
+SEM Trees have received relatively little attention as tools for
+detecting MNI in general, some researchers have already used SEM Trees
+as a successful heuristic to investigate measurement invariance {Sajobi
+et al.} (2026).
 
 SEM trees merge two paradigms: SEMs and decision trees. Decision trees
 describe recursive partitions of the covariate space, whereby the sample
@@ -374,19 +377,9 @@ Hence, SEM trees combine a theory-driven measurement model with a
 data-driven search for heterogeneity. This makes them especially
 valuable when researchers have a well-established measurement model but
 little prior knowledge about where MNI may arise or what form it may
-take. The researcher decision structure of this approach remains closely
-aligned with familiar MGCFA practice, making SEM trees a comparatively
-accessible extension of conventional MI analysis.
-
-This highlights, that SEM trees can offer substantially greater
-flexibility by accommodating multiple candidate moderators, continuous
-and categorical partitioning variables, and potentially nonlinear forms
-of heterogeneity, given the sample size is large enough to detect such
-effects. Although explicit specification of moderators and moderation
-functions remains advantageous when strong theoretical expectations are
-available, SEM trees could provide a complementary strategy for
-situations in which the sources or functional forms of heterogeneity are
-uncertain.
+take. Because the decision structure closely resembles familiar MGCFA
+practice, SEM trees represent a comparatively accessible extension of
+conventional MI analysis.
 
 \subsection{Present Study}\label{present-study}
 
@@ -404,7 +397,7 @@ relationship between covariates and measurement parameters.
 The present simulation study examines the consequences of these
 different representations for detecting MNI. Specifically, we compare
 MNLFA and SEM trees performance in detecting MNI, when the true
-parameter--covariate relationship is linear, quadratic, or sigmoid,
+parameter--covariate relationship is linear, quadratic, or sigmoidal,
 while additionally varying the magnitude of parameter heterogeneity and
 sample size.
 
@@ -419,77 +412,38 @@ level at which MNI occurs, corresponding to metric and scalar MNI for
 continuous indicators.
 
 We expect SEM trees to perform particularly well in conditions
-characterized by nonlinear moderation, especially sigmoid relationships,
-whereas their relative advantage should diminish in purely linear
-settings. In contrast, MNLFA is expected to perform best when the
-functional form of moderation is correctly specified, particularly in
-linear conditions, but to be more sensitive to misspecification of the
-underlying moderation function. For both methods, stronger moderation
-effects are expected to increase the detectability of measurement
-non-invariance.
+characterized by nonlinear moderation, especially sigmoidal
+relationships, whereas their relative advantage should diminish in
+purely linear settings. In contrast, MNLFA is expected to perform best
+when the functional form of moderation is correctly specified,
+particularly in linear conditions, but to be more sensitive to
+misspecification of the underlying moderation function. For both
+methods, stronger moderation effects are expected to increase the
+detectability of measurement non-invariance.
 
-Related tree-based approaches have recently been developed specifically
-for investigating MNI across multiple covariates within the broader
-SEM-tree framework. Sterner and Goretzko (2023) introduced exploratory
-factor analysis (EFA) trees, and Goretzko et al. (2026) subsequently
-extended this work to CFA trees. Like SEM trees more generally, EFA and
-CFA trees use model-based recursive partitioning and score-based
-structural-change tests to identify parameter instability across
-candidate covariates. EFA trees embed an exploratory factor model within
-this framework, whereas CFA trees retain a prespecified confirmatory
-measurement structure and can be configured to investigate particular
-classes of measurement parameters, including item intercepts in analyses
-of scalar MNI.
+In addition to the simulation study, we compare the results of both
+approaches for assessing measurement invariance with metric predictors
+data using empirical data from the ninth wave of the Survey of Health,
+Ageing and Retirement in Europe (SHARE-ERIC 2024). As primary outcome,
+we model quality of life assessed by the CASP-12 (Borrat-Besson et al.
+2015; Wiggins et al. 2008). The illustration is motivated by the study
+from Bonneville-Roussy et al. (2024), who examined longitudinal and
+cross-sectional MI of the CASP-12 across age, gender, and cultural
+regions using group-based comparisons. Age is a particularly useful case
+for comparison: conventional MGCFA, which requires discretizing
+continous age into age groups, whereas the approaches considered here
+can incorporate age as a continuous covariate, avoiding potentially
+arbitrary categorization.
 
-The procedure examined in the present study is likewise a CFA-based
-application of the SEM-tree framework. Metric and scalar MNI are
-investigated using separate score-based instability tests focused on
-factor loadings and item intercepts, respectively. This
-parameter-focused implementation differs in its constraint strategy from
-the intercept-focused CFA-tree procedure described by Goretzko et al.
-(2026), in which nonfocal model parameters can be fixed while intercepts
-are evaluated for instability. Rather than proposing a distinct
-tree-based MI method, the present study therefore evaluates the
-performance of a particular parameter-focused specification of SEM trees
-and compares it with the parametric moderation approach of MNLFA.
+We close with an integrative discussion of the simulation and empirical
+results and give some practical recommendations to researcher as to when
+each approach, that is a conventional MGCFA, MLNFA, or SEM Trees may be
+best suitable to examine measurement invariance in latent variable
+models.
 
-It is to be noted that regularization provides an additional extension
-to several of these approaches and may be particularly useful when
-complex measurement models or large numbers of potential sources of MNI
-are considered. Within EFA, regularization can be used to obtain sparse
-and interpretable loading structures without relying on conventional
-factor rotation (Goretzko 2025), whereas within MNLFA, regularization
-has been applied to moderation parameters to identify measurement bias
-across multiple categorical and continuous background characteristics
-(Bauer et al. 2020; Belzak and Bauer 2024). Although such extensions can
-reduce the need to prespecify individual sources of measurement
-heterogeneity, they also introduce additional methodological choices
-concerning penalization and model selection. The present study therefore
-focuses on MNLFA and SEM trees without regularization.
+\section{Simulation}\label{simulation}
 
-\subsection{Application Example}\label{application-example}
-
-In addition to the simulation study, we illustrate the approaches using
-the CASP-12 measure of quality of life from the ninth wave of the Survey
-of Health, Ageing and Retirement in Europe (SHARE-ERIC 2024). The
-CASP-12 is a shortened version of the original 19-item CASP scale; the
-version used in SHARE also differs slightly from the CASP-12 proposed by
-Wiggins et al. (2008, 2008; Borrat-Besson et al. 2015).
-
-The application is motivated by Bonneville-Roussy et al. (2024), who
-investigated longitudinal and cross-sectional MI of the CASP-12 across
-age, gender, and cultural regions using group-based comparisons. Here,
-we focus on cross-sectional MI in wave 9, using age, gender, and culture
-as covariates. In particular, age provides a useful case for comparing
-conventional MGCFA, which requires discretization into age groups, with
-approaches that can incorporate age as a continuous covariate and
-thereby avoid potentially arbitrary categorization.
-
-\section{Method}\label{method}
-
-\subsection{Simulation}\label{simulation}
-
-\subsection{Data-generating mechanism}\label{data-generating-mechanism}
+\subsection{Method}\label{method}
 
 Data were generated from a single-factor CFA model measured by four
 continuous indicators. Baseline factor loadings were fixed to
@@ -609,8 +563,8 @@ Data-generating conditions manipulated The manipulated data-generating
 factors are summarized in Table (\textbf{ref?})(tab:simulation-design).
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3974}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6026}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3735}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6265}}@{}}
 \caption{Overview of the simulation design.}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
@@ -630,7 +584,8 @@ Levels
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-Population model & 0, 1.1, 1.11, 1.12, 1.2, 1.21, 1.22, 1.3, 1.32 \\
+Population model & L0I0, LAI0, L0IA, LAIA, L2I0, L0I2, L2I2, 1.3,
+1.32 \\
 Functional form of moderation & Linear, quadratic, sigmoid, null/no
 moderation \\
 Loading moderation magnitude & \(\delta_\lambda \in \{0.20, 0.30\}\) \\
@@ -799,7 +754,7 @@ specified as \texttt{focus.parameters}, such that the instability test
 targeted heterogeneity in the intercept parameters.
 
 Importantly, \texttt{focus.parameters} determined which parameter scores
-entered the instability test; nonfocused free parameters were not
+entered the instability test; non-focused free parameters were not
 globally fixed. Thus, item intercepts and residual variances remained
 free parameters of the CFA underlying the loading-focused tree, whereas
 factor loadings and residual variances remained free parameters of the
@@ -892,68 +847,6 @@ rather than through paired replication-level contrasts. An additional
 100 SEM-tree analyses were conducted for the noisy-predictor robustness
 condition.
 
-\subsection{Empirical Example}\label{empirical-example}
-
-We analyzed the CASP-12 using data from Wave 9 of the Survey of Health,
-Ageing and Retirement in Europe (SHARE). Following the characteristics
-examined by Bonneville-Roussy et al. (2024), age, gender, and cultural
-region were considered as potential sources of measurement
-heterogeneity. Age was included as a continuous covariate, gender as a
-dichotomous covariate, and countries were grouped into four cultural
-regions: Nordic, Western, Southern, and Eastern Europe. All covariates
-were considered simultaneously in the analytical models. Gender was
-coded as 0 = male and 1 = female, and Western Europe served as the
-reference category for cultural region in the MNLFA analyses.
-
-The CASP-12 comprises 12 items assessing four domains of quality of
-life: Control, Autonomy, Self-Realization, and Pleasure, with three
-items assigned to each domain. Responses are recorded on a four-point
-rating scale ranging from 1 (Often) to 4 (Never). Positively worded
-items were reverse-scored so that all items had a common direction, with
-higher values indicating better quality of life. In the present
-analyses, the four-category CASP-12 items were treated as continuous
-indicators. Accordingly, scalar measurement parameters refer to item
-intercepts.
-
-The empirical MNLFA followed the same general testing strategy as the
-simulation. The model was identified using the first item of each factor
-(C1, A1, P1, and S1) as an anchor item, with its loading fixed to 1 and
-its intercept and corresponding moderation effects fixed to zero. Thus,
-loading and intercept moderation was tested for the remaining eight
-non-anchor items, conditional on invariance of the four anchor items. In
-the unrestricted model, the loadings and intercepts of these eight
-items, as well as residual variances, were allowed to vary with the
-covariates. Latent means were allowed to vary with all covariates and
-remained freely moderated across the metric and scalar models, thereby
-allowing covariate-related differences in latent factor means to be
-estimated separately from item-intercept moderation. The latent
-covariance matrix was freely estimated but held constant across
-covariate values.
-
-The empirical SEM-tree analyses used the same four anchor items for
-identification. Separate loading- and intercept-focused trees were
-estimated. The metric tree tested parameter instability in the loadings
-of the eight non-anchor items, whereas the scalar tree tested
-instability in their eight intercepts. The anchor-item loadings and
-intercepts were not included among the focal parameters. Age, gender,
-and cultural region were supplied simultaneously as candidate
-partitioning variables. As in the simulation, score-based
-parameter-instability tests used \(\alpha=.05\), Bonferroni adjustment,
-and a maximum tree depth of three; for the empirical analyses, the
-minimum node size was set to 100. As an exploratory extension, a SEM
-forest was additionally estimated to examine the functional form of
-moderator-related parameter variation. Partial-dependence analyses were
-used to obtain a flexible, tree-based approximation of how measurement
-parameters varied across values of the moderators.
-
-CASP-12 responses outside the valid range of 1--4 were coded as missing,
-as were invalid negative age values. Participants were excluded if they
-had missing information on age, gender, or cultural region. For the
-MNLFA and SEM-tree analyses, the sample was further restricted to
-participants with complete responses on all 12 CASP-12 items. Age was
-standardized within the resulting analysis sample. The final analysis
-sample comprised \(N=65{,}214\) participants.
-
 \subsection{Transparency and Openness}\label{transparency-and-openness}
 
 All data generating code, analysis code, and research materials are
@@ -976,9 +869,7 @@ Wickham 2026), \texttt{purrr} (Wickham and Henry 2026), \texttt{future}
 (Bengtsson 2021), \texttt{parallel} (R Core Team 2025), and
 \texttt{ggplot2} (Wickham 2016).
 
-\section{Results}\label{results}
-
-\subsection{Simulation}\label{simulation-1}
+\subsection{Results}\label{results}
 
 Across 172,800 method-specific simulation runs, 41 (0.024\%) did not
 yield evaluable metric or scalar test results. This occurred in 7 of
@@ -1161,30 +1052,129 @@ of a level-specific scalar test did not necessarily translate into
 equally high accuracy when metric and scalar invariance were evaluated
 sequentially (see table 4).
 
-\subsection{Empirical Example}\label{empirical-example-1}
+\subsection{Exploratory Analysis}\label{exploratory-analysis}
+
+After seeing the simulation results, recognizing that we obtained
+effects from a rather uninformative, or homogeneously informative space,
+we appended runs with smaller effect sizes for \(\delta_{lambda}\) (.10)
+and \(\delta_{nu}\) (.25). The respective results can be seen in the
+indicated column in table .
+
+In the candidate-variable robustness analysis (1,000 replications),
+metric non invariance was detected in 79.1\% of replications and the
+true moderator was identified in 77.4\%. The true moderator alone was
+selected in 68.2\% of replications, while the true moderator and at
+least one noise variable were jointly selected in 9.2\%. Selection of
+noise variables in the absence of the true moderator occured in 1.7\% of
+the cases.
+
+\section{Empirical Example}\label{empirical-example}
+
+For the application we used the data on the CASP-12 scale from Wave 9 of
+the Survey of Health, Ageing and Retirement in Europe (SHARE). The
+CASP-12 is a shorter version of the CASP-19, a measure to assess quality
+of life in old age (Hyde et al. 2003). The CASP-12 comprises 12 items
+assessing four domains of quality of life: \emph{Control},
+\emph{Autonomy}, \emph{Self-Realization}, and \emph{Pleasure}, with
+three items assigned to each domain. Responses are recorded on a
+four-point rating scale ranging from 1 (Often) to 4 (Never). The shorter
+version was later suggested by (\textbf{Wiggins2008?}) still differs
+from the version used in SHARE, by two items. Instead of the items ``I
+feel that I can please myself what I do.'', SHARE includes the item
+``Wie oft denken Sie, dass familiäre Verpflichtungen Sie daran hindern,
+das zu tun, was Sie möchten?'' (A2). Furthermore, instead of the item
+``I enjoy the things that I do.'', SHARE includes the item ``Wie oft
+blicken Sie - unterm Strich - mit einem Gefühl des Glücks auf Ihr Leben
+zurück?'' (P3). In the present analyses, the four-category CASP-12 items
+were treated as continuous indicators. Accordingly, scalar measurement
+parameters refer to item intercepts. Positively worded items were
+reverse-scored so that all items had a common direction, with higher
+values indicating better quality of life.
+
+Following the characteristics examined by Bonneville-Roussy et al.
+(2024), age, gender, and cultural region were considered as potential
+sources of measurement heterogeneity. Age was included as a continuous
+covariate, gender as a dichotomous covariate, and countries were grouped
+into four cultural regions: Nordic, Western, Southern, and Eastern
+Europe. All covariates were considered simultaneously in the analytical
+models. Gender was coded as 0 = male and 1 = female, and Western Europe
+served as the reference category for cultural region in the MNLFA
+analyses.
+
+The empirical MNLFA followed the same general testing strategy as the
+simulation. The model was identified using the first item of each factor
+(C1, A1, P1, and S1) as an anchor item, with its loading fixed to 1 and
+its intercept and corresponding moderation effects fixed to zero. Thus,
+loading and intercept moderation was tested for the remaining eight
+non-anchor items, conditional on invariance of the four anchor items. In
+the unrestricted model, the loadings and intercepts of these eight
+items, as well as residual variances, were allowed to vary with the
+covariates. Latent means were allowed to vary with all covariates and
+remained freely moderated across the metric and scalar models, thereby
+allowing covariate-related differences in latent factor means to be
+estimated separately from item-intercept moderation. The latent
+covariance matrix was freely estimated but held constant across
+covariate values.
+
+The empirical SEM-tree analyses used the same four anchor items for
+identification. Separate loading- and intercept-focused trees were
+estimated. The metric tree tested parameter instability in the loadings
+of the eight non-anchor items, whereas the scalar tree tested
+instability in their eight intercepts. The anchor-item loadings and
+intercepts were not included among the focal parameters. Age, gender,
+and cultural region were supplied simultaneously as candidate
+partitioning variables. As in the simulation, score-based
+parameter-instability tests used \(\alpha=.05\), Bonferroni adjustment,
+and a maximum tree depth of three; for the empirical analyses, the
+minimum node size was set to 100. As an exploratory extension, a SEM
+forest (Brandmaier et al. 2016) was additionally estimated to examine
+the functional form of moderator-related parameter variation. Partial
+dependence plots (PDPs) were used to obtain a flexible, tree-based
+approximation of how measurement parameters varied across values of the
+moderators.
+
+CASP-12 responses outside the valid range of 1--4 were coded as missing,
+as were invalid negative age values. Participants were excluded if they
+had missing information on age, gender, or cultural region. For the
+MNLFA and SEM-tree analyses, the sample was further restricted to
+participants with complete responses on all 12 CASP-12 items. Age was
+standardized within the resulting analysis sample. The final analysis
+sample comprised \(N=65{,}214\) participants.
+
+\subsection{Results}\label{results-1}
+
+As a first sanity check we performed a CFA, using WLSMV as estimator, to
+see how that model fitted in general. The simpel CFA model for CASP-12
+(\(X^2\) = 21508.260; \emph{df} = 48) showed acceptable fit indices with
+CFI = .94; TLI = .92; RMSEA = .08 {[}.082-.084{]} and a SRMR of .05. The
+loadings onto the items were generally high only the factor
+\emph{Autonomy} showed lower loadings onto its items
+(\(\lambda_{A1}\)=.58; \(\lambda_{A2}\)=.25; \(\lambda_{A3}\)=.45). The
+results can be seen in the Appendix table .
 
 \subsubsection{MNLFA}\label{mnlfa-1}
 
-The MNLFA provided evidence against both metric and scalar MI of the
-CASP-12. Constraining loading-moderation effects to zero resulted in a
-significant deterioration in model fit relative to the unrestricted
-model \((\Delta\chi^2(40)=2524.64; p<.001)\). Subsequently constraining
-intercept-moderation effects to zero resulted in a statistically
-significant deterioration in fit,
-\((\Delta\chi^2(40)=13541.93; p<.001)\) (Table X). Thus, the MNLFA
-indicated moderation of both factor loadings and item intercepts.
-
-The estimated moderation coefficients suggested that MNI was primarily
-associated with age and cultural cluster, whereas gender-related
-differences were comparatively small (Tables X and X). Relative to the
-Western European reference group, the largest loading-moderation
-coefficients for Southern Europe were observed for A3
-\((\hat\beta=.423)\) and C3 \((\hat\beta=.358)\), while the
-corresponding coefficients for Eastern Europe were largest for A3
-\((\hat\beta=.345)\) and A2 \((\hat\beta=.297)\). Age-related loading
-moderation was smaller in magnitude, with the largest coefficients
-observed for A3 \((\hat\beta=-.098)\) and A2 \((\hat\beta=-.084)\).
-Gender-related loading-moderation coefficients were small throughout.
+The unrestricted model provided the best relative fit
+(\(-2LL = 1,756,979, AIC = 1,757,383, BIC = 1,759,218\)). Constraining
+loading-moderation effects to zero resulted in a significant
+deterioration in model fit relative to the unrestricted model
+\((\Delta\chi^2(40)=2524.64; p<.001)\), accompanied by increases in
+\(AIC (1,759,828)\) and \(BIC (1,761,300)\). Thus, metric invariance was
+not supported. Subsequently constraining intercept-moderation effects to
+zero resulted in a statistically significant deterioration in fit,
+\((\Delta\chi^2(40)=13541.93; p<.001)\), with
+\(AIC = 1,773,298 and BIC = 1,774,406\) (see Table X), providing
+evidence against scalar invariance. Overall, the model comparisons
+indicated that both factor loadings and item intercepts varied as a
+function of the included moderators. The estimated moderation
+coefficients suggested that MNI was primarily associated with age and
+cultural cluster, whereas gender-related differences were comparatively
+small (Tables X and X). Relative to the Western European reference
+group, the largest loading-moderation coefficients for Southern Europe
+were observed for A3 \((\hat\beta=.423)\) and C3 \((\hat\beta=.358)\),
+while the corresponding coefficients for Eastern Europe were largest for
+A3 \((\hat\beta=.345)\) and A2 \((\hat\beta=.297)\). Gender-related
+loading-moderation coefficients were small throughout.
 
 Differences were more pronounced for item intercepts. The largest
 coefficients were observed for the Southern European cluster,
@@ -1222,11 +1212,27 @@ variable, with the initial split occurring at approximately 79 years.
 Cultural cluster was subsequently selected in both age-defined branches,
 consistently distinguishing Southern Europe from the remaining cultural
 clusters. Further partitions were again based on age, with additional
-cutoffs around 69 years among younger participants and around 87--88
+cutoffs around 69 years among younger participants and around \(87--88\)
 years among older participants. Gender was not selected as a
 partitioning variable. The scalar tree therefore indicated a combination
 of age- and culture-related intercept instability, with Southern Europe
 emerging repeatedly as a distinct subgroup.
+
+\subsubsection{Partial Dependence Plots}\label{partial-dependence-plots}
+
+The PDP show the factor loadings, predicted by the SEM forest, across
+age while averaging over the remaining predictors. The PDPs were
+generated based on 10 trees with a depth of 3 and a case-minimum of 500.
+
+\begin{center}\includegraphics[width=0.8\linewidth]{PDP_plot} \end{center}
+
+The PDPs suggest that some of the inspected loadings might not be
+modearted linearly by age. For the items A2 and A3, loadings were rather
+stable at the lower age range and decreased with age, the largest
+difference occuring between mid-60s and early 70s. For the factor
+Pleasure the pattern seems to be more heterogeneous, as the loading of
+item P2 seems relatively stable across Age, whereas item P3 shows a more
+pronounced decline, also starting in mid 60s.
 
 \section{Discussion}\label{discussion}
 
@@ -1328,7 +1334,10 @@ boundary, most notably the distinction at 60 years. The MNLFA results
 complement this pattern by showing that age-related heterogeneity can
 also be represented without introducing discrete age categories. Age
 significantly moderated both loadings and intercepts, with comparatively
-pronounced coefficients for A2 and A3.
+pronounced coefficients for A2 (``Wie oft haben Sie das Gefühl, keinen
+Einfluss darauf zu haben, was mit Ihnen geschieht?'') and A3 (``Wie oft
+denken Sie, dass fehlendes Geld Sie davon abhält, die Dinge zu tun, die
+Sie tun möchten?'').
 
 Together, these findings help reconcile the present results with the
 largely age-invariant findings reported by Bonneville-Roussy et al.
@@ -1546,7 +1555,7 @@ generally superior.
 Research}\label{limitations-and-future-research}
 
 Several limitations delimit the conclusions of the present study. First,
-the simulation considered linear, quadratic, and sigmoid moderation.
+the simulation considered linear, quadratic, and sigmoidal moderation.
 These conditions represent distinct forms of parameter heterogeneity but
 do not exhaust the functional forms that may occur in applied research.
 The comparatively stable performance of SEM trees across the forms
@@ -1569,7 +1578,7 @@ loadings therefore did not fully isolate loading instability from
 heterogeneity in item intercepts. A direct comparison with CFA-tree
 specifications that use different constraint strategies would be
 particularly informative. Such a comparison could examine whether fixing
-nonfocal parameters more strictly improves localization of MNI to the
+non-focal parameters more strictly improves localization of MNI to the
 correct invariance level, and what consequences this has for power and
 robustness to other forms of model misspecification. This would help
 distinguish properties of recursive partitioning itself from properties
@@ -1590,6 +1599,20 @@ interpreted as sample-specific until their stability is established in
 independent data. Replication across SHARE waves would provide a
 particularly relevant test of whether similar age partitions and
 parameter differences are recovered.
+
+Regularization offers a further extension to the presented approaches
+and can be particularly useful for complex measurement models or when
+many potential sources of MNI are under consideration. Within EFA,
+regularization can be used to obtain sparse and interpretable loading
+structures without relying on conventional factor rotation (Goretzko
+2025), whereas within MNLFA, regularization has been applied to
+moderation parameters to identify measurement bias across multiple
+categorical and continuous background characteristics (Bauer et al.
+2020; Belzak and Bauer 2024). Although such extensions can reduce the
+need to prespecify individual sources of measurement heterogeneity, they
+also introduce additional methodological choices concerning penalization
+and model selection. The present study therefore focuses on MNLFA and
+SEM trees without regularization.
 
 \subsection{Practical Recommendations}\label{practical-recommendations}
 
@@ -1694,6 +1717,12 @@ Borrat-Besson, Carmen, Valerie-Anne Ryser, and Judite Goncalves. 2015.
 and Retirement in Europe (SHARE) to Measure Quality of Life Among People
 Aged 50+}}. FORS Working Paper Series Nos. 2015-4. FORS.
 
+\bibitem[\citeproctext]{ref-Brandmaier2016}
+Brandmaier, A. M., J. J. Prindle, J. J. McArdle, and U. Lindenberger.
+2016. {``Theory-Guided Exploration with Structural Equation Model
+Forests.''} \emph{Psychological Methods} 21 (4): 566--82.
+\url{https://doi.org/10.1037/met0000090}.
+
 \bibitem[\citeproctext]{ref-semtree2026}
 Brandmaier, A. M., John J. Prindle, Manuel Arnold, and Caspar J. Van
 Lissa. 2026. \emph{Semtree: Recursive Partitioning for Structural
@@ -1704,6 +1733,11 @@ Cheung, Gordon W., and Roger B. Rensvold. 2002. {``Evaluating
 Goodness-of-Fit Indexes for Testing Measurement Invariance.''}
 \emph{Structural Equation Modeling: A Multidisciplinary Journal} 9 (2):
 233--55. \url{https://doi.org/10.1207/S15328007SEM0902/_5}.
+
+\bibitem[\citeproctext]{ref-finch2017structural}
+Finch, W Holmes. 2017. {``Structural Equation Modelling Trees for
+Invariance Assessment.''} \emph{International Journal of Quantitative
+Research in Education} 4 (1-2): 72--93.
 
 \bibitem[\citeproctext]{ref-Flake2020}
 Flake, Jessica K., and Eiko I. Fried. 2020. {``Measurement
@@ -1729,6 +1763,13 @@ Goretzko, David, Matt C. Howard, and Philipp Sterner. 2026.
 Organizational Research Using Exploratory Factor Analysis and
 Confirmatory Factor Analysis Trees.''} \emph{Journal of Applied
 Psychology} 111 (8): 1037--53. \url{https://doi.org/10.1037/apl0001368}.
+
+\bibitem[\citeproctext]{ref-Hyde2003}
+Hyde, M., R. D. Wiggins, P. Higgs, and D. B. Blane. 2003. {``A Measure
+of Quality of Life in Early Old Age: The Theory, Development and
+Properties of a Needs Satisfaction Model (CASP-19).''} \emph{Aging \&
+Mental Health} 7 (3): 186--94.
+\url{https://doi.org/10.1080/1360786031000101157}.
 
 \bibitem[\citeproctext]{ref-Kline2023}
 Kline, Rex B. 2023. {``Structural Equation Modeling.''} In \emph{The
@@ -1770,6 +1811,12 @@ R Core Team. 2025. \emph{R: A Language and Environment for Statistical
 Computing}. R Foundation for Statistical Computing.
 \url{https://www.R-project.org/}.
 
+\bibitem[\citeproctext]{ref-sajobi2026tree}
+{Sajobi, Tolulope T, Olayinka I Arimoro, Nancy E Mayo, et al.} 2026.
+{``Tree-Based Structural Equation Model for Assessing Measurement
+Invariance in Patient-Reported Outcome Measures.''} \emph{Health and
+Quality of Life Outcomes}.
+
 \bibitem[\citeproctext]{ref-SHAREwave9}
 SHARE-ERIC. 2024. {``{Survey of Health, Ageing and Retirement in Europe
 (SHARE) Wave 9}.''} Version 9.0.0. SHARE-ERIC.
@@ -1782,13 +1829,6 @@ Methodological Research in Psychology: A Standardized Structure for
 Planning, Preregistration, and Reporting.''} \emph{Psychological
 Methods}, advance online publication.
 \url{https://doi.org/10.1037/met0000695}.
-
-\bibitem[\citeproctext]{ref-Sterner2023}
-Sterner, P., and D. Goretzko. 2023. {``{Exploratory Factor Analysis
-Trees: Evaluating Measurement Invariance Between Multiple
-Covariates}.''} \emph{Structural Equation Modeling: A Multidisciplinary
-Journal} 30 (6): 871--86.
-\url{https://doi.org/10.1080/10705511.2023.2188573}.
 
 \bibitem[\citeproctext]{ref-tarka2018}
 Tarka, Piotr. 2018. {``An Overview of Structural Equation Modeling: Its
