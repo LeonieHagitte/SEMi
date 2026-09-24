@@ -384,13 +384,25 @@ casp_tree_analysis <- function(
   )
 }
 
+tree_data <- df_complete %>%
+  dplyr::select(
+    dplyr::all_of(casp_items),
+    age_z,
+    female,
+    cultural_cluster
+  ) %>%
+  as.data.frame()
 
+# Checks
+dim(tree_data)
+anyNA(tree_data)
+colSums(is.na(tree_data))
 
 
 fit_casp_openmx2 <- casp_tree_analysis(
   data = tree_data
 )
-#--------------------------------------------------
+#------------------------------------------------------------------------------
 fit_casp_openmx2$output$status$code
 summary(fit_casp_openmx2)
 omxGetParameters(fit_casp_openmx2, free = TRUE)
@@ -403,12 +415,16 @@ fit_casp_openmx2$metric_test
 fit_casp_openmx2$scalar_tree
 fit_casp_openmx2$scalar_test
 
-# Metric tree
+# Metric tree -------------------------------------------------Plot-------------
 plot(fit_casp_openmx2$metric_tree)
+plotTreeStructure(fit_casp_openmx2$metric_tree)
+
+# labels on the nodes rather than on top 
 
 # Scalar tree
 plot(fit_casp_openmx2$scalar_tree)
-
+plotTreeStructure(fit_casp_openmx2$scalar_tree)
+#-------------------------------------------------------------------------------
 # OpenMx convergence status
 fit_casp_openmx2$baseline_fit$output$status$code
 
@@ -440,20 +456,7 @@ tree_baseline_summary <- tibble::tibble(
 
 tree_baseline_summary
 #-----------------------------------------------------------------------------
-tree_data <- df_complete %>%
-  dplyr::select(
-    dplyr::all_of(casp_items),
-    age_z,
-    female,
-    cultural_cluster
-  ) %>%
-  as.data.frame()
 
-# Checks
-dim(tree_data)
-anyNA(tree_data)
-colSums(is.na(tree_data))
-#---------------------------------
 metric_items <- c(
   "C2", "C3",
   "A2", "A3",
@@ -591,24 +594,6 @@ ggplot(
   ) +
   theme_minimal()
 #-------------------------------------------------------------------------------
-forest_tree_control_test <- semtree::semtree_control(
-  method = "naive",
-  alpha = 1,
-  bonferroni = FALSE,
-  max.depth = 4,
-  min.N = 500,
-  exclude.heywood = FALSE
-)
-
-forest_control_fast_test <- semtree::semforest_control(
-  num.trees = 1,
-  sampling = "subsample",
-  control = forest_tree_control_test,
-  mtry = 2
-)
-
-forest_control_fast_test
-#########################################
 # One-tree PDP
 #set.seed(20260916)
 
@@ -663,27 +648,6 @@ age_z_limits <- quantile(
 
 age_limits <- age_mean + age_z_limits * age_sd
 
-ggplot(
-  pd_long_fast %>%
-    filter(
-      age >= age_limits[1],
-      age <= age_limits[2]
-    ),
-  aes(x = age, y = loading)
-) +
-  geom_line(linewidth = 0.8) +
-  geom_point(size = 1.5) +
-  facet_wrap(
-    ~ parameter,
-    scales = "free_y",
-    ncol = 4
-  ) +
-  labs(
-    x = "Age (years)",
-    y = "Forest-predicted loading"
-  ) +
-  theme_minimal()
-
 ############################################################# 22/09
 # Constrained metric SEM forest:
 # depth 3, 10 trees
@@ -727,7 +691,7 @@ t_metric_10 <- system.time({
       "female",
       "cultural_cluster"
     ),
-    control = forest_control_50,
+    control = forest_control_10,
     constraints = metric_constraints,
     seeds = TRUE
   )
@@ -745,21 +709,20 @@ saveRDS(
   "metric_forest_depth3_min500_10trees.rds"
 )
 
-
 #########################################
 # Partial dependence for age
 #########################################
 
-pd_metric_50 <- semtree::partialDependence(
-  metric_forest_50,
+pd_metric_10 <- semtree::partialDependence(
+  metric_forest_10,
   data = tree_data,
   reference.var = "age_z",
   support = 20
 )
 
 saveRDS(
-  pd_metric_50,
-  "pd_metric_depth3_min500_50trees.rds"
+  pd_metric_10,
+  "pd_metric_depth3_min500_10trees.rds"
 )
 
 
@@ -774,11 +737,11 @@ metric_pars <- c(
   "lambda_S2", "lambda_S3"
 )
 
-pd_50 <- as.data.frame(pd_metric_50$samples)
+pd_10 <- as.data.frame(pd_metric_10$samples)
 
-names(pd_50)
+names(pd_10)
 
-pd_long_50 <- pd_50 %>%
+pd_long_10 <- pd_10 %>%
   select(age_z, all_of(metric_pars)) %>%
   pivot_longer(
     cols = all_of(metric_pars),
@@ -808,7 +771,7 @@ age_limits <- age_mean + age_z_limits * age_sd
 #########################################
 
 ggplot(
-  pd_long_50 %>%
+  pd_long_10 %>%
     filter(
       age >= age_limits[1],
       age <= age_limits[2]
@@ -827,3 +790,70 @@ ggplot(
     y = "Forest-predicted loading"
   ) +
   theme_minimal()
+
+#--------------------------------------------
+pd_plot <- pd_long_10 %>%
+  filter(
+    age >= age_limits[1],
+    age <= age_limits[2]
+  ) %>%
+  mutate(
+    factor = case_when(
+      grepl("^lambda_C", parameter) ~ "C",
+      grepl("^lambda_A", parameter) ~ "A",
+      grepl("^lambda_P", parameter) ~ "P",
+      grepl("^lambda_S", parameter) ~ "S"
+    ),
+    indicator = case_when(
+      grepl("2$", parameter) ~ "Indicator 2",
+      grepl("3$", parameter) ~ "Indicator 3"
+    )
+  )
+
+
+
+ggplot(
+  pd_plot,
+  aes(
+    x = age,
+    y = loading,
+    linetype = indicator,
+    group = parameter
+  )
+) +
+  geom_line(linewidth = 0.7) +
+  geom_point(size = 1.2) +
+  facet_wrap(
+    ~ factor,
+    ncol = 2,
+    scales = "fixed",
+    axes = "all",
+    axis.labels = "all"
+  ) +
+  scale_x_continuous(
+    breaks = seq(50, 90, by = 10)
+  ) +
+  scale_y_continuous(
+    breaks = seq(0.4, 1.8, by = 0.2),
+    labels = function(x) {
+      ifelse(
+        seq_along(x) %% 2 == 1,
+        sprintf("%.1f", x),
+        ""
+      )
+    }
+  ) +
+  labs(
+    x = "Age (years)",
+    y = "Forest-predicted factor loading",
+    linetype = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    axis.line = element_line(linewidth = 0.4),
+    axis.ticks = element_line(linewidth = 0.4),
+    strip.background = element_blank(),
+    legend.position = "inside",
+    legend.position.inside = c(0.95, 0.65)
+  )
