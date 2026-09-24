@@ -43,28 +43,21 @@ biblatexoptions:
   - sorting=nyt
 lang: american
 ---
-<!-- Maybe something catchier ?-->
-Meaningful comparisons between individuals or groups of individuals depend on the assumption that psychological constructs are measured in the same way across various contexts. 
-Unlike weight or height of a person, latent constructs such as intelligence, attitudes, or personality traits are not directly observable. Instead, researchers infer them from responses to observed indicators using measurement models. 
-Ensuring that these measurements operate equivalently is therefore a prerequisite for valid scientific conclusions. 
+Comparing persons or groups on psychological constructs — intelligence, well-being, attitudes, personality — is one of the most basic acts in the social and behavioral sciences, yet it rests on an assumption that is all to often not made explicit: that the measure itself means the same thing for everyone being compared.
+Unlike weight or height of a person, latent constructs like these cannot be observed directly. 
+Instead, they are inferred from indicators, typically responses to self-report items, using measurement models. 
+If these measures differently work for the people or contexts being compared -- one could say, if the same construct is measured with a different yardstick for different individuals -- then any observed difference becomes ambiguous and ultimately unusable for solid inferences. 
+It may reflect a genuine difference in the construct, an artifact of how it was measured, or some blend of both, and there is no way to disentangle the two after the fact
+[@Flake2020; @Flake2017; @Cheung2002; @Meredith1993]. 
+This is the problem of measurement invariance (MI): the question of whether a measurement model operates equivalently across individuals, groups, contexts, or occasions [@Meredith1993].
+Far from just a technical requirement, MI is essential for comparing latent means, variances, covariances, or structural relations such as regressions on a latent level; which is to say, a precondition for much correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
 
-When a measure fails to represent the intended construct or functions differently across individuals, groups, or contexts, even highly rigorous analyses may produce misleading conclusions [@Flake2020; @Flake2017]. 
-Thus, a central aspect of measurement quality is _measurement invariance_ (MI), which refers to the assumption that a measurement model operates equivalently across individuals, groups, contexts, or measurement occasions. 
-
-When MI holds, the relationship between a latent construct and its observed indicators remains stable across the conditions being compared [@Meredith1993]. 
-Thus, assuming MI is essential whenever researchers seek to compare latent means, variances, covariances, or structural relations, making MI a fundamental prerequisite for correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
-<!--#shortened this: Violations of MI imply that the relationship between the latent construct and its observed indicators differs across groups or conditions. 
-In such cases, differences in observed responses may not solely reflect differences in the underlying construct but may also arise from systematic differences in item functioning or measurement precision. 
-Consequently, observed group differences become ambiguous, as they may represent a combination of substantive construct differences and measurement-related distortions [@Cheung2002; @Meredith1993].-->
-Conversely, violations of MI indicate that observed differences may reflect not only substantive differences in the underlying construct but also systematic differences in item functioning or measurement precision [@Cheung2002; @Meredith1993]. 
-Without establishing MI, it is therefore impossible to determine whether observed differences reflect true differences in the latent construct or artifacts of the measurement process.
-Consequently, MI is not only a methodological requirement but also a prerequisite for valid theoretical interpretation. 
-
-<!-- foreshadowing - drinnen lassen?-->
-Conventional approaches to MI typically represent heterogeneity in measurement parameters through predefined groups or discrete conditions. 
-This representation becomes restrictive when candidate sources of measurement heterogeneity are continuous, such as age or other individual characteristics, particularly when the functional relationships between these covariates and measurement parameters are unknown. 
-In these settings, discretizing continuous covariates may obscure the form and location of measurement non-invariance, whereas imposing a prespecified functional relationship risks misspecifying the underlying heterogeneity. 
-Thus, a central methodological problem is how to represent and detect heterogeneity in measurement parameters across continuous covariates without requiring either predefined groups or a known functional form.
+Yet the standard approach for testing MI assumes something that is often untrue: that the source of measurement heterogeneity is categorical. 
+Conventional approaches represent heterogeneity through predefined groups, e.g., sex, treatment arm, or age group, across which measurement parameters are constrained and compared. 
+This works well when group boundaries are theoretically meaningful, but many of the most important candidate sources of measurement heterogeneity, such as age, are continuous, and their relationship to measurement parameters is rarely known in advance. 
+Forcing a continuous characteristic into discrete bins requires an often arbitrary cutoff and can obscure exactly where and how measurement breaks down; assuming a particular functional form instead risks the opposite error, misrepresenting heterogeneity that does not follow that form. 
+This leaves researchers with a genuine methodological bind: how can measurement heterogeneity across a continuous covariate be detected and characterized without committing in advance to either discrete groups or a specific functional shape? 
+Two recent approaches, moderated nonlinear factor analysis and SEM trees, offer different answers to this question, and it is their comparative strengths and limitations that this paper investigates.
 
 ## Classical Measurement Invariance Testing 
 
