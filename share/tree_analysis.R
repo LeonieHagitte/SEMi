@@ -424,6 +424,43 @@ plotTreeStructure(fit_casp_openmx2$metric_tree)
 # Scalar tree
 plot(fit_casp_openmx2$scalar_tree)
 plotTreeStructure(fit_casp_openmx2$scalar_tree)
+
+
+# -------------------------------------------------------------------------
+# Metric tree: factor loadings
+# -------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------
+metric_focus <- paste0("lambda_",c("C2","C3","A2","A3","P2","P3","S2","S3"))
+
+metric_tree <- plot(
+  fit_casp_openmx2$metric_tree,
+  filter.parameters = metric_focus,
+  tweak = 1.5,
+  space = -0.2,
+  yspace = -0.4,
+  gap = 7
+)
+
+# -------------------------------------------------------------------------
+# Scalar tree: item intercepts
+# -------------------------------------------------------------------------
+
+scalar_focus <- paste0(
+  "nu_",
+  c("C2", "C3", "A2", "A3", "P2", "P3", "S2", "S3")
+)
+
+scalar_tree<- plot(
+  fit_casp_openmx2$scalar_tree,
+  filter.parameters = scalar_focus,
+  tweak = 1.2,
+  space = -0.2,
+  yspace = -0.4,
+  gap = 7
+)
+
 #-------------------------------------------------------------------------------
 # OpenMx convergence status
 fit_casp_openmx2$baseline_fit$output$status$code
@@ -431,7 +468,7 @@ fit_casp_openmx2$baseline_fit$output$status$code
 # -2 Log Likelihood
 fit_casp_openmx2$baseline_fit$output$Minus2LogLikelihood
 
-# Parameter estimates
+# Parameter stimates
 omxGetParameters(
   fit_casp_openmx2$baseline_fit,
   free = TRUE
@@ -660,7 +697,7 @@ forest_tree_control <- semtree::semtree_control(
   bonferroni = FALSE,
   max.depth = 3,
   min.N = 500,
-  exclude.heywood = FALSE
+  exclude.heywood = TRUE
 )
 
 # Increase number of trees for greater
@@ -708,7 +745,32 @@ saveRDS(
   metric_forest_10,
   "metric_forest_depth3_min500_10trees.rds"
 )
+#------------------------
+# -------------------------------------------------------------------------
+# Save SEM-tree results for reproducible reporting
+# -------------------------------------------------------------------------
 
+dir.create("results", showWarnings = FALSE)
+
+sem_tree_results <- list(
+  
+  # Baseline model statistics
+  baseline = tree_baseline_summary,
+  
+  # Score-based test results
+  metric_test = fit_casp_openmx2$metric_test,
+  scalar_test = fit_casp_openmx2$scalar_test,
+  
+  # Fitted trees, including their splits
+  metric_tree = fit_casp_openmx2$metric_tree,
+  scalar_tree = fit_casp_openmx2$scalar_tree
+  
+)
+
+saveRDS(
+  sem_tree_results,
+  file = "results/sem_tree_results.rds"
+)
 #########################################
 # Partial dependence for age
 #########################################
@@ -811,8 +873,7 @@ pd_plot <- pd_long_10 %>%
   )
 
 
-
-ggplot(
+pdp_plot <- ggplot(
   pd_plot,
   aes(
     x = age,
@@ -821,8 +882,14 @@ ggplot(
     group = parameter
   )
 ) +
-  geom_line(linewidth = 0.7) +
-  geom_point(size = 1.2) +
+  geom_line(
+    linewidth = 0.7,
+    colour = "#343231"
+  ) +
+  geom_point(
+    size = 1.3,
+    colour = "#343231"
+  ) +
   facet_wrap(
     ~ factor,
     ncol = 2,
@@ -848,12 +915,200 @@ ggplot(
     y = "Forest-predicted factor loading",
     linetype = NULL
   ) +
-  theme_minimal() +
+  theme_classic(base_size = 12) +
+  theme(
+    # Remove all gridlines and borders
+    panel.grid = element_blank(),
+    panel.border = element_blank(),
+    
+    # Match importance plot axes
+    axis.line = element_line(
+      colour = "#343231",
+      linewidth = 0.4
+    ),
+    axis.ticks = element_line(
+      colour = "#343231",
+      linewidth = 0.4
+    ),
+    
+    # Match text styling
+    axis.text = element_text(
+      colour = "#343231"
+    ),
+    axis.title = element_text(
+      colour = "#343231"
+    ),
+    axis.title.x = element_text(
+      margin = margin(t = 10)
+    ),
+    axis.title.y = element_text(
+      margin = margin(r = 10)
+    ),
+    
+    # Minimal facet labels
+    strip.background = element_blank(),
+    strip.text = element_text(
+      colour = "#343231",
+      face = "plain",
+      size = 12
+    ),
+    
+    # Keep legend inside
+    legend.position = "inside",
+    legend.position.inside = c(0.95, 0.65),
+    legend.background = element_blank(),
+    legend.key = element_blank(),
+    legend.text = element_text(
+      colour = "#343231"
+    ),
+    
+    # White background
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+    ),
+    panel.background = element_rect(
+      fill = "white",
+      colour = NA
+    )
+  )
+#-----------------------------------------------------------------------------
+set.seed(20260916)
+
+metric_importance <- semtree::varimp(
+  metric_forest_10,
+  var.names = c("age_z", "female", "cultural_cluster")
+)
+
+print(metric_importance, sort.values = TRUE)
+
+plot(metric_importance)
+
+#---------
+predictors <- c("age_z", "female", "cultural_cluster")
+
+importance_results <- lapply(predictors, function(v) {
+  
+  cat("\nTesting:", v, "\n")
+  
+  tryCatch(
+    semtree::varimp(
+      metric_forest_10,
+      var.names = v
+    ),
+    error = function(e) {
+      message("Failed for ", v, ": ", conditionMessage(e))
+      NULL
+    }
+  )
+})
+
+names(importance_results) <- predictors
+importance_results$age_z
+importance_results$female
+importance_results$cultural_cluster
+
+lapply(importance_results, str)
+
+importance_df <- bind_rows(
+  lapply(names(importance_results), function(v) {
+    data.frame(
+      predictor = v,
+      tree = seq_along(importance_results[[v]]$importance),
+      importance = as.numeric(importance_results[[v]]$importance)
+    )
+  })
+)
+
+# Summarize across the 10 trees
+importance_summary <- importance_df %>%
+  group_by(predictor) %>%
+  summarise(
+    mean_importance = mean(importance, na.rm = TRUE),
+    sd_importance = sd(importance, na.rm = TRUE),
+    n_valid = sum(is.finite(importance)),
+    .groups = "drop"
+  )
+
+importance_summary
+
+library(ggplot2)
+library(dplyr)
+
+importance_df <- importance_df %>%
+  mutate(
+    predictor = factor(
+      as.character(predictor),
+      levels = c("cultural_cluster", "female", "age_z"),
+      labels = c("Cultural cluster", "Gender", "Age")
+    )
+  )
+
+importance_plot <- ggplot(
+  importance_df,
+  aes(x = importance, y = predictor)
+) +
+  # Zero reference line
+  geom_vline(
+    xintercept = 0,
+    colour = "#C7C7C7",
+    linewidth = 0.4
+  ) +
+  # Individual tree estimates
+  geom_jitter(
+    height = 0.10,
+    width = 0,
+    alpha = 0.65,
+    size = 1.8,
+    colour = "#A6A6A6"
+  ) +
+  # Mean importance
+  stat_summary(
+    fun = mean,
+    geom = "point",
+    shape = 18,
+    size = 3.5,
+    colour = "#343231"
+  ) +
+  labs(
+    x = "Permutation variable importance",
+    y = NULL
+  ) +
+  theme_classic(base_size = 12) +
   theme(
     panel.grid = element_blank(),
-    axis.line = element_line(linewidth = 0.4),
-    axis.ticks = element_line(linewidth = 0.4),
-    strip.background = element_blank(),
-    legend.position = "inside",
-    legend.position.inside = c(0.95, 0.65)
+    panel.border = element_blank(),
+    axis.line.y = element_blank(),
+    axis.line.x = element_line(
+      colour = "#343231",
+      linewidth = 0.4
+    ),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(
+      colour = "#343231",
+      linewidth = 0.4
+    ),
+    axis.text = element_text(colour = "#343231"),
+    axis.title.x = element_text(
+      colour = "#343231",
+      margin = margin(t = 10)
+    ),
+    plot.background = element_rect(
+      fill = "white",
+      colour = NA
+    ),
+    panel.background = element_rect(
+      fill = "white",
+      colour = NA
+    )
   )
+
+saveRDS(
+  importance_plot,
+  "importance_plot.rds"
+)
+
+saveRDS(
+  pdp_plot,
+  "pdp_plot.rds"
+)

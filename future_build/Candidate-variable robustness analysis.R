@@ -142,4 +142,3 @@ robustness_summary_1000
 #n metric_rejection_rate successful_moderator_identification_rate any_noise_selected_rate true_and_noise_selected_rate true_only_selected_rate noise_without_true_rate neither_selected_rate n_errors
 #<int>                 <dbl>                                    <dbl>                   <dbl>                        <dbl>                   <dbl>                   <dbl>                 <dbl>    <int>
 #  1  1000                 0.791                                    0.774                   0.109                        0.092                   0.682                   0.017                 0.209        0
-> 

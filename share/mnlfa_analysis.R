@@ -822,7 +822,6 @@ mnlfa_lrt_table <- mnlfa_lrt_summary %>%
   )
 
 mnlfa_lrt_table
-#----------------------------------------------------------------------------
 
 loading_summary <- enframe(
   loading_mod,
@@ -874,6 +873,32 @@ mnlfa_coef_summary <- bind_rows(
   arrange(type, moderator, item)
 
 mnlfa_coef_summary
+#----------------------------------------------------------------------------
+dir.create("results", showWarnings = FALSE)
+mnlfa_results <- list(
+  fit = mnlfa_fit_summary,
+  lrt = mnlfa_lrt_summary,
+  coefficients = mnlfa_coef_summary
+)
+
+saveRDS(
+  mnlfa_results,
+  "results/mnlfa_results.rds"
+)
+#----------------------------------------------------------------------------
+gender_summary <- mnlfa_coef_summary %>%
+  filter(moderator == "Female") %>%
+  group_by(type) %>%
+  summarise(
+    min_beta = min(estimate),
+    max_beta = max(estimate),
+    max_abs_beta = max(abs(estimate)),
+    median_abs_beta = median(abs(estimate)),
+    .groups = "drop"
+  )
+
+gender_summary
+#---------------
 
 mnlfa_loading_table <- mnlfa_coef_summary %>%
   filter(type == "Loading") %>%

@@ -373,6 +373,7 @@ standardizedSolution(fit_casp_wlsmv) %>%
   )
 
 lavInspect(fit_casp_wlsmv, "cor.lv")
+saveRDS(fit_casp_wlsmv, "fit_casp_wlsmv.rds")
 #------------
 fit_casp_ml <- cfa(
   model = casp_model,

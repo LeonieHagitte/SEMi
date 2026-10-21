@@ -76,6 +76,11 @@ eval_exploratory <- eval_main %>%
         delta_nu %in% confirmatory_delta_nu)
   )
 
+perf_cell_all <- bind_rows(
+  perf_cell,
+  perf_cell_exploratory
+)
+
 # ============================================================
 # 4. Separate metric and scalar testing
 #    PRIMARY = nominal design cells
@@ -501,7 +506,7 @@ perf_cell
 perf_sequential_cell
 
 technical_cell
-#-------------------------
+#----------------------------------------------------------------------------------------------------------------------------
 method_failure_summary
 # A tibble: 3 × 6
 #method  attempted_runs failed_runs successful_runs failure_rate failure_percent
@@ -547,7 +552,7 @@ method_failure_summary <- eval_confirmatory %>%
   )
 
 method_failure_summary
-
+#-------------------------------------------------------------------------------------------------------------------------------------------
 # ============================================================
 # 9. EXPLORATORY ANALYSIS
 #    Low-effect conditions added after initial inspection
@@ -898,3 +903,86 @@ perf_sequential_cell_exploratory <- perf_sequential_cell_exploratory %>%
 performance_long_exploratory
 perf_cell_exploratory
 perf_sequential_cell_exploratory
+
+
+# Combine evaluation-level results
+eval_all <- bind_rows(
+  eval_confirmatory,
+  eval_exploratory
+)
+
+# Variables identifying a data-generating condition
+cell_vars <- c(
+  "popmodel",
+  "N",
+  "reliability",
+  "lambda",
+  "intercepts",
+  "delta_lambda",
+  "delta_nu",
+  "moderator"
+)
+
+# Reference set of active conditions
+eval_active <- eval_all %>%
+  filter(
+    num_noisy_predictors == 0,
+    case_when(
+      # Complete measurement invariance:
+      # neither effect-size parameter is active
+      popmodel == "0" ~
+        delta_lambda == 0.2 & delta_nu == 0.5,
+      
+      # Metric-only noninvariance:
+      # delta_lambda varies; delta_nu is fixed
+      popmodel %in% c("1.1", "1.2", "1.3") ~
+        delta_nu == 0.5,
+      
+      # Scalar-only noninvariance:
+      # delta_nu varies; delta_lambda is fixed
+      popmodel %in% c("1.11", "1.21") ~
+        delta_lambda == 0.2,
+      
+      # Both metric and scalar noninvariance:
+      # both effect sizes vary
+      popmodel %in% c("1.12", "1.22", "1.32") ~
+        TRUE,
+      
+      TRUE ~ FALSE
+    )
+  ) %>%
+  mutate(
+    failed = is.na(metric_reject) | is.na(scalar_reject)
+  )
+
+eval_active <- eval_active %>%
+  filter(
+    moderator != "noise",
+    popmodel != "0" | moderator == "linear"
+  )
+
+# Verify number of cells
+active_cells <- eval_active %>%
+  distinct(across(all_of(cell_vars)))
+
+stopifnot(nrow(active_cells) == 508)
+
+# Recalculate failure summaries
+method_failure_summary <- eval_active %>%
+  group_by(method) %>%
+  summarise(
+    attempted_runs = n(),
+    failed_runs = sum(failed),
+    failure_percent = 100 * failed_runs / attempted_runs,
+    .groups = "drop"
+  )
+
+overall_failure_summary <- eval_active %>%
+  summarise(
+    attempted_runs = n(),
+    failed_runs = sum(failed),
+    failure_percent = 100 * failed_runs / attempted_runs
+  )
+
+method_failure_summary
+overall_failure_summary

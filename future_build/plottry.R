@@ -101,8 +101,8 @@ results2_confirmatory <- results2 %>%
 results2_exploratory <- results2 %>%
   filter(
     num_noisy_predictors == 0,
-    !(delta_lambda %in% c(0.2, 0.3) &
-        delta_nu %in% c(0.5, 1))
+    !(delta_lambda %in% c(0.1, 0.2) &
+        delta_nu %in% c(0.25, 0.5))
   )
 
 # --------------------

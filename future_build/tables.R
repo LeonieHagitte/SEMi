@@ -1,8 +1,7 @@
 #Tables
-# ============================================================
-# TABLE 2
-# Level-specific performance by population model and method
-# ============================================================
+library(dplyr)
+library(tidyr)
+library(knitr)
 
 # Truth label for each population model
 pop_truth <- eval_confirmatory %>%
@@ -22,650 +21,219 @@ pop_truth <- eval_confirmatory %>%
       TRUE ~ NA_character_
     )
   )
+#-------------------------------------------------------------------------------
 
-
-# Aggregate cell-level rejection rates
-table2_long <- perf_cell %>%
+table2_cell <- perf_cell_all %>%
   filter(moderator != "noise") %>%
-  group_by(
-    popmodel,
-    method,
-    level,
-    estimand
+  mutate(
+    method = recode(
+      method,
+      MNLFA = "Linear MNLFA",
+      MNLFAQ = "Quadratic MNLFA",
+      SEMTREE = "SEM tree"
+    ),
+    result = if_else(
+      n_eval > 0,
+      sprintf("%.3f (%.3f)", rate, mcse),
+      "NA"
+    )
   ) %>%
-  summarise(
-    n_cells = n(),
-    
-    mean_rate = mean(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    # Monte Carlo SE of the equally weighted mean
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
-    
-    min_rate = min(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    max_rate = max(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    .groups = "drop"
-  ) %>%
-  left_join(
-    pop_truth %>%
-      select(popmodel, truth),
-    by = "popmodel"
-  )
-
-table2_long
-#---------------------------------------------------------------------------
-table2 <- table2_long %>%
   select(
-    popmodel,
-    truth,
-    method,
-    level,
-    mean_rate,
-    mcse_mean
+    popmodel, N, moderator,
+    delta_lambda, delta_nu,
+    method, level, result
   ) %>%
   pivot_wider(
-    names_from = level,
-    values_from = c(
-      mean_rate,
-      mcse_mean
-    )
-  ) %>%
-  rename(
-    metric_rejection = mean_rate_Metric,
-    scalar_rejection = mean_rate_Scalar,
-    metric_mcse = mcse_mean_Metric,
-    scalar_mcse = mcse_mean_Scalar
+    names_from = c(level, method),
+    values_from = result,
+    names_glue = "{level}: {method}"
   ) %>%
   arrange(
-    factor(
-      popmodel,
-      levels = c(
-        "0", "1.1", "1.11", "1.12",
-        "1.2", "1.21", "1.22",
-        "1.3", "1.32"
-      )
-    ),
-    method
+    popmodel, N, moderator,
+    delta_lambda, delta_nu
   )
 
-table2
-#------------
-table2_print <- table2 %>%
-  mutate(
-    Metric = sprintf(
-      "%.3f (%.3f)",
-      metric_rejection,
-      metric_mcse
-    ),
-    
-    Scalar = sprintf(
-      "%.3f (%.3f)",
-      scalar_rejection,
-      scalar_mcse
-    )
+# did the pivot produced exactly one row
+# per distinct data-generating condition.
+n_expected <- perf_cell_all %>%
+  filter(moderator != "noise") %>%
+  distinct(
+    popmodel, N, moderator,
+    delta_lambda, delta_nu
   ) %>%
-  select(
-    Population_Model = popmodel,
-    Truth = truth,
-    Method = method,
-    Metric,
-    Scalar
-  )
+  nrow()
 
-table2_print
-#----------------------------------------------------------------------------
-# ============================================================
-# TABLE 3
-# Performance by moderator functional form
-# ============================================================
+stopifnot(nrow(table2_cell) == n_expected)
 
-table3_long <- perf_cell %>%
-  filter(
-    moderator != "noise"
-  ) %>%
-  group_by(
-    level,
-    estimand,
-    moderator,
-    method
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    mean_rate = mean(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
-    
-    min_rate = min(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    max_rate = max(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    .groups = "drop"
-  )
-
-table3_long
-#--------------
-table3 <- table3_long %>%
-  mutate(
-    result = sprintf(
-      "%.3f (%.3f)",
-      mean_rate,
-      mcse_mean
-    )
-  ) %>%
-  select(
-    level,
-    estimand,
-    moderator,
-    method,
-    result
-  ) %>%
-  pivot_wider(
-    names_from = method,
-    values_from = result
-  ) %>%
-  arrange(
-    factor(
-      level,
-      levels = c("Metric", "Scalar")
-    ),
-    factor(
-      estimand,
-      levels = c(
-        "Power",
-        "Rejection u. invariance"
-      )
-    ),
-    factor(
-      moderator,
-      levels = c(
-        "linear",
-        "quadratic",
-        "sigmoid"
-      )
-    )
-  )
-
-table3
-#------------------------
-table3_noise <- perf_cell %>%
-  filter(
-    moderator == "noise"
-  ) %>%
-  group_by(
-    level,
-    method
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    mean_rejection = mean(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
-    
-    .groups = "drop"
-  )
-
-table3_noise
-
-# ============================================================
-# TABLE 4
-# Sequential performance by true MNI pattern
-# ============================================================
-
-table4 <- perf_sequential_cell %>%
-  filter(
-    moderator != "noise"
-  ) %>%
-  group_by(
-    truth_class,
-    method
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    metric_decision =
-      mean(
-        p_metric_decision,
-        na.rm = TRUE
-      ),
-    
-    scalar_stage_reached =
-      mean(
-        scalar_stage_reached,
-        na.rm = TRUE
-      ),
-    
-    scalar_conditional_rejection =
-      mean(
-        scalar_conditional_rejection,
-        na.rm = TRUE
-      ),
-    
-    scalar_decision =
-      mean(
-        p_scalar_decision,
-        na.rm = TRUE
-      ),
-    
-    invariance_retained =
-      mean(
-        p_invariance_retained,
-        na.rm = TRUE
-      ),
-    
-    sequential_accuracy =
-      mean(
-        sequential_accuracy,
-        na.rm = TRUE
-      ),
-    
-    .groups = "drop"
-  ) %>%
-  arrange(
-    factor(
-      truth_class,
-      levels = c(
-        "No MNI",
-        "Metric only",
-        "Scalar only",
-        "Metric + scalar"
-      )
-    ),
-    method
-  )
-
-table4
-#-------------------
-table4_print <- table4 %>%
-  mutate(
-    across(
-      c(
-        metric_decision,
-        scalar_stage_reached,
-        scalar_decision,
-        invariance_retained,
-        sequential_accuracy
-      ),
-      ~ round(.x, 3)
-    )
-  ) %>%
-  select(
-    Truth = truth_class,
-    Method = method,
-    `Metric decision` = metric_decision,
-    `Scalar stage reached` = scalar_stage_reached,
-    `Scalar decision` = scalar_decision,
-    `Invariance retained` = invariance_retained,
-    `Correct classification` = sequential_accuracy
-  )
-
-table4_print
-
-#------------------------------------------------------------------------------
-print(n=27,table2_print)
-table3
-table4_print
-#------------------------------------------------------------------------------
-save(
-  table2_print,
-  table3,
-  table4_print,
-  file = "manuscript_tables.RData"
+saveRDS(
+  table2_cell,
+  "results/table2_condition_specific.rds"
 )
 
-#===============================================================================
-# Exploratory results
-#===============================================================================
-# Aggregate cell-level rejection rates
-
-table2_long_exploratory <- perf_cell_exploratory %>%
-  filter(moderator != "noise") %>%
-  group_by(
-    popmodel,
-    method,
-    level,
-    estimand
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    mean_rate = mean(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    # Monte Carlo SE of the equally weighted mean
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
-    
-    min_rate = min(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    max_rate = max(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    .groups = "drop"
-  ) %>%
-  left_join(
-    pop_truth %>%
-      select(popmodel, truth),
-    by = "popmodel"
-  )
-
-table2_long_exploratory
-#---------------------------------------------------------------------------
-table2_exploratory <- table2_long_exploratory %>%
-  select(
-    popmodel,
-    truth,
-    method,
-    level,
-    mean_rate,
-    mcse_mean
-  ) %>%
-  pivot_wider(
-    names_from = level,
-    values_from = c(
-      mean_rate,
-      mcse_mean
-    )
-  ) %>%
-  rename(
-    metric_rejection = mean_rate_Metric,
-    scalar_rejection = mean_rate_Scalar,
-    metric_mcse = mcse_mean_Metric,
-    scalar_mcse = mcse_mean_Scalar
-  ) %>%
-  arrange(
-    factor(
-      popmodel,
-      levels = c(
-        "0", "1.1", "1.11", "1.12",
-        "1.2", "1.21", "1.22",
-        "1.3", "1.32"
-      )
-    ),
-    method
-  )
-
-table2_exploratory
-#------------
-table2_print_exploratory <- table2_exploratory %>%
-  mutate(
-    Metric = sprintf(
-      "%.3f (%.3f)",
-      metric_rejection,
-      metric_mcse
-    ),
-    
-    Scalar = sprintf(
-      "%.3f (%.3f)",
-      scalar_rejection,
-      scalar_mcse
-    )
-  ) %>%
-  select(
-    Population_Model = popmodel,
-    Truth = truth,
-    Method = method,
-    Metric,
-    Scalar
-  )
-
-table2_print_exploratory
-#----------------------------------------------------------------------------
-# ============================================================
-# TABLE 3
-# Performance by moderator functional form
-# ============================================================
-
-table3_long_exploratory <- perf_cell_exploratory %>%
+#-------------------------------------------------------------------------------
+table3_cell <- perf_cell_all %>%
   filter(
-    moderator != "noise"
+    moderator %in% c("linear", "quadratic", "sigmoid"),
+    true_noninvariance == TRUE,
+    estimand == "Power"
   ) %>%
-  group_by(
-    level,
-    estimand,
-    moderator,
-    method
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    mean_rate = mean(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
-    
-    min_rate = min(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    max_rate = max(
-      rate,
-      na.rm = TRUE
-    ),
-    
-    .groups = "drop"
-  )
-
-table3_long_exploratory
-#--------------
-table3_exploratory <- table3_long_exploratory %>%
   mutate(
-    result = sprintf(
-      "%.3f (%.3f)",
-      mean_rate,
-      mcse_mean
+    method = recode(
+      method,
+      MNLFA = "Linear MNLFA",
+      MNLFAQ = "Quadratic MNLFA",
+      SEMTREE = "SEM tree"
+    ),
+    result = if_else(
+      n_eval > 0,
+      sprintf("%.3f (%.3f)", rate, mcse),
+      "NA"
     )
   ) %>%
   select(
-    level,
-    estimand,
-    moderator,
-    method,
-    result
+    popmodel, N, moderator,
+    delta_lambda, delta_nu,
+    level, method, result
   ) %>%
   pivot_wider(
     names_from = method,
     values_from = result
   ) %>%
   arrange(
-    factor(
-      level,
-      levels = c("Metric", "Scalar")
+    popmodel, level, N,
+    moderator, delta_lambda, delta_nu
+  )
+
+table3_cell
+
+saveRDS(
+  table3_cell,
+  "results/table3_condition_specific.rds"
+)
+#-------------------------------------------------------------------------------
+# FULL-DESIGN SEQUENTIAL CLASSIFICATION
+
+eval_sequential_all <- eval_main %>%
+  filter(moderator != "noise") %>%
+  mutate(
+    truth_class = case_when(
+      !true_metric_noninvariance & !true_scalar_noninvariance ~ "No MNI",
+      true_metric_noninvariance & !true_scalar_noninvariance  ~ "Metric only",
+      !true_metric_noninvariance & true_scalar_noninvariance  ~ "Scalar only",
+      true_metric_noninvariance & true_scalar_noninvariance   ~ "Metric + scalar",
+      TRUE ~ NA_character_
     ),
-    factor(
-      estimand,
-      levels = c(
-        "Power",
-        "Rejection u. invariance"
-      )
+    
+    # Sequential procedure:
+    # metric test first; scalar test only if metric is retained
+    seq_decision = case_when(
+      is.na(metric_reject) ~ NA_character_,
+      metric_reject == TRUE ~ "Metric noninvariance",
+      is.na(scalar_reject) ~ NA_character_,
+      scalar_reject == TRUE ~ "Scalar noninvariance",
+      TRUE ~ "Invariance retained"
     ),
-    factor(
-      moderator,
-      levels = c(
-        "linear",
-        "quadratic",
-        "sigmoid"
-      )
+    
+    true_seq_decision = case_when(
+      true_metric_noninvariance ~ "Metric noninvariance",
+      true_scalar_noninvariance ~ "Scalar noninvariance",
+      !true_metric_noninvariance & !true_scalar_noninvariance ~
+        "Invariance retained",
+      TRUE ~ NA_character_
+    ),
+    
+    seq_correct = if_else(
+      !is.na(seq_decision) & !is.na(true_seq_decision),
+      seq_decision == true_seq_decision,
+      NA
     )
   )
 
-table3_exploratory
-#------------------------
-table3_noise_exploratory <- perf_cell_exploratory %>%
-  filter(
-    moderator == "noise"
-  ) %>%
+perf_sequential_all <- eval_sequential_all %>%
   group_by(
-    level,
-    method
+    method,
+    popmodel,
+    N,
+    moderator,
+    delta_lambda,
+    delta_nu,
+    truth_class
   ) %>%
   summarise(
-    n_cells = n(),
+    n_total = n(),
     
-    mean_rejection = mean(
-      rate,
-      na.rm = TRUE
+    n_seq_eval = sum(!is.na(seq_decision)),
+    
+    p_metric_decision = if_else(
+      n_seq_eval > 0,
+      sum(seq_decision == "Metric noninvariance", na.rm = TRUE) /
+        n_seq_eval,
+      NA_real_
     ),
     
-    mcse_mean =
-      sqrt(
-        sum(mcse^2, na.rm = TRUE)
-      ) / n_cells,
+    p_scalar_decision = if_else(
+      n_seq_eval > 0,
+      sum(seq_decision == "Scalar noninvariance", na.rm = TRUE) /
+        n_seq_eval,
+      NA_real_
+    ),
+    
+    p_invariance_retained = if_else(
+      n_seq_eval > 0,
+      sum(seq_decision == "Invariance retained", na.rm = TRUE) /
+        n_seq_eval,
+      NA_real_
+    ),
+    
+    sequential_accuracy = if_else(
+      n_seq_eval > 0,
+      sum(seq_correct, na.rm = TRUE) / n_seq_eval,
+      NA_real_
+    ),
     
     .groups = "drop"
   )
 
-table3_noise_exploratory
 
-# ============================================================
-# TABLE 4
-# Sequential performance by true MNI pattern
-# ============================================================
-
-table4_exploratory <- perf_sequential_cell_exploratory %>%
-  filter(
-    moderator != "noise"
+table4_cell <- perf_sequential_all %>%
+  mutate(
+    method = recode(
+      method,
+      MNLFA = "Linear MNLFA",
+      MNLFAQ = "Quadratic MNLFA",
+      SEMTREE = "SEM tree"
+    )
   ) %>%
-  group_by(
+  transmute(
+    popmodel,
     truth_class,
-    method
-  ) %>%
-  summarise(
-    n_cells = n(),
-    
-    metric_decision =
-      mean(
-        p_metric_decision,
-        na.rm = TRUE
-      ),
-    
-    scalar_stage_reached =
-      mean(
-        scalar_stage_reached,
-        na.rm = TRUE
-      ),
-    
-    scalar_conditional_rejection =
-      mean(
-        scalar_conditional_rejection,
-        na.rm = TRUE
-      ),
-    
-    scalar_decision =
-      mean(
-        p_scalar_decision,
-        na.rm = TRUE
-      ),
-    
-    invariance_retained =
-      mean(
-        p_invariance_retained,
-        na.rm = TRUE
-      ),
-    
-    sequential_accuracy =
-      mean(
-        sequential_accuracy,
-        na.rm = TRUE
-      ),
-    
-    .groups = "drop"
+    N,
+    moderator,
+    delta_lambda,
+    delta_nu,
+    method,
+    n_seq_eval,
+    `Metric decision` = sprintf("%.3f", p_metric_decision),
+    `Scalar decision` = sprintf("%.3f", p_scalar_decision),
+    `Invariance retained` = sprintf("%.3f", p_invariance_retained),
+    `Correct classification` = sprintf("%.3f", sequential_accuracy)
   ) %>%
   arrange(
-    factor(
-      truth_class,
-      levels = c(
-        "No MNI",
-        "Metric only",
-        "Scalar only",
-        "Metric + scalar"
-      )
-    ),
-    method
+    popmodel, N, moderator,
+    delta_lambda, delta_nu, method
   )
 
-table4_exploratory
-#-------------------
-table4_print_exploratory <- table4_exploratory %>%
-  mutate(
-    across(
-      c(
-        metric_decision,
-        scalar_stage_reached,
-        scalar_decision,
-        invariance_retained,
-        sequential_accuracy
-      ),
-      ~ round(.x, 3)
-    )
-  ) %>%
-  select(
-    Truth = truth_class,
-    Method = method,
-    `Metric decision` = metric_decision,
-    `Scalar stage reached` = scalar_stage_reached,
-    `Scalar decision` = scalar_decision,
-    `Invariance retained` = invariance_retained,
-    `Correct classification` = sequential_accuracy
-  )
+table4_cell
 
-table4_print_exploratory
+saveRDS(
+  table4_cell,
+  "results/table4_condition_specific.rds"
+)
 
-#------------------------------------------------------------------------------
-print(n=27,table2_print_exploratory)
-table3_exploratory
-table4_print_exploratory
-
+#-------------------------------------------------------------------------------
 save(
-  table2_print_exploratory,
-  table3_exploratory,
-  table4_print_exploratory,
-  file = "manuscript_tables_exploratory.RData"
+  table2_cell,
+  table3_cell,
+  table4_cell,
+  file = "manuscript_tables.RData"
 )
