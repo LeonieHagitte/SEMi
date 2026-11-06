@@ -74,7 +74,7 @@ It proceeds testing through a hierarchy of invariance levels with increasingly s
 Which level is required depends on the inference being drawn, e.g., metric invariance is generally necessary for comparing latent means, whereas weaker forms may suffice for comparing correlations [@Putnick2016; @Little1997].
 
 Because MGCFA tests invariance across predefined groups, it is well suited to settings with theoretically meaningful categorical distinctions, such as treatment conditions, demographic categories, or discrete measurement occasions.
-It is less well suited to characteristics that vary continuously, such as age. 
+It  is less suitable for continuous variables such as age, where imposing arbitrary cutoffs can obscure both the location and the pattern of measurement non-invariance along the underlying continuum. 
 Forcing these into predefined groups requires arbitrary cutoffs that are hard to justify and can obscure both _where_ <!-- with here--> non-invariance occurs and _how_ measurement parameters actually vary along the underlying continuum. 
 Methods that can represent such heterogeneity without requiring either discrete groups or a prespecified functional form are therefore much needed.
 
