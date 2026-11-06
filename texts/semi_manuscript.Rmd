@@ -53,7 +53,7 @@ Such differences may reflect genuine differences in the underlying construct, ar
 [@Flake2020; @Flake2017; @Cheung2002; @Meredith1993]. 
 This is the problem of measurement invariance (MI). 
 The question of whether a measurement model operates equivalently across individuals, groups, contexts, or occasions [@Meredith1993].
-Far from just a technical requirement, MI is essential for comparing latent means, variances, covariances, or structural relations such as regressions on a latent level; which is to say, a precondition for much correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
+Far from being just a technical requirement, MI is essential for comparing latent means, variances, covariances, or structural relations such as regressions on a latent level; which is to say, a precondition for much correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
 
 Yet the standard approach for testing MI assumes something that is often untrue, namely that the source of measurement heterogeneity is categorical. 
 Conventional approaches represent heterogeneity through predefined groups, e.g., sex, treatment arm, or age group, across which measurement parameters are constrained and compared. 
