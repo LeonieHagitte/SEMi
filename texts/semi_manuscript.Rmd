@@ -69,7 +69,7 @@ Within a SEM, the measurement model specifies how latent factors relate to their
 
 Classical MI testing builds on this framework in a confirmatory way. 
 Researchers specify a measurement model, typically a confirmatory factor analysis (CFA), reflecting substantive hypotheses about the construct of interest, then partition the sample by a categorical grouping variable and test increasingly restrictive equality constraints across groups. 
-This approach, multiple-group CFA (MGCFA), is the most widely used method for evaluating MI [e.g., @Cheung2002; @Putnick2016]. 
+This multiple-group CFA (MGCFA) approach is the most widely used method for evaluating MI [e.g., @Cheung2002; @Putnick2016]. 
 It proceeds testing through a hierarchy of invariance levels with increasingly stronger assumptions: _configural invariance_ (the same structural pattern holds in all groups), metric invariance (factor loadings are additionally equal, indicating that items relate to the construct with the same strength across groups), _scalar invariance_ (item intercepts are additionally equal, establishing a common scale unit and origin needed for comparing latent means) [@Little1997], and _residual_ or _strict invariance_ (residual variances are additionally equal, so that any remaining group differences reflect the construct rather than differential measurement error) [@Cheung2002; @Widaman1997]. 
 Which level is required depends on the inference being drawn, e.g., metric invariance is generally necessary for comparing latent means, whereas weaker forms may suffice for comparing correlations [@Putnick2016; @Little1997].
 
