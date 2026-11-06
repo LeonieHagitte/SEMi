@@ -49,7 +49,7 @@ Unlike weight or height of a person, latent constructs like these cannot be obse
 Instead, they are inferred from indicators, typically responses to self-report items, using measurement models. 
 If these measures function differently across the individuals or contexts being compared, it is as though the same construct were being measured with different yardsticks. 
 Any observed differences would therefore be difficult to interpret and could not serve as a reliable basis for drawing meaningful conclusions.
-It may reflect a genuine difference in the construct, an artifact of how it was measured, or some blend of both, and there is no way to disentangle the two after the fact
+Such differences may reflect genuine differences in the underlying construct, artifacts of the measurement process, or a combination of both, with no reliable way to disentangle these sources after the fact.
 [@Flake2020; @Flake2017; @Cheung2002; @Meredith1993]. 
 This is the problem of measurement invariance (MI). 
 The question of whether a measurement model operates equivalently across individuals, groups, contexts, or occasions [@Meredith1993].
