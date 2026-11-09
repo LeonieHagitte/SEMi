@@ -881,7 +881,7 @@ gender_intercept <- gender_summary %>%
 ```
 
 The unrestricted model provided the best relative fit (-2LL = `r fmt(unrestricted$minus2LL,0)`, AIC = `r fmt(unrestricted$AIC,0)`, BIC = `r fmt(unrestricted$BIC,0)`).  
-Constraining loading-moderation effects to zero resulted in a significant deterioration in model fit relative to the unrestricted model $\Delta\chi^2$(`r metric_test$df`) = `r fmt(metric_test$Chisq,2)`, p`r fmt_p(metric_test$p)`, accompanied by increases in AIC = `r fmt(metric$AIC,0)` and BIC = `r fmt(metric$BIC,0)`. 
+Constraining loading-moderation effects to zero resulted in a significant reduction in model fit relative to the unrestricted model $\Delta\chi^2$(`r metric_test$df`) = `r fmt(metric_test$Chisq,2)`, p`r fmt_p(metric_test$p)`, accompanied by increases in AIC = `r fmt(metric$AIC,0)` and BIC = `r fmt(metric$BIC,0)`. 
 Thus, metric invariance was not supported. 
 Subsequently constraining intercept-moderation effects to zero resulted in a further significant deterioration in fit $\Delta\chi^2$(`r scalar_test$df`) = `r fmt(scalar_test$Chisq,2)`, p`r fmt_p(scalar_test$p)`, with AIC = `r fmt(scalar$AIC,0)` and BIC = `r fmt(scalar$BIC,0)`(see Table \ref{tab:mnlfa-fit}). <!-- Ref done-->
 
