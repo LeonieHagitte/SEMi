@@ -448,7 +448,7 @@ cat("\\end{table}\n")
 
 ### Primary and exploratory simulation conditions
 
-Accounting for the applicability of the manipulated factors across population models and functional forms, the simulation design comprised 508 distinct data-generating cells. 
+The simulation design comprised 508 distinct conditions.
 Each condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees across 100 replications each.
 
 Inspection of the primary results indicated that several conditions yielded near-ceiling detection rates, limiting differentiation between methods at the preregistered effect sizes. 
