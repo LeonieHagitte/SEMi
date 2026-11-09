@@ -155,7 +155,7 @@ We close with an integrative discussion of the simulation and empirical findings
 ## Method 
 
 To compare MNLFA and SEM trees under conditions where the true relationship between a continuous covariate and measurement parameters is known, we ran a Monte Carlo simulation study. 
-Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts were made to depend on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
+Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts were depend on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
 We systematically varied the functional form of moderation, the parameter class affected (loadings, intercepts, or both), the magnitude of moderation, sample size, and analysis method. 
 For each combination of these design factors, a separate dataset was generated and analyzed using the corresponding method: linear MNLFA, quadratic MNLFA, or SEM trees. 
 Thus, conditions differing only in analysis method were based on independently generated datasets under otherwise identical data-generating conditions. 
