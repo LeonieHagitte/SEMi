@@ -756,7 +756,7 @@ Selection of noise variables in the absence of the true moderator occured in 1.7
 # Illustrative Application: Quality of Life (CASP-12)
 
 We illustrate both approaches using CASP-12 data from Wave 9 of the Survey of Health, Ageing and Retirement in Europe (SHARE). 
-The CASP-12, a short form of the CASP-19 quality-of-life measure [@Hyde2003], comprises 12 items spanning four domains (Control, Autonomy, Self-Realization, and Pleasure) each measured by three items on a four-point scale (1 = Often to 4 = Never). 
+The CASP-12, a short form of the CASP-19 quality-of-life measure [@Hyde2003] and comprises 12 items spanning four domains (Control, Autonomy, Self-Realization, and Pleasure) each measured by three items on a four-point scale (1 = Often to 4 = Never). 
 The SHARE version deviates from the standard 12-item form proposed by @Wiggins2008 in two items (A2, P3)^[SHARE replaces "I feel that I can please myself what I do" with an item on feeling hindered by family obligations (A2), and "I enjoy the things that I do" with an item on looking back on one's life with happiness (P3).]
 Positively worded items were reverse-scored so that higher values consistently indicated better quality of life; items were treated as continuous indicators, so scalar parameters correspond to item intercepts.
 
