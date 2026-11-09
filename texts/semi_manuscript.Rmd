@@ -116,7 +116,7 @@ Even though SEM trees have received relatively little attention as tools for det
 
 SEM trees merge two paradigms: SEMs and decision trees. 
 Decision trees recursively partition the sample based on covariate values, creating increasingly homogeneous subgroups that differ with respect to a target outcome.
-SEM trees combine the hierarchical structure of decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
+SEM trees extend this principle to SEMs, identifying subgroups that differ in the parameters of a specified model. 
 Unlike many other tree-based methods, SEM trees can be applied to models that include latent variables. 
 
 In contrast to MGCFA and MNLFA, SEM trees represent a rather exploratory approach to the assessment of MI. 
