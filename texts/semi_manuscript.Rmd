@@ -89,7 +89,7 @@ Hence, whether MI is present depends on which parameters are moderated by the ex
 The exogenous variables may moderate any subset of the parameters in the measurement model and structural model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable [@Bauer2009; @Bauer2017]. 
 If moderation is limited to the parameters of the structural model, that is, the means, variances, and covariance, the model remains consistent with the assumption of MI. 
-In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI [@Bauer2017; @Kolbe2024]. 
+In contrast, moderation of parameters of the measurement models, including intercepts, loadings, or residual variances, constitutes MNI [@Bauer2017; @Kolbe2024]. 
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
 Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches [@Bauer2009; @Kolbe2024]. 
 
