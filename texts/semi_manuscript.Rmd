@@ -616,7 +616,7 @@ Simulation design construction, data handling, aggregation, and visualization di
 Across 152,400 method-specific simulation runs, 42 (0.028%) did not yield evaluable metric or scalar test results.  
 This occurred in 8 of 50,800 MNLFA runs (0.016%) and 34 of 50,800 MNLFAQ runs (0.067%); all 50,800 SEM tree runs yielded evaluable test results.  
 Whenever results were unavailable, both metric and scalar test results were missing.  
-Rejection rates were calculated based on the number of evaluable replications within each condition, with all conditions comprising 100 attempted replications.
+Rejection rates were calculated based on the number of available replications within each condition, with all conditions comprising 100 attempted replications.
 
 Under complete MI (Model L0I0), rejection rates were generally close to the nominal \(\alpha=.05\) level. 
 This pattern was observed across the three methods and was comparatively stable across the examined sample sizes and moderator functional forms. 
