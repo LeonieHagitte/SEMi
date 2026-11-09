@@ -108,7 +108,7 @@ Such settings motivate methods that can explore parameter heterogeneity without 
 ## Structural Equation Model Trees 
 
 SEM trees were originally introduced by @Brandmaier2013 as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g. by identifying moderators of model parameters in a SEM. 
-Subsequent developments further refined the methodology and expanded its applicability [@Arnold2021; @Brandmaier2016]. 
+Subsequent developments further improved the methodology and expanded its applicability [@Arnold2021; @Brandmaier2016]. 
 
 Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for explaining heterogeneity.
 Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
