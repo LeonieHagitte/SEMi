@@ -653,7 +653,7 @@ However, increasing sample size did not compensate for functional-form mismatch 
 The linear specification remained weak under quadratic MNI even at larger sample sizes, whereas the quadratic specification remained weak under linear and sigmoid MNI. 
 Beyond functional form and sample size, power also varied across MNI configurations. 
 SEM tree metric power was consistently high across most population models but was comparatively lower for Model 1.32, in which loading and intercept noninvariance were induced by different moderators. <!-- ref suppl material -->
-The patterns shown in figure \ref{fig:fig2} represent selected population models and explicitly defined effect-size conditions. <!-- ref -done-->
+The patterns shown in Figure \ref{fig:fig2} represent selected population models and explicitly defined effect-size conditions. <!-- ref -done-->
 The complete results across population models, sample sizes, moderator forms, and confirmatory and exploratory effect magnitudes are reported in Supplementary Table S2. <!-- ref suppl material -->
 Thus, although SEM trees were generally robust across functional forms, their performance also depended on the specific configuration of MNI. 
 
