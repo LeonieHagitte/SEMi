@@ -142,7 +142,7 @@ The present simulation examines the consequences of this difference for detectin
 Three aspects of performance are addressed: whether each method detects MNI at all; how detection depends on the functional form of $\theta(z)$; and, since loading and intercept heterogeneity are examined separately, whether each method correctly localizes MNI at the correct level.
 
 We expect SEM trees to outperform MNLFA under nonlinear moderation, particularly for sigmoidal relationships, but to have less of an advantage under linear moderation, which is less readily captured by recursive partitioning. 
-MNLFA, conversely, should perform best when its specified functional form is correct — particularly under linear moderation — but be more sensitive to misspecification. 
+Conversely, MNLFA should perform best when the assumed functional form is correctly specified, particularly under linear moderation, but be more sensitive to model misspecification. For both methods, we expect detection rates to increase with stronger moderation effects and larger sample sizes.
 For both methods, stronger moderation effects and larger sample sizes should improve detectability.
 
 We complement the simulation with an empirical illustration using CASP-12 quality-of-life data from Wave 9 of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9; @BorratBesson2015; @Wiggins2008], motivated by @BonnevilleRoussy2024's group-based analysis of CASP-12 invariance across age, gender, and cultural region. 
