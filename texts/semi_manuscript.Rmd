@@ -452,7 +452,7 @@ The simulation design comprised 508 distinct conditions.
 Each condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees across 100 replications each.
 
 Inspection of the primary results indicated that several conditions yielded near-ceiling detection rates, limiting differentiation between methods at the preregistered effect sizes. 
-Exploratory analyses therefore additionally examined smaller moderation effects $(\delta_\lambda=.10, \delta_\nu=.25)$. 
+Thus, we added exploratory analyses to examine smaller moderation effect sizes $(\delta_\lambda=.10, \delta_\nu=.25)$. 
 
 In the primary method comparison, the relevant data-generating moderator or moderators were supplied to the SEM trees as candidate partitioning variables. 
 Thus, the comparison focused on how the methods represent moderator-related parameter heterogeneity. 
