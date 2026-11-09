@@ -743,7 +743,7 @@ Figure \ref{fig:fig4} presents correct classification rates at ($N = 1000$) unde
 Classification performance varied across methods, moderator functional forms, and  importantly, effect magnitudes. 
 Under scalar-only noninvariance, the results were particularly sensitive to the behavior of the preceding metric test, when the effect magnitude was highest. 
 The proportion of replications reaching the scalar stage provides a possible explanation for this pattern. 
-At $N = 1000$ ($\Delta_\lambda$ = 0.2, $\Delta_\nu$ = 1.0) linear MNLFA proceeded to scalar testing in 95%, 94%, and 94% of replications under linear, quadratic, and sigmoid moderation, respectively. 
+At $N = 1,000$ ($\Delta_\lambda$ = 0.2, $\Delta_\nu$ = 1.0) linear MNLFA proceeded to scalar testing in 95%, 94%, and 94% of replications under linear, quadratic, and sigmoid moderation, respectively. 
 The corresponding proportions were 0%, 93%, and 45% for quadratic MNLFA and 4%, 22%, and 88% for SEM trees. 
 Thus, in several conditions, a substantial proportion of replications had already been incorrectly classified as exhibiting metric noninvariance, preventing the scalar test from being reached. 
 This distinction is essential when comparing level-specific power with the performance of the complete sequential procedure.
