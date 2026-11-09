@@ -121,7 +121,7 @@ Unlike many other tree-based methods, SEM trees can accommodate models with late
 
 Unlike MGCFA and MNLFA, SEM trees offer a more exploratory approach to the assessment of MI. 
 Similar to these methods though, SEM trees require the researcher to specify a measurement model a priori.
-Beyond this, however, the researcher only needs to provide a set of candidate variables that may account for heterogeneity in the data. 
+Other than that, researchers only need to provide a set of candidate variables that may account for heterogeneity in the data. 
 These variables may be numerous and can be either categorical or continuous.   
 Similar to MGCFA, researchers first specify a measurement model and identify variables that may account for heterogeneity. 
 The crucial difference is that MGCFA requires the researcher to select a specific categorical grouping variable, whereas SEM trees can evaluate a large set of candidate variables simultaneously and determine which, if any, are associated with violations of MI. 
