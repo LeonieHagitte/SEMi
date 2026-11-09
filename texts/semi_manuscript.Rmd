@@ -115,7 +115,7 @@ Because violations of MI manifest as systematic heterogeneity in parameters of t
 Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI in confirmatory factor models [@finch2017structural; @sajobi2026tree] and @XXX proposed an extension to investigate MI in exploratory factor analytical models. 
 
 SEM trees merge two paradigms: SEMs and decision trees. 
-Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
+Decision trees recursively partition the sample based on covariate values, creating increasingly homogeneous subgroups that differ with respect to a target outcome.
 SEM trees combine the hierarchical structure of decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
 Unlike many other tree-based methods, SEM trees can be applied to models that include latent variables. 
 
