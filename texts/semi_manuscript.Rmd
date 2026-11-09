@@ -761,7 +761,7 @@ The SHARE version deviates from the standard 12-item form proposed by @Wiggins20
 Positively worded items were reverse-scored so that higher values consistently indicated better quality of life; items were treated as continuous indicators, so scalar parameters correspond to item intercepts.
 
 Following @BonnevilleRoussy2024, we considered age (continuous), gender (male/female), and cultural region (Nordic, Western, Southern, Eastern Europe; Western as reference) simultaneously as candidate sources of measurement heterogeneity.
-Gender was coded as 0 = male and 1 = female, and Western Europe served as the reference category for cultural region in the MNLFA analyses.
+Gender  and cultural region were dummy-coded with with _male_ as reference category for gender and Western Europe as reference category for cultural region in the MNLFA analyses.
 
 Both analyses used the first item of each factor (C1, A1, P1, S1) as anchors, with loadings fixed to 1 and intercepts and moderation effects fixed to 0, so that MNI was tested for the remaining eight items conditional on anchor invariance. 
 In the MNLFA, the loadings, intercepts, and residual variances of the eight non-anchor items were allowed to vary with all three covariates; latent means were likewise freely moderated across the metric and scalar models, separating covariate-related mean differences from intercept moderation, while the latent covariance matrix was estimated but held constant. 
