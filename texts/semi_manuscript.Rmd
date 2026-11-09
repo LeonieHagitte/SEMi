@@ -112,7 +112,7 @@ Subsequent developments further improved the methodology and expanded its applic
 
 Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for explaining heterogeneity.
 Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
-Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI [@finch2017structural; @sajobi2026tree]. 
+Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI in confirmatory factor models [@finch2017structural; @sajobi2026tree] and @XXX proposed an extension to investigate MI in exploratory factor analytical models. 
 
 SEM trees merge two paradigms: SEMs and decision trees. 
 Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
