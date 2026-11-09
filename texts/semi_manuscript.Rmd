@@ -376,7 +376,7 @@ fig_plot
 ## Simulation design
 
 The simulation employed a fully crossed factorial design in which each data-generating condition was evaluated using all three analysis methods.
-Data-generating conditions varied the population measurement model (whether and which parameters, that is, loadings, intercepts, or both, were subject to moderation), the functional form of that moderation (linear, quadratic, sigmoidal, or null), the magnitude of loading and intercept moderation, and sample size.
+Data-generating conditions varied the population measurement model (how many loadings or intercepts, or both, were subject to moderation), the functional form of that moderation (linear, quadratic, sigmoidal, or null), the magnitude of loading and intercept moderation, and sample size.
 For each combination of data-generating conditions and analysis method, a separate dataset was generated and analyzed using the method specified for that condition, linear MNLFA, quadratic MNLFA, or SEM trees. 
 To keep track of the different population models, we introduced a four-letter coding scheme (see table \ref{tab:coding-scheme}). 
 Each code first indicates whether factor loadings were moderated, no loading moderation is denoted L0, moderation of two of the four loadings as L2, and moderation of all four loadings as LA. 
