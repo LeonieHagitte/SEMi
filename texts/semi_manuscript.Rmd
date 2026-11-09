@@ -1212,7 +1212,7 @@ metric_age_right <- age_mean + metric_age_right_z * age_sd
 The baseline four-factor model used for the SEM tree analyses converged successfully ($N$ = `r fmt(baseline_N, 0)`, `r baseline_npar` free parameters, (-2LL) = `r fmt(baseline_minus2LL, 0)`, AIC = `r fmt(baseline_AIC, 0)`, BIC = `r fmt(baseline_BIC, 0)`). <!--65{,}215$, 42 free parameters, $-2LL=1{,}801{,}399, AIC =1{,}801{,}483, BIC =1{,}801{,}864$). -->
 The score-guided SEM tree analyses also indicated parameter heterogeneity at both the metric and scalar levels ($p_{metric}$ = `r fmt_p(metric_p)` and $p_{scalar}$ = `r fmt_p(scalar_p)`, respectively; see Figures \ref{fig:metric-tree} \&\ref{fig:scalar-tree}). 
 
-For metric invariance, cultural cluster was selected as the first partitioning variable by the trees, `r paste(metric_split_groups, collapse = "and")` separating Western and Nordic countries from Southern and Eastern countries ($LR$ = `r fmt(metric_LR, 2)`; $df$ = `r metric_df`). <!--5988.70; df=8)$--> 
+For metric invariance, cultural cluster was selected as the first partitioning variable by the trees, "`r paste(metric_split_groups, collapse = " and ")`" separating Western and Nordic countries from Southern and Eastern countries ($LR$ = `r fmt(metric_LR, 2)`; $df$ = `r metric_df`). <!--5988.70; df=8)$--> 
 Within both resulting branches, the next partition was based on age, at approximately `r fmt(metric_age_left, 1)` years. 
 Further age-based partitions occurred at approximately 65 and 79 years, together with an additional distinction between Western and Nordic countries within one subgroup. 
  
