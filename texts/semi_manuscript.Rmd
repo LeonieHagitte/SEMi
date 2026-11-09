@@ -760,7 +760,7 @@ The CASP-12, a short form of the CASP-19 quality-of-life measure [@Hyde2003] and
 The SHARE version deviates from the standard 12-item form proposed by @Wiggins2008 in two items (A2, P3)^[SHARE replaces "I feel that I can please myself what I do" with an item on feeling hindered by family obligations (A2), and "I enjoy the things that I do" with an item on looking back on one's life with happiness (P3).]
 Positively worded items were reverse-scored so that higher values consistently indicated better quality of life; items were treated as continuous indicators, so scalar parameters correspond to item intercepts.
 
-Following @BonnevilleRoussy2024, we considered age (continuous), gender (dichotomous), and cultural region (Nordic, Western, Southern, Eastern Europe; Western as reference) simultaneously as candidate sources of measurement heterogeneity.
+Following @BonnevilleRoussy2024, we considered age (continuous), gender (male/female), and cultural region (Nordic, Western, Southern, Eastern Europe; Western as reference) simultaneously as candidate sources of measurement heterogeneity.
 Gender was coded as 0 = male and 1 = female, and Western Europe served as the reference category for cultural region in the MNLFA analyses.
 
 Both analyses used the first item of each factor (C1, A1, P1, S1) as anchors, with loadings fixed to 1 and intercepts and moderation effects fixed to 0, so that MNI was tested for the remaining eight items conditional on anchor invariance. 
