@@ -169,7 +169,7 @@ Residual variances were fixed such that indicator reliability equaled $\rho = .7
 Because residual variances were held constant while loadings varied under loading moderation, conditional indicator reliability varied accordingly in conditions with metric noninvariance. 
 MNI was introduced by allowing selected factor loadings and/or item intercepts to depend on the moderator.
 
-Nine population models were investigated.
+Nine population models were investigated that differed in how many item intercepts and how many loadings were moderated (including a model of no moderation at all).
 <!--
 | Model | Loading moderation | Intercept moderation |
 |-------|--------------------|----------------------|
