@@ -83,7 +83,7 @@ This highlights the need for methods that can capture such heterogeneity without
 MNLFA meets the need to include continuous moderators by modeling factor loadings, intercepts, and other measurement parameters as functions of observed covariates, including continuous characteristics [@Bauer2009; @Bauer2017]. 
 MNLFA extends conventional group-based invariance testing by representing measurement heterogeneity without imposing arbitrary group boundaries.
 MNI is conceptualized as moderation of the measurement model itself by variables exogenous to the model. 
-If measurement parameters differ as a function of these moderator variables, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
+If measurement parameters are found to differ as a function of these moderator variables, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
 
 Hence, whether MI is present depends on which parameters are moderated by the exogenous variables. 
 The exogenous variables may moderate any subset of the parameters in the measurement model and structural model. 
