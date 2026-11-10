@@ -154,8 +154,7 @@ This design allowed us to evaluate, under fully controlled conditions, whether e
 
 ### Model Specification
 
-In the CFA, baseline factor loadings were fixed to $\lambda = 0.70$, baseline intercepts were fixed to one, and the latent factor variance was fixed to one. 
-
+In the CFA, consistent with parameter ranges examined in previous simulation studies [e.g. @Wolf2013; @Jak2026], baseline factor loadings were fixed to $\lambda = 0.70$, baseline intercepts were fixed to one, and the latent factor variance was fixed to one. 
 Residual variances were fixed such that indicator reliability equaled $\rho = .75.$ at the baseline factor loading of $\lambda=.70$. 
 Because residual variances were held constant while loadings varied under loading moderation, conditional indicator reliability varied accordingly in conditions with metric noninvariance. 
 MNI was introduced by allowing selected factor loadings and/or item intercepts to depend on the moderator.
