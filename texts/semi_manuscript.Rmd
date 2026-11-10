@@ -514,7 +514,7 @@ The resulting likelihood-ratio test^[The degrees-of-freedom of the test correspo
 Scalar MNI was evaluated by comparing the metric-invariance model with a scalar-invariant model in which moderator effects on item intercepts were additionally constrained to zero.
 Residual-variance moderation remained freely estimated. 
 The scalar likelihood-ratio test therefore evaluated the joint null hypothesis of no moderator-related intercept variation conditional on loading moderation having been constrained to zero. 
-An additional omnibus comparison between the unrestricted and scalar-invariance models tested the joint removal of loading and intercept moderation. 
+An additional omnibus comparison between the unrestricted and scalar-invariance models tested the joint removal of loading and intercept moderation [vgl. @Kolbe2022]. 
 All likelihood-ratio tests used $\alpha=.05$.
 
 The linear and quadratic MNLFA specifications differed only in the transformation $g(\cdot)$ applied to the raw moderators. Linear MNLFA used $g(M)=M$, whereas quadratic MNLFA used $g(M)=2M^2-1$. 
