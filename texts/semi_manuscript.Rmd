@@ -566,10 +566,11 @@ For each population model and simulation condition, the following performance me
 **Level-specific rejection:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level when that form of MNI was absent, but MNI could be present at another level. 
 For example, metric rejection under scalar-only MNI was considered level-specific rejection rather than rejection under complete MI.
 
-In addition, a *sequential classification* was derived using a metric-first decision rule, following traditional approaches to MI testing. 
-If the metric test rejected, the replication was classified as metric MNI; if the metric test did not reject but the scalar test rejected, it was classified as scalar MNI; if neither test rejected, invariance was retained. 
-In the primary comparison, SEM trees were supplied only with the true moderator variables. 
-Consequently, statistical power and rejection rates reflect the ability to detect MNI independent of moderator selection.
+In addition, we evaluated the behavior of a sequential decision rule for SEM trees that mirrors traditional MI testing. 
+If the metric test rejected the H0, the model was classified as metric MNI. 
+If it did not reject but the subsequent scalar test did, the replication was classified as scalar MNI. 
+If neither test rejected its H0, MI was concluded. 
+In the primary comparison, SEM trees received only the true moderator(s) as candidate partitioning variables, so power and rejection rates reflect the ability to detect MNI independent of moderator selection.
 
 In the robustness analysis a simulation replication was considered successful only if the SEM tree both rejected the null hypothesis of parameter stability and selected the true moderator as a splitting variable. 
 This criterion therefore jointly evaluated the ability of SEM trees to detect MNI and to distinguish the informative moderator from irrelevant candidate predictors.
