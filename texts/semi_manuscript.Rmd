@@ -93,7 +93,7 @@ In contrast, moderation of parameters of the measurement models, including inter
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
 Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches [@Bauer2009; @Kolbe2024]. 
 
-This increased flexibility comes at the cost of greater specification requirements. 
+This increased flexibility comes at the cost of more demanding specification requirements. 
 Like MGCFA, MNLFA constitutes a confirmatory approach to the assessment of MI [@Bauer2017]. 
 In practice, at least three sets of decisions are required. 
 First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. 
