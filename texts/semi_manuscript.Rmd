@@ -130,10 +130,6 @@ They do so by approximating non-linearity with the recursive splits into sub gro
 
 ## Present Study 
 
-MGCFA, MNLFA, and SEM trees represent measurement heterogeneity differently. 
-MGCFA captures it as differences between predefined groups. 
-When heterogeneity instead depends on a continuous covariate $z$, the problem becomes modeling a measurement parameter $\theta$ as a function $\theta(z)$: MNLFA specifies this function parametrically, whereas SEM trees approximate it through a data-driven, piecewise linear approximation.
-
 The present simulation examines the consequences of this difference for detecting MNI, comparing MNLFA and SEM trees when the true $\theta(z)$ relationship is linear, quadratic, or sigmoidal, and varying the magnitude of heterogeneity and sample size. 
 Three aspects of performance are addressed: whether each method detects MNI at all; how detection depends on the functional form of $\theta(z)$; and, since loading and intercept heterogeneity are examined separately, whether each method correctly localizes MNI at the correct level.
 
