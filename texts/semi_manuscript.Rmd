@@ -451,7 +451,7 @@ Candidate-variable selection was examined separately in a robustness analysis.
 
 The simulated population conditions were evaluated using two parametrically specified MNLFA analyses, linear MNLFA and quadratic MNLFA, as well as score-based SEM trees. 
 All analyses were based on a single-factor measurement model with four continuous indicators $x_1,\ldots,x_4$ and one latent factor $\eta$. 
-The MNLFA analyses evaluated metric and scalar MNI through nested likelihood-ratio tests, whereas the SEM-tree analyses used separate score-based parameter-instability tests focused on factor loadings and item intercepts.
+The MNLFA analyses evaluated metric and scalar MNI through sequential likelihood-ratio tests, whereas the SEM-tree analyses used separate score-based parameter-instability tests focused on factor loadings and item intercepts.
 
 ### MNLFA
 
