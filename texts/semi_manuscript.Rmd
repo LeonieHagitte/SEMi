@@ -1480,4 +1480,9 @@ Replication across SHARE waves and independent samples would help establish the 
 Something on multiple testing and alpha error inflation
 -->
 
+Taken together, our findings show that both SEM trees and MNLFA are well suited for investigating measurement invariance when moderators are continuous or numerous, and that they serve different purposes. 
+SEM trees are particularly attractive for exploratory work: in larger samples, they reliably detect nonlinear moderation without a prespecified functional form, and they can uncover conditional combinations of moderators, such as the age-by-culture patterns found in the CASP-12 data. 
+MNLFA, in turn, offers higher detection rates and directly interpretable parameter estimates when the moderation function is linear or correctly specified. 
+Rather than competing, the two approaches complement each other: SEM trees can screen for unexpected sources and shapes of heterogeneity, and MNLFA can then quantify them in a parsimonious, theory-driven model.
+
 # References
