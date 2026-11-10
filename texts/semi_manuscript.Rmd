@@ -1461,7 +1461,7 @@ The empirical example therefore illustrates that MNLFA and SEM trees can yield b
 
 Several limitations qualify the generalizability of the present findings. 
 First, the simulation considered linear, quadratic, and sigmoidal moderation, representing distinct but not exhaustive forms of MNI. 
-Although SEM trees performed comparatively consistently across these conditions, this advantage cannot be generalized to arbitrary functional relationships. 
+Although SEM trees performed comparatively consistently across these conditions, this advantage cannot be generalized to arbitrary functional relationships; even though, it is important to note that SEM trees are invariant across monotonic transformations of a predictor. 
 Second, the simulation employed a relatively simple one-factor model with four continuous indicators. 
 Future studies should examine whether the observed performance patterns extend to more complex measurement structures, including multifactor models, ordinal indicators, cross-loadings, and correlated residuals.
 
