@@ -110,7 +110,7 @@ Such settings motivate methods that can explore parameter heterogeneity without 
 SEM trees were originally introduced by @Brandmaier2013 as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g. by identifying moderators of model parameters in a SEM. 
 Subsequent developments further improved the methodology and expanded its applicability [@Arnold2021; @Brandmaier2016]. 
 
-Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for explaining heterogeneity.
+Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for exploring heterogeneity.
 Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
 Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI in confirmatory factor models [@finch2017structural; @sajobi2026tree] and @XXX proposed an extension to investigate MI in exploratory factor analytical models. 
 
