@@ -76,7 +76,6 @@ The required level of invariance depends on the inference of interest, for examp
 
 Because MGCFA tests invariance across predefined groups, it is well suited to settings with theoretically meaningful categorical distinctions, such as treatment conditions, demographic categories, or discrete measurement occasions.
 It  is less suitable for continuous variables such as age, where imposing arbitrary cutoffs can obscure both the location and the pattern of measurement non-invariance along the underlying continuum. 
-Forcing these into predefined groups requires arbitrary cutoffs that are hard to justify and can obscure both _where_ <!-- with here--> non-invariance occurs and _how_ measurement parameters actually vary along the underlying continuum. 
 This highlights the need for methods that can capture such heterogeneity without relying on predefined groups or prespecified functional forms.
 
 ## Moderated Nonlinear Factor Analysis 
