@@ -538,7 +538,7 @@ In the *scalar tree*, the four item-intercept parameters $\nu_1,\ldots,\nu_4$ we
 Importantly, focus parameters determined which parameter scores entered the instability test; non-focused free parameters were allowed to vary between groups but did not contribute to the split evaluation.
 Thus, item intercepts and residual variances remained free parameters of the CFA underlying the loading-focused tree, whereas factor loadings and residual variances remained free parameters of the CFA underlying the intercept-focused tree. 
 The metric and scalar SEM trees therefore constituted separate parameter-focused instability analyses rather than a sequence of CFA models in which increasingly restrictive equality constraints were imposed on the complete measurement model. 
-This implementation detail is particularly relevant for interpreting cross-level rejection, because instability detected by a loading-focused or intercept-focused test need not imply that heterogeneity is confined exclusively to the corresponding parameter class.
+Accordingly, the two analyses differed in the parameter classes targeted by their instability tests, rather than in the imposition of successive measurement-invariance constraints. 
 
 Recursive partitioning used score-based parameter-instability tests with $\alpha=.05$, Bonferroni adjustment for multiple testing, a maximum tree depth of three, and a minimum node size of 50.
 
