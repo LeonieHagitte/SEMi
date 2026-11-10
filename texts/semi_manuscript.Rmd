@@ -268,11 +268,10 @@ In our simulation $k$ is set to 10.
 This transformation captures symmetric nonlinear moderation as a function of distance from the center while remaining bounded in $(-1,1)$.
 
 4. **Null:**
-   This represents a baseline condition, in which there is no informative moderation.
-   This represents a baseline condition, in which there is no informative moderation.
    $$
    h(M) = 0
    $$
+This represents a baseline condition, in which there is no informative moderation. 
 
 These functions were selected to represent qualitatively different forms of heterogeneity. 
 The first three functions represented structured forms of moderation, whereas the null condition represented the absence of systematic moderation. 
