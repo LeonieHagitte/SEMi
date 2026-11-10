@@ -1297,7 +1297,7 @@ For the factor Pleasure the pattern seems to be more heterogeneous, as the loadi
 
 The present study compared MNLFA and SEM trees for detecting MNI when moderator effects differed in their functional form, magnitude and with different sample sizes. 
 The simulation results revealed a trade-off between model-based specificity and data-driven flexibility. 
-MNLFA achieved high power when the specified moderation function corresponded to the underlying functional form of MNI, but its performance deteriorated substantially under functional-form misspecification. 
+As expected, MNLFA achieved high power when the specified moderation function corresponded to the underlying functional form of MNI, but its performance deteriorated substantially under functional-form misspecification. 
 This finding is consistent with previous methodological work highlighting the sensitivity of parametric approaches to assumptions about the functional form of moderation. 
 In particular, @Bauer2023 emphasized that correctly specified parametric functions may improve accuracy and statistical power, whereas incorrect specifications can introduce bias. 
 Similarly, recent work on related methods has highlighted the risk of misrepresenting complex nonlinear moderation patterns when the assumed functional form does not adequately capture the underlying relationship [@Liu2025]. 
