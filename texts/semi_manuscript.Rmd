@@ -1310,7 +1310,7 @@ The strong performance of linear MNLFA under sigmoid moderation should, however,
 Within the simulated range, a substantial portion of the sigmoid relationship was approximately linear, allowing the linear specification to capture much of the induced moderation. 
 Its performance could thus depend on the extent to which nonlinearity is expressed over the observed moderator range. 
 Additionally, it is likely that additional statistical information cannot compensate for a moderator function that inadequately represents the underlying relationship. 
-As SEM trees, showed consistently high power across linear, quadratic, and sigmoid forms, their performance seems to depend less strongly on correctly anticipating the functional form of MNI. 
+As SEM trees showed consistently high power across linear, quadratic, and sigmoid forms, their performance seems to depend less strongly on correctly anticipating the functional form of MNI. 
 This advantage could be particularly relevant in applications in which theory identifies plausible sources of measurement heterogeneity but provides limited guidance regarding the shape of their association with measurement parameters. 
 
 The empirical application complemented these simulation findings. 
