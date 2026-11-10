@@ -1333,7 +1333,7 @@ Furthermore, PDPs average model predictions across the distribution of the remai
 Nonetheless, the PDPs provide some exploratory insights into potential age-related differences in the measurement of CASP-12. 
 Most notably, the predicted loadings of both Pleasure indicators decreased with age, with the most pronounced changes occurring between the mid-60s and early 70s. 
 This pattern may suggest that the aspects of pleasure captured by these indicators become less strongly associated with the underlying construct at older ages. 
-For Self-Realization, the predicted loadings were comparatively stable across most of the age range, although both indicators showed an increase at more advanced ages. 
+For the domain _Self-Realization_, the predicted loadings were comparatively stable across most of the age range, although both indicators showed an increase at more advanced ages. 
 This could indicate that the relationship between these indicators and the underlying dimension of self-realization becomes somewhat stronger in later life. 
 The patterns for Autonomy were more heterogeneous, while the loading of one indicator remained relatively stable, the other decreased considerably with age. 
 This may suggest that particular aspects of autonomy change in their relevance for representing the latent construct, rather than the dimension as a whole being affected uniformly. 
