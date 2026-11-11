@@ -1443,7 +1443,7 @@ Second, the simulation employed a relatively simple one-factor model with four c
 Future studies should examine whether the observed performance patterns extend to more complex measurement structures, including multifactor models, ordinal indicators, cross-loadings, and correlated residuals.
 
 The simulation also largely separated the detection of MNI from moderator selection by supplying SEM trees with the relevant moderator variables. 
-Although EFA trees have previously been evaluated in the presence of irrelevant candidate covariates (@Sterner2023), and methodological work on SEM trees has examined selection bias and multiple-testing adjustments (@Arnold2021), the additional noise-predictor analysis in the present study addressed these issues only under restricted conditions. 
+Although EFA trees have previously been evaluated in the presence of irrelevant candidate covariates [@Sterner2023], and methodological work on SEM trees has examined selection bias and multiple-testing adjustments [@Arnold2021], the additional noise-predictor analysis in the present study addressed these issues only under restricted conditions. 
 Future research should therefore investigate how parameter-focused CFA-based trees perform with larger sets of correlated and irrelevant moderators, particularly regarding the probability of selecting the true source of MNI, the stability of selected variables and split points, and the trade-off between false-positive selections and statistical power. 
 Such investigations are especially relevant because a selected moderator may act as a proxy for another correlated source of measurement heterogeneity.
 
