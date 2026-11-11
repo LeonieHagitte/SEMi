@@ -575,11 +575,6 @@ In the primary comparison, SEM trees received only the true moderator(s) as cand
 In the robustness analysis a simulation replication was considered successful only if the SEM tree both rejected the null hypothesis of parameter stability and selected the true moderator as a splitting variable. 
 This criterion therefore jointly evaluated the ability of SEM trees to detect MNI and to distinguish the informative moderator from irrelevant candidate predictors.
 
-## Exploratory Analysis 
-
-After seeing the first simulation results, recognizing that we obtained effects from a rather uninformative, or homogeneously informative space, we appended runs with smaller effect sizes for $\delta_{lambda}$ (.10) and $\delta_{nu}$ (.25). 
-The respective results are to be understood as exploratory results, diverging from the preregistrated delta values. 
-
 ## Replications
 
 Each data-generating design cell was replicated 100 times. 
