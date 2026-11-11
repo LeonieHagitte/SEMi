@@ -581,7 +581,6 @@ This criterion therefore jointly evaluated the ability of SEM trees to detect MN
 All data generating code, analysis code, and research materials are available at [https://github.com/LeonieHagitte/SEMi]. 
 This study's design and its analysis were pre-registered, following the ADEMP preregistration template [@Siepe2024], at Zenodo (10.5281/zenodo.19891929).
 For the empirical example we used the ninth wave data of SHARE, which is not openly available, but can be requested for scientific use. 
-The questionnaires referred to are openly available online. 
 
 ### Software 
 
@@ -593,8 +592,7 @@ Simulation design construction, data handling, aggregation, and visualization di
 ## Results 
 
 Across 152,400 method-specific simulation runs, 42 (0.028%) did not yield evaluable metric or scalar test results.  
-This occurred in 8 of 50,800 MNLFA runs (0.016%) and 34 of 50,800 MNLFAQ runs (0.067%); all 50,800 SEM tree runs yielded evaluable test results.  
-Whenever results were unavailable, both metric and scalar test results were missing.  
+This occurred in 8 of 50,800 MNLFA runs (0.016%) and 34 of 50,800 MNLFAQ runs (0.067%); all 50,800 SEM tree runs yielded evaluable test results.    
 Rejection rates were calculated based on the number of available replications within each condition, with all conditions comprising 100 attempted replications.
 
 Under complete MI (Model L0I0), rejection rates were generally close to the nominal \(\alpha=.05\) level. 
