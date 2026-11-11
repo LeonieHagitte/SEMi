@@ -1266,7 +1266,7 @@ combined_plot
 \vspace{0.4em}
 \end{figure}
 
-The PDPs suggest that some of the inspected loadings might not be modearted linearly by age. 
+The PDPs suggest that some of the inspected loadings might be non-linearly moderated by age. 
 For the items A2 and A3, loadings were rather stable at the lower age range and decreased with age, the largest difference occuring between mid-60s and early 70s. 
 For the factor Pleasure the pattern seems to be more heterogeneous, as the loading of item P2 seems relatively stable across Age, whereas item P3 shows a more pronounced decline, also starting in mid 60s. 
 
