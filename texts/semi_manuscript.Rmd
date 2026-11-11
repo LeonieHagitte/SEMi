@@ -146,12 +146,12 @@ We close with an integrative discussion of the simulation and empirical findings
 
 ## Method 
 
-To compare MNLFA and SEM trees under conditions where the true relationship between a continuous covariate and measurement parameters is known, we ran a Monte Carlo simulation study. 
-Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts were depend on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
+To compare MNLFA and SEM trees under conditions where the true relationship between a continuous covariate and measurement parameters is known, we conducted a Monte Carlo simulation study. 
+Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts depended on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
 We systematically varied the functional form of moderation, the parameter class affected (loadings, intercepts, or both), the magnitude of moderation, sample size, and analysis method. 
-For each combination of these design factors, a separate dataset was generated and analyzed using the corresponding method: linear MNLFA, quadratic MNLFA, or SEM trees. 
-Consequently, method performance was compared across simulation conditions rather than through paired replication-level comparisons. 
-This design allowed us to evaluate, under fully controlled conditions, whether each method detected the presence of MNI, how detection was affected by a match or mismatch between the true and assumed functional form, and whether each method correctly localized detected heterogeneity to the metric or scalar level. 
+For each simulation condition, datasets were independently generated for the three analysis methods: linear MNLFA, quadratic MNLFA, and SEM trees. 
+Consequently, method performance was compared at the simulation-condition level rather than through paired replication-level comparisons. 
+This design allowed us to evaluate, under controlled conditions, whether each method detected MNI, how detection depended on the correspondence between the true and assumed functional forms, and whether each method correctly identified MNI at the metric or scalar level. 
 
 ### Model Specification
 
