@@ -1327,7 +1327,7 @@ The findings also showed some item-level convergence with @BonnevilleRoussy2024,
 Similarly, the present MNLFA results showed comparatively pronounced age-related moderation for Autonomy items A2 and A3 (item A1 was used for identification). 
 Although this suggests that Autonomy warrants particular attention, age-related heterogeneity was not confined to this dimension. 
 
-## Methodological Discussion 
+## Different Approaches to Characterizing Measurement Noninvariance  
 
 MNLFA is inherently model-based, researchers specify which covariates are expected to moderate measurement parameters and how these moderator effects enter the model. 
 When these assumptions are well founded, the resulting coefficients provide a direct and parsimonious description of how individual measurement parameters vary with the covariates. 
