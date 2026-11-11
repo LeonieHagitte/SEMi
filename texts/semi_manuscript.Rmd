@@ -781,7 +781,7 @@ cfa_stats <- fitMeasures(
 cfa_loadings <- standardizedSolution(fit_casp_wlsmv)
 ```
 
-First, we performed a CFA, using WLSMV as estimator, to assess global model fit.
+First, we performed a CFA, using Weighted Least Squares Mean and Variance (WLSMV) as estimator, to assess global model fit.
 The simple CFA model for CASP-12 ($X^2$ = `r fmt(cfa_stats["chisq"], 2)`; $df$ = `r cfa_stats["df"]`) <!--21508.260; *df* = 48)--> showed acceptable fit indices with CFI = `r fmt(cfa_stats["cfi"], 2)`, TLI = `r fmt(cfa_stats["tli"], 2)`, RMSEA = `r fmt(cfa_stats["rmsea"], 3)` [`r fmt(cfa_stats["rmsea.ci.lower"], 3)`–`r fmt(cfa_stats["rmsea.ci.upper"], 3)`], and SRMR = `r fmt(cfa_stats["srmr"], 2)`. 
 The loadings onto the items were generally high only the factor *Autonomy* showed lower loadings onto its items A1 ($\lambda_{A1}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A1"], 2)`), A2 ($\lambda_{A2}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A2"], 2)`), and A3 ($\lambda_{A3}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A3"], 2)`). 
 Full results can be found in the Appendix table <!-- X TODO-->. 
