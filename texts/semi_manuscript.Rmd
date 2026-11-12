@@ -619,10 +619,10 @@ Complete condition-specific rejection rates, including Monte Carlo standard erro
 \vspace{0.4em}
 \end{landscape}
 \clearpage
-Statistical power depended strongly on the correspondence between the functional form of MNI and the moderator specification used in MNLFA.
-Linear MNLFA generally showed greater sensitivity to linear and sigmoid heterogeneity than to quadratic heterogeneity. 
-Conversely, quadratic MNLFA performed particularly well under quadratic moderation, whereas its sensitivity under linear and sigmoid moderation was substantially lower in several conditions. 
-SEM trees showed comparatively consistent detection performance across moderator functional forms, although their power also varied with sample size, effect magnitude, and the population-model configuration. 
+Statistical power depended strongly on the correspondence between the true functional form of MNI and the moderator specification used in MNLFA. 
+Linear MNLFA generally showed greater power under linear and sigmoid moderation than under quadratic moderation. 
+Conversely, quadratic MNLFA performed particularly well under quadratic moderation, whereas its power under linear and sigmoid moderation was substantially lower in several conditions. 
+SEM trees showed comparatively consistent detection performance across moderator functional forms, although their power also varied with sample size, effect magnitude, and population-model configuration. 
 Figure \ref{fig:fig2} illustrates these patterns for metric-only noninvariance (Model LAI0) and scalar-only noninvariance (Model L0IA). <!-- ref -done -->
 
 Power generally increased with sample size, particularly for SEM trees, which often approached ceiling performance by $N=700$ or $N=1000$. 
