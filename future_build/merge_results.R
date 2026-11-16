@@ -11,12 +11,7 @@ results <- data.frame(do.call(rbind, lapply(files, function(f) {
   x
 })))
 
-############
-# display results
-#
-
-# Sanity check on the number of simulated conditions:
-# Count number of cases based on some simulation parameters
+#------------------------------------------------------------------------------
 results %>%
   dplyr::count(popmodel, moderator, true_any_noninvariance)
 
