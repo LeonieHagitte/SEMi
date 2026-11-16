@@ -1,6 +1,20 @@
 library(dplyr)
 library(tidyr)
 
+runtime_summary <- results %>%
+  filter(num_noisy_predictors == 0) %>%
+  group_by(method) %>%
+  summarise(
+    n = sum(!is.na(runtime_sec)),
+    mean_sec = mean(runtime_sec, na.rm = TRUE),
+    median_sec = median(runtime_sec, na.rm = TRUE),
+    sd_sec = sd(runtime_sec, na.rm = TRUE),
+    p95_sec = quantile(runtime_sec, 0.95, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+runtime_summary
+
 # ============================================================
 # 1. Create common method-independent result variables
 # ============================================================
@@ -76,12 +90,7 @@ eval_exploratory <- eval_main %>%
         delta_nu %in% confirmatory_delta_nu)
   )
 
-perf_cell_all <- bind_rows(
-  perf_cell,
-  perf_cell_exploratory
-)
-
-# ============================================================
+# ============================================================-------------------------------------------------
 # 4. Separate metric and scalar testing
 #    PRIMARY = nominal design cells
 # ============================================================
@@ -507,7 +516,7 @@ perf_sequential_cell
 
 technical_cell
 #----------------------------------------------------------------------------------------------------------------------------
-method_failure_summary
+#method_failure_summary
 # A tibble: 3 × 6
 #method  attempted_runs failed_runs successful_runs failure_rate failure_percent
 #<chr>            <int>       <int>           <int>        <dbl>           <dbl>
@@ -986,3 +995,9 @@ overall_failure_summary <- eval_active %>%
 
 method_failure_summary
 overall_failure_summary
+#----------------------------------------------------------------------------
+
+perf_cell_all <- bind_rows(
+  perf_cell,
+  perf_cell_exploratory
+)
