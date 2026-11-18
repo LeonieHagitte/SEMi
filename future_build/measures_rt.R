@@ -966,7 +966,29 @@ active_cells <- eval_active %>%
   distinct(across(all_of(cell_vars)))
 
 stopifnot(nrow(active_cells) == 508)
+#------------------------------------------------------------------------------
+# Computational runtime summary
 
+runtime_summary <- eval_active %>%
+  group_by(method) %>%
+  summarise(
+    n = sum(!is.na(runtime_sec)),
+    mean_sec = mean(runtime_sec, na.rm = TRUE),
+    median_sec = median(runtime_sec, na.rm = TRUE),
+    sd_sec = sd(runtime_sec, na.rm = TRUE),
+    p95_sec = as.numeric(
+      quantile(runtime_sec, 0.95, na.rm = TRUE)
+    ),
+    .groups = "drop"
+  )
+
+runtime_summary
+
+saveRDS(
+  runtime_summary,
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/runtime_summary.rds"
+)
+#------------------------------------------------------------------------------
 # Recalculate failure summaries
 method_failure_summary <- eval_active %>%
   group_by(method) %>%
@@ -986,3 +1008,33 @@ overall_failure_summary <- eval_active %>%
 
 method_failure_summary
 overall_failure_summary
+
+# --------------------------------------------------------------------------
+
+classification_summary <- eval_active %>%
+  group_by(method, truth_class) %>%
+  summarise(
+    n_total = n(),
+    n_eval = sum(!is.na(seq_correct)),
+    correct_rate = mean(seq_correct, na.rm = TRUE),
+    metric_error_rate = if (
+      first(truth_class) == "Scalar only"
+    ) {
+      mean(metric_reject, na.rm = TRUE)
+    } else {
+      NA_real_
+    },
+    .groups = "drop"
+  )
+
+classification_summary %>%
+  mutate(
+    correct_pct = round(100 * correct_rate, 1),
+    metric_error_pct = round(100 * metric_error_rate, 1)
+  ) %>%
+  print(n = Inf)
+
+saveRDS(
+  classification_summary,
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/classification_summary.rds"
+)

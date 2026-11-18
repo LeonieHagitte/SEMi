@@ -25,7 +25,14 @@ classoption:
 header-includes:
   - \affiliation{$^{1}$Goethe University Frankfurt\\ $^{2}$Max Planck Institute for Human Development{,} Berlin{,} Germany\\ $^{3}$MSB Medical School Berlin{,} Berlin{,} Germany\\ $^{4}$Max Planck UCL Centre for Computational Psychiatry and Ageing Research{,} Berlin{,} Germany}
   - |
-    \abstract{Establishing measurement invariance (MI) is essential for valid psychological assessments, yet measurement parameters may vary continuously across observed characteristics, resulting in measurement noninvariance (MNI) (Bauer et al., 2020). Moderated nonlinear factor analysis (MNLFA) models such variation but requires prespecifying its functional form (Bauer, 2017; Kolbe et al., 2024). Structural equation modeling (SEM) trees offer a nonparametric alternative using recursive partitioning (Arnold et al., 2021; Brandmaier et al., 2013, 2016). A Monte Carlo simulation compares linear MNLFA, quadratic MNLFA, and SEM trees using single-factor confirmatory factor analysis models with loading and intercept moderation under linear, quadratic, sigmoid, and null transformations. Population models, moderation magnitudes, and sample sizes are varied. SEM trees receive only the true moderator; a sensitivity analysis introduces ten irrelevant predictors. An empirical application uses CASP-12 data from SHARE Wave 9 (Börsch-Supan et al., 2013; Knesebeck et al., 2005; SHARE-ERIC, 2024; Wiggins et al.,2008). MNLFA detection performance depends on functional-form specification, whereas SEM trees show consistent sensitivity across moderation functions. Under scalar-only MNI, both MNLFA and SEM trees exhibit inflated metric MI rejection rates despite invariant loadings, with stronger inflation for SEM trees. In the empirical application, both approaches identify age and cultural background as sources of CASP-12 measurement heterogeneity. SEM trees provide flexibility when moderation functions are unknown but exhibit limitations in distinguishing metric from scalar MNI. Although generally less pronounced, similar classification problems occur with MNLFA. These findings highlight the complementary strengths and limitations of SEM trees and MNLFA in assessing continuous MNI.}
+    \authornote{
+    Leonie Hagitte: \url{https://orcid.org/0000-0001-6850-6970} 
+    Andreas M. Brandmaier: \url{https://orcid.org/0000-0001-8765-6982} 
+    Correspondence concerning this article should be addressed to Leonie Hagitte, Email: hagitte@mpib-berlin.mpg.de
+    During this work, Leonie Hagitte was a pre-doctoral fellow of the International Max Planck Research School on Learning, Institutions, and Future Evolution.
+    }
+  - |
+    \abstract{Establishing measurement invariance (MI) is essential for valid psychological assessments. MI is usually tested across a few predefined groups, yet parameters of a measurement model may vary continuously across participants. Splitting variables at arbitrary cutoffs is often a unsatisfactory solution. We compare two approaches that avoid arbitrary cutoffs: moderated nonlinear factor analysis (MNLFA), which models how measurement parameters change with a covariate but requires a prespecified functional form, and structural equation model (SEM) trees, which search for data-driven splits without assuming one. In a preregistered Monte Carlo simulation, we we varied the shape of moderation of loadings and intercepts (none, linear, quadratic, sigmoid), its magnitude, and sample size (N = 300–1,000), and compared linear MNLFA, quadratic MNLFA, and SEM trees. MNLFA detection performance depends on correct specification, whereas SEM trees show consistent sensitivity across moderation functions. Under scalar-only MNI, both MNLFA and SEM trees show inflated metric MI rejection rates despite invariant loadings, with stronger inflation for SEM trees. In an application to CASP-12 quality-of-life data (SHARE Wave 9, N = 65,214), both methods identified age and cultural region, but not gender, as sources of measurement heterogeneity. We conclude that SEM trees are well suited for exploring unknown moderation, whereas MNLFA is better for confirming and quantifying it.  These findings highlight the complementary strengths and limitations of SEM trees and MNLFA in assessing continuous MNI.}
   - |
   - \keywords{Measurement invariance, moderated nonlinear factor analysis, structural equation model trees, continuous moderators, Monte Carlo simulation}
   - \usepackage{placeins}
@@ -47,19 +54,21 @@ lang: american
 Comparing persons or groups on psychological constructs, like intelligence, well-being, attitudes or personality, is one of the most basic acts in the social and behavioral sciences, yet it rests on an assumption that is all to often not made explicit: that the measure itself means the same thing for everyone being compared.
 Unlike weight or height of a person, latent constructs like these cannot be observed directly. 
 Instead, they are inferred from indicators, typically responses to self-report items, using measurement models. 
-If these measures differently work for the people or contexts being compared, one could say, if the same construct is measured with a different yardstick for different individuals, then any observed difference becomes ambiguous and ultimately unusable for solid inferences. 
-It may reflect a genuine difference in the construct, an artifact of how it was measured, or some blend of both, and there is no way to disentangle the two after the fact
+If these measures function differently across the individuals or contexts being compared, it is as though the same construct were being measured with different yardsticks. 
+Any observed differences would therefore be difficult to interpret and could not serve as a reliable basis for drawing meaningful conclusions.
+Such differences may reflect genuine differences in the underlying construct, artifacts of the measurement process, or a combination of both, with no reliable way to disentangle these sources after the fact.
 [@Flake2020; @Flake2017; @Cheung2002; @Meredith1993]. 
 This is the problem of measurement invariance (MI). 
 The question of whether a measurement model operates equivalently across individuals, groups, contexts, or occasions [@Meredith1993].
-Far from just a technical requirement, MI is essential for comparing latent means, variances, covariances, or structural relations such as regressions on a latent level; which is to say, a precondition for much correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
+Far from being just a technical requirement, MI is essential for comparing latent means, variances, covariances, or structural relations such as regressions on a latent level; which is to say, a precondition for much correlational, experimental, and longitudinal research designs [@Putnick2016; @Little1997].  
 
-Yet the standard approach for testing MI assumes something that is often untrue, namely that the source of measurement heterogeneity is categorical. 
+Yet conventional approaches to testing MI assume that measurement heterogeneity is categorical, comparing measurement parameters across predefined groups (e.g., sex, treatment arm, or age group). 
+While appropriate when group boundaries are theoretically meaningful, this assumption is often at odds with the continuous nature of important sources of measurement heterogeneity, such as age, and their relationship to measurement parameters is rarely known in advance.
 Conventional approaches represent heterogeneity through predefined groups, e.g., sex, treatment arm, or age group, across which measurement parameters are constrained and compared. 
 This works well when group boundaries are theoretically meaningful, but many of the most important candidate sources of measurement heterogeneity, such as age, are continuous, and their relationship to measurement parameters is rarely known in advance. 
 <!-- Forcing a continuous variable into discrete categories requires often arbitrary cutoffs and can obscure exactly where and how measurement breaks down; assuming a particular functional form instead risks the opposite error, misrepresenting heterogeneity that does not follow that form. -- > this doubles nearly exactly with a part later -->
-This leaves researchers with a genuine methodological bind: how can measurement heterogeneity across a continuous covariate be detected and characterized without committing in advance to either discrete groups or a specific functional shape? 
-Two recent approaches, moderated nonlinear factor analysis (MNLFA) and Structural Equation Model trees (SEM trees), offer different answers to this question, and it is their comparative strengths and limitations that this paper investigates.
+This leaves researchers facing a dilemma: how can measurement heterogeneity across a continuous covariate be detected and characterized without committing to a specific functional form in advance or relying on an arbitrary cutoffs? 
+Two recent approaches, moderated nonlinear factor analysis (MNLFA) and Structural Equation Model trees (SEM trees), offer ways to incorporate continuous covariate into tests of measurement invariance, and it is their comparative strengths and limitations that this paper investigates.
 
 ## Classical Measurement Invariance Testing 
 
@@ -67,32 +76,31 @@ Structural equation models (SEMs) are a principled framework for defining latent
 Within a SEM, the measurement model specifies how latent factors relate to their manifest indicators, separating construct-related variance from measurement error and thereby providing a basis for evaluating measurement quality [@Bollen1989].
 
 Classical MI testing builds on this framework in a confirmatory way. 
-Researchers specify a measurement model, typically a confirmatory factor analysis (CFA), reflecting substantive hypotheses about the construct, then partition the sample by a categorical grouping variable and test increasingly restrictive equality constraints across groups. 
-This approach, multiple-group CFA (MGCFA), is the most widely used method for evaluating MI [e.g., @Cheung2002; @Putnick2016]. 
+Researchers specify a measurement model, typically a confirmatory factor analysis (CFA), reflecting substantive hypotheses about the construct of interest, then partition the sample by a categorical grouping variable and test increasingly restrictive equality constraints across groups. 
+This multiple-group CFA (MGCFA) approach is the most widely used method for evaluating MI [e.g., @Cheung2002; @Putnick2016]. 
 It proceeds testing through a hierarchy of invariance levels with increasingly stronger assumptions: _configural invariance_ (the same structural pattern holds in all groups), metric invariance (factor loadings are additionally equal, indicating that items relate to the construct with the same strength across groups), _scalar invariance_ (item intercepts are additionally equal, establishing a common scale unit and origin needed for comparing latent means) [@Little1997], and _residual_ or _strict invariance_ (residual variances are additionally equal, so that any remaining group differences reflect the construct rather than differential measurement error) [@Cheung2002; @Widaman1997]. 
-Which level is required depends on the inference being drawn, e.g., metric invariance is generally necessary for comparing latent means, whereas weaker forms may suffice for comparing correlations [@Putnick2016; @Little1997].
+The required level of invariance depends on the inference of interest, for example, comparing latent means generally requires scalar invariance, whereas comparing correlations may require only weaker forms [@Putnick2016; @Little1997].
 
-Because MGCFA tests invariance only with respect to a pre-specified grouping variable, it is well suited to settings with theoretically meaningful discrete distinctions, e.g. a set of treatment conditions, demographic categories, or discrete measurement occasions.
-It is less well suited to characteristics that vary continuously, such as age. 
-Forcing these into predefined groups requires arbitrary cutoffs that are hard to justify and can obscure both _where_ <!-- with here--> non-invariance occurs and _how_ measurement parameters actually vary along the underlying continuum. 
-Methods that can represent such heterogeneity without requiring either discrete groups or a prespecified functional form are therefore much needed.
+Because MGCFA tests invariance across predefined groups, it is well suited to settings with theoretically meaningful categorical distinctions, such as treatment conditions, demographic categories, or discrete measurement occasions.
+It  is less suitable for continuous variables such as age, where imposing arbitrary cutoffs can obscure both the location and the pattern of measurement non-invariance along the underlying continuum. 
+This highlights the need for methods that can capture such heterogeneity without relying on predefined groups or prespecified functional forms.
 
 ## Moderated Nonlinear Factor Analysis 
 
-MNLFA meets this requirement by modeling factor loadings, intercepts, and other measurement parameters as functions of observed covariates, including continuous characteristics [@Bauer2009; @Bauer2017]. 
-In this way, MNLFA extends conventional group-based invariance testing by representing measurement heterogeneity without imposing arbitrary group boundaries.
+MNLFA meets the need to include continuous moderators by modeling factor loadings, intercepts, and other measurement parameters as functions of observed covariates, including continuous characteristics [@Bauer2009; @Bauer2017]. 
+MNLFA extends conventional group-based invariance testing by representing measurement heterogeneity without imposing arbitrary group boundaries.
 MNI is conceptualized as moderation of the measurement model itself by variables exogenous to the model. 
-If measurement parameters differ as a function of these moderator variables, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
+If measurement parameters are found to differ as a function of these moderator variables, the measurement model no longer operates equivalently across individuals and therefore violates MI [@Bauer2017; @Kolbe2024].
 
 Hence, whether MI is present depends on which parameters are moderated by the exogenous variables. 
 The exogenous variables may moderate any subset of the parameters in the measurement model and structural model. 
 Specifically, the means, variances, and covariance of latent factors, as well as the item intercepts, factor loadings, and residual variances of any manifest indicator, may vary systematically across individuals as deterministic functions of the exogenous variable [@Bauer2009; @Bauer2017]. 
-If moderation is limited to the latent-factor parameters, that is, the means, variances, and covariance, the model remains consistent with MI. 
-In contrast, moderation of item-level parameters, including intercepts, loadings, or residual variances, constitutes MNI [@Bauer2017; @Kolbe2024]. 
+If moderation is limited to the parameters of the structural model, that is, the means, variances, and covariance, the model remains consistent with the assumption of MI. 
+In contrast, moderation of parameters of the measurement models, including intercepts, loadings, or residual variances, constitutes MNI [@Bauer2017; @Kolbe2024]. 
 Accordingly, a moderation function must be specified for each parameter that is allowed to vary as a function of the exogenous variable. 
 Because of this conceptualization,this method allows researchers to model gradual, nonlinear, and individual-specific forms of MNI that are difficult to represent within traditional multiple-group approaches [@Bauer2009; @Kolbe2024]. 
 
-This increased flexibility comes at the cost of greater specification requirements. 
+This increased flexibility comes at the cost of more demanding specification requirements. 
 Like MGCFA, MNLFA constitutes a confirmatory approach to the assessment of MI [@Bauer2017]. 
 In practice, at least three sets of decisions are required. 
 First, the measurement model must be specified, including the latent structure and the relationships between latent and observed variables. 
@@ -107,41 +115,39 @@ Such settings motivate methods that can explore parameter heterogeneity without 
 ## Structural Equation Model Trees 
 
 SEM trees were originally introduced by @Brandmaier2013 as a method for identifying important covariates  and their interactions within SEMs to explain heterogeneity, e.g. by identifying moderators of model parameters in a SEM. 
-Subsequent developments further refined the methodology and expanded its applicability [@Arnold2021; @Brandmaier2016]. 
+Subsequent developments further improved the methodology and expanded its applicability [@Arnold2021; @Brandmaier2016]. 
 
-Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for explaining heterogeneity.
+Notably, SEM Trees were not developed as a dedicated methods to investigate MI but as a generic strategy for exploring heterogeneity.
 Because violations of MI manifest as systematic heterogeneity in parameters of the measurement model, SEM trees are by design well suited for detecting such effects.
-Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI [@finch2017structural; @sajobi2026tree]. 
+Even though SEM trees have received relatively little attention as tools for detecting MNI in general, some researchers have already used SEM Trees as a successful heuristic to investigate MI in confirmatory factor models [@finch2017structural; @sajobi2026tree] and @Sterner2023 proposed an extension to investigate MI in exploratory factor analytical models. 
 
 SEM trees merge two paradigms: SEMs and decision trees. 
-Decision trees describe recursive partitions of the covariate space, whereby the sample is repeatedly split according to covariate values into progressively more homogeneous subsets, in order to maximize differences in a given outcome variable.
-SEM trees combine the hierarchical structure of decision trees with SEMs, so that they describe heterogeneity in data with respect to a specified SEM as targeted outcome structure. 
-Unlike many other tree-based methods, SEM trees can be applied to models that include latent variables. 
+Decision trees recursively partition the sample based on covariate values, creating increasingly homogeneous subgroups that differ with respect to a target outcome.
+SEM trees extend this principle to SEMs, identifying subgroups that differ in the parameters of a specified model. 
+Unlike many other tree-based methods, SEM trees can accommodate models with latent variables.. 
 
-In contrast to MGCFA and MNLFA, SEM trees represent a rather exploratory approach to the assessment of MI. 
+Unlike MGCFA and MNLFA, SEM trees offer a more exploratory approach to the assessment of MI. 
 Similar to these methods though, SEM trees require the researcher to specify a measurement model a priori.
-Beyond this, however, the researcher only needs to provide a set of candidate variables that may account for heterogeneity in the data. 
+Other than that, researchers only need to provide a set of candidate variables that may account for heterogeneity in the data. 
 These variables may be numerous and can be either categorical or continuous.   
 Similar to MGCFA, researchers first specify a measurement model and identify variables that may account for heterogeneity. 
 The crucial difference is that MGCFA requires the researcher to select a specific categorical grouping variable, whereas SEM trees can evaluate a large set of candidate variables simultaneously and determine which, if any, are associated with violations of MI. 
-Moreover, SEM trees can accommodate heterogeneity generated by nonlinear forms of moderation without requiring the functional form to be specified parametrically, by representing such heterogeneity through recursive partitioning.
-
-Hence, SEM trees combine a theory-driven measurement model with a data-driven search for heterogeneity. 
-This makes them especially valuable when researchers have a well-established measurement model but little prior knowledge about where MNI may arise or what form it may take. 
-Because the decision structure closely resembles familiar MGCFA practice, SEM trees represent a comparatively accessible extension to conventional MI analysis.
+Moreover, SEM trees can accommodate heterogeneity generated by nonlinear forms of moderation without requiring the functional form to be specified parametrically. 
+They do so by approximating non-linearity with the recursive splits into sub groups. 
 
 ## Present Study 
 
-MGCFA, MNLFA, and SEM trees represent measurement heterogeneity differently. 
-MGCFA captures it as differences between predefined groups. 
-When heterogeneity instead depends on a continuous covariate $z$, the problem becomes modeling a measurement parameter $\theta$ as a function $\theta(z)$: MNLFA specifies this function parametrically, whereas SEM trees approximate it through a data-driven, piecewise linear approximation.
+The present simulation investigates how differences between MNLFA and SEM trees affect their ability to detect and correctly identify the level of MNI associated with continuous moderators.
+Although their methodological properties suggest differences in their sensitivity to different forms of parameter heterogeneity, it remains unclear how pronounced these differences are under varying data-generating conditions.
+In particular, detecting systematic parameter heterogeneity may not necessarily require accurately representing its underlying functional form.
+Moreover, detecting MNI does not guarantee that the method correctly identifies whether heterogeneity affects factor loadings or item intercepts.
 
-The present simulation examines the consequences of this difference for detecting MNI, comparing MNLFA and SEM trees when the true $\theta(z)$ relationship is linear, quadratic, or sigmoidal, and varying the magnitude of heterogeneity and sample size. 
-Three aspects of performance are addressed: whether each method detects MNI at all; how detection depends on the functional form of $\theta(z)$; and, since loading and intercept heterogeneity are introduced separately, whether each method correctly localizes MNI to the metric or scalar level.
+To investigate these questions, we compare linear MNLFA, quadratic MNLFA, and SEM trees under linear, quadratic, and sigmoidal moderation, systematically varying the magnitude of heterogeneity, sample size, and the measurement parameters affected.
+The primary comparison provides SEM trees with the relevant moderators, allowing us to examine detection performance independently of candidate-variable selection.
+In a separate robustness analysis, we additionally investigate whether SEM trees can detect metric MNI and identify the relevant moderator when ten irrelevant candidate partitioning variables are included.
 
-We expect SEM trees to hold an advantage under nonlinear, especially sigmoidal, moderation, with this advantage shrinking under purely linear moderation, which is typically more difficult to represent well in the recursive partitioning paradigm. 
-MNLFA, conversely, should perform best when its specified functional form is correct — particularly under linear moderation — but be more sensitive to misspecification. 
-For both methods, stronger moderation effects and larger sample sizes should improve detectability.
+We expect MNLFA detection performance to depend on the correspondence between the specified and true functional forms, whereas SEM trees may be less sensitive to differences in the underlying moderation function.
+For both approaches, we generally expect greater statistical power with increasing sample size and stronger moderation effects.
 
 We complement the simulation with an empirical illustration using CASP-12 quality-of-life data from Wave 9 of the Survey of Health, Ageing and Retirement in Europe [@SHAREwave9; @BorratBesson2015; @Wiggins2008], motivated by @BonnevilleRoussy2024's group-based analysis of CASP-12 invariance across age, gender, and cultural region. 
 Age offers a natural comparison case: MGCFA requires discretizing it into groups, whereas MNLFA and SEM trees can treat it as continuous, avoiding arbitrary categorization.
@@ -152,22 +158,22 @@ We close with an integrative discussion of the simulation and empirical findings
 
 ## Method 
 
-To compare MNLFA and SEM trees under conditions where the true relationship between a continuous covariate and measurement parameters is known, we ran a Monte Carlo simulation study. 
-Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts were made to depend on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
+To compare MNLFA and SEM trees under conditions where the true relationship between a continuous covariate and measurement parameters is known, we conducted a Monte Carlo simulation study. 
+Data were generated from a single-factor measurement model in which factor loadings and/or item intercepts depended on a continuous moderator through one of several functional forms (linear, quadratic, sigmoidal, or none). 
 We systematically varied the functional form of moderation, the parameter class affected (loadings, intercepts, or both), the magnitude of moderation, sample size, and analysis method. 
-For each combination of these design factors, a separate dataset was generated and analyzed using the corresponding method: linear MNLFA, quadratic MNLFA, or SEM trees. 
-Thus, conditions differing only in analysis method were based on independently generated datasets under otherwise identical data-generating conditions. 
-This design allowed us to evaluate, under fully controlled conditions, whether each method detected the presence of MNI, how detection was affected by a match or mismatch between the true and assumed functional form, and whether each method correctly localized detected heterogeneity to the metric or scalar level. 
+For each simulation condition, datasets were independently generated for the three analysis methods: linear MNLFA, quadratic MNLFA, and SEM trees. 
+Here, linear MNLFA refers to an MNLFA specification including a linear moderator term, whereas quadratic MNLFA includes a squared moderator term, allowing for quadratic relationships between the moderator and measurement parameters.
+Consequently, method performance was compared at the simulation-condition level rather than through paired replication-level comparisons. 
+This design allowed us to evaluate, under controlled conditions, whether each method detected MNI, how detection depended on the correspondence between the true and assumed functional forms, and whether each method correctly identified MNI at the metric or scalar level. 
 
 ### Model Specification
 
-In the CFA, baseline factor loadings were fixed to $\lambda = 0.70$, baseline intercepts were fixed to one, and the latent factor variance was fixed to one. 
-
+In the CFA, consistent with parameter ranges examined in previous simulation studies [e.g. @Wolf2013; @Jak2026], baseline factor loadings were fixed to $\lambda = 0.70$, baseline intercepts were fixed to one, and the latent factor variance was fixed to one. 
 Residual variances were fixed such that indicator reliability equaled $\rho = .75.$ at the baseline factor loading of $\lambda=.70$. 
 Because residual variances were held constant while loadings varied under loading moderation, conditional indicator reliability varied accordingly in conditions with metric noninvariance. 
 MNI was introduced by allowing selected factor loadings and/or item intercepts to depend on the moderator.
 
-Nine population models were investigated.
+Nine population models were investigated that differed in how many item intercepts and how many loadings were moderated (including a model of no moderation at all).
 <!--
 | Model | Loading moderation | Intercept moderation |
 |-------|--------------------|----------------------|
@@ -191,8 +197,8 @@ models <- data.frame(
     "L2I0",
     "L0I2",
     "L2I2",
-    "1.3",
-    "1.32"
+    "LAI0\\_2MInt",
+    "LAIA\\_2MSep"
   ),
   `Loading moderation` = c(
     "none",
@@ -239,6 +245,9 @@ cat("\\footnotesize\n")
 cat("\\item \\textit{Note.} L = loading; I = intercept; ")
 cat("0 = no moderation; 2 = moderation of items 1--2; ")
 cat("A = moderation of all items.\n")
+cat("2MInt = two moderators with an interaction effect; ")
+cat("2MSep = two moderators affecting separate parameter classes ")
+cat("($M_1$ for loadings and $M_2$ for intercepts).\n")
 cat("\\end{tablenotes}\n")
 cat("\n\\vspace{0.4em}\n")
 cat("\\end{threeparttable}\n")
@@ -279,6 +288,7 @@ This transformation captures symmetric nonlinear moderation as a function of dis
    $$
    h(M) = 0
    $$
+This represents a baseline condition, in which there is no informative moderation. 
 
 These functions were selected to represent qualitatively different forms of heterogeneity. 
 The first three functions represented structured forms of moderation, whereas the null condition represented the absence of systematic moderation. 
@@ -371,10 +381,10 @@ fig_plot
 
 ## Simulation design
 
-The simulation followed a fully crossed factorial design, combining data-generating conditions with analysis method. 
-Data-generating conditions varied the population measurement model (whether and which parameters, that is, loadings, intercepts, or both, were subject to moderation), the functional form of that moderation (linear, quadratic, sigmoidal, or null), the magnitude of loading and intercept moderation, and sample size.
+The simulation employed a fully crossed factorial design in which each data-generating condition was evaluated using all three analysis methods.
+Data-generating conditions varied the population measurement model (how many loadings or intercepts, or both, were subject to moderation), the functional form of that moderation (linear, quadratic, sigmoidal, or null), the magnitude of loading and intercept moderation, and sample size.
 For each combination of data-generating conditions and analysis method, a separate dataset was generated and analyzed using the method specified for that condition, linear MNLFA, quadratic MNLFA, or SEM trees. 
-To keep track of the different population models, we introduced a four-letter coding scheme (see table \ref{tab:coding-scheme}). 
+To keep track of the different population models, we introduced a four-letter coding scheme (see Table \ref{tab:coding-scheme}). 
 Each code first indicates whether factor loadings were moderated, no loading moderation is denoted L0, moderation of two of the four loadings as L2, and moderation of all four loadings as LA. 
 The code then indicates whether item intercepts were moderated, following the same logic: no intercept moderation is denoted I0, moderation of two of the four intercepts as I2, and moderation of all four intercepts as IA. 
 For example, a population model in which all loadings but no intercepts were moderated is denoted LAI0.
@@ -395,7 +405,7 @@ simulation_design <- data.frame(
     "Analysis method"
   ),
   Levels = c(
-    "L0I0, LAI0, L0IA, LAIA, L2I0, L0I2, L2I2, 1.3, 1.32",
+    "L0I0, LAI0, L0IA, LAIA, L2I0, L0I2, L2I2, LAI0\\_2MInt, LAIA\\_2MSep",
     "Linear, quadratic, sigmoid, null/no moderation",
     "$\\delta_\\lambda \\in \\{0.20, 0.30\\}$",
     "$\\delta_\\nu \\in \\{0.50, 1.00\\}$",
@@ -413,16 +423,18 @@ cat("\\begin{threeparttable}\n")
 
 cat("\\caption{Overview of the simulation design.\\label{tab:simulation_design}}\n")
 
+
 cat(
   knitr::kable(
     simulation_design,
     format = "latex",
     booktabs = TRUE,
     escape = FALSE,
-    align = c("l", "l"),
+    align = c("l", "p{8cm}"),
     caption = NULL
   )
 )
+
 
 cat("\n\\begin{tablenotes}[flushleft]\n")
 cat("\\footnotesize\n")
@@ -444,11 +456,11 @@ cat("\\end{table}\n")
 
 ### Primary and exploratory simulation conditions
 
-Accounting for the applicability of the manipulated factors across population models and functional forms, the simulation design comprised 508 distinct data-generating cells. 
-Each condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees across 100 replications, yielding 152,400 primary analyses. 
+The simulation design comprised 508 distinct conditions.
+Each condition was evaluated using linear MNLFA, quadratic MNLFA, and SEM trees across 100 replications each.
 
 Inspection of the primary results indicated that several conditions yielded near-ceiling detection rates, limiting differentiation between methods at the preregistered effect sizes. 
-Exploratory analyses therefore additionally examined smaller moderation effects $(\delta_\lambda=.10, \delta_\nu=.25)$. 
+Thus, we added exploratory analyses to examine smaller moderation effect sizes $(\delta_\lambda=.10, \delta_\nu=.25)$. 
 
 In the primary method comparison, the relevant data-generating moderator or moderators were supplied to the SEM trees as candidate partitioning variables. 
 Thus, the comparison focused on how the methods represent moderator-related parameter heterogeneity. 
@@ -458,7 +470,7 @@ Candidate-variable selection was examined separately in a robustness analysis.
 
 The simulated population conditions were evaluated using two parametrically specified MNLFA analyses, linear MNLFA and quadratic MNLFA, as well as score-based SEM trees. 
 All analyses were based on a single-factor measurement model with four continuous indicators $x_1,\ldots,x_4$ and one latent factor $\eta$. 
-The MNLFA analyses evaluated metric and scalar MNI through nested likelihood-ratio tests, whereas the SEM-tree analyses used separate score-based parameter-instability tests focused on factor loadings and item intercepts.
+The MNLFA analyses evaluated metric and scalar MNI through sequential likelihood-ratio tests, whereas the SEM-tree analyses used separate score-based parameter-instability tests focused on factor loadings and item intercepts.
 
 ### MNLFA
 
@@ -521,10 +533,11 @@ The resulting likelihood-ratio test^[The degrees-of-freedom of the test correspo
 Scalar MNI was evaluated by comparing the metric-invariance model with a scalar-invariant model in which moderator effects on item intercepts were additionally constrained to zero.
 Residual-variance moderation remained freely estimated. 
 The scalar likelihood-ratio test therefore evaluated the joint null hypothesis of no moderator-related intercept variation conditional on loading moderation having been constrained to zero. 
-An additional omnibus comparison between the unrestricted and scalar-invariance models tested the joint removal of loading and intercept moderation. 
+An additional omnibus comparison between the unrestricted and scalar-invariance models tested the joint removal of loading and intercept moderation [vgl. @Kolbe2024]. 
 All likelihood-ratio tests used $\alpha=.05$.
 
-The linear and quadratic MNLFA specifications differed only in the transformation $g(\cdot)$ applied to the raw moderators. Linear MNLFA used $g(M)=M$, whereas quadratic MNLFA used $g(M)=2M^2-1$. 
+The linear and quadratic MNLFA specifications differed only in the transformation $g(\cdot)$ applied to the raw moderators. 
+Linear MNLFA used $g(M)=M$, whereas quadratic MNLFA used $g(M)=2M^2-1$. 
 Thus, quadratic MNLFA did not represent a conventional polynomial model containing both linear and squared moderator terms; rather, the quadratically transformed moderators entered otherwise identical moderation equations.
 
 The analytical functional form was correctly specified when $g(\cdot)=h(\cdot)$. 
@@ -545,13 +558,15 @@ In the *scalar tree*, the four item-intercept parameters $\nu_1,\ldots,\nu_4$ we
 Importantly, focus parameters determined which parameter scores entered the instability test; non-focused free parameters were allowed to vary between groups but did not contribute to the split evaluation.
 Thus, item intercepts and residual variances remained free parameters of the CFA underlying the loading-focused tree, whereas factor loadings and residual variances remained free parameters of the CFA underlying the intercept-focused tree. 
 The metric and scalar SEM trees therefore constituted separate parameter-focused instability analyses rather than a sequence of CFA models in which increasingly restrictive equality constraints were imposed on the complete measurement model. 
-This implementation detail is particularly relevant for interpreting cross-level rejection, because instability detected by a loading-focused or intercept-focused test need not imply that heterogeneity is confined exclusively to the corresponding parameter class.
+Accordingly, the two analyses differed in the parameter classes targeted by their instability tests, rather than in the imposition of successive measurement-invariance constraints. 
 
 Recursive partitioning used score-based parameter-instability tests with $\alpha=.05$, Bonferroni adjustment for multiple testing, a maximum tree depth of three, and a minimum node size of 50.
 
-In the primary comparison, SEM trees were supplied with the relevant raw data-generating moderator $M_1$, or moderators $M_1$ and $M_2$, as candidate partitioning variables. 
-Unlike MNLFA, the SEM-tree analyses were therefore not supplied with the transformed moderators $Z^{(d)}=h(M)$. 
-Under quadratic and sigmoid data-generating conditions, the tree instead had to represent the resulting parameter heterogeneity through recursive partitions of the original moderator space $M$.
+In the primary comparison, SEM trees were supplied with the relevant raw moderator $M_1$, or moderators $M_1$ and $M_2$, as candidate partitioning variables. 
+The candidate-variable specification remained unchanged across functional forms within each population model, whereas the true relationships between the moderators and measurement parameters varied according to the data-generating transformation $Z=h(M)$. 
+SEM trees therefore approximated the resulting parameter heterogeneity through recursive partitioning of the original moderator space. 
+In contrast, linear and quadratic MNLFA modeled parameter heterogeneity using prespecified moderator transformations $g(M)=M$ and $g(M)=2M^2-1$, respectively, which did not necessarily correspond to the true data-generating transformation $h(M)$. 
+Neither MNLFA specification matched the true functional form under sigmoid moderation.
 
 Candidate-variable selection was examined separately in a robustness analysis. 
 In this condition, the true raw moderator $M_1$ was supplemented with ten independent irrelevant predictors, each generated independently from a uniform distribution on $(-1,1)$. 
@@ -568,37 +583,25 @@ For each population model and simulation condition, the following performance me
 
 **Statistical power:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level when the respective form of MNI was present in the data-generating model. 
  
-**Complete-null rejection:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level under complete MI, when neither loading nor intercept MNI was present. 
+**Global correct rejection:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level under complete MI, when neither loading nor intercept MNI was present. 
  
-**Level-specific rejection:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level when that form of MNI was absent, but MNI could be present at another level. 
+**Level-specific correct rejection:** The proportion of simulation replications in which the method rejected the null hypothesis of MI at the corresponding level when that form of MNI was absent, but MNI could be present at another level. 
 For example, metric rejection under scalar-only MNI was considered level-specific rejection rather than rejection under complete MI.
 
-In addition, a *sequential classification* was derived using a metric-first decision rule, following traditional approaches to MI testing. 
-If the metric test rejected, the replication was classified as metric MNI; if the metric test did not reject but the scalar test rejected, it was classified as scalar MNI; if neither test rejected, invariance was retained. 
-In the primary comparison, SEM trees were supplied only with the true moderator variables. 
-Consequently, statistical power and rejection rates reflect the ability to detect MNI independent of moderator selection.
+In addition, we evaluated the behavior of a sequential decision rule for SEM trees that mirrors traditional MI testing. 
+If the metric test rejected the H0, the model was classified as metric MNI. 
+If it did not reject but the subsequent scalar test did, the replication was classified as scalar MNI. 
+If neither test rejected its H0, MI was concluded. 
+In the primary comparison, SEM trees received only the true moderator(s) as candidate partitioning variables, so power and rejection rates reflect the ability to detect MNI independent of moderator selection.
 
 In the robustness analysis a simulation replication was considered successful only if the SEM tree both rejected the null hypothesis of parameter stability and selected the true moderator as a splitting variable. 
 This criterion therefore jointly evaluated the ability of SEM trees to detect MNI and to distinguish the informative moderator from irrelevant candidate predictors.
-
-## Exploratory Analysis 
-
-After seeing the first simulation results, recognizing that we obtained effects from a rather uninformative, or homogeneously informative space, we appended runs with smaller effect sizes for $\delta_{lambda}$ (.10) and $\delta_{nu}$ (.25). 
-The respective results are to be understood as exploratory results, diverging from the preregistrated delta values. 
-
-## Replications
-
-Each data-generating design cell was replicated 100 times. 
-The three analysis methods were evaluated in separate method-specific simulation runs. 
-Method-specific replications used independently seeded datasets, and performance was therefore compared at the simulation-condition level rather than through paired replication-level contrasts. 
-An additional 100 SEM-tree analyses were conducted for the multiple predictor robustness check.
 
 ## Transparency and Openness 
 
 All data generating code, analysis code, and research materials are available at [https://github.com/LeonieHagitte/SEMi]. 
 This study's design and its analysis were pre-registered, following the ADEMP preregistration template [@Siepe2024], at Zenodo (10.5281/zenodo.19891929).
 For the empirical example we used the ninth wave data of SHARE, which is not openly available, but can be requested for scientific use. 
-The questionnaires referred to are openly available online. 
 
 ### Software 
 
@@ -609,10 +612,31 @@ Simulation design construction, data handling, aggregation, and visualization di
 
 ## Results 
 
+```{r load-runtime-results, include=FALSE}
+library(dplyr)
+
+runtime_summary <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/runtime_summary.rds"
+)
+
+runtime_value <- function(method_name, statistic, digits = 1) {
+  value <- runtime_summary %>%
+    filter(method == method_name) %>%
+    pull(all_of(statistic))
+
+  if (length(value) != 1L || !is.finite(value)) {
+    stop("Missing or non-unique runtime result: ", method_name, " / ", statistic)
+  }
+
+  sprintf(paste0("%.", digits, "f"), value)
+}
+```
+
 Across 152,400 method-specific simulation runs, 42 (0.028%) did not yield evaluable metric or scalar test results.  
-This occurred in 8 of 50,800 MNLFA runs (0.016%) and 34 of 50,800 MNLFAQ runs (0.067%); all 50,800 SEM tree runs yielded evaluable test results.  
-Whenever results were unavailable, both metric and scalar test results were missing.  
-Rejection rates were calculated based on the number of evaluable replications within each condition, with all conditions comprising 100 attempted replications.
+This occurred in 8 of 50,800 MNLFA runs (0.016%) and 34 of 50,800 MNLFAQ runs (0.067%); all 50,800 SEM tree runs yielded evaluable test results.    
+Rejection rates were calculated based on the number of available replications within each condition, with all conditions comprising 100 attempted replications.
+
+Mean runtime was `r runtime_value("MNLFA", "mean_sec")` seconds (*SD* = `r runtime_value("MNLFA", "sd_sec")`) for linear MNLFA, `r runtime_value("MNLFAQ", "mean_sec")` seconds (*SD* = `r runtime_value("MNLFAQ", "sd_sec")`) for quadratic MNLFA, and `r runtime_value("SEMTREE", "mean_sec", 2)` seconds (*SD* = `r runtime_value("SEMTREE", "sd_sec", 2)`) for SEM trees. Additional runtime statistics are reported in Supplementary Table X. <!-- add table plus reference to supp-->
 
 Under complete MI (Model L0I0), rejection rates were generally close to the nominal \(\alpha=.05\) level. 
 This pattern was observed across the three methods and was comparatively stable across the examined sample sizes and moderator functional forms. 
@@ -638,10 +662,11 @@ Complete condition-specific rejection rates, including Monte Carlo standard erro
 \vspace{0.4em}
 \end{landscape}
 \clearpage
-Statistical power depended strongly on the correspondence between the functional form of MNI and the moderator specification used in MNLFA.
-Linear MNLFA generally showed greater sensitivity to linear and sigmoid heterogeneity than to quadratic heterogeneity. 
-Conversely, quadratic MNLFA performed particularly well under quadratic moderation, whereas its sensitivity under linear and sigmoid moderation was substantially lower in several conditions. 
-SEM trees showed comparatively consistent detection performance across moderator functional forms, although their power also varied with sample size, effect magnitude, and the population-model configuration. 
+
+Statistical power depended strongly on the correspondence between the true functional form of MNI and the moderator specification used in MNLFA. 
+Linear MNLFA generally showed greater power under linear and sigmoid moderation than under quadratic moderation. 
+Conversely, quadratic MNLFA performed particularly well under quadratic moderation, whereas its power under linear and sigmoid moderation was substantially lower in several conditions. 
+SEM trees showed comparatively consistent detection performance across moderator functional forms, although their power also varied with sample size, effect magnitude, and population-model configuration. 
 Figure \ref{fig:fig2} illustrates these patterns for metric-only noninvariance (Model LAI0) and scalar-only noninvariance (Model L0IA). <!-- ref -done -->
 
 Power generally increased with sample size, particularly for SEM trees, which often approached ceiling performance by $N=700$ or $N=1000$. 
@@ -649,7 +674,7 @@ However, increasing sample size did not compensate for functional-form mismatch 
 The linear specification remained weak under quadratic MNI even at larger sample sizes, whereas the quadratic specification remained weak under linear and sigmoid MNI. 
 Beyond functional form and sample size, power also varied across MNI configurations. 
 SEM tree metric power was consistently high across most population models but was comparatively lower for Model 1.32, in which loading and intercept noninvariance were induced by different moderators. <!-- ref suppl material -->
-The patterns shown in figure \ref{fig:fig2} represent selected population models and explicitly defined effect-size conditions. <!-- ref -done-->
+The patterns shown in Figure \ref{fig:fig2} represent selected population models and explicitly defined effect-size conditions. <!-- ref -done-->
 The complete results across population models, sample sizes, moderator forms, and confirmatory and exploratory effect magnitudes are reported in Supplementary Table S2. <!-- ref suppl material -->
 Thus, although SEM trees were generally robust across functional forms, their performance also depended on the specific configuration of MNI. 
 
@@ -667,7 +692,7 @@ fig3 <- readRDS(
 )
 ```
 
-```{r fig3, echo=FALSE, out.width="100%", warning=FALSE, message=FALSE, fig.align="center",fig.cap="Note. Metric-level rejection rates under complete MI (A) and scalar-only noninvariance (B), by moderator functional form and analysis method, at N = 1000 ($\\delta_\\lambda$ = 0.2. \\& $\\delta_\\nu$ = 0.5) The dashed horizontal line indicates the nominal significance level of $\\alpha = .05$. Elevated metric rejection under scalar-only noninvariance represents rejection of a true metric-invariance hypothesis in the presence of intercept heterogeneity."}
+```{r fig3, echo=FALSE, fig.width=14.0, fig.height=9, out.width="100%", warning=FALSE, message=FALSE, fig.align="center",fig.cap="Note. Metric-level rejection rates under complete MI (A) and scalar-only noninvariance (B), by moderator functional form and analysis method, at N = 1000 ($\\delta_\\lambda$ = 0.2. \\& $\\delta_\\nu$ = 0.5) The dashed horizontal line indicates the nominal significance level of $\\alpha = .05$. Elevated metric rejection under scalar-only noninvariance represents rejection of a true metric-invariance hypothesis in the presence of intercept heterogeneity."}
 
 library(patchwork)
 library(ggplot2)
@@ -677,7 +702,7 @@ fig0a2 <- fig0a +
   labs(title = "Complete invariance") +
   guides(shape = guide_legend(title = "Method")) +
   theme(
-    plot.title = element_text(face = "bold", size = 11, hjust = 0.5),
+    plot.title = element_text(face = "bold", size = 12, hjust = 0.5),
     legend.position = "bottom"
   )
 
@@ -689,7 +714,7 @@ fig3_2 <- fig3 +
     colour = guide_legend(title = "Population model")
   ) +
   theme(
-    plot.title = element_text(face = "bold", size = 11, hjust = 0.5),
+    plot.title = element_text(face = "bold", size = 12, hjust = 0.5),
     legend.position = "bottom"
   )
 
@@ -711,56 +736,147 @@ fig3_combined <- (
   theme(
     legend.position = "bottom",
     legend.box = "vertical",
-    legend.text = element_text(size = 9),
-    legend.title = element_text(size = 9)
+    legend.text = element_text(size = 11),
+    legend.title = element_text(size = 11)
   )
 
 fig3_combined
 ```
 
-\ref{fig:fig3} contrasts metric rejection under complete invariance with metric rejection in the presence of scalar-only noninvariance. 
+Figure \ref{fig:fig3} contrasts correct metric rejection under complete invariance with false metric rejection in the presence of scalar-only noninvariance. 
 Whereas rejection rates under complete invariance were generally near the nominal level, intercept heterogeneity could produce substantially elevated metric rejection rates. 
 This indicates cross-level sensitivity rather than complete-null Type I error and high sensitivity of the SEM tree metric test was accompanied by reduced specificity for the level of noninvariance when scalar MNI was present. 
 The elevated metric rejection rates in the presence of scalar MNI also varied with sample size and number of moderated intercepts. 
 In several conditions, particularly for SEM trees, metric rejection increased as sample size increased, potentially indicating that cross-level sensitivity became more pronounced with increasing statistical information. <!-- ref suppl material -->
 In contrast, scalar rejection rates when intercepts were invariant remained generally close to the nominal level across methods and functional forms, indicating considerably less cross-level rejection of scalar tests in the presence of loading MNI <!-- ref suppl material -->
 
+```{r sequential-numbers, include=FALSE}
+library(dplyr)
 
-```{r fig4-sequential, echo=FALSE, fig.width=11.69, fig.height=8.27, out.width="100%", fig.cap="Note. Correct classification rates under sequential metric-then-scalar invariance testing at $N = 1000$, by moderator functional form, effect magnitude, and method. Panels show complete invariance (A), metric-only noninvariance (B), and scalar-only noninvariance (C). Scalar testing was conducted sequentially only when metric invariance was retained. Under scalar-only noninvariance, elevated metric-level rejection rates therefore reduced the number of replications reaching scalar testing. At $N = 1000$ and $\\Delta_\\nu$ = 1.0, this proportion ranged from 4% to 88% for SEM trees and from 0% to 93% for quadratic MNLFA across moderator forms, compared with 94% to 95% for linear MNLFA.\\label{fig:fig4}"}
+classification_summary <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/classification_summary.rds"
+)
+
+sequential_pct <- function(method_name, truth_name,
+                           measure = "correct_rate") {
+
+  value <- classification_summary %>%
+    filter(
+      method == method_name,
+      truth_class == truth_name
+    ) %>%
+    pull(all_of(measure))
+
+  if (length(value) != 1L || is.na(value)) {
+    stop("Missing or non-unique sequential result: ",
+         method_name, " / ", truth_name)
+  }
+
+  sprintf("%.1f%%", 100 * value)
+}
+
+```
+
+```{r fig4-numbers, include=FALSE}
+library(dplyr)
+
+reach_summary <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/figure4_reach_summary.rds"
+)
+
+# Inspect exact labels before using them
+unique(reach_summary$moderator)
+unique(reach_summary$method)
+
+reach_values <- reach_summary %>%
+  filter(
+    condition == "Scalar-only MNI",
+    effect_value == 1.00
+  )
+
+reach_pct <- function(method_name, moderator_name) {
+  value <- reach_values %>%
+    filter(
+      as.character(method) == method_name,
+      as.character(moderator) == moderator_name
+    ) %>%
+    pull(rate)
+
+  if (length(value) != 1L || is.na(value)) {
+    stop("Missing or non-unique Figure 4 result: ",
+         method_name, " / ", moderator_name)
+  }
+
+  sprintf("%.0f%%", 100 * value)
+}
+```
+
+```{r fig4-sequential, echo=FALSE, fig.width=11.69, fig.height=8.27, out.width="100%", fig.cap="Note. Proportion of replications reaching the scalar stage of sequential metric-then-scalar invariance testing at N = 1000. Results are shown under metric-only (A) and scalar-only noninvariance (B), across moderator functional forms, effect magnitudes, and methods. A replication reached scalar testing only when the metric invariance test did not reject. Thus, lower proportions indicate more frequent termination at the metric stage. Error bars represent approximate 95% Monte Carlo confidence intervals.\\label{fig:fig4}"}
 fig4_combined <- readRDS("C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/figure4.rds")
 fig4_combined
 ```
 
 This finding has implications beyond the interpretation of individual invariance tests. 
-In a sequential testing procedure, rejection at the metric stage prevents subsequent evaluation of scalar invariance. <!-- Sequential classification performance was evaluated using a metric-first decision procedure. Replications were classified as showing metric noninvariance when the metric test rejected, scalar noninvariance when the metric test did not reject but the scalar test rejected, and retained invariance when neither test rejected. Correct classification therefore required identifying the appropriate level of noninvariance, rather than merely rejecting an invariance hypothesis. -->
+In a sequential testing procedure, rejection at the metric stage prevents subsequent evaluation of scalar invariance. 
+This cross-level sensitivity also affected the sequential classification of MNI. 
+SEM trees correctly classified metric-only MNI in `r sequential_pct("SEMTREE", "Metric only")` of evaluable replications and combined metric and scalar MNI in `r sequential_pct("SEMTREE", "Metric + scalar")`, but scalar-only MNI in `r sequential_pct("SEMTREE", "Scalar only")`, compared with `r sequential_pct("MNLFA", "Scalar only")` for linear MNLFA and `r sequential_pct("MNLFAQ", "Scalar only")` for quadratic MNLFA. 
+Under scalar-only MNI, erroneous rejection at the preceding metric stage occurred in `r sequential_pct("SEMTREE", "Scalar only", "metric_error_rate")` of SEM-tree replications, `r sequential_pct("MNLFA", "Scalar only", "metric_error_rate")` for linear MNLFA, and `r sequential_pct("MNLFAQ", "Scalar only", "metric_error_rate")` for quadratic MNLFA, preventing these cases from reaching scalar testing. 
+As illustrated in Figure 4, this effect varied substantially across moderator forms and effect magnitudes. 
 Consequently, elevated metric rejection under scalar-only noninvariance can lead to an incorrect final classification even when the method would otherwise be sensitive to intercept heterogeneity. 
 
-Figure \ref{fig:fig4} presents correct classification rates at ($N = 1000$) under complete invariance, metric-only noninvariance, and scalar-only noninvariance. <!-- ref -done-->
-Classification performance varied across methods, moderator functional forms, and  importantly, effect magnitudes. 
-Under scalar-only noninvariance, the results were particularly sensitive to the behavior of the preceding metric test, when the effect magnitude was highest. 
-The proportion of replications reaching the scalar stage provides a possible explanation for this pattern. 
-At $N = 1000$ ($\Delta_\lambda$ = 0.2, $\Delta_\nu$ = 1.0) linear MNLFA proceeded to scalar testing in 95%, 94%, and 94% of replications under linear, quadratic, and sigmoid moderation, respectively. 
-The corresponding proportions were 0%, 93%, and 45% for quadratic MNLFA and 4%, 22%, and 88% for SEM trees. 
+Figure \ref{fig:fig4} presents the proportion of replications reaching scalar testing at $N = 1,000$ under metric-only and scalar-only noninvariance. 
+This proportion varied across methods, moderator functional forms, and, importantly, effect magnitudes. 
+Under scalar-only noninvariance, the preceding metric test substantially limited progression to scalar testing in some conditions, particularly at larger effect magnitudes.
+At $N = 1,000$ ($\delta_\lambda = 0.2$, $\delta_\nu = 1.0$), linear MNLFA proceeded to scalar testing in `r reach_pct("MNLFA linear", "Linear")`, `r reach_pct("MNLFA linear", "Quadratic")`, and `r reach_pct("MNLFA linear", "Sigmoid")` of replications under linear, quadratic, and sigmoid moderation, respectively. 
+The corresponding proportions were `r reach_pct("MNLFA quadratic", "Linear")`, `r reach_pct("MNLFA quadratic", "Quadratic")`, and `r reach_pct("MNLFA quadratic", "Sigmoid")` for quadratic MNLFA and `r reach_pct("SEM Tree", "Linear")`, `r reach_pct("SEM Tree", "Quadratic")`, and `r reach_pct("SEM Tree", "Sigmoid")` for SEM trees.
 Thus, in several conditions, a substantial proportion of replications had already been incorrectly classified as exhibiting metric noninvariance, preventing the scalar test from being reached. 
-This distinction is essential when comparing level-specific power with the performance of the complete sequential procedure.
+This distinction is essential when comparing level-specific power with the performance of the complete sequential procedure. 
 Complete condition-specific probabilities of metric classification, scalar classification, retained invariance, and correct final classification are provided in Supplementary Table S3. <!-- ref suppl material --> 
 
-In the candidate-variable robustness analysis (1,000 replications), metric non invariance was detected in 79.1% of replications and the true moderator was identified in 77.4%. 
-The true moderator alone was selected in 68.2% of replications, while the true moderator and at least one noise variable were jointly selected in 9.2%. 
-Selection of noise variables in the absence of the true moderator occured in 1.7% of the cases. 
+```{r load-robustness-results, include=FALSE}
+robustness_summary <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/robustness_summary_1000.rds"
+)
+
+mnlfa_multiplicity <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/mnlfa_multiplicity.rds"
+)
+
+robustness_pct <- function(variable) {
+  value <- robustness_summary[[variable]]
+  stopifnot(length(value) == 1L, is.finite(value))
+  sprintf("%.1f", 100 * value)
+}
+
+multiplicity_pct <- function(variable) {
+  value <- mnlfa_multiplicity[[variable]]
+  stopifnot(length(value) == 1L, is.finite(value))
+  sprintf("%.1f", 100 * value)
+}
+```
+
+In the candidate-variable robustness analysis (`r format(robustness_summary$n, big.mark = ",")` replications), metric noninvariance was detected in `r robustness_pct("metric_rejection_rate")`% of replications, and the true moderator was identified in `r robustness_pct("successful_moderator_identification_rate")`%. 
+The true moderator alone was selected in `r robustness_pct("true_only_selected_rate")`% of replications, whereas the true moderator and at least one noise predictor were jointly selected in `r robustness_pct("true_and_noise_selected_rate")`%. 
+Noise predictors were selected without the true moderator in `r robustness_pct("noise_without_true_rate")`% of replications. 
+Overall, at least one noise predictor was selected in `r robustness_pct("any_noise_selected_rate")`% of replications.
+
+For comparison, the potential consequences of testing multiple candidate moderators in MNLFA were examined analytically. 
+Under the assumption of `r mnlfa_multiplicity$k` independent tests of true null hypotheses, each conducted at a nominal significance level of `r sprintf("%.2f", mnlfa_multiplicity$alpha)`, the probability of at least one false rejection is `r multiplicity_pct("fwer_independent")`%. 
+Applying a Bonferroni correction reduces the individual significance threshold to `r sprintf("%.3f", mnlfa_multiplicity$alpha_bonferroni)` and the corresponding family-wise error probability under independence to `r multiplicity_pct("fwer_independent_bonferroni")`%. 
+These theoretical probabilities illustrate the potential effects of multiple testing but do not represent empirically observed MNLFA error rates.
 
 # Illustrative Application: Quality of Life (CASP-12)
 
 We illustrate both approaches using CASP-12 data from Wave 9 of the Survey of Health, Ageing and Retirement in Europe (SHARE). 
-The CASP-12, a short form of the CASP-19 quality-of-life measure [@Hyde2003], comprises 12 items spanning four domains (Control, Autonomy, Self-Realization, and Pleasure) each measured by three items on a four-point scale (1 = Often to 4 = Never). 
-The SHARE version deviates from the standard 12-item form proposed by @Wiggins2008 in two items (A2, P3)^[SHARE replaces "I feel that I can please myself what I do" with an item on feeling hindered by family obligations (A2), and "I enjoy the things that I do" with an item on looking back on one's life with happiness (P3).]
+The CASP-12, a short form of the CASP-19 quality-of-life measure [@Hyde2003], comprises 12 items spanning four domains (Control, Autonomy, Self-Realization, and Pleasure) each measured by three items on a four-point scale (1 = Often to 4 = Never).
+The SHARE version deviates from the standard 12-item form proposed by @Wiggins2008 in two items (A2, P3; @BorratBesson2015)^[SHARE replaces "I feel that I can please myself what I do" with an item on feeling hindered by family obligations (A2), and "I enjoy the things that I do" with an item on looking back on one's life with happiness (P3).]
 Positively worded items were reverse-scored so that higher values consistently indicated better quality of life; items were treated as continuous indicators, so scalar parameters correspond to item intercepts.
 
-Following @BonnevilleRoussy2024, we considered age (continuous), gender (dichotomous), and cultural region (Nordic, Western, Southern, Eastern Europe; Western as reference) simultaneously as candidate sources of measurement heterogeneity.
-Gender was coded as 0 = male and 1 = female, and Western Europe served as the reference category for cultural region in the MNLFA analyses.
+Following @BonnevilleRoussy2024, who investigated wave two and seven of the SHARE data, we considered age (continuous), gender (male/female), and cultural region (Nordic, Western, Southern, Eastern Europe; Western as reference) simultaneously as candidate sources of measurement heterogeneity.
+Gender  and cultural region were dummy-coded with with _male_ as reference category for gender and Western Europe as reference category for cultural region in the MNLFA analyses.
 
 Both analyses used the first item of each factor (C1, A1, P1, S1) as anchors, with loadings fixed to 1 and intercepts and moderation effects fixed to 0, so that MNI was tested for the remaining eight items conditional on anchor invariance. 
-In the MNLFA, the loadings, intercepts, and residual variances of the eight non-anchor items were allowed to vary with all three covariates; latent means were likewise freely moderated across the metric and scalar models, separating covariate-related mean differences from intercept moderation, while the latent covariance matrix was estimated but held constant. 
+In the MNLFA, factor loadings, item intercepts, and residual variances for all eight non-anchor items were allowed to vary as functions of the three covariates. In both the metric and scalar models, latent means were also allowed to depend on these covariates, enabling the model to distinguish covariate-related differences in the latent constructs from differential item functioning (DIF) reflected in item intercepts. The latent covariance matrix was freely estimated but constrained to remain constant across covariate values.
 The SEM-tree analyses estimated separate loading- and intercept-focused trees on the same eight non-anchor items, with age, gender, and cultural region supplied jointly as candidate partitioning variables and the anchor items excluded from the focal parameters. As in the simulation, score-based tests used $\alpha = .05$ with Bonferroni adjustment and a maximum depth of three, but with a minimum node size of 100. 
 A SEM forest [@Brandmaier2016] was additionally estimated to obtain partial dependence plots approximating the functional form of moderator-related parameter variation.
 
@@ -800,8 +916,9 @@ cfa_stats <- fitMeasures(
 cfa_loadings <- standardizedSolution(fit_casp_wlsmv)
 ```
 
-First, we performed a CFA, using WLSMV as estimator, to assess global model fit.
+First, we performed a CFA, using Weighted Least Squares Mean and Variance (WLSMV) as estimator, to assess global model fit.
 The simple CFA model for CASP-12 ($X^2$ = `r fmt(cfa_stats["chisq"], 2)`; $df$ = `r cfa_stats["df"]`) <!--21508.260; *df* = 48)--> showed acceptable fit indices with CFI = `r fmt(cfa_stats["cfi"], 2)`, TLI = `r fmt(cfa_stats["tli"], 2)`, RMSEA = `r fmt(cfa_stats["rmsea"], 3)` [`r fmt(cfa_stats["rmsea.ci.lower"], 3)`–`r fmt(cfa_stats["rmsea.ci.upper"], 3)`], and SRMR = `r fmt(cfa_stats["srmr"], 2)`. 
+Here, for model identification, latent factor variances were fixed to one, allowing all factor loadings to be freely estimated.
 The loadings onto the items were generally high only the factor *Autonomy* showed lower loadings onto its items A1 ($\lambda_{A1}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A1"], 2)`), A2 ($\lambda_{A2}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A2"], 2)`), and A3 ($\lambda_{A3}$ = `r fmt(cfa_loadings$est.std[cfa_loadings$op == "=~" & cfa_loadings$rhs == "A3"], 2)`). 
 Full results can be found in the Appendix table <!-- X TODO-->. 
 
@@ -877,9 +994,9 @@ gender_intercept <- gender_summary %>%
 ```
 
 The unrestricted model provided the best relative fit (-2LL = `r fmt(unrestricted$minus2LL,0)`, AIC = `r fmt(unrestricted$AIC,0)`, BIC = `r fmt(unrestricted$BIC,0)`).  
-Constraining loading-moderation effects to zero resulted in a significant deterioration in model fit relative to the unrestricted model $\Delta\chi^2$(`r metric_test$df`) = `r fmt(metric_test$Chisq,2)`, p`r fmt_p(metric_test$p)`, accompanied by increases in AIC = `r fmt(metric$AIC,0)` and BIC = `r fmt(metric$BIC,0)`. 
+Constraining loading-moderation effects to zero resulted in a significant reduction in model fit relative to the unrestricted model $\Delta\chi^2$(`r metric_test$df`) = `r fmt(metric_test$Chisq,2)`, p`r fmt_p(metric_test$p)`, accompanied by increases in AIC = `r fmt(metric$AIC,0)` and BIC = `r fmt(metric$BIC,0)`. 
 Thus, metric invariance was not supported. 
-Subsequently constraining intercept-moderation effects to zero resulted in a further significant deterioration in fit $\Delta\chi^2$(`r scalar_test$df`) = `r fmt(scalar_test$Chisq,2)`, p`r fmt_p(scalar_test$p)`, with AIC = `r fmt(scalar$AIC,0)` and BIC = `r fmt(scalar$BIC,0)`(see Table \ref{tab:mnlfa-fit}). <!-- Ref done-->
+Subsequently constraining intercept-moderation effects to zero resulted in a further significant reduction in fit $\Delta\chi^2$(`r scalar_test$df`) = `r fmt(scalar_test$Chisq,2)`, p`r fmt_p(scalar_test$p)`, with AIC = `r fmt(scalar$AIC,0)` and BIC = `r fmt(scalar$BIC,0)`(see Table \ref{tab:mnlfa-fit}). <!-- Ref done-->
 
 ```{r mnlfa-model-comparison-table, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
 library(dplyr)
@@ -985,30 +1102,47 @@ library(knitr)
 mnlfa_coef_table <- coef %>%
   filter(type %in% c("Loading", "Intercept")) %>%
   mutate(
-    estimate_fmt = sprintf("%.3f", estimate)
+    ci_lower = estimate - qnorm(0.975) * se,
+    ci_upper = estimate + qnorm(0.975) * se,
+    estimate_fmt = sprintf(
+      "\\shortstack{%.3f \\\\ {\\scriptsize [%.3f, %.3f]}}",
+      estimate, ci_lower, ci_upper
+    )
   ) %>%
   select(type, item, moderator, estimate_fmt) %>%
   pivot_wider(
     names_from = moderator,
     values_from = estimate_fmt
   ) %>%
+  select(
+    type, item,
+    Age, Female, Nordic, Southern, Eastern
+  ) %>%
   arrange(
     factor(type, levels = c("Loading", "Intercept")),
     item
+  ) %>%
+  rename(
+    Type = type,
+    Item = item
   )
 
 cat("\\begin{table}[htbp]\n")
 cat("\\centering\n")
 cat("\\begin{threeparttable}\n")
-cat("\\caption{Item-Level MNLFA Moderation Coefficients}\n\\label{tab:mnlfa-coefficients}")
+cat("\\caption{Item-Level MNLFA Moderation Coefficients}\n")
+cat("\\label{tab:mnlfa-coefficients}\n")
+
+cat("\\small\n")
+cat("\\setlength{\\tabcolsep}{4pt}\n")
 
 cat(
   knitr::kable(
     mnlfa_coef_table,
     format = "latex",
     booktabs = TRUE,
-    escape = TRUE,
-    align = c("l", "l", rep("r", ncol(mnlfa_coef_table) - 2)),
+    escape = FALSE,
+    align = c("l", "l", rep("c", ncol(mnlfa_coef_table) - 2)),
     na = "--"
   )
 )
@@ -1016,12 +1150,11 @@ cat(
 cat("\n\\begin{tablenotes}[flushleft]\n")
 cat("\\footnotesize\n")
 cat("\\item \\textit{Note.} ")
-cat("Entries are unstandardized moderation coefficients. ")
+cat("Entries are unstandardized moderation coefficients with 95\\% Wald confidence intervals. ")
 cat("The Western European cultural cluster and male respondents serve as reference groups. ")
 cat("Age coefficients refer to the age scale used in model estimation. ")
 cat("Dashes indicate parameters that were not estimated or were constrained for identification.\n")
 cat("\\end{tablenotes}\n")
-cat("\n\\vspace{0.4em}\n")
 cat("\\end{threeparttable}\n")
 cat("\\end{table}\n")
 ```
@@ -1206,9 +1339,9 @@ metric_age_right <- age_mean + metric_age_right_z * age_sd
 ``` 
 
 The baseline four-factor model used for the SEM tree analyses converged successfully ($N$ = `r fmt(baseline_N, 0)`, `r baseline_npar` free parameters, (-2LL) = `r fmt(baseline_minus2LL, 0)`, AIC = `r fmt(baseline_AIC, 0)`, BIC = `r fmt(baseline_BIC, 0)`). <!--65{,}215$, 42 free parameters, $-2LL=1{,}801{,}399, AIC =1{,}801{,}483, BIC =1{,}801{,}864$). -->
-The score-guided SEM tree analyses also indicated parameter heterogeneity at both the metric and scalar levels ($p_{metric}$ = `r fmt_p(metric_p)` and $p_{scalar}$ = `r fmt_p(scalar_p)`, respectively; see see \ref{fig:metric-tree} \&\ref{fig:scalar-tree}). 
+The score-guided SEM tree analyses also indicated parameter heterogeneity at both the metric and scalar levels ($p_{metric}$ = `r fmt_p(metric_p)` and $p_{scalar}$ = `r fmt_p(scalar_p)`, respectively; see Figures \ref{fig:metric-tree} \&\ref{fig:scalar-tree}). 
 
-For metric invariance, cultural cluster was selected as the first partitioning variable by the trees, `r paste(metric_split_groups, collapse = "and")` separating Western and Nordic countries from Southern and Eastern countries ($LR$ = `r fmt(metric_LR, 2)`; $df$ = `r metric_df`). <!--5988.70; df=8)$--> 
+For metric invariance, cultural cluster was selected as the first partitioning variable by the trees, "`r paste(metric_split_groups, collapse = " and ")`" separating Western and Nordic countries from Southern and Eastern countries ($LR$ = `r fmt(metric_LR, 2)`; $df$ = `r metric_df`). <!--5988.70; df=8)$--> 
 Within both resulting branches, the next partition was based on age, at approximately `r fmt(metric_age_left, 1)` years. 
 Further age-based partitions occurred at approximately 65 and 79 years, together with an additional distinction between Western and Nordic countries within one subgroup. 
  
@@ -1285,7 +1418,7 @@ combined_plot
 \vspace{0.4em}
 \end{figure}
 
-The PDPs suggest that some of the inspected loadings might not be modearted linearly by age. 
+The PDPs suggest that some of the inspected loadings might be non-linearly moderated by age. 
 For the items A2 and A3, loadings were rather stable at the lower age range and decreased with age, the largest difference occuring between mid-60s and early 70s. 
 For the factor Pleasure the pattern seems to be more heterogeneous, as the loading of item P2 seems relatively stable across Age, whereas item P3 shows a more pronounced decline, also starting in mid 60s. 
 
@@ -1293,7 +1426,7 @@ For the factor Pleasure the pattern seems to be more heterogeneous, as the loadi
 
 The present study compared MNLFA and SEM trees for detecting MNI when moderator effects differed in their functional form, magnitude and with different sample sizes. 
 The simulation results revealed a trade-off between model-based specificity and data-driven flexibility. 
-MNLFA achieved high power when the specified moderation function corresponded to the underlying functional form of MNI, but its performance deteriorated substantially under functional-form misspecification. 
+As expected, MNLFA achieved high power when the specified moderation function corresponded to the underlying functional form of MNI, but its performance deteriorated substantially under functional-form misspecification. 
 This finding is consistent with previous methodological work highlighting the sensitivity of parametric approaches to assumptions about the functional form of moderation. 
 In particular, @Bauer2023 emphasized that correctly specified parametric functions may improve accuracy and statistical power, whereas incorrect specifications can introduce bias. 
 Similarly, recent work on related methods has highlighted the risk of misrepresenting complex nonlinear moderation patterns when the assumed functional form does not adequately capture the underlying relationship [@Liu2025]. 
@@ -1302,11 +1435,14 @@ SEM trees, in contrast, showed comparatively stable power across linear, quadrat
 Thus, the methods ability to detect measurement heterogeneity, depends on whether its functional form is well assumed in advance and whether localizing MNI to loadings or intercepts was of primary interest. 
 For MNLFA, the dependence on functional form specification was particularly pronounced. 
 Linear MNLFA performed well for linear and sigmoid effects but poorly for quadratic effects, whereas the quadratic specification showed the complementary pattern. 
-The strong performance of linear MNLFA under sigmoid moderation should, however, be interpreted in light of the specific moderator range and steepness used in the data-generating model. 
+However, the poor performance of linear MNLFA under quadratic moderation should be interpreted in light of the specific quadratic function used in the simulation ($h(M)=2M^2-1$). 
+Because this function is symmetric around zero, it cannot be captured by a linear moderation term when the moderator distribution is symmetric around zero. 
+Other quadratic functions with a nonzero linear component could be better approximated by linear MNLFA, potentially resulting in higher detection power.
+The strong performance of linear MNLFA under sigmoid moderation should also be interpreted in light of the specific moderator range and steepness used in the data-generating model. 
 Within the simulated range, a substantial portion of the sigmoid relationship was approximately linear, allowing the linear specification to capture much of the induced moderation. 
 Its performance could thus depend on the extent to which nonlinearity is expressed over the observed moderator range. 
 Additionally, it is likely that additional statistical information cannot compensate for a moderator function that inadequately represents the underlying relationship. 
-As SEM trees, showed consistently high power across linear, quadratic, and sigmoid forms, their performance seems to depend less strongly on correctly anticipating the functional form of MNI. 
+As SEM trees showed consistently high power across linear, quadratic, and sigmoid forms, their performance seems to depend less strongly on correctly anticipating the functional form of MNI. 
 This advantage could be particularly relevant in applications in which theory identifies plausible sources of measurement heterogeneity but provides limited guidance regarding the shape of their association with measurement parameters. 
 
 The empirical application complemented these simulation findings. 
@@ -1329,7 +1465,7 @@ Furthermore, PDPs average model predictions across the distribution of the remai
 Nonetheless, the PDPs provide some exploratory insights into potential age-related differences in the measurement of CASP-12. 
 Most notably, the predicted loadings of both Pleasure indicators decreased with age, with the most pronounced changes occurring between the mid-60s and early 70s. 
 This pattern may suggest that the aspects of pleasure captured by these indicators become less strongly associated with the underlying construct at older ages. 
-For Self-Realization, the predicted loadings were comparatively stable across most of the age range, although both indicators showed an increase at more advanced ages. 
+For the domain _Self-Realization_, the predicted loadings were comparatively stable across most of the age range, although both indicators showed an increase at more advanced ages. 
 This could indicate that the relationship between these indicators and the underlying dimension of self-realization becomes somewhat stronger in later life. 
 The patterns for Autonomy were more heterogeneous, while the loading of one indicator remained relatively stable, the other decreased considerably with age. 
 This may suggest that particular aspects of autonomy change in their relevance for representing the latent construct, rather than the dimension as a whole being affected uniformly. 
@@ -1339,14 +1475,13 @@ Taken together, these exploratory findings indicate that potential age-related m
 @BonnevilleRoussy2024 examined age invariance across four predefined age groups: younger than 60, 60–69, 70–79, and 80 years and older. 
 Whereas they found cross-sectional age invariance for 11 of the 12 CASP-12 items, both MNLFA and SEM trees identified age-related parameter heterogeneity in the present data. 
 MNLFA modeled age continuously, while SEM trees identified data-driven thresholds at which heterogeneity was most pronounced. 
-Several thresholds aligned with the predefined age-group boundaries: the metric tree identified splits around 65, 69, and 79 years, and the scalar tree around 69, 79, and 87–88 years. 
-However, the additional splits around 65 and 87–88 years suggest heterogeneity within the predefined 60–69 and 80-and-older groups, respectively, whereas the boundary at 60 years was not reproduced. 
+Several age-based splits were identified, some of which were close to the predefined age-group boundaries used in the previous study. Overall, the findings suggest that age-related measurement heterogeneity may be present across different age ranges. 
 MNLFA identified significant age-related differences in both factor loadings and intercepts, with particularly pronounced coefficients for A2 ("Wie oft haben Sie das Gefühl, keinen Einfluss darauf zu haben, was mit Ihnen geschieht?") and A3 ("Wie oft denken Sie, dass fehlendes Geld Sie davon abhält, die Dinge zu tun, die Sie tun möchten?"). 
 The findings also showed some item-level convergence with @BonnevilleRoussy2024, who identified age-related MNI in an Autonomy item ("Do the things you want to do."; A1). 
 Similarly, the present MNLFA results showed comparatively pronounced age-related moderation for Autonomy items A2 and A3 (item A1 was used for identification). 
 Although this suggests that Autonomy warrants particular attention, age-related heterogeneity was not confined to this dimension. 
 
-## Methodological Discussion 
+## Different Approaches to Characterizing Measurement Noninvariance  
 
 MNLFA is inherently model-based, researchers specify which covariates are expected to moderate measurement parameters and how these moderator effects enter the model. 
 When these assumptions are well founded, the resulting coefficients provide a direct and parsimonious description of how individual measurement parameters vary with the covariates. 
@@ -1360,11 +1495,7 @@ This distinction between detection and localization is important for interpretin
 The high overall power of SEM trees indicates that they are effective at identifying heterogeneity in the measurement model across the conditions considered, but a detected instability should not necessarily be interpreted as uniquely identifying the parameter class responsible for that heterogeneity. 
 Notably, the SEM-tree metric test frequently rejected invariance when only intercepts were noninvariant, whereas scalar rejection generally remained near the nominal level when only loadings were noninvariant. 
 This asymmetric cross-level sensitivity was particularly pronounced at larger sample sizes in some scalar-only conditions, suggesting systematic sensitivity to intercept instability rather than sampling imprecision. 
-
-This cross-level sensitivity also affected the sequential classification of MNI. 
-SEM trees correctly classified metric-only MNI in 80.9% of replications and combined metric and scalar MNI in 77.4%, but scalar-only MNI in 69.6%, compared with 63.6% for linear MNLFA and 32.9% for quadratic MNLFA. 
-Under scalar-only MNI, erroneous rejection at the preceding metric stage occurred in 25.8% of SEM-tree replications, 11.1% for linear MNLFA, and 26.5% for quadratic MNLFA, preventing these cases from reaching scalar testing. 
-As illustrated in Figure 4, this effect varied substantially across moderator forms and effect magnitudes. 
+In a strict sequential testing procedure, rejection at the metric stage prevents subsequent evaluation of scalar invariance. Consequently, metric rejection under scalar-only noninvariance can lead to incorrect classification of the level of noninvariance, even when measurement heterogeneity is detected. 
 However, premature metric rejection did not fully explain the differences in classification accuracy, particularly for linear MNLFA, indicating that errors at the subsequent scalar stage also contributed. 
 Thus, sequential classification rates reflect not only sensitivity to MNI but also the ability to distinguish loading from intercept instability. 
 
@@ -1457,12 +1588,12 @@ The empirical example therefore illustrates that MNLFA and SEM trees can yield b
 
 Several limitations qualify the generalizability of the present findings. 
 First, the simulation considered linear, quadratic, and sigmoidal moderation, representing distinct but not exhaustive forms of MNI. 
-Although SEM trees performed comparatively consistently across these conditions, this advantage cannot be generalized to arbitrary functional relationships. 
+Although SEM trees performed comparatively consistently across these conditions, this advantage cannot be generalized to arbitrary functional relationships; even though, it is important to note that SEM trees are invariant across monotonic transformations of a predictor. 
 Second, the simulation employed a relatively simple one-factor model with four continuous indicators. 
 Future studies should examine whether the observed performance patterns extend to more complex measurement structures, including multifactor models, ordinal indicators, cross-loadings, and correlated residuals.
 
 The simulation also largely separated the detection of MNI from moderator selection by supplying SEM trees with the relevant moderator variables. 
-Although EFA trees have previously been evaluated in the presence of irrelevant candidate covariates (@Sterner2023), and methodological work on SEM trees has examined selection bias and multiple-testing adjustments (@Arnold2021), the additional noise-predictor analysis in the present study addressed these issues only under restricted conditions. 
+Although EFA trees have previously been evaluated in the presence of irrelevant candidate covariates [@Sterner2023], and methodological work on SEM trees has examined selection bias and multiple-testing adjustments [@Arnold2021], the additional noise-predictor analysis in the present study addressed these issues only under restricted conditions. 
 Future research should therefore investigate how parameter-focused CFA-based trees perform with larger sets of correlated and irrelevant moderators, particularly regarding the probability of selecting the true source of MNI, the stability of selected variables and split points, and the trade-off between false-positive selections and statistical power. 
 Such investigations are especially relevant because a selected moderator may act as a proxy for another correlated source of measurement heterogeneity.
 
@@ -1475,5 +1606,10 @@ Replication across SHARE waves and independent samples would help establish the 
 <!--
 Something on multiple testing and alpha error inflation
 -->
+
+Taken together, our findings show that both SEM trees and MNLFA are well suited for investigating measurement invariance when moderators are continuous or numerous, and that they serve different purposes. 
+SEM trees are particularly attractive for exploratory work: in larger samples, they reliably detect nonlinear moderation without a prespecified functional form, and they can uncover conditional combinations of moderators, such as the age-by-culture patterns found in the CASP-12 data. 
+MNLFA, in turn, offers higher detection rates and directly interpretable parameter estimates when the moderation function is linear or correctly specified. 
+Rather than competing, the two approaches complement each other: SEM trees can screen for unexpected sources and shapes of heterogeneity, and MNLFA can then quantify them in a parsimonious, theory-driven model.
 
 # References

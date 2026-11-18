@@ -1,0 +1,41 @@
+---
+title: "Appendix"
+author: "Leonie"
+date: "2026-10-13"
+output: pdf_document
+---
+
+Table 2 summarizes metric and scalar rejection rates across population models.
+
+```{r table2, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE, results='asis'}
+library(knitr)
+
+table2_cell <- readRDS(
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/table2_condition_specific.rds"
+)
+
+cat("\\begingroup\n")
+cat("\\centering\n")
+cat("\\small\n")
+cat("\\setlength{\\tabcolsep}{3pt}\n")
+
+cat(
+  knitr::kable(
+    table2_cell,
+    format = "latex",
+    booktabs = TRUE,
+    longtable = TRUE,
+    escape = TRUE,
+    align = c("l", "r", "l", "r", "r", rep("c", ncol(table2_cell) - 5)),
+    caption = paste(
+      "Condition-specific rejection rates for metric and scalar",
+      "measurement invariance across population models, sample sizes,",
+      "moderator specifications, and effect sizes.",
+      "Monte Carlo standard errors are given in parentheses."
+    ),
+    label = "tab:condition-performance"
+  )
+)
+
+cat("\\endgroup\n")
+```
