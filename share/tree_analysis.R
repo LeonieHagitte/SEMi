@@ -1,3 +1,5 @@
+library(ggplot2)
+library(dplyr)
 # =========================================================================
 # CASP-12 SEM-tree analysis
 # =========================================================================
@@ -477,6 +479,10 @@ omxGetParameters(
 # Full OpenMx summary
 summary(fit_casp_openmx2$baseline_fit)
 
+saveRDS(
+  fit_casp_openmx2,
+  "fit_casp_openmx2.rds"
+)
 #--------------
 tree_baseline_summary <- tibble::tibble(
   N = fit_casp_openmx2$baseline_fit$data$numObs,
@@ -1031,9 +1037,6 @@ importance_summary <- importance_df %>%
   )
 
 importance_summary
-
-library(ggplot2)
-library(dplyr)
 
 importance_df <- importance_df %>%
   mutate(
