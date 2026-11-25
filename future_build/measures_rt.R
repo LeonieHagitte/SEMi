@@ -76,12 +76,7 @@ eval_exploratory <- eval_main %>%
         delta_nu %in% confirmatory_delta_nu)
   )
 
-perf_cell_all <- bind_rows(
-  perf_cell,
-  perf_cell_exploratory
-)
-
-# ============================================================
+# ============================================================-------------------------------------------------
 # 4. Separate metric and scalar testing
 #    PRIMARY = nominal design cells
 # ============================================================
@@ -507,7 +502,7 @@ perf_sequential_cell
 
 technical_cell
 #----------------------------------------------------------------------------------------------------------------------------
-method_failure_summary
+#method_failure_summary
 # A tibble: 3 × 6
 #method  attempted_runs failed_runs successful_runs failure_rate failure_percent
 #<chr>            <int>       <int>           <int>        <dbl>           <dbl>
@@ -1036,5 +1031,10 @@ classification_summary %>%
 
 saveRDS(
   classification_summary,
-  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/classification_summary.rds"
+  "C:/Users/Leonie.Hagitte/Desktop/gh/SEMi/future_build/results/classification_summary.rds")
+#----------------------------------------------------------------------------
+
+perf_cell_all <- bind_rows(
+  perf_cell,
+  perf_cell_exploratory
 )
