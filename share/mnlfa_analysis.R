@@ -768,6 +768,19 @@ mnlfa_pars <- OpenMx::omxGetParameters(
   free = TRUE
 )
 
+# Extract parameter estimates and standard errors
+parameter_table <- summary(casp_mnlfa$fitConfig)$parameters
+
+colnames(parameter_table)
+head(parameter_table)
+
+parameter_se <- parameter_table %>%
+  as_tibble() %>%
+  transmute(
+    parameter = name,
+    se = Std.Error
+  )
+
 # Loading moderation
 loading_mod <- mnlfa_pars[
   grepl("^C_(age|female|nordic|southern|eastern)_", names(mnlfa_pars))
@@ -828,6 +841,7 @@ loading_summary <- enframe(
   name = "parameter",
   value = "estimate"
 ) %>%
+  left_join(parameter_se, by = "parameter") %>%
   mutate(
     type = "Loading",
     parameter = sub("^C_", "", parameter)
@@ -844,6 +858,7 @@ intercept_summary <- enframe(
   name = "parameter",
   value = "estimate"
 ) %>%
+  left_join(parameter_se, by = "parameter") %>%
   mutate(
     type = "Intercept",
     parameter = sub("^B_", "", parameter)

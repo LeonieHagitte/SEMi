@@ -174,6 +174,7 @@ fig3 <- ggplot(
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
+    panel.spacing.x = unit(0.2, "lines"),
     axis.text.x = element_blank(),
     
     axis.line = element_line(
@@ -307,6 +308,7 @@ fig0a <- ggplot(
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
+    panel.spacing.x = unit(0.2, "lines"),
     axis.text.x = element_blank(),
     axis.line = element_line(linewidth = .3, colour = "#343231"),
     legend.position = "bottom",
@@ -442,6 +444,7 @@ fig3b <- ggplot(
   theme(
     panel.grid = element_blank(),
     panel.border = element_blank(),
+    panel.spacing.x = unit(0.2, "lines"),
     axis.text.x = element_blank(),
     axis.line = element_line(linewidth = .3, colour = "#343231"),
     legend.position = "inside",
@@ -472,3 +475,4 @@ saveRDS(
   fig3b,
   "results/fig3b.rds"
 )
+

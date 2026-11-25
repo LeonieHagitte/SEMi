@@ -138,7 +138,36 @@ robustness_summary_1000 <- robustness_results_1000 %>%
   )
 
 robustness_summary_1000
+
+saveRDS(
+  robustness_summary_1000,
+  "results/robustness_summary_1000.rds"
+)
+
 # A tibble: 1 × 9
 #n metric_rejection_rate successful_moderator_identification_rate any_noise_selected_rate true_and_noise_selected_rate true_only_selected_rate noise_without_true_rate neither_selected_rate n_errors
 #<int>                 <dbl>                                    <dbl>                   <dbl>                        <dbl>                   <dbl>                   <dbl>                 <dbl>    <int>
 #  1  1000                 0.791                                    0.774                   0.109                        0.092                   0.682                   0.017                 0.209        0
+
+# ============================================================
+# Analytical multiple-testing benchmark for MNLFA
+# ============================================================
+
+alpha <- 0.05
+k_noise <- 10  # 10 irrelevant predictors
+
+mnlfa_multiplicity <- tibble(
+  k = k_noise,
+  alpha = alpha,
+  fwer_independent = 1 - (1 - alpha)^k,
+  alpha_bonferroni = alpha / k,
+  fwer_independent_bonferroni =
+    1 - (1 - alpha_bonferroni)^k
+)
+
+mnlfa_multiplicity
+
+saveRDS(
+  mnlfa_multiplicity,
+  "results/mnlfa_multiplicity.rds"
+)
